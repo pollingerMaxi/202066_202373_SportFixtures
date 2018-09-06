@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportFixtures.Portal", "SportFixtures.Portal\SportFixtures.Portal.csproj", "{D687955B-8C11-4C32-B910-214004A6BB55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportFixtures.Data", "SportFixtures.Data\SportFixtures.Data.csproj", "{E2A6A0C4-3AF5-4018-9C0D-3EE47B9838E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportFixtures.Test", "SportFixtures.Test\SportFixtures.Test.csproj", "{33167DC9-4CD6-4562-B984-251722DA7FE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{D687955B-8C11-4C32-B910-214004A6BB55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D687955B-8C11-4C32-B910-214004A6BB55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D687955B-8C11-4C32-B910-214004A6BB55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2A6A0C4-3AF5-4018-9C0D-3EE47B9838E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2A6A0C4-3AF5-4018-9C0D-3EE47B9838E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2A6A0C4-3AF5-4018-9C0D-3EE47B9838E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2A6A0C4-3AF5-4018-9C0D-3EE47B9838E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33167DC9-4CD6-4562-B984-251722DA7FE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33167DC9-4CD6-4562-B984-251722DA7FE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33167DC9-4CD6-4562-B984-251722DA7FE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33167DC9-4CD6-4562-B984-251722DA7FE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
