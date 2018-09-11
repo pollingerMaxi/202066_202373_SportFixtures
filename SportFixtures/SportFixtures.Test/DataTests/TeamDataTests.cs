@@ -45,5 +45,25 @@ namespace SportFixtures.Test.DataTests
             var teams = unitOfWork.TeamRepository.Get();
             Assert.IsTrue(teams.Count() == 1);
         }
+
+        [TestMethod]
+        public void AddTeamWithName()
+        {
+            var team = new Team() { Name = "Test name" };
+            unitOfWork.TeamRepository.Insert(team);
+            context.SaveChanges();
+            Assert.IsTrue(unitOfWork.TeamRepository.Get().First().Name == team.Name);
+        }
+
+        [TestMethod]
+        public void AddTeamWithPhotoPath()
+        {
+            var team = new Team() { PhotoPath = @"C:\photos\photo.png"};
+            unitOfWork.TeamRepository.Insert(team);
+            context.SaveChanges();
+            Assert.IsTrue(unitOfWork.TeamRepository.Get().First().PhotoPath == team.PhotoPath);
+        }
+
+
     }
 }
