@@ -12,23 +12,27 @@ namespace SportFixtures.Test.DataTests
     [TestClass]
     public class TeamDataTests
     {
+        private Context context;
+        private UnitOfWork unitOfWork;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            context = new Context();
+            unitOfWork = new UnitOfWork(context);
+        }
+
         [TestCleanup]
         public void TestCleanup()
         {
-            using (var context = new Context())
-            {
-                var unitOfWork = new UnitOfWork(context);
-                var teams = unitOfWork.TeamRepository.Get();
-                context.RemoveRange(teams);
-                context.SaveChanges();
-            }
+            var teams = unitOfWork.TeamRepository.Get();
+            context.RemoveRange(teams);
+            context.SaveChanges();
         }
 
         [TestMethod]
         public void GetAllTeamsWithNoTeamsInRepository()
         {
-            var context = new Context();
-            var unitOfWork = new UnitOfWork(context);
             var teams = unitOfWork.TeamRepository.Get();
             Assert.IsTrue(teams.Count() == 0);
         }
@@ -36,8 +40,6 @@ namespace SportFixtures.Test.DataTests
         [TestMethod]
         public void GetAllTeamsWithOneTeamInRepository()
         {
-            var context = new Context();
-            var unitOfWork = new UnitOfWork(context);
             unitOfWork.TeamRepository.Insert(new Team());
             context.SaveChanges();
             var teams = unitOfWork.TeamRepository.Get();
