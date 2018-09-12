@@ -34,14 +34,14 @@ namespace SportFixtures.Test.DataTests
         }
 
         [TestMethod]
-        public void GetAllTeamsWithNoTeamsInRepository()
+        public void GetAllTeamsWithNoTeamsInRepositoryTest()
         {
             var teams = unitOfWork.TeamRepository.Get();
             Assert.IsTrue(teams.Count() == 0);
         }
 
         [TestMethod]
-        public void GetAllTeamsWithOneTeamInRepository()
+        public void GetAllTeamsWithOneTeamInRepositoryTest()
         {
             unitOfWork.TeamRepository.Insert(new Team());
             context.SaveChanges();
@@ -50,7 +50,7 @@ namespace SportFixtures.Test.DataTests
         }
 
         [TestMethod]
-        public void AddTeamWithName()
+        public void AddTeamWithNameTest()
         {
             var team = new Team() { Name = "Test name" };
             unitOfWork.TeamRepository.Insert(team);
@@ -59,14 +59,57 @@ namespace SportFixtures.Test.DataTests
         }
 
         [TestMethod]
-        public void AddTeamWithPhotoPath()
+        public void AddTeamWithPhotoPathTest()
         {
-            var team = new Team() { PhotoPath = @"C:\photos\photo.png"};
+            var team = new Team() { PhotoPath = @"C:\photos\photo.png" };
             unitOfWork.TeamRepository.Insert(team);
             context.SaveChanges();
             Assert.IsTrue(unitOfWork.TeamRepository.Get().First().PhotoPath == team.PhotoPath);
         }
 
+        [TestMethod]
+        public void GetTeamByIdTest()
+        {
+            var team = new Team();
+            unitOfWork.TeamRepository.Insert(team);
+            context.SaveChanges();
+            Assert.IsTrue(unitOfWork.TeamRepository.GetByID(team.Id) == team);
+        }
+
+        [TestMethod]
+        public void DeleteTeamByIdTest()
+        {
+            var team = new Team();
+            unitOfWork.TeamRepository.Insert(team);
+            context.SaveChanges();
+            unitOfWork.TeamRepository.Delete(team.Id);
+            context.SaveChanges();
+            Assert.IsTrue(unitOfWork.TeamRepository.Get().Count() == 0);
+        }
+
+        [TestMethod]
+        public void DeleteTeamByObjectTest()
+        {
+            var team = new Team();
+            unitOfWork.TeamRepository.Insert(team);
+            context.SaveChanges();
+            unitOfWork.TeamRepository.Delete(team);
+            context.SaveChanges();
+            Assert.IsTrue(unitOfWork.TeamRepository.Get().Count() == 0);
+        }
+
+        [TestMethod]
+        public void UpdateTeamTest()
+        {
+            var updatedName = "UpdatedName";
+            var team = new Team() { Name = "InitialName" };
+            unitOfWork.TeamRepository.Insert(team);
+            context.SaveChanges();
+            team.Name = updatedName;
+            unitOfWork.TeamRepository.Update(team);
+            context.SaveChanges();
+            Assert.IsTrue(unitOfWork.TeamRepository.GetByID(team.Id).Name == updatedName);
+        }
 
     }
 }
