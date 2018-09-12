@@ -12,7 +12,16 @@ namespace SportFixtures.Data.Access
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.;Database=SportFixturesTest;Trusted_Connection=True;Integrated Security=True");
+            if(!optionsBuilder.IsConfigured){
+                optionsBuilder.UseSqlServer(@"Server=.;Database=SportFixturesTest;Trusted_Connection=True;Integrated Security=True");
+            }
         }
+
+        public Context()
+        {}
+        public Context(DbContextOptions<Context> options)
+            :base(options)
+        {}
+
     }
 }

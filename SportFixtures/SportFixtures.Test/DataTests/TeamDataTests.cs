@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore.InMemory;
+using Microsoft.EntityFrameworkCore;
 
 namespace SportFixtures.Test.DataTests
 {
@@ -18,7 +20,8 @@ namespace SportFixtures.Test.DataTests
         [TestInitialize]
         public void TestInitialize()
         {
-            context = new Context();
+            var options = new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(databaseName: "teamDB").Options;
+            context = new Context(options);
             unitOfWork = new UnitOfWork(context);
         }
 
