@@ -9,7 +9,7 @@ namespace SportFixtures.Data.Access
     public class Context : DbContext
     {
         public DbSet<Team> Teams { get; set; }
-
+        public DbSet<Sport> Sport { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if(!optionsBuilder.IsConfigured){

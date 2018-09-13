@@ -10,6 +10,7 @@ namespace SportFixtures.Data.Repository
     {
         private Context context;
         private GenericRepository<Team> teamRepository;
+        private GenericRepository<Sport> sportRepository;
 
         public UnitOfWork(Context context)
         {
@@ -25,6 +26,18 @@ namespace SportFixtures.Data.Repository
                     this.teamRepository = new GenericRepository<Team>(context);
                 }
                 return teamRepository;
+            }
+        }
+
+        public GenericRepository<Sport> SportRepository
+        {
+            get
+            {
+                if (this.sportRepository == null)
+                {
+                    this.sportRepository = new GenericRepository<Sport>(context);
+                }
+                return sportRepository;
             }
         }
 
