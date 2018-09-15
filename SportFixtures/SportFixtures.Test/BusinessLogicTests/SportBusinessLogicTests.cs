@@ -3,6 +3,8 @@ using Moq;
 using SportFixtures.Data.Access;
 using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
+using SportFixtures.BusinessLogic.Interfaces;
+using SportFixtures.BusinessLogic.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,13 +34,14 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
-        public void UniqueName(){
+        public void UniqueNameTest(){
             var mockUnitOfWork = new Mock<UnitOfWork>();
             mockUnitOfWork.Setup(un => un.SportRepository.Get(null, null, ""));
-            SportBussinesLogic sportBL = new SportBussinesLogic(mockUnitOfWork.Object);
-            var name = "Futbol";
+            
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockUnitOfWork.Object);
+            string sportName = "Futbol";
 
-            Assert.Equals(sportBL.NameAlreadyExists(name), true);
+            Assert.Equals(sportBL.UniqueName(sportName), true);
         }
         
 
