@@ -11,8 +11,8 @@ namespace SportFixtures.Data.Repository
     public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         internal Context context;
-        internal DbSet<TEntity> dbSet;
-
+        internal DbSet<TEntity> dbSet;    
+     
         public GenericRepository(Context context)
         {
             this.context = context;

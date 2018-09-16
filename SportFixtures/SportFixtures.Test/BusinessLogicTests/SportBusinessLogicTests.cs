@@ -23,6 +23,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockUnitOfWork.Setup(un => un.SportRepository);
             
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockUnitOfWork.Object);
+
             string sportName = "Futbol";
 
             Assert.AreEqual(sportBL.UniqueName(sportName), true);

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SportFixtures.Data.Repository
 {
-    public class UnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private Context context;
         private GenericRepository<Team> teamRepository;
