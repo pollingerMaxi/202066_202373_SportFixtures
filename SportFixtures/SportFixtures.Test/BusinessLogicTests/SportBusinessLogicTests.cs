@@ -15,27 +15,11 @@ namespace SportFixtures.Test.BusinessLogicTests
     [TestClass]
     public class SportBusinessLogicTests
     {
-        private Context context;
-        private UnitOfWork unitOfWork; 
-
-        [TestInitialize]
-        public void TestInitialize()
-        {
-            context = new Context();
-            unitOfWork = new UnitOfWork(context);
-        }
-
-        [TestCleanup]
-        public void TestCleanup()
-        {
-            var sports = unitOfWork.SportRepository.Get();
-            context.RemoveRange(sports);
-            context.SaveChanges();
-        }
 
         [TestMethod]
         public void UniqueNameTest(){
-            var mockUnitOfWork = new Mock<UnitOfWork>();
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+
             mockUnitOfWork.Setup(un => un.SportRepository.Get(null, null, ""));
             
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockUnitOfWork.Object);

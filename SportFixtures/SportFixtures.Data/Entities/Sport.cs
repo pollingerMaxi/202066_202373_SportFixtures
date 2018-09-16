@@ -8,6 +8,7 @@ namespace SportFixtures.Data.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool IsDeleted { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -20,6 +21,11 @@ namespace SportFixtures.Data.Entities
             }
 
             return equals;
+        }
+
+        public Sport()
+        {
+            this.IsDeleted = false;
         }
 
     }

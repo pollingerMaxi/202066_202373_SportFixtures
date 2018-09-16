@@ -8,7 +8,7 @@ using System.Text;
 
 namespace SportFixtures.Data.Repository
 {
-    public class GenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         internal Context context;
         internal DbSet<TEntity> dbSet;
@@ -76,6 +76,16 @@ namespace SportFixtures.Data.Repository
         {
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
+        }
+
+        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
+        {
+            throw new NotImplementedException();
+        }
+
+        public TEntity GetById(object id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
