@@ -13,6 +13,9 @@ namespace SportFixtures.Data.Repository
         internal Context context;
         internal DbSet<TEntity> dbSet;
 
+        public GenericRepository() { }
+        
+     
         public GenericRepository(Context context)
         {
             this.context = context;

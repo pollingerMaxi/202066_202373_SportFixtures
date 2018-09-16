@@ -19,13 +19,12 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void UniqueNameTest(){
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-
             mockUnitOfWork.Setup(un => un.SportRepository.Get(null, null, ""));
-            
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockUnitOfWork.Object);
+
             string sportName = "Futbol";
 
-            Assert.Equals(sportBL.UniqueName(sportName), true);
+            Assert.AreEqual(sportBL.UniqueName(sportName), true);
         }
         
 
