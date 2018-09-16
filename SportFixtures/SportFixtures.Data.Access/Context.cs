@@ -12,16 +12,15 @@ namespace SportFixtures.Data.Access
         public DbSet<Sport> Sport { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if(!optionsBuilder.IsConfigured){
+            if (!optionsBuilder.IsConfigured)
+            {
                 optionsBuilder.UseSqlServer(@"Server=.;Database=SportFixturesTest;Trusted_Connection=True;Integrated Security=True");
             }
         }
 
-        public Context()
-        {}
+        public Context() { }
         public Context(DbContextOptions<Context> options)
-            :base(options)
-        {}
+            : base(options) { }
 
     }
 }

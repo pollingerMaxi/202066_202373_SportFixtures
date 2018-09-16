@@ -73,7 +73,7 @@ namespace SportFixtures.Test.DataTests
             var team = new Team();
             unitOfWork.TeamRepository.Insert(team);
             context.SaveChanges();
-            Assert.IsTrue(unitOfWork.TeamRepository.GetByID(team.Id) == team);
+            Assert.IsTrue(unitOfWork.TeamRepository.GetById(team.Id) == team);
         }
 
         [TestMethod]
@@ -108,7 +108,7 @@ namespace SportFixtures.Test.DataTests
             team.Name = updatedName;
             unitOfWork.TeamRepository.Update(team);
             context.SaveChanges();
-            Assert.IsTrue(unitOfWork.TeamRepository.GetByID(team.Id).Name == updatedName);
+            Assert.IsTrue(unitOfWork.TeamRepository.GetById(team.Id).Name == updatedName);
         }
 
     }

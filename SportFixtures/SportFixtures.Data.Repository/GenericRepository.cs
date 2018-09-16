@@ -47,7 +47,7 @@ namespace SportFixtures.Data.Repository
             }
         }
 
-        public virtual TEntity GetByID(object id)
+        public virtual TEntity GetById(object id)
         {
             return dbSet.Find(id);
         }
@@ -79,11 +79,6 @@ namespace SportFixtures.Data.Repository
         }
 
         public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
-        {
-            throw new NotImplementedException();
-        }
-
-        public TEntity GetById(object id)
         {
             throw new NotImplementedException();
         }
