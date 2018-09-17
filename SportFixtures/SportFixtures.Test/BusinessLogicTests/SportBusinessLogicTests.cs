@@ -29,6 +29,17 @@ namespace SportFixtures.Test.BusinessLogicTests
             Assert.AreEqual(sportBL.UniqueName(sportName), true);
         }
         
+        [TestMethod]
+        public void AddSportTest()
+        {
+            var sportName = "Futbol";
+            var mockUnitOfWork = new Mock<UnitOfWork>(new Context());
+            mockUnitOfWork.Setup(un => un.SportRepository.Insert(new Sport() { Name = sportName}));
+            mockUnitOfWork.Setup(un => un.Save());
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockUnitOfWork.Object);
+            sportBL.AddSport(sportName);
+            Assert.IsTrue(mockUnitOfWork.Object.SportRepository.Get(null, null, "").First().Name == sportName);
+        }
 
     }
 }

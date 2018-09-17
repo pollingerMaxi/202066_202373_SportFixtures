@@ -10,5 +10,6 @@ namespace SportFixtures.Data.Repository
         GenericRepository<Sport> SportRepository { get; }
         GenericRepository<Team> TeamRepository { get; }
 
+        void Save();
     }
 }

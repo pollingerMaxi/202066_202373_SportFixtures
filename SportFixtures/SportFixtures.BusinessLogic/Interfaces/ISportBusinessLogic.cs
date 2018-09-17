@@ -7,5 +7,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
     {
         bool UniqueName(string sportName);
 
+        void AddSport(string name);
     }
 }

@@ -41,5 +41,10 @@ namespace SportFixtures.Data.Repository
             }
         }
 
+        public void Save()
+        {
+            context.SaveChanges();
+        }
+
     }
 }
