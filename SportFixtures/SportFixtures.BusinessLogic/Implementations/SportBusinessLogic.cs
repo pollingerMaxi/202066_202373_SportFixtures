@@ -19,7 +19,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public bool UniqueName(string sportName)
         {
-            return !repository.GetAll().Any(s => s.Name == sportName);
+            return !repository.Get().Any(s => s.Name == sportName);
         }
 
         public void AddSport(string name)
