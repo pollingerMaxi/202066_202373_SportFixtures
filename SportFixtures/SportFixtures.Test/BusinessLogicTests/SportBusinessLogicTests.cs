@@ -17,28 +17,26 @@ namespace SportFixtures.Test.BusinessLogicTests
     {
 
         [TestMethod]
-        public void UniqueNameTest(){
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-
-            mockUnitOfWork.Setup(un => un.SportRepository);
-            
-            ISportBusinessLogic sportBL = new SportBusinessLogic(mockUnitOfWork.Object);
-
+        public void UniqueNameTest()
+        {
+            var mockRepo = new Mock<IRepository<Sport>>();
+            mockRepo.Setup(un => un.Get(null, null, "")).Returns(new List<Sport>());
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
             string sportName = "Futbol";
-
             Assert.AreEqual(sportBL.UniqueName(sportName), true);
         }
-        
+
         [TestMethod]
         public void AddSportTest()
         {
             var sportName = "Futbol";
-            var mockUnitOfWork = new Mock<UnitOfWork>(new Context());
-            mockUnitOfWork.Setup(un => un.SportRepository.Insert(new Sport() { Name = sportName}));
-            mockUnitOfWork.Setup(un => un.Save());
-            ISportBusinessLogic sportBL = new SportBusinessLogic(mockUnitOfWork.Object);
+            var list = new List<Sport>();
+            var mockRepo = new Mock<IRepository<Sport>>();
+            mockRepo.Setup(x => x.Insert(It.IsAny<Sport>())).Callback<Sport>(x => list.Add(new Sport() { Name = sportName }));
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
             sportBL.AddSport(sportName);
-            Assert.IsTrue(mockUnitOfWork.Object.SportRepository.Get(null, null, "").First().Name == sportName);
+            mockRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Once());
+            Assert.IsTrue(list.First().Name == sportName);
         }
 
     }

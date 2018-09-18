@@ -7,9 +7,10 @@ namespace SportFixtures.BusinessLogic.Implementations
 {
     public class SportBusinessLogic : ISportBusinessLogic
     {   
-        private IUnitOfWork UnitOfWork;
-        public SportBusinessLogic(IUnitOfWork UnitOfWork){
-            this.UnitOfWork = UnitOfWork;
+        private IRepository<Sport> repository;
+
+        public SportBusinessLogic(IRepository<Sport> repository){
+            this.repository = repository;
         }
 
         public bool UniqueName(string sportName){
@@ -20,8 +21,8 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             if (UniqueName(name))
             {
-                UnitOfWork.SportRepository.Insert(new Sport() { Name = name });
-                UnitOfWork.Save();
+                repository.Insert(new Sport() { Name = name });
+                repository.Save();
             }
         }
     }

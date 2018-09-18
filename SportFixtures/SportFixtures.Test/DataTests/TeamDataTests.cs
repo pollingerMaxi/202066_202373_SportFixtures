@@ -15,20 +15,20 @@ namespace SportFixtures.Test.DataTests
     public class TeamDataTests
     {
         private Context context;
-        private UnitOfWork unitOfWork;
+        private IRepository<Team> repository;
 
         [TestInitialize]
         public void TestInitialize()
         {
             var options = new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(databaseName: "teamDB").Options;
             context = new Context(options);
-            unitOfWork = new UnitOfWork(context);
+            repository = new GenericRepository<Team>(context);
         }
 
         [TestCleanup]
         public void TestCleanup()
         {
-            var teams = unitOfWork.TeamRepository.Get();
+            var teams = repository.Get();
             context.RemoveRange(teams);
             context.SaveChanges();
         }
@@ -36,16 +36,16 @@ namespace SportFixtures.Test.DataTests
         [TestMethod]
         public void GetAllTeamsWithNoTeamsInRepositoryTest()
         {
-            var teams = unitOfWork.TeamRepository.Get();
+            var teams = repository.Get();
             Assert.IsTrue(teams.Count() == 0);
         }
 
         [TestMethod]
         public void GetAllTeamsWithOneTeamInRepositoryTest()
         {
-            unitOfWork.TeamRepository.Insert(new Team());
+            repository.Insert(new Team());
             context.SaveChanges();
-            var teams = unitOfWork.TeamRepository.Get();
+            var teams = repository.Get();
             Assert.IsTrue(teams.Count() == 1);
         }
 
@@ -53,49 +53,49 @@ namespace SportFixtures.Test.DataTests
         public void AddTeamWithNameTest()
         {
             var team = new Team() { Name = "Test name" };
-            unitOfWork.TeamRepository.Insert(team);
+            repository.Insert(team);
             context.SaveChanges();
-            Assert.IsTrue(unitOfWork.TeamRepository.Get().First().Name == team.Name);
+            Assert.IsTrue(repository.Get().First().Name == team.Name);
         }
 
         [TestMethod]
         public void AddTeamWithPhotoPathTest()
         {
             var team = new Team() { PhotoPath = @"C:\photos\photo.png" };
-            unitOfWork.TeamRepository.Insert(team);
+            repository.Insert(team);
             context.SaveChanges();
-            Assert.IsTrue(unitOfWork.TeamRepository.Get().First().PhotoPath == team.PhotoPath);
+            Assert.IsTrue(repository.Get().First().PhotoPath == team.PhotoPath);
         }
 
         [TestMethod]
         public void GetTeamByIdTest()
         {
             var team = new Team();
-            unitOfWork.TeamRepository.Insert(team);
+            repository.Insert(team);
             context.SaveChanges();
-            Assert.IsTrue(unitOfWork.TeamRepository.GetById(team.Id) == team);
+            Assert.IsTrue(repository.GetById(team.Id) == team);
         }
 
         [TestMethod]
         public void DeleteTeamByIdTest()
         {
             var team = new Team();
-            unitOfWork.TeamRepository.Insert(team);
+            repository.Insert(team);
             context.SaveChanges();
-            unitOfWork.TeamRepository.Delete(team.Id);
+            repository.Delete(team.Id);
             context.SaveChanges();
-            Assert.IsTrue(unitOfWork.TeamRepository.Get().Count() == 0);
+            Assert.IsTrue(repository.Get().Count() == 0);
         }
 
         [TestMethod]
         public void DeleteTeamByObjectTest()
         {
             var team = new Team();
-            unitOfWork.TeamRepository.Insert(team);
+            repository.Insert(team);
             context.SaveChanges();
-            unitOfWork.TeamRepository.Delete(team);
+            repository.Delete(team);
             context.SaveChanges();
-            Assert.IsTrue(unitOfWork.TeamRepository.Get().Count() == 0);
+            Assert.IsTrue(repository.Get().Count() == 0);
         }
 
         [TestMethod]
@@ -103,12 +103,12 @@ namespace SportFixtures.Test.DataTests
         {
             var updatedName = "UpdatedName";
             var team = new Team() { Name = "InitialName" };
-            unitOfWork.TeamRepository.Insert(team);
+            repository.Insert(team);
             context.SaveChanges();
             team.Name = updatedName;
-            unitOfWork.TeamRepository.Update(team);
+            repository.Update(team);
             context.SaveChanges();
-            Assert.IsTrue(unitOfWork.TeamRepository.GetById(team.Id).Name == updatedName);
+            Assert.IsTrue(repository.GetById(team.Id).Name == updatedName);
         }
 
     }

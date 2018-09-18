@@ -13,19 +13,19 @@ namespace SportFixtures.Test.BusinessLogicTests
     public class TeamBusinessLogicTests
     {
         private Context context;
-        private UnitOfWork unitOfWork; 
+        private IRepository<Team> repository; 
 
         [TestInitialize]
         public void TestInitialize()
         {
             context = new Context();
-            unitOfWork = new UnitOfWork(context);
+            repository = new GenericRepository<Team>(context);
         }
 
         [TestCleanup]
         public void TestCleanup()
         {
-            var teams = unitOfWork.TeamRepository.Get();
+            var teams = repository.Get();
             context.RemoveRange(teams);
             context.SaveChanges();
         }

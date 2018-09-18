@@ -63,5 +63,10 @@ namespace SportFixtures.Data.Repository
         /// </summary>
         /// <param name="entityToUpdate">Modified Object</param>
         void Update(TEntity entityToUpdate);
+
+        /// <summary>
+        /// Saves changes
+        /// </summary>
+        void Save();
     }
 }
