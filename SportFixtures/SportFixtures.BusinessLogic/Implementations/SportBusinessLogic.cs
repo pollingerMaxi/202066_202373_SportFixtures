@@ -2,6 +2,9 @@
 using SportFixtures.Data.Entities;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Repository;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace SportFixtures.BusinessLogic.Implementations
 {
@@ -14,6 +17,11 @@ namespace SportFixtures.BusinessLogic.Implementations
         }
 
         public bool UniqueName(string sportName){
+            var sports = repository.GetAll();
+            if(sports.Any(s => s.Name == sportName))
+            {
+                return false;
+            }
             return true;
         }
 

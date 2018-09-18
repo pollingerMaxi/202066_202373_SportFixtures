@@ -19,8 +19,10 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void UniqueNameTest()
         {
+            var sports = new List<Sport>();
+            sports.Add(new Sport{Name="Basquetbol"});
             var mockRepo = new Mock<IRepository<Sport>>();
-            mockRepo.Setup(un => un.Get(null, null, "")).Returns(new List<Sport>());
+            mockRepo.Setup(un => un.Get(null, null, "")).Returns(sports);
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
             string sportName = "Futbol";
             Assert.AreEqual(sportBL.UniqueName(sportName), true);
