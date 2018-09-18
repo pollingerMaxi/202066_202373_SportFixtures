@@ -9,20 +9,17 @@ using System.Linq;
 namespace SportFixtures.BusinessLogic.Implementations
 {
     public class SportBusinessLogic : ISportBusinessLogic
-    {   
+    {
         private IRepository<Sport> repository;
 
-        public SportBusinessLogic(IRepository<Sport> repository){
+        public SportBusinessLogic(IRepository<Sport> repository)
+        {
             this.repository = repository;
         }
 
-        public bool UniqueName(string sportName){
-            var sports = repository.GetAll();
-            if(sports.Any(s => s.Name == sportName))
-            {
-                return false;
-            }
-            return true;
+        public bool UniqueName(string sportName)
+        {
+            return !repository.GetAll().Any(s => s.Name == sportName);
         }
 
         public void AddSport(string name)
