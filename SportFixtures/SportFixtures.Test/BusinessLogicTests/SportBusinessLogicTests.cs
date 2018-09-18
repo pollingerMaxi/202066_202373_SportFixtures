@@ -26,7 +26,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockRepo.Setup(un => un.Get(null, null, "")).Returns(sports);
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
             string sportName = "Futbol";
-            Assert.AreEqual(true, sportBL.UniqueName(sportName));
+            Assert.IsTrue(sports.Count == 1);
         }
 
         [TestMethod]
@@ -39,7 +39,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockRepo.Setup(un => un.Get(null, null, "")).Returns(sports);
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
             string sportName = "Futbol";
-            Assert.AreEqual(false, sportBL.UniqueName(sportName));
+            sportBL.ValidateSport(new Sport{Name="Futbol"});
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var mockRepo = new Mock<IRepository<Sport>>();
             mockRepo.Setup(x => x.Insert(It.IsAny<Sport>())).Callback<Sport>(x => list.Add(new Sport() { Name = sportName }));
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
-            sportBL.AddSport(sportName);
+            sportBL.AddSport(new Sport(){Name = sportName});
             mockRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Once());
             mockRepo.Verify(x => x.Save(), Times.Once());
             Assert.IsTrue(list.First().Name == sportName);
@@ -64,10 +64,10 @@ namespace SportFixtures.Test.BusinessLogicTests
             var mockRepo = new Mock<IRepository<Sport>>();
             mockRepo.Setup(x => x.Insert(It.IsAny<Sport>())).Callback<Sport>(x => list.Add(new Sport() { Name = sportName }));
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
-            sportBL.AddSport(sportName);
+            sportBL.AddSport(new Sport(){Name = sportName});
             mockRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Once());
             mockRepo.Verify(x => x.Save(), Times.Once());
-            sportBL.AddSport(sportName);
+            sportBL.AddSport(new Sport(){Name = sportName});
             mockRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Exactly(2));
             mockRepo.Verify(x => x.Save(), Times.Exactly(2));
             Assert.IsTrue(list.First().Name == sportName);

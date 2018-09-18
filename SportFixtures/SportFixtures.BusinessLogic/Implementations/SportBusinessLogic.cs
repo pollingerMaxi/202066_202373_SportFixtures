@@ -18,18 +18,25 @@ namespace SportFixtures.BusinessLogic.Implementations
             this.repository = repository;
         }
 
-        public bool UniqueName(string sportName)
+        private bool UniqueName(string sportName)
         {
-            return !repository.Get().Any(s => s.Name == sportName) ? true : throw new DuplicatedSportNameException();
+            return !repository.Get().Any(s => s.Name == sportName);
         }
 
-        public void AddSport(string name)
+        public void ValidateSport(Sport sport)
         {
-            if (UniqueName(name))
+            if(!UniqueName(sport.Name))
             {
-                repository.Insert(new Sport() { Name = name });
-                repository.Save();
+                throw new DuplicatedSportNameException();
             }
+        }
+
+        public void AddSport(Sport sport)
+        {
+            ValidateSport(sport);
+            repository.Insert(sport);
+            repository.Save();
+            
         }
     }
 }

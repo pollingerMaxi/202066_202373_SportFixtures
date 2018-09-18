@@ -5,8 +5,7 @@ namespace SportFixtures.BusinessLogic.Interfaces
 {
     public interface ISportBusinessLogic
     {
-        bool UniqueName(string sportName);
-
-        void AddSport(string name);
+        void AddSport(Sport sport);
+        void ValidateSport(Sport sport);
     }
 }
