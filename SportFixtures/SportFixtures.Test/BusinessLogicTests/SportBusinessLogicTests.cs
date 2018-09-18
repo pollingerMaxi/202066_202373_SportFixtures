@@ -36,6 +36,24 @@ namespace SportFixtures.Test.BusinessLogicTests
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
             sportBL.AddSport(sportName);
             mockRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Once());
+            mockRepo.Verify(x => x.Save(), Times.Once());
+            Assert.IsTrue(list.First().Name == sportName);
+        }
+
+        [TestMethod]
+        public void AddSportWithDuplicatedNameTest()
+        {
+            var sportName = "Futbol";
+            var list = new List<Sport>();
+            var mockRepo = new Mock<IRepository<Sport>>();
+            mockRepo.Setup(x => x.Insert(It.IsAny<Sport>())).Callback<Sport>(x => list.Add(new Sport() { Name = sportName }));
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
+            sportBL.AddSport(sportName);
+            mockRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Once());
+            mockRepo.Verify(x => x.Save(), Times.Once());
+            sportBL.AddSport(sportName);
+            mockRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Exactly(2));
+            mockRepo.Verify(x => x.Save(), Times.Exactly(2));
             Assert.IsTrue(list.First().Name == sportName);
         }
 
