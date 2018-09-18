@@ -25,7 +25,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockRepo.Setup(un => un.Get(null, null, "")).Returns(sports);
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
             string sportName = "Futbol";
-            Assert.AreEqual(sportBL.UniqueName(sportName), true);
+            Assert.AreEqual(true, sportBL.UniqueName(sportName));
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockRepo.Setup(un => un.Get(null, null, "")).Returns(sports);
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
             string sportName = "Futbol";
-            Assert.AreEqual(sportBL.UniqueName(sportName), false);
+            Assert.AreEqual(false, sportBL.UniqueName(sportName));
         }
 
         [TestMethod]
