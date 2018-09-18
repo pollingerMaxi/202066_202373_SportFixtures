@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SportFixtures.Exceptions.SportExceptions;
 
 namespace SportFixtures.Test.BusinessLogicTests
 {
@@ -29,6 +30,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(DuplicatedSportNameException))]
         public void NotUniqueNameTest()
         {
             var sports = new List<Sport>();

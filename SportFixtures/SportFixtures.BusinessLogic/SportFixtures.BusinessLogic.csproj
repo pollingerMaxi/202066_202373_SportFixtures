@@ -4,6 +4,7 @@
     <ProjectReference Include="..\SportFixtures.Data\SportFixtures.Data.csproj" />
     <ProjectReference Include="..\SportFixtures.Data.Access\SportFixtures.Data.Access.csproj" />
     <ProjectReference Include="..\SportFixtures.Data.Repository\SportFixtures.Data.Repository.csproj" />
+    <ProjectReference Include="..\SportFixtures.Exceptions\SportFixtures.Exceptions.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
