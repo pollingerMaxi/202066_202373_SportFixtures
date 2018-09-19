@@ -29,6 +29,10 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 throw new DuplicatedSportNameException();
             }
+            if(string.IsNullOrWhiteSpace(sport.Name))
+            {
+                throw new InvalidSportNameException();
+            }
         }
 
         public void AddSport(Sport sport)

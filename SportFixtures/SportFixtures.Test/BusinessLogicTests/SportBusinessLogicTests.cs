@@ -43,7 +43,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
-        public void AddSportTest()
+        public void AddSportOkTest()
         {
             var sportName = "Futbol";
             var list = new List<Sport>();
@@ -71,6 +71,28 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Exactly(2));
             mockRepo.Verify(x => x.Save(), Times.Exactly(2));
             Assert.IsTrue(list.First().Name == sportName);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidSportNameException))]
+        public void AddSportWithoutNameTest()
+        {
+            var sportName = "";
+            var list = new List<Sport>();
+            var mockRepo = new Mock<IRepository<Sport>>();
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
+            sportBL.AddSport(new Sport() { Name = sportName });
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidSportNameException))]
+        public void AddSportNameOnlySpacesTest()
+        {
+            var sportName = "           ";
+            var list = new List<Sport>();
+            var mockRepo = new Mock<IRepository<Sport>>();
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
+            sportBL.AddSport(new Sport() { Name = sportName });
         }
 
     }
