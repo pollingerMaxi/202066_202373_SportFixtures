@@ -9,6 +9,7 @@ namespace SportFixtures.Data.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
+        public ICollection<Team> Teams { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -26,6 +27,7 @@ namespace SportFixtures.Data.Entities
         public Sport()
         {
             this.IsDeleted = false;
+            Teams = new List<Team>();
         }
 
     }

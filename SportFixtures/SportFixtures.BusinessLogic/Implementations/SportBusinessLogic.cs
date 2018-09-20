@@ -25,11 +25,11 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void ValidateSport(Sport sport)
         {
-            if(!UniqueName(sport.Name))
+            if (!UniqueName(sport.Name))
             {
                 throw new DuplicatedSportNameException();
             }
-            if(string.IsNullOrWhiteSpace(sport.Name))
+            if (string.IsNullOrWhiteSpace(sport.Name))
             {
                 throw new InvalidSportNameException();
             }
@@ -40,7 +40,14 @@ namespace SportFixtures.BusinessLogic.Implementations
             ValidateSport(sport);
             repository.Insert(sport);
             repository.Save();
-            
+
+        }
+
+        public void AddTeamToSport(Team team, Sport sport)
+        {
+            sport.Teams.Add(team);
+            repository.Update(sport);
+            repository.Save();
         }
     }
 }
