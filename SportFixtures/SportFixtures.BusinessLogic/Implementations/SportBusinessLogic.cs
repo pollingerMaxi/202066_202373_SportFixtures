@@ -45,9 +45,18 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void AddTeamToSport(Team team, Sport sport)
         {
-            sport.Teams.Add(team);
-            repository.Update(sport);
-            repository.Save();
+            if(!TeamIsInSport(team, sport)){
+                sport.Teams.Add(team);
+                repository.Update(sport);
+                repository.Save();
+            }
+            
         }
+
+        public bool TeamIsInSport(Team team, Sport sport){
+            return sport.Teams.Any(t => t.Id == team.Id);
+        }
+
+        //public bool TeamIsInAnySport(Team team){}
     }
 }

@@ -108,5 +108,25 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockRepo.Verify(x => x.Update(It.IsAny<Sport>()), Times.Once);
         }
 
+        [TestMethod]
+        public void TeamDoesntExistsOnASportList()
+        {
+            var team = new Team(){Id = '1', Name = "Nacional" };
+            var sport = new Sport() { Name = "SportName" };
+            var mockRepo = new Mock<IRepository<Sport>>();
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
+            Assert.IsTrue(!sportBL.TeamIsInSport(team, sport));
+        }
+
+        [TestMethod]
+        public void TeamExistsOnASportList()
+        {
+            var team = new Team(){Id = '1', Name = "Nacional"};
+            var sport = new Sport() { Name = "SportName"};
+            sport.Teams.Add(team);
+            var mockRepo = new Mock<IRepository<Sport>>();
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
+            Assert.IsTrue(sportBL.TeamIsInSport(team, sport));
+        }
     }
 }
