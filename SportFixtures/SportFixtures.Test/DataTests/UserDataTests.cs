@@ -65,5 +65,20 @@ namespace SportFixtures.Test.DataTests
             mockRepo.Verify(x => x.Insert(user), Times.Once);
             Assert.IsTrue(list.Count == 1);
         }
+
+        [TestMethod]
+        public void UpdateUserInRepositoryTest()
+        {
+            var mockRepo = new Mock<IRepository<User>>();
+            var user = new User() { Name = "InitialName" };
+            var list = new List<User>() { user };
+            mockRepo.Setup(r => r.Insert(user)).Callback<User>(x => list.Add(user));
+            mockRepo.Object.Insert(user);
+            user.Name = "UpdatedName";
+            mockRepo.Object.Update(user);
+            mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once);
+            mockRepo.Verify(x => x.Update(user), Times.Once);
+            Assert.IsTrue(list.Find(u => u.Name == "UpdatedName") == user);
+        }
     }
 }
