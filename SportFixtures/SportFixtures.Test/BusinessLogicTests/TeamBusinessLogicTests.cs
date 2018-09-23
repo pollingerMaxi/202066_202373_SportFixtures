@@ -17,19 +17,19 @@ namespace SportFixtures.Test.BusinessLogicTests
     public class TeamBusinessLogicTests
     {
         private Context context;
-        private IRepository<Team> repository; 
+        private IRepository<Team> repository;
 
         [TestMethod]
         public void AddTeamOkTest()
         {
-            var team = new Team(){Id = 1, Name = "Nacional"};
+            var team = new Team() { Id = 1, Name = "Nacional" };
             var teamsList = new List<Team>();
             var mockTeamRepo = new Mock<IRepository<Team>>();
             var mockSportRepo = new Mock<IRepository<Sport>>();
             mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
             ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
-            
+
             teamBL.AddTeam(team);
             mockTeamRepo.Verify(x => x.Insert(It.IsAny<Team>()), Times.Once());
             mockTeamRepo.Verify(x => x.Save(), Times.Once());
@@ -40,21 +40,21 @@ namespace SportFixtures.Test.BusinessLogicTests
         [ExpectedException(typeof(InvalidTeamNameException))]
         public void AddTeamEmptyNameShouldReturnExceptionTest()
         {
-            var team = new Team(){Id = 1, Name = ""};
+            var team = new Team() { Id = 1, Name = "" };
             var teamsList = new List<Team>();
             var mockTeamRepo = new Mock<IRepository<Team>>();
             var mockSportRepo = new Mock<IRepository<Sport>>();
             mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
             ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
-            
+
             teamBL.AddTeam(team);
         }
 
         [TestMethod]
-        public void TeamExistsByIdShouldReturnFalse()
+        public void TeamExistsByIdShouldReturnFalseTest()
         {
-            var team = new Team(){Id = 1, Name = "Nacional"};
+            var team = new Team() { Id = 1, Name = "Nacional" };
             var teamsList = new List<Team>();
             var mockTeamRepo = new Mock<IRepository<Team>>();
             var mockSportRepo = new Mock<IRepository<Sport>>();
@@ -67,9 +67,9 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
-        public void TeamExistsByIdShouldReturnTrue()
+        public void TeamExistsByIdShouldReturnTrueTest()
         {
-            var team = new Team(){Id = 1, Name = "Nacional"};
+            var team = new Team() { Id = 1, Name = "Nacional" };
             var teamsList = new List<Team>();
             var mockTeamRepo = new Mock<IRepository<Team>>();
             var mockSportRepo = new Mock<IRepository<Sport>>();
@@ -84,22 +84,21 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void UpdateSportIdOfTeamTest()
         {
-            // NO SE COMO MOCKEAR EL UPDATE
-            //var team = new Team(){Id = 1, Name = "Nacional"};
-            //var sport = new Sport(){ Id = 1, Name = "Sport"};
-            //var teamsList = new List<Team>();
-            //var mockTeamRepo = new Mock<IRepository<Team>>();
-            //var mockSportRepo = new Mock<IRepository<Sport>>();
-            //mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
-            //mockTeamRepo.Setup(x => x.Update(It.IsAny<Team>())).Callback<Team>(x => teamsList.First.Id = sport.Id));
-            //ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
-            //ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
-            //mockTeamRepo.Setup(un => un.Get(null, null, "")).Returns(teamsList);
-            //teamBL.AddTeam(team);
-            //teamBL.UpdateSportIdOfTeam(team, sport);
-            //Assert.IsTrue());
+            var team = new Team() { Id = 1, Name = "Nacional" };
+            var sport = new Sport() { Id = 1, Name = "Sport" };
+            var teamsList = new List<Team>();
+            var mockTeamRepo = new Mock<IRepository<Team>>();
+            var mockSportRepo = new Mock<IRepository<Sport>>();
+            mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
+            mockTeamRepo.Setup(x => x.Update(It.IsAny<Team>())).Callback<Team>(x => teamsList.First().Id = sport.Id);
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
+            ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
+            mockTeamRepo.Setup(un => un.Get(null, null, "")).Returns(teamsList);
+            teamBL.AddTeam(team);
+            teamBL.AddTeamToSport(team, sport);
+            mockTeamRepo.Verify(x => x.Update(team), Times.Once);
         }
-       
+
 
     }
 }

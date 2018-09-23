@@ -29,9 +29,18 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 throw new DuplicatedSportNameException();
             }
+
             if (string.IsNullOrWhiteSpace(sport.Name))
             {
                 throw new InvalidSportNameException();
+            }
+        }
+
+        public void ValidateTeamInSport(Team team, Sport sport)
+        {
+            if (sport.Teams.Any(t => t.Id == team.Id))
+            {
+                throw new TeamAlreadyInSportException();
             }
         }
 
@@ -45,15 +54,14 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void AddTeamToSport(Team team, Sport sport)
         {
-            if(!TeamIsInSport(team, sport)){
-                sport.Teams.Add(team);
-                repository.Update(sport);
-                repository.Save();
-            }
-            
+            ValidateTeamInSport(team, sport);
+            sport.Teams.Add(team);
+            repository.Update(sport);
+            repository.Save();
         }
 
-        public bool TeamIsInSport(Team team, Sport sport){
+        public bool TeamIsInSport(Team team, Sport sport)
+        {
             return sport.Teams.Any(t => t.Id == team.Id);
         }
 

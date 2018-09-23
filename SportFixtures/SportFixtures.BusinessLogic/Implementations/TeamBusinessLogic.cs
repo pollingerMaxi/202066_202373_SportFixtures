@@ -13,6 +13,7 @@ namespace SportFixtures.BusinessLogic.Implementations
     {
         private IRepository<Team> repository;
         private ISportBusinessLogic sportBL;
+
         public TeamBusinessLogic(IRepository<Team> repository, ISportBusinessLogic sportBl)
         {
             this.repository = repository;
@@ -25,14 +26,17 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Insert(team);
             repository.Save();
         }
+
         public bool TeamExistsById(int teamId)
         {
             return repository.Get().Any(t => t.Id == teamId);
         }
-       // private bool UniqueName(string teamName)
-       // {
-       //     return !repository.Get().Any(t => t.Name == teamName);
-       // }
+
+        // private bool UniqueName(string teamName)
+        // {
+        //     return !repository.Get().Any(t => t.Name == teamName);
+        // }
+
         public void ValidateTeam(Team team)
         {
             if (string.IsNullOrWhiteSpace(team.Name))
@@ -40,6 +44,7 @@ namespace SportFixtures.BusinessLogic.Implementations
                 throw new InvalidTeamNameException();
             }
         }
+
         public void AddTeamToSport(Team team, Sport sport)
         {
             sportBL.AddTeamToSport(team, sport);
