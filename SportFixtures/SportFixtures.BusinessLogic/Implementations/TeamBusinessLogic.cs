@@ -54,6 +54,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         private void UpdateSportIdOfTeam(Team team, Sport sport)
         {
             repository.Update(team);
+            repository.Save();
         }
     }
 }

@@ -59,12 +59,5 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Update(sport);
             repository.Save();
         }
-
-        public bool TeamIsInSport(Team team, Sport sport)
-        {
-            return sport.Teams.Any(t => t.Id == team.Id);
-        }
-
-        //public bool TeamIsInAnySport(Team team){}
     }
 }
