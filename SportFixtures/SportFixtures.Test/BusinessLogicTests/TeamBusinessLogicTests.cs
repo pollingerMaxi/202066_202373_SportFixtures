@@ -95,7 +95,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
             mockTeamRepo.Setup(un => un.Get(null, null, "")).Returns(teamsList);
             teamBL.AddTeam(team);
-            teamBL.AddTeamToSport(team, sport);
+            teamBL.AddTeamToSport(team);
             mockTeamRepo.Verify(x => x.Update(team), Times.Once);
         }
 

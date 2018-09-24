@@ -98,14 +98,16 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void AddTeamToSportOkTest()
         {
-            var team = new Team();
-            var sport = new Sport() { Name = "SportName" };
-            var list = new List<Sport>();
+            var team = new Team() { Name = "TeamName", SportId = 34 };
+            var sport = new Sport() { Name = "SportName", Id = 34 };
+            var list = new List<Sport>() { sport };
             var mockRepo = new Mock<IRepository<Sport>>();
-            mockRepo.Setup(r => r.Insert(It.IsAny<Sport>())).Callback<Sport>(x => list.Add(sport));
+            mockRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
+            mockRepo.Setup(r => r.Update(It.IsAny<Sport>())).Callback<Sport>(x => list.First().Teams.Add(team));
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
-            sportBL.AddTeamToSport(team, sport);
-            mockRepo.Verify(x => x.Update(It.IsAny<Sport>()), Times.Once);
+            sportBL.AddTeamToSport(team);
+            mockRepo.Verify(r => r.GetById(team.SportId), Times.Once);
+            mockRepo.Verify(r => r.Update(It.IsAny<Sport>()), Times.Once);
         }
 
         [TestMethod]
@@ -118,8 +120,9 @@ namespace SportFixtures.Test.BusinessLogicTests
             var mockTeamRepo = new Mock<IRepository<Team>>();
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
             ITeamBusinessLogic teamBl = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
+            mockSportRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
             mockSportRepo.Setup(r => r.Update(It.IsAny<Sport>())).Callback<Sport>(x => sportsList.First().Teams.Add(team));
-            sportBL.AddTeamToSport(team, sport);
+            sportBL.AddTeamToSport(team);
             mockSportRepo.Verify(x => x.Update(sport), Times.Once);
             mockSportRepo.Verify(x => x.Save(), Times.Once);
         }
@@ -135,9 +138,10 @@ namespace SportFixtures.Test.BusinessLogicTests
             var mockTeamRepo = new Mock<IRepository<Team>>();
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
             ITeamBusinessLogic teamBl = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
+            mockSportRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
             mockSportRepo.Setup(r => r.Update(It.IsAny<Sport>())).Callback<Sport>(x => sportsList.First().Teams.Add(team));
-            sportBL.AddTeamToSport(team, sport);
-            sportBL.AddTeamToSport(team, sport);
+            sportBL.AddTeamToSport(team);
+            sportBL.AddTeamToSport(team);
             mockSportRepo.Verify(x => x.Update(sport), Times.Exactly(2));
             mockSportRepo.Verify(x => x.Save(), Times.Exactly(2));
         }

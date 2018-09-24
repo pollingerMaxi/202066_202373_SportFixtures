@@ -36,9 +36,9 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
         }
 
-        public void ValidateTeamInSport(Team team, Sport sport)
+        private void ValidateTeamInSport(Team team, Sport sport)
         {
-            if (sport.Teams.Any(t => t.Id == team.Id))
+            if (sport.Teams.Any(t => t.Name == team.Name))
             {
                 throw new TeamAlreadyInSportException();
             }
@@ -52,12 +52,23 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         }
 
-        public void AddTeamToSport(Team team, Sport sport)
+        public void AddTeamToSport(Team team)
         {
+            var sport = GetSportById(team.SportId);
             ValidateTeamInSport(team, sport);
             sport.Teams.Add(team);
             repository.Update(sport);
             repository.Save();
+        }
+
+        private Sport GetSportById(int sportId)
+        {
+            var sport = repository.GetById(sportId);
+            if (sport == null)
+            {
+                throw new SportDoesNotExistException();
+            }
+            return sport;
         }
     }
 }

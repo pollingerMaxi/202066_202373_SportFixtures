@@ -7,6 +7,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
     {
         void AddTeam(Team team);
         bool TeamExistsById(int teamId);
-        void AddTeamToSport(Team team, Sport sport);
+        void AddTeamToSport(Team team);
     }
 }
