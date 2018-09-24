@@ -6,6 +6,7 @@ using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SportFixtures.Test.DataTests
@@ -72,13 +73,21 @@ namespace SportFixtures.Test.DataTests
             var mockRepo = new Mock<IRepository<User>>();
             var user = new User() { Name = "InitialName" };
             var list = new List<User>() { user };
-            mockRepo.Setup(r => r.Insert(user)).Callback<User>(x => list.Add(user));
-            mockRepo.Object.Insert(user);
             user.Name = "UpdatedName";
             mockRepo.Object.Update(user);
-            mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once);
             mockRepo.Verify(x => x.Update(user), Times.Once);
             Assert.IsTrue(list.Find(u => u.Name == "UpdatedName") == user);
+        }
+
+        [TestMethod]
+        public void DeleteUserByIdTest()
+        {
+            var user = new User();
+            repository.Insert(user);
+            repository.Save();
+            repository.Delete(user.Id);
+            repository.Save();
+            Assert.IsTrue(repository.Get().Count() == 0);
         }
     }
 }
