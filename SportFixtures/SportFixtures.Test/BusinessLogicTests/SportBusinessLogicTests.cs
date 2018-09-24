@@ -141,5 +141,30 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockSportRepo.Verify(x => x.Update(sport), Times.Exactly(2));
             mockSportRepo.Verify(x => x.Save(), Times.Exactly(2));
         }
+
+        [TestMethod]
+        public void EqualsShouldBeTrueTest()
+        {
+            var sportName = "SportName";
+            var firstSport = new Sport() { Name = sportName };
+            var secondSport = new Sport() { Name = sportName };
+            Assert.AreEqual(firstSport, secondSport);
+        }
+
+        [TestMethod]
+        public void EqualsShouldBeFalseTest()
+        {
+            var firstSport = new Sport() { Name = "SomeName" };
+            var secondSport = new Sport() { Name = "SomeOtherName" };
+            Assert.AreNotEqual(firstSport, secondSport);
+        }
+
+        [TestMethod]
+        public void EqualsShouldBeFalse2Test()
+        {
+            var firstSport = new Sport() { Name = "SomeName" };
+            var secondSport = new Sport() { Name = "SomeOtherName" };
+            Assert.IsFalse(secondSport.Equals(null));
+        }
     }
 }
