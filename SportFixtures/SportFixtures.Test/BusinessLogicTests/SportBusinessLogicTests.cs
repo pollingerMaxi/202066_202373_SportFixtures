@@ -170,5 +170,20 @@ namespace SportFixtures.Test.BusinessLogicTests
             var secondSport = new Sport() { Name = "SomeOtherName" };
             Assert.IsFalse(secondSport.Equals(null));
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(SportDoesNotExistException))]
+        public void AddTeamToSportShouldReturnExceptionTest()
+        {
+            var team = new Team() { Name = "TeamName", SportId = 4 };
+            var sport = new Sport() { Name = "SportName", Id = 34 };
+            var list = new List<Sport>() { sport };
+            var mockRepo = new Mock<IRepository<Sport>>();
+            mockRepo.Setup(r => r.Update(It.IsAny<Sport>())).Callback<Sport>(x => list.First().Teams.Add(team));
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
+            sportBL.AddTeamToSport(team);
+            mockRepo.Verify(r => r.GetById(team.SportId), Times.Once);
+            mockRepo.Verify(r => r.Update(It.IsAny<Sport>()), Times.Once);
+        }
     }
 }
