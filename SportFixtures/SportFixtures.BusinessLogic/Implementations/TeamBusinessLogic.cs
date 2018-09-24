@@ -28,12 +28,22 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
-        public void ValidateTeam(Team team)
+        private void ValidateTeam(Team team)
         {
             if (string.IsNullOrWhiteSpace(team.Name))
             {
                 throw new InvalidTeamNameException();
             }
+            if (!ValidatePhotoPath(team.PhotoPath))
+            {
+                throw new InvalidPhotoPathException();
+            }
+        }
+
+        private bool ValidatePhotoPath(String path)
+        {
+            Regex r = new Regex(@"^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(jpg|gif|jpeg|png)$");
+            return r.IsMatch(path);
         }
 
         private void AddTeamToSport(Team team)

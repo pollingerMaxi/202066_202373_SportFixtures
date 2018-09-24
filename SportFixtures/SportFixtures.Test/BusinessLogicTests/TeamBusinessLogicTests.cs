@@ -22,7 +22,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void AddTeamOkTest()
         {
-            var team = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            var team = new Team() { Id = 1, Name = "Nacional", SportId = 1, PhotoPath = "path/photo.png" };
             var sport = new Sport() { Id = 1, Name = "SportName" };
             var teamsList = new List<Team>();
             var mockTeamRepo = new Mock<IRepository<Team>>();
@@ -42,6 +42,34 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void AddTeamEmptyNameShouldReturnExceptionTest()
         {
             var team = new Team() { Id = 1, Name = "" };
+            var teamsList = new List<Team>();
+            var mockTeamRepo = new Mock<IRepository<Team>>();
+            var mockSportRepo = new Mock<IRepository<Sport>>();
+            mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
+            ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
+            teamBL.AddTeam(team);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidPhotoPathException))]
+        public void AddTeamInvalidPhotoPathShouldReturnExceptionTest()
+        {
+            var team = new Team() { Id = 1, Name = "TeamName", PhotoPath = "!230#_skdpath" };
+            var teamsList = new List<Team>();
+            var mockTeamRepo = new Mock<IRepository<Team>>();
+            var mockSportRepo = new Mock<IRepository<Sport>>();
+            mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
+            ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
+            teamBL.AddTeam(team);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidPhotoPathException))]
+        public void AddTeamValidPhotoPathTest()
+        {
+            var team = new Team() { Id = 1, Name = "TeamName", PhotoPath = "path/photo.jpg" };
             var teamsList = new List<Team>();
             var mockTeamRepo = new Mock<IRepository<Team>>();
             var mockSportRepo = new Mock<IRepository<Sport>>();
