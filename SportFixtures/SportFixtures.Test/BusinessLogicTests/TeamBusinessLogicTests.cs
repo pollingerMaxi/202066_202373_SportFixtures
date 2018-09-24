@@ -22,14 +22,15 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void AddTeamOkTest()
         {
-            var team = new Team() { Id = 1, Name = "Nacional" };
+            var team = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            var sport = new Sport() { Id = 1, Name = "SportName" };
             var teamsList = new List<Team>();
             var mockTeamRepo = new Mock<IRepository<Team>>();
             var mockSportRepo = new Mock<IRepository<Sport>>();
             mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
             ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
-
+            mockSportRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
             teamBL.AddTeam(team);
             mockTeamRepo.Verify(x => x.Insert(It.IsAny<Team>()), Times.Once());
             mockTeamRepo.Verify(x => x.Save(), Times.Once());
@@ -47,58 +48,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
             ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
-
             teamBL.AddTeam(team);
         }
-
-        [TestMethod]
-        public void TeamExistsByIdShouldReturnFalseTest()
-        {
-            var team = new Team() { Id = 1, Name = "Nacional" };
-            var teamsList = new List<Team>();
-            var mockTeamRepo = new Mock<IRepository<Team>>();
-            var mockSportRepo = new Mock<IRepository<Sport>>();
-            mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
-            ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
-            ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
-            mockTeamRepo.Setup(un => un.Get(null, null, "")).Returns(teamsList);
-            teamBL.AddTeam(team);
-            Assert.IsTrue(!teamBL.TeamExistsById(2));
-        }
-
-        [TestMethod]
-        public void TeamExistsByIdShouldReturnTrueTest()
-        {
-            var team = new Team() { Id = 1, Name = "Nacional" };
-            var teamsList = new List<Team>();
-            var mockTeamRepo = new Mock<IRepository<Team>>();
-            var mockSportRepo = new Mock<IRepository<Sport>>();
-            mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
-            ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
-            ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
-            mockTeamRepo.Setup(un => un.Get(null, null, "")).Returns(teamsList);
-            teamBL.AddTeam(team);
-            Assert.IsTrue(teamBL.TeamExistsById(team.Id));
-        }
-
-        [TestMethod]
-        public void UpdateSportIdOfTeamTest()
-        {
-            var team = new Team() { Id = 1, Name = "Nacional" };
-            var sport = new Sport() { Id = 1, Name = "Sport" };
-            var teamsList = new List<Team>();
-            var mockTeamRepo = new Mock<IRepository<Team>>();
-            var mockSportRepo = new Mock<IRepository<Sport>>();
-            mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
-            mockTeamRepo.Setup(x => x.Update(It.IsAny<Team>())).Callback<Team>(x => teamsList.First().Id = sport.Id);
-            ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
-            ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
-            mockTeamRepo.Setup(un => un.Get(null, null, "")).Returns(teamsList);
-            teamBL.AddTeam(team);
-            teamBL.AddTeamToSport(team);
-            mockTeamRepo.Verify(x => x.Update(team), Times.Once);
-        }
-
-
     }
 }

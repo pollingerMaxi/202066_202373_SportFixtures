@@ -28,16 +28,6 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
-        public bool TeamExistsById(int teamId)
-        {
-            return repository.Get().Any(t => t.Id == teamId);
-        }
-
-        // private bool UniqueName(string teamName)
-        // {
-        //     return !repository.Get().Any(t => t.Name == teamName);
-        // }
-
         public void ValidateTeam(Team team)
         {
             if (string.IsNullOrWhiteSpace(team.Name))
@@ -46,7 +36,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
         }
 
-        public void AddTeamToSport(Team team)
+        private void AddTeamToSport(Team team)
         {
             sportBL.AddTeamToSport(team);
         }
