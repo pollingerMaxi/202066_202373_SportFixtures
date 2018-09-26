@@ -14,6 +14,8 @@ namespace SportFixtures.Test.BusinessLogicTests
     [TestClass]
     public class UserBusinessLogicTests
     {
+        private const dynamic NO_BUSINESS_LOGIC = null;
+
         [TestMethod]
         public void AddUserOkTest()
         {
@@ -21,7 +23,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var list = new List<User>();
             var mockRepo = new Mock<IRepository<User>>();
             mockRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => list.Add(user));
-            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object);
+            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object, NO_BUSINESS_LOGIC);
             userBL.AddUser(user);
             mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
             mockRepo.Verify(x => x.Save(), Times.Once());
@@ -34,7 +36,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var list = new List<User>();
             var mockRepo = new Mock<IRepository<User>>();
             mockRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => list.Add(user));
-            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object);
+            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object, NO_BUSINESS_LOGIC);
             userBL.AddUser(user);
             mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
             mockRepo.Verify(x => x.Save(), Times.Once());
@@ -47,7 +49,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var list = new List<User>();
             var mockRepo = new Mock<IRepository<User>>();
             mockRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => list.Add(user));
-            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object);
+            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object, NO_BUSINESS_LOGIC);
             userBL.AddUser(user);
             mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
             mockRepo.Verify(x => x.Save(), Times.Once());
@@ -61,7 +63,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var list = new List<User>();
             var mockRepo = new Mock<IRepository<User>>();
             mockRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => list.Add(user));
-            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object);
+            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object, NO_BUSINESS_LOGIC);
             userBL.AddUser(user);
             mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
             mockRepo.Verify(x => x.Save(), Times.Once());
@@ -75,7 +77,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var list = new List<User>();
             var mockRepo = new Mock<IRepository<User>>();
             mockRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => list.Add(user));
-            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object);
+            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object, NO_BUSINESS_LOGIC);
             userBL.AddUser(user);
             mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
             mockRepo.Verify(x => x.Save(), Times.Once());
@@ -89,7 +91,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var list = new List<User>();
             var mockRepo = new Mock<IRepository<User>>();
             mockRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => list.Add(user));
-            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object);
+            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object, NO_BUSINESS_LOGIC);
             userBL.AddUser(user);
             mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
             mockRepo.Verify(x => x.Save(), Times.Once());
@@ -103,10 +105,41 @@ namespace SportFixtures.Test.BusinessLogicTests
             var list = new List<User>();
             var mockRepo = new Mock<IRepository<User>>();
             mockRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => list.Add(user));
-            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object);
+            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object, NO_BUSINESS_LOGIC);
             userBL.AddUser(user);
             mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
             mockRepo.Verify(x => x.Save(), Times.Once());
+        }
+
+        [TestMethod]
+        public void FollowTeamTest()
+        {
+            var user = new User() { Name = "Name", Username = "nick33", LastName = "surname", Password = "hash", Email = "a@a.com" };
+            var team = new Team();
+            var mockUserRepo = new Mock<IRepository<User>>();
+            var mockTeamRepo = new Mock<IRepository<Team>>();
+            var teamBL = new TeamBusinessLogic(mockTeamRepo.Object, NO_BUSINESS_LOGIC);
+            var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL);
+            mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
+            mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(user);
+            userBL.FollowTeam(user, team);
+            mockTeamRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
+            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
+            Assert.IsTrue(user.FollowedTeams.Contains(team));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserDoesNotExistException))]
+        public void FollowTeamWithInvalidUserTest()
+        {
+            var user = new User() { Name = "Name", Username = "nick33", LastName = "surname", Password = "hash", Email = "a@a.com" };
+            var team = new Team();
+            var mockUserRepo = new Mock<IRepository<User>>();
+            var mockTeamRepo = new Mock<IRepository<Team>>();
+            var teamBL = new TeamBusinessLogic(mockTeamRepo.Object, NO_BUSINESS_LOGIC);
+            var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL);
+            mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
+            userBL.FollowTeam(user, team);
         }
     }
 }

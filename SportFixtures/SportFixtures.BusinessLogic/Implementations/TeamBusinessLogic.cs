@@ -59,12 +59,12 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void Update(Team team)
         {
-            checkIfTeamExists(team);           
+            CheckIfTeamExists(team);           
             repository.Update(team);
             repository.Save();
         }
 
-        private void checkIfTeamExists(Team team)
+        public void CheckIfTeamExists(Team team)
         {
             if(repository.GetById(team.Id) == null){
                 throw new TeamDoesNotExistsException();
@@ -73,7 +73,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void Delete(Team team)
         {
-            checkIfTeamExists(team); 
+            CheckIfTeamExists(team); 
             repository.Delete(team);
             repository.Save();
         }
