@@ -78,11 +78,6 @@ namespace SportFixtures.Data.Repository
             context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
-        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
-        {
-            throw new NotImplementedException();
-        }
-
         public void Save()
         {
             context.SaveChanges();
