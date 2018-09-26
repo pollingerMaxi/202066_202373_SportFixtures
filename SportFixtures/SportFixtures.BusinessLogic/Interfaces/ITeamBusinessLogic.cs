@@ -7,5 +7,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
     {
         void AddTeam(Team team);
         void UpdateTeam(Team team);
+        void DeleteTeam(Team team);
     }
 }

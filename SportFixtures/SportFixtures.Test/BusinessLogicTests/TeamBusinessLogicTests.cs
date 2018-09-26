@@ -101,5 +101,27 @@ namespace SportFixtures.Test.BusinessLogicTests
             teamBL.UpdateTeam(team);
             mockTeamRepo.Verify(x => x.Update(It.IsAny<Team>()), Times.Once());
         }
+
+        public void DeleteTeamOkTest()
+        {
+            var team = new Team() { Id = 1, Name = "TeamName" };
+            var sport = new Sport() { Id = 1, Name = "SportName" };
+            var teamsList = new List<Team>();
+            var mockTeamRepo = new Mock<IRepository<Team>>();
+            var mockSportRepo = new Mock<IRepository<Sport>>();
+            mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
+            mockTeamRepo.Setup(x => x.Update(It.IsAny<Team>())).Callback<Team>(x => teamsList.Remove(team));
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
+            ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
+            mockSportRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
+            mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
+            teamBL.AddTeam(team);
+            teamBL.DeleteTeam(team);
+            mockTeamRepo.Verify(x => x.Insert(It.IsAny<Team>()), Times.Once());
+            mockTeamRepo.Verify(x => x.Delete(It.IsAny<Team>()), Times.Once());
+            mockTeamRepo.Verify(x => x.Save(), Times.AtLeastOnce());
+            Assert.IsTrue(teamsList.Count() == 0);
+        }
+
     }
 }

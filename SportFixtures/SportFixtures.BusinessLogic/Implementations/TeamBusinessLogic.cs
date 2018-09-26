@@ -70,5 +70,12 @@ namespace SportFixtures.BusinessLogic.Implementations
                 throw new TeamDoesNotExistsException();
             }
         }
+
+        public void DeleteTeam(Team team)
+        {
+            checkIfTeamExists(team); 
+            repository.Delete(team);
+            repository.Save();
+        }
     }
 }
