@@ -9,5 +9,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void ValidateSport(Sport sport);
         void AddTeamToSport(Team team);
         void Update(Sport sport);
+        void Delete(Sport sport);
     }
 }

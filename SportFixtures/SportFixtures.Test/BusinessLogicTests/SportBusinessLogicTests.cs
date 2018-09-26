@@ -224,5 +224,24 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockRepo.Verify(x => x.Save(), Times.AtLeastOnce());
             Assert.IsTrue(list.First().Name == "UpdatedName");
         }
+
+        [TestMethod]
+        public void DeleteSportOkTest()
+        {
+            Sport sport = new Sport(){Id = 1, Name = "Futbol"};
+            var list = new List<Sport>();
+            var mockRepo = new Mock<IRepository<Sport>>();
+            mockRepo.Setup(x => x.Insert(It.IsAny<Sport>())).Callback<Sport>(x => list.Add(sport));
+            mockRepo.Setup(x => x.Delete(It.IsAny<Sport>())).Callback<Sport>(x => list.Remove(sport));
+            mockRepo.Setup(x => x.Get(null, null, "")).Returns(list);
+            mockRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
+            sportBL.AddSport(sport);
+            sportBL.Delete(sport);
+            mockRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Once());
+            mockRepo.Verify(x => x.Delete(It.IsAny<Sport>()), Times.Once());
+            mockRepo.Verify(x => x.Save(), Times.AtLeastOnce());
+            Assert.IsTrue(list.Count() == 0);
+        }
     }
 }
