@@ -59,9 +59,16 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void UpdateTeam(Team team)
         {
-             repository.Update(team);
-             repository.Save();
+            checkIfTeamExists(team);           
+            repository.Update(team);
+            repository.Save();
         }
 
+        private void checkIfTeamExists(Team team)
+        {
+            if(repository.GetById(team.Id) == null){
+                throw new TeamDoesNotExistsException();
+            }
+        }
     }
 }

@@ -78,13 +78,28 @@ namespace SportFixtures.Test.BusinessLogicTests
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
             ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
             mockSportRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
+            mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
             teamBL.AddTeam(team);
             team.Name = "UpdatedName";
             teamBL.UpdateTeam(team);
             mockTeamRepo.Verify(x => x.Insert(It.IsAny<Team>()), Times.Once());
             mockTeamRepo.Verify(x => x.Update(It.IsAny<Team>()), Times.Once());
-            mockTeamRepo.Verify(x => x.Save(), Times.Once());
+            mockTeamRepo.Verify(x => x.Save(), Times.AtLeastOnce());
             Assert.IsTrue(teamsList.First().Name == "UpdatedName");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamDoesNotExistsException))]
+        public void UpdateTeamNameShouldReturnExceptionTest()
+        {
+            var team = new Team() { Id = 1, Name = "TeamName" };
+            var mockTeamRepo = new Mock<IRepository<Team>>();
+            var mockSportRepo = new Mock<IRepository<Sport>>();
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
+            ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
+            team.Name = "UpdatedName";
+            teamBL.UpdateTeam(team);
+            mockTeamRepo.Verify(x => x.Update(It.IsAny<Team>()), Times.Once());
         }
     }
 }
