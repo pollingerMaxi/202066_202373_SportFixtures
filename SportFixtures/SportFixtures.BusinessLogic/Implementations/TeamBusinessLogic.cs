@@ -44,11 +44,12 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             bool pathIsValid = true;
 
-            if (!string.IsNullOrWhiteSpace(path)){
+            if (!string.IsNullOrWhiteSpace(path))
+            {
                 Regex r = new Regex(@"^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(jpg|gif|jpeg|png)$");
                 pathIsValid = r.IsMatch(path);
             }
-            
+
             return pathIsValid;
         }
 
@@ -59,21 +60,28 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void Update(Team team)
         {
-            checkIfTeamExists(team);           
+            CheckIfTeamExists(team);
+            ValidateTeam(team);
             repository.Update(team);
             repository.Save();
         }
 
-        private void checkIfTeamExists(Team team)
+        private int GetTeamSportId(Team team)
         {
-            if(repository.GetById(team.Id) == null){
+            return repository.GetById(team.Id).SportId;
+        }
+
+        public void CheckIfTeamExists(Team team)
+        {
+            if (repository.GetById(team.Id) == null)
+            {
                 throw new TeamDoesNotExistsException();
             }
         }
 
         public void Delete(Team team)
         {
-            checkIfTeamExists(team); 
+            CheckIfTeamExists(team);
             repository.Delete(team);
             repository.Save();
         }

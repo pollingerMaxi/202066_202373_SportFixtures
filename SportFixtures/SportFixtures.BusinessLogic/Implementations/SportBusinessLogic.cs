@@ -83,11 +83,12 @@ namespace SportFixtures.BusinessLogic.Implementations
                 throw new SportDoesNotExistException();
             }
         }
-
+        
         public void Delete(Sport sport){
             CheckIfSportExists(sport);
             repository.Delete(sport);
             repository.Save();
         }
+
     }
 }
