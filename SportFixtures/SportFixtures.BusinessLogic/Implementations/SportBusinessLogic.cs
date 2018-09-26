@@ -23,7 +23,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             return !repository.Get().Any(s => s.Name == sportName);
         }
 
-        public void ValidateSport(Sport sport)
+        private void ValidateSport(Sport sport)
         {
             if (!UniqueName(sport.Name))
             {
@@ -44,7 +44,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
         }
 
-        public void AddSport(Sport sport)
+        public void Add(Sport sport)
         {
             ValidateSport(sport);
             repository.Insert(sport);
