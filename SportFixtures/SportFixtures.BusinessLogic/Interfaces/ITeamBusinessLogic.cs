@@ -6,6 +6,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
     public interface ITeamBusinessLogic
     {
         void AddTeam(Team team);
-        
+        void UpdateTeam(Team team);
     }
 }

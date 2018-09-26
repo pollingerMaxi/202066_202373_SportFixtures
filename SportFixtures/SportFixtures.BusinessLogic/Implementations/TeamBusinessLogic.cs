@@ -42,13 +42,26 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         private bool ValidatePhotoPath(String path)
         {
-            Regex r = new Regex(@"^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(jpg|gif|jpeg|png)$");
-            return r.IsMatch(path);
+            bool pathIsValid = true;
+
+            if (!string.IsNullOrWhiteSpace(path)){
+                Regex r = new Regex(@"^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(jpg|gif|jpeg|png)$");
+                pathIsValid = r.IsMatch(path);
+            }
+            
+            return pathIsValid;
         }
 
         private void AddTeamToSport(Team team)
         {
             sportBL.AddTeamToSport(team);
         }
+
+        public void UpdateTeam(Team team)
+        {
+             repository.Update(team);
+             repository.Save();
+        }
+
     }
 }

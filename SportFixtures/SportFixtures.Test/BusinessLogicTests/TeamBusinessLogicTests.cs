@@ -22,7 +22,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void AddTeamOkTest()
         {
-            var team = new Team() { Id = 1, Name = "Nacional", SportId = 1, PhotoPath = "c:\\path\\photo.jpg" };
+            var team = new Team() { Id = 1, Name = "Nacional", SportId = 1};
             var sport = new Sport() { Id = 1, Name = "SportName" };
             var teamsList = new List<Team>();
             var mockTeamRepo = new Mock<IRepository<Team>>();
@@ -63,6 +63,28 @@ namespace SportFixtures.Test.BusinessLogicTests
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
             ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
             teamBL.AddTeam(team);
+        }
+
+        [TestMethod]
+        public void UpdateTeamNameOkTest()
+        {
+            var team = new Team() { Id = 1, Name = "TeamName" };
+            var sport = new Sport() { Id = 1, Name = "SportName" };
+            var teamsList = new List<Team>();
+            var mockTeamRepo = new Mock<IRepository<Team>>();
+            var mockSportRepo = new Mock<IRepository<Sport>>();
+            mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
+            mockTeamRepo.Setup(x => x.Update(It.IsAny<Team>())).Callback<Team>(x => teamsList.First().Name = team.Name);
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
+            ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
+            mockSportRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
+            teamBL.AddTeam(team);
+            team.Name = "UpdatedName";
+            teamBL.UpdateTeam(team);
+            mockTeamRepo.Verify(x => x.Insert(It.IsAny<Team>()), Times.Once());
+            mockTeamRepo.Verify(x => x.Update(It.IsAny<Team>()), Times.Once());
+            mockTeamRepo.Verify(x => x.Save(), Times.Once());
+            Assert.IsTrue(teamsList.First().Name == "UpdatedName");
         }
     }
 }
