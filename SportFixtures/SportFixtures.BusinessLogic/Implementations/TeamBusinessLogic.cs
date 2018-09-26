@@ -66,11 +66,6 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
-        private int GetTeamSportId(Team team)
-        {
-            return repository.GetById(team.Id).SportId;
-        }
-
         public void CheckIfTeamExists(Team team)
         {
             if (repository.GetById(team.Id) == null)
