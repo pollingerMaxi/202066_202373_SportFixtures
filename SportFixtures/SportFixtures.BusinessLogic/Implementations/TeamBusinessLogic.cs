@@ -20,40 +20,61 @@ namespace SportFixtures.BusinessLogic.Implementations
             this.sportBL = sportBl;
         }
 
-        public void AddTeam(Team team)
+        public void Add(Team team)
         {
             ValidateTeam(team);
             repository.Insert(team);
+            AddTeamToSport(team);
             repository.Save();
         }
 
-        public bool TeamExistsById(int teamId)
-        {
-            return repository.Get().Any(t => t.Id == teamId);
-        }
-
-        // private bool UniqueName(string teamName)
-        // {
-        //     return !repository.Get().Any(t => t.Name == teamName);
-        // }
-
-        public void ValidateTeam(Team team)
+        private void ValidateTeam(Team team)
         {
             if (string.IsNullOrWhiteSpace(team.Name))
             {
                 throw new InvalidTeamNameException();
             }
+            if (!ValidatePhotoPath(team.PhotoPath))
+            {
+                throw new InvalidPhotoPathException();
+            }
         }
 
-        public void AddTeamToSport(Team team, Sport sport)
+        private bool ValidatePhotoPath(String path)
         {
-            sportBL.AddTeamToSport(team, sport);
-            this.UpdateSportIdOfTeam(team, sport);
+            bool pathIsValid = true;
+
+            if (!string.IsNullOrWhiteSpace(path)){
+                Regex r = new Regex(@"^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(jpg|gif|jpeg|png)$");
+                pathIsValid = r.IsMatch(path);
+            }
+            
+            return pathIsValid;
         }
 
-        private void UpdateSportIdOfTeam(Team team, Sport sport)
+        private void AddTeamToSport(Team team)
         {
+            sportBL.AddTeamToSport(team);
+        }
+
+        public void Update(Team team)
+        {
+            checkIfTeamExists(team);           
             repository.Update(team);
+            repository.Save();
+        }
+
+        private void checkIfTeamExists(Team team)
+        {
+            if(repository.GetById(team.Id) == null){
+                throw new TeamDoesNotExistsException();
+            }
+        }
+
+        public void Delete(Team team)
+        {
+            checkIfTeamExists(team); 
+            repository.Delete(team);
             repository.Save();
         }
     }

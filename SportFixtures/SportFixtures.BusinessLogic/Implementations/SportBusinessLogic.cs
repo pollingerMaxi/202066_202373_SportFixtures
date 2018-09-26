@@ -23,7 +23,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             return !repository.Get().Any(s => s.Name == sportName);
         }
 
-        public void ValidateSport(Sport sport)
+        private void ValidateSport(Sport sport)
         {
             if (!UniqueName(sport.Name))
             {
@@ -36,15 +36,15 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
         }
 
-        public void ValidateTeamInSport(Team team, Sport sport)
+        private void ValidateTeamInSport(Team team, Sport sport)
         {
-            if (sport.Teams.Any(t => t.Id == team.Id))
+            if (sport.Teams.Any(t => t.Name == team.Name))
             {
                 throw new TeamAlreadyInSportException();
             }
         }
 
-        public void AddSport(Sport sport)
+        public void Add(Sport sport)
         {
             ValidateSport(sport);
             repository.Insert(sport);
@@ -52,11 +52,41 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         }
 
-        public void AddTeamToSport(Team team, Sport sport)
+        public void AddTeamToSport(Team team)
         {
+            var sport = GetSportById(team.SportId);
             ValidateTeamInSport(team, sport);
             sport.Teams.Add(team);
             repository.Update(sport);
+            repository.Save();
+        }
+
+        private Sport GetSportById(int sportId)
+        {
+            var sport = repository.GetById(sportId);
+            if (sport == null)
+            {
+                throw new SportDoesNotExistException();
+            }
+            return sport;
+        }
+        
+        public void Update(Sport sport){
+            CheckIfSportExists(sport);
+            repository.Update(sport);
+            repository.Save();
+        }
+
+        private void CheckIfSportExists(Sport sport)
+        {
+            if(repository.GetById(sport.Id) == null){
+                throw new SportDoesNotExistException();
+            }
+        }
+
+        public void Delete(Sport sport){
+            CheckIfSportExists(sport);
+            repository.Delete(sport);
             repository.Save();
         }
     }
