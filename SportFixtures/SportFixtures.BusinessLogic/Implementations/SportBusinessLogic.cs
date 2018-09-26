@@ -71,5 +71,17 @@ namespace SportFixtures.BusinessLogic.Implementations
             return sport;
         }
         
+        public void Update(Sport sport){
+            CheckIfSportExists(sport);
+            repository.Update(sport);
+            repository.Save();
+        }
+
+        private void CheckIfSportExists(Sport sport)
+        {
+            if(repository.GetById(sport.Id) == null){
+                throw new SportDoesNotExistException();
+            }
+        }
     }
 }

@@ -185,5 +185,44 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockRepo.Verify(r => r.GetById(team.SportId), Times.Once);
             mockRepo.Verify(r => r.Update(It.IsAny<Sport>()), Times.Once);
         }
+
+        [TestMethod]
+        public void UpdateSportOkTest()
+        {
+            Sport sport = new Sport(){Id = 1, Name = "Futbol"};
+            var list = new List<Sport>();
+            var mockRepo = new Mock<IRepository<Sport>>();
+            mockRepo.Setup(x => x.Insert(It.IsAny<Sport>())).Callback<Sport>(x => list.Add(sport));
+            mockRepo.Setup(x => x.Update(It.IsAny<Sport>())).Callback<Sport>(x => list.First().Name = sport.Name);
+            mockRepo.Setup(x => x.Get(null, null, "")).Returns(list);
+            mockRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
+            sportBL.AddSport(sport);
+            sport.Name = "UpdatedName";
+            sportBL.Update(sport);
+            mockRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Once());
+            mockRepo.Verify(x => x.Update(It.IsAny<Sport>()), Times.Once());
+            mockRepo.Verify(x => x.Save(), Times.AtLeastOnce());
+            Assert.IsTrue(list.First().Name == "UpdatedName");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SportDoesNotExistException))]
+        public void UpdateSportShouldReturnExceptionTest()
+        {
+            Sport sport = new Sport(){Id = 1, Name = "Futbol"};
+            var list = new List<Sport>();
+            var mockRepo = new Mock<IRepository<Sport>>();
+            mockRepo.Setup(x => x.Insert(It.IsAny<Sport>())).Callback<Sport>(x => list.Add(sport));
+            mockRepo.Setup(x => x.Update(It.IsAny<Sport>())).Callback<Sport>(x => list.First().Name = sport.Name);
+            mockRepo.Setup(x => x.Get(null, null, "")).Returns(list);
+            ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
+            sport.Name = "UpdatedName";
+            sportBL.Update(sport);
+            mockRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Once());
+            mockRepo.Verify(x => x.Update(It.IsAny<Sport>()), Times.Once());
+            mockRepo.Verify(x => x.Save(), Times.AtLeastOnce());
+            Assert.IsTrue(list.First().Name == "UpdatedName");
+        }
     }
 }

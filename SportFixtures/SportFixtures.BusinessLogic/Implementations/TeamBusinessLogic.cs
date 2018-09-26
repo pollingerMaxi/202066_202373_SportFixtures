@@ -57,7 +57,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             sportBL.AddTeamToSport(team);
         }
 
-        public void UpdateTeam(Team team)
+        public void Update(Team team)
         {
             checkIfTeamExists(team);           
             repository.Update(team);
@@ -71,7 +71,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
         }
 
-        public void DeleteTeam(Team team)
+        public void Delete(Team team)
         {
             checkIfTeamExists(team); 
             repository.Delete(team);

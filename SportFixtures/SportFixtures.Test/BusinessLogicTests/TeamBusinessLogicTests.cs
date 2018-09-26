@@ -81,7 +81,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
             teamBL.AddTeam(team);
             team.Name = "UpdatedName";
-            teamBL.UpdateTeam(team);
+            teamBL.Update(team);
             mockTeamRepo.Verify(x => x.Insert(It.IsAny<Team>()), Times.Once());
             mockTeamRepo.Verify(x => x.Update(It.IsAny<Team>()), Times.Once());
             mockTeamRepo.Verify(x => x.Save(), Times.AtLeastOnce());
@@ -98,7 +98,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockSportRepo.Object);
             ITeamBusinessLogic teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
             team.Name = "UpdatedName";
-            teamBL.UpdateTeam(team);
+            teamBL.Update(team);
             mockTeamRepo.Verify(x => x.Update(It.IsAny<Team>()), Times.Once());
         }
 
@@ -116,7 +116,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockSportRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
             mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
             teamBL.AddTeam(team);
-            teamBL.DeleteTeam(team);
+            teamBL.Delete(team);
             mockTeamRepo.Verify(x => x.Insert(It.IsAny<Team>()), Times.Once());
             mockTeamRepo.Verify(x => x.Delete(It.IsAny<Team>()), Times.Once());
             mockTeamRepo.Verify(x => x.Save(), Times.AtLeastOnce());
