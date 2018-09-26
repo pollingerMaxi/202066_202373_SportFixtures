@@ -20,7 +20,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             this.sportBL = sportBl;
         }
 
-        public void AddTeam(Team team)
+        public void Add(Team team)
         {
             ValidateTeam(team);
             repository.Insert(team);
