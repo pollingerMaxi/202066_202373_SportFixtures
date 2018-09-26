@@ -20,7 +20,7 @@ namespace SportFixtures.Test.DataTests
         [TestInitialize]
         public void TestInitialize()
         {
-            var options = new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(databaseName: "teamDB").Options;
+            var options = new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(databaseName: "userDB").Options;
             context = new Context(options);
             repository = new GenericRepository<User>(context);
         }
@@ -56,7 +56,7 @@ namespace SportFixtures.Test.DataTests
         }
 
         [TestMethod]
-        public void AddTeamToRepositoryTest()
+        public void AddUserToRepositoryTest()
         {
             var mockRepo = new Mock<IRepository<User>>();
             var list = new List<User>();
