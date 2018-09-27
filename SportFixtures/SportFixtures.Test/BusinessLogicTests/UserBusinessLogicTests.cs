@@ -138,6 +138,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL);
             mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
             userBL.FollowTeam(user, team);
+            mockTeamRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
         }
 
         [TestMethod]
@@ -173,6 +174,23 @@ namespace SportFixtures.Test.BusinessLogicTests
             userBLWithoutTeamBL.AddUser(userWithAllData);
             userBLWithoutTeamBL.AddUser(userWithAllData);
             mockUserRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Exactly(2));
+        }
+
+        [TestMethod]
+        public void DeleteUserTest()
+        {
+            mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
+            mockUserRepo.Setup(r => r.Delete(It.IsAny<User>())).Callback<User>(x => userList.Remove(userWithAllData));
+            userBLWithoutTeamBL.Delete(userWithAllData);
+            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
+            mockUserRepo.Verify(x => x.Delete(It.IsAny<User>()), Times.Once);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserDoesNotExistException))]
+        public void DeleteUserNotValidTest()
+        {
+            userBLWithoutTeamBL.Delete(userWithAllData);
         }
     }
 }

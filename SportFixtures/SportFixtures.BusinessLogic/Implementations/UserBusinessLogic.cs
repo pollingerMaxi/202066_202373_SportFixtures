@@ -87,5 +87,12 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             return repository.Get(null, null, "").FirstOrDefault(u => u.Username == username) == null;
         }
+
+        public void Delete(User user)
+        {
+            CheckIfUserExists(user);
+            repository.Delete(user);
+            repository.Save();
+        }
     }
 }
