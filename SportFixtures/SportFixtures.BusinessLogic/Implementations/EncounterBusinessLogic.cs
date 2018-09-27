@@ -35,6 +35,9 @@ namespace SportFixtures.BusinessLogic.Implementations
             if(encounter.Team1.SportId != encounter.Team2.SportId){
                 throw new EncounterTeamsDifferentSportException();
             }
+            if(encounter.SportId != encounter.Team1.SportId){
+                throw new EncounterSportDifferentFromTeamsSportException();
+            }
         }
     }
 }

@@ -96,5 +96,20 @@ namespace SportFixtures.Test.BusinessLogicTests
 
             encounterBL.Add(encounter);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(EncounterSportDifferentFromTeamsSportException))]
+        public void AddEncounterWithDifferentSportAsTeamsSportShouldReturnExceptionTest()
+        {
+            var team = new Team() { Id = 1, Name = "Nacional", SportId = 1};
+            var team2 = new Team() { Id = 1, Name = "Peñarol", SportId = 1};
+            var sport = new Sport() { Id = 1, Name = "Futbol" };
+            var sport2 = new Sport() { Id = 2, Name = "Basquetbol" };
+            var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport2.Id, Team1 = team, Team2 = team2 };
+
+            mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
+
+            encounterBL.Add(encounter);
+        }
     }
 }
