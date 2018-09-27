@@ -15,44 +15,47 @@ namespace SportFixtures.Test.BusinessLogicTests
     public class UserBusinessLogicTests
     {
         private const dynamic NO_BUSINESS_LOGIC = null;
+        private User userWithAllData;
+        private IUserBusinessLogic userBLWithoutTeamBL;
+        private Mock<IRepository<User>> mockUserRepo;
+        private Mock<IRepository<Team>> mockTeamRepo;
+        private List<User> userList;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            userWithAllData = new User() { Name = "name", Username = "username", LastName = "lastname", Password = "hash", Email = "email@email.com" };
+            mockUserRepo = new Mock<IRepository<User>>();
+            mockTeamRepo = new Mock<IRepository<Team>>();
+            userList = new List<User>();
+            userBLWithoutTeamBL = new UserBusinessLogic(mockUserRepo.Object, NO_BUSINESS_LOGIC);
+        }
 
         [TestMethod]
         public void AddUserOkTest()
         {
-            var user = new User() { Name = "name", Username = "username", LastName = "lastname", Password = "hash", Email = "email@email.com" };
-            var list = new List<User>();
-            var mockRepo = new Mock<IRepository<User>>();
-            mockRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => list.Add(user));
-            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object, NO_BUSINESS_LOGIC);
-            userBL.AddUser(user);
-            mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
-            mockRepo.Verify(x => x.Save(), Times.Once());
+            mockUserRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => userList.Add(userWithAllData));
+            userBLWithoutTeamBL.AddUser(userWithAllData);
+            mockUserRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
+            mockUserRepo.Verify(x => x.Save(), Times.Once());
         }
 
         [TestMethod]
         public void AddUserWithUsernameTest()
         {
-            var user = new User() { Name = "name", Username = "username", LastName = "lastname", Password = "hash", Email = "email@email.com" };
-            var list = new List<User>();
-            var mockRepo = new Mock<IRepository<User>>();
-            mockRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => list.Add(user));
-            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object, NO_BUSINESS_LOGIC);
-            userBL.AddUser(user);
-            mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
-            mockRepo.Verify(x => x.Save(), Times.Once());
+            mockUserRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => userList.Add(userWithAllData));
+            userBLWithoutTeamBL.AddUser(userWithAllData);
+            mockUserRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
+            mockUserRepo.Verify(x => x.Save(), Times.Once());
         }
 
         [TestMethod]
         public void AddUserWithFullInfoOkTest()
         {
-            var user = new User() { Name = "name", Username = "username", LastName = "lastname", Password = "hash", Email = "email@email.com" };
-            var list = new List<User>();
-            var mockRepo = new Mock<IRepository<User>>();
-            mockRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => list.Add(user));
-            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object, NO_BUSINESS_LOGIC);
-            userBL.AddUser(user);
-            mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
-            mockRepo.Verify(x => x.Save(), Times.Once());
+            mockUserRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => userList.Add(userWithAllData));
+            userBLWithoutTeamBL.AddUser(userWithAllData);
+            mockUserRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
+            mockUserRepo.Verify(x => x.Save(), Times.Once());
         }
 
         [TestMethod]
@@ -60,13 +63,10 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void AddUserWithInvalidNameTest()
         {
             var user = new User() { Name = " ", Username = "username", LastName = "lastname", Password = "hash", Email = "email@email.com" };
-            var list = new List<User>();
-            var mockRepo = new Mock<IRepository<User>>();
-            mockRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => list.Add(user));
-            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object, NO_BUSINESS_LOGIC);
-            userBL.AddUser(user);
-            mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
-            mockRepo.Verify(x => x.Save(), Times.Once());
+            mockUserRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => userList.Add(user));
+            userBLWithoutTeamBL.AddUser(user);
+            mockUserRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
+            mockUserRepo.Verify(x => x.Save(), Times.Once());
         }
 
         [TestMethod]
@@ -74,13 +74,10 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void AddUserWithEmptyEmailTest()
         {
             var user = new User() { Name = "Name", Username = "username", LastName = "lastname", Password = "hash", Email = " " };
-            var list = new List<User>();
-            var mockRepo = new Mock<IRepository<User>>();
-            mockRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => list.Add(user));
-            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object, NO_BUSINESS_LOGIC);
-            userBL.AddUser(user);
-            mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
-            mockRepo.Verify(x => x.Save(), Times.Once());
+            mockUserRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => userList.Add(user));
+            userBLWithoutTeamBL.AddUser(user);
+            mockUserRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
+            mockUserRepo.Verify(x => x.Save(), Times.Once());
         }
 
         [TestMethod]
@@ -88,13 +85,10 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void AddUserWithInvalidEmailTest()
         {
             var user = new User() { Name = "Name", Username = "username", LastName = "lastname", Password = "hash", Email = "something" };
-            var list = new List<User>();
-            var mockRepo = new Mock<IRepository<User>>();
-            mockRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => list.Add(user));
-            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object, NO_BUSINESS_LOGIC);
-            userBL.AddUser(user);
-            mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
-            mockRepo.Verify(x => x.Save(), Times.Once());
+            mockUserRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => userList.Add(user));
+            userBLWithoutTeamBL.AddUser(user);
+            mockUserRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
+            mockUserRepo.Verify(x => x.Save(), Times.Once());
         }
 
         [TestMethod]
@@ -102,30 +96,36 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void AddUserWithInvalidFieldsTest()
         {
             var user = new User() { Name = "Name", Username = " ", LastName = "", Password = "hash", Email = "something.com" };
-            var list = new List<User>();
-            var mockRepo = new Mock<IRepository<User>>();
-            mockRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => list.Add(user));
-            IUserBusinessLogic userBL = new UserBusinessLogic(mockRepo.Object, NO_BUSINESS_LOGIC);
-            userBL.AddUser(user);
-            mockRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
-            mockRepo.Verify(x => x.Save(), Times.Once());
+            mockUserRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => userList.Add(user));
+            userBLWithoutTeamBL.AddUser(user);
+            mockUserRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
+            mockUserRepo.Verify(x => x.Save(), Times.Once());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidUserLastNameException))]
+        public void AddUserWithInvalidLastnameTest()
+        {
+            var user = new User() { Name = "Name", Username = "username", LastName = " ", Password = "hash", Email = "something@domain.com" };
+            mockUserRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => userList.Add(user));
+            userBLWithoutTeamBL.AddUser(user);
+            mockUserRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
+            mockUserRepo.Verify(x => x.Save(), Times.Once());
         }
 
         [TestMethod]
         public void FollowTeamTest()
         {
-            var user = new User() { Name = "Name", Username = "nick33", LastName = "surname", Password = "hash", Email = "a@a.com" };
             var team = new Team();
-            var mockUserRepo = new Mock<IRepository<User>>();
             var mockTeamRepo = new Mock<IRepository<Team>>();
             var teamBL = new TeamBusinessLogic(mockTeamRepo.Object, NO_BUSINESS_LOGIC);
             var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL);
             mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
-            mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(user);
-            userBL.FollowTeam(user, team);
+            mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
+            userBL.FollowTeam(userWithAllData, team);
             mockTeamRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
             mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
-            Assert.IsTrue(user.FollowedTeams.Contains(team));
+            Assert.IsTrue(userWithAllData.FollowedTeams.Contains(team));
         }
 
         [TestMethod]
@@ -134,12 +134,15 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             var user = new User() { Name = "Name", Username = "nick33", LastName = "surname", Password = "hash", Email = "a@a.com" };
             var team = new Team();
-            var mockUserRepo = new Mock<IRepository<User>>();
-            var mockTeamRepo = new Mock<IRepository<Team>>();
             var teamBL = new TeamBusinessLogic(mockTeamRepo.Object, NO_BUSINESS_LOGIC);
             var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL);
             mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
             userBL.FollowTeam(user, team);
+        }
+
+        [TestMethod]
+        public void UpdateUserTest()
+        {
         }
     }
 }

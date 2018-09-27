@@ -8,5 +8,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
     public interface IUserBusinessLogic
     {
         void AddUser(User user);
+        void FollowTeam(User user, Team team);
     }
 }
