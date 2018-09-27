@@ -2,6 +2,7 @@ using System;
 using SportFixtures.Data.Entities;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Repository;
+using SportFixtures.Exceptions.EncounterExceptions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,8 +19,16 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void Add(Encounter encounter)
         {
+            Validate(encounter);
             repository.Insert(encounter);
             repository.Save();
+        }
+
+        private void Validate(Encounter encounter)
+        {
+            if(encounter.Team1 == encounter.Team2){
+                throw new EncounterSameTeamException();
+            }
         }
     }
 }
