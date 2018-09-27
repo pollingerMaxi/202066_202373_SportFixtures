@@ -26,6 +26,9 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         private void Validate(Encounter encounter)
         {
+            if(encounter.Team1 == null || encounter.Team2 == null){
+                throw new EncounterTeamsCantBeNullException();
+            }
             if(encounter.Team1 == encounter.Team2){
                 throw new EncounterSameTeamException();
             }
