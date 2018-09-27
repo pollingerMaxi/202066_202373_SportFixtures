@@ -11,7 +11,8 @@ namespace SportFixtures.Data.Access
         public DbSet<Team> Teams { get; set; }
         public DbSet<Sport> Sports { get; set; }
         public DbSet<User> Users { get; set; }
-
+        public DbSet<Encounter> Encounters { get; set; }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
