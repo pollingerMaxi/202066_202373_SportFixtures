@@ -6,6 +6,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
     public interface IEncounterBusinessLogic
     {
         void Add(Encounter encounter);
-
+        void Update(Encounter encounter);
     }
 }

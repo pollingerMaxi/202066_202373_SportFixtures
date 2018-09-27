@@ -39,5 +39,11 @@ namespace SportFixtures.BusinessLogic.Implementations
                 throw new EncounterSportDifferentFromTeamsSportException();
             }
         }
+
+        public void Update(Encounter encounter){
+            Validate(encounter);
+            repository.Update(encounter);
+            repository.Save();
+        }
     }
 }
