@@ -131,7 +131,24 @@ namespace SportFixtures.Test.BusinessLogicTests
             Assert.IsTrue(encounterList.First().Team1 == updatedTeam);
         }
 
-        
+        [TestMethod]
+        public void UpdateEncounterDateOkTest()
+        {
+            var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1};
+            var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1};
+            var sport = new Sport() { Id = 1, Name = "Futbol" };
+            DateTime updatedDate = new DateTime(2018, 9, 27, 8, 30, 00);
+            var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id,Team1 = team1, Team2 = team2 };
+            mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
+            mockEncounterRepo.Setup(x => x.Update(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.First().Date = updatedDate);
+            encounterBL.Add(encounter);
+            encounter.Date = updatedDate;
+            encounterBL.Update(encounter);
+            mockEncounterRepo.Verify(x => x.Insert(It.IsAny<Encounter>()), Times.Once());
+            mockEncounterRepo.Verify(x => x.Update(It.IsAny<Encounter>()), Times.Once());
+            mockEncounterRepo.Verify(x => x.Save(), Times.AtLeast(2));
+            Assert.IsTrue(encounterList.First().Date == updatedDate);
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EncounterTeamsDifferentSportException))]
