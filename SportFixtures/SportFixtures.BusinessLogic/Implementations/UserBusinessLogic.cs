@@ -4,7 +4,7 @@ using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.UserExceptions;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace SportFixtures.BusinessLogic.Implementations
@@ -48,6 +48,11 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 throw new InvalidUserLastNameException();
             }
+
+            if (!UsernameIsUnique(user.Username))
+            {
+                throw new UsernameAlreadyInUseException();
+            }
         }
 
         private bool ValidateEmail(string email)
@@ -69,6 +74,18 @@ namespace SportFixtures.BusinessLogic.Implementations
             CheckIfUserExists(user);
             user.FollowedTeams.Add(team);
             repository.Save();
+        }
+
+        public void Update(User user)
+        {
+            CheckIfUserExists(user);
+            repository.Update(user);
+            repository.Save();
+        }
+
+        private bool UsernameIsUnique(string username)
+        {
+            return repository.Get(null, null, "").FirstOrDefault(u => u.Username == username) == null;
         }
     }
 }

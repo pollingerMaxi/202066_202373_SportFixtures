@@ -29,6 +29,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockTeamRepo = new Mock<IRepository<Team>>();
             userList = new List<User>();
             userBLWithoutTeamBL = new UserBusinessLogic(mockUserRepo.Object, NO_BUSINESS_LOGIC);
+            mockUserRepo.Setup(r => r.Get(null, null, "")).Returns(userList);
         }
 
         [TestMethod]
@@ -117,7 +118,6 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void FollowTeamTest()
         {
             var team = new Team();
-            var mockTeamRepo = new Mock<IRepository<Team>>();
             var teamBL = new TeamBusinessLogic(mockTeamRepo.Object, NO_BUSINESS_LOGIC);
             var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL);
             mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
@@ -143,6 +143,36 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void UpdateUserTest()
         {
+            mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
+            userBLWithoutTeamBL.Update(userWithAllData);
+            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
+            mockUserRepo.Verify(x => x.Update(It.IsAny<User>()), Times.Once);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserDoesNotExistException))]
+        public void UpdateUserWithInvalidUserTest()
+        {
+            userBLWithoutTeamBL.Update(userWithAllData);
+            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void UsernameIsNotDuplicatedTest()
+        {
+            mockUserRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => userList.Add(userWithAllData));
+            userBLWithoutTeamBL.AddUser(userWithAllData);
+            mockUserRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UsernameAlreadyInUseException))]
+        public void UsernameIsDuplicatedTest()
+        {
+            mockUserRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => userList.Add(userWithAllData));
+            userBLWithoutTeamBL.AddUser(userWithAllData);
+            userBLWithoutTeamBL.AddUser(userWithAllData);
+            mockUserRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Exactly(2));
         }
     }
 }
