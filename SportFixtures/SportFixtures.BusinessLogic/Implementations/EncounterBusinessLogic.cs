@@ -41,9 +41,23 @@ namespace SportFixtures.BusinessLogic.Implementations
         }
 
         public void Update(Encounter encounter){
+            CheckIfExists(encounter);
             Validate(encounter);
             repository.Update(encounter);
             repository.Save();
+        }
+
+        public void Delete(Encounter encounter){
+            CheckIfExists(encounter);
+            repository.Delete(encounter);
+            repository.Save();
+        }
+
+        public void CheckIfExists(Encounter encounter){
+            if (repository.GetById(encounter.Id) == null)
+            {
+                throw new EncounterDoesNotExistsException();
+            }
         }
     }
 }

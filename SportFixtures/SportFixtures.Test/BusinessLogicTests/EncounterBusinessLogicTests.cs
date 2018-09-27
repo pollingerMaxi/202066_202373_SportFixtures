@@ -122,6 +122,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id,Team1 = team1, Team2 = team2 };
             mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
             mockEncounterRepo.Setup(x => x.Update(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.First().Team1 = updatedTeam);
+            mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
             encounterBL.Add(encounter);
             encounter.Team1 = updatedTeam;
             encounterBL.Update(encounter);
@@ -141,6 +142,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id,Team1 = team1, Team2 = team2 };
             mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
             mockEncounterRepo.Setup(x => x.Update(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.First().Date = updatedDate);
+            mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
             encounterBL.Add(encounter);
             encounter.Date = updatedDate;
             encounterBL.Update(encounter);
@@ -152,7 +154,7 @@ namespace SportFixtures.Test.BusinessLogicTests
 
         [TestMethod]
         [ExpectedException(typeof(EncounterTeamsDifferentSportException))]
-        public void UpdateEncounterTeamWithDifferentSportShouldReturnExceptionTest()
+        public void UpdateEncounterTeamWithDifferentSportShouldReturnsExceptionTest()
         {
             var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1};
             var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1};
@@ -161,6 +163,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id,Team1 = team1, Team2 = team2 };
             mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
             mockEncounterRepo.Setup(x => x.Update(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.First().Team1 = updatedTeam);
+            mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
             encounterBL.Add(encounter);
             encounter.Team1 = updatedTeam;
             encounterBL.Update(encounter);
@@ -168,7 +171,7 @@ namespace SportFixtures.Test.BusinessLogicTests
 
         [TestMethod]
         [ExpectedException(typeof(EncounterSportDifferentFromTeamsSportException))]
-        public void UpdateEncounterSportWithDifferentTeamSportsShouldReturnExceptionTest()
+        public void UpdateEncounterSportWithDifferentTeamSportsShouldReturnsExceptionTest()
         {
             var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1};
             var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1};
@@ -177,9 +180,24 @@ namespace SportFixtures.Test.BusinessLogicTests
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id,Team1 = team1, Team2 = team2 };
             mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
             mockEncounterRepo.Setup(x => x.Update(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.First().SportId = updatedSport.Id);
+            mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
             encounterBL.Add(encounter);
             encounter.SportId = updatedSport.Id;
             encounterBL.Update(encounter);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EncounterDoesNotExistsException))]
+        public void UpdateEncounterThatDoesntExistsReturnsExceptionTest()
+        {
+            var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1};
+            var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1};
+            var sport = new Sport() { Id = 1, Name = "Futbol" };
+            var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id,Team1 = team1, Team2 = team2 };
+            var notAddedEncounter = new Encounter() { Id = 2, Date = DateTime.Now, SportId = sport.Id,Team1 = team1, Team2 = team2 };
+            mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
+            encounterBL.Add(encounter);
+            encounterBL.Update(notAddedEncounter);
         }
     }
 }
