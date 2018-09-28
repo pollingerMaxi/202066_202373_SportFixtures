@@ -59,5 +59,15 @@ namespace SportFixtures.BusinessLogic.Implementations
                 throw new EncounterDoesNotExistsException();
             }
         }
+
+        private bool CheckIfTeamHasEncounterOnTheSameDay(Team team, DateTime date){
+            return repository.Get().Any(e => ((e.Date.Date == date.Date) && (e.Team1.Equals(team) || e.Team2.Equals(team))));
+        }
+
+        public void CheckTeamsEncountersDate(Encounter encounter){
+            if(CheckIfTeamHasEncounterOnTheSameDay(encounter.Team1, encounter.Date) ||CheckIfTeamHasEncounterOnTheSameDay(encounter.Team2, encounter.Date)){
+                throw new TeamAlreadyHasAnEncounterOnTheSameDayException();
+            }
+        }
     }
 }
