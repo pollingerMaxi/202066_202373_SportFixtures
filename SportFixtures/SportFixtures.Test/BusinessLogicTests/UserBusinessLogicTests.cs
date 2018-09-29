@@ -2,6 +2,7 @@
 using Moq;
 using SportFixtures.BusinessLogic.Implementations;
 using SportFixtures.BusinessLogic.Interfaces;
+using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.UserExceptions;
@@ -24,7 +25,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestInitialize]
         public void TestInitialize()
         {
-            userWithAllData = new User() { Name = "name", Username = "username", LastName = "lastname", Password = "hash", Email = "email@email.com" };
+            userWithAllData = new User() { Name = "name", Username = "username", LastName = "lastname", Password = "hash", Email = "email@email.com", Role = Role.User };
             mockUserRepo = new Mock<IRepository<User>>();
             mockTeamRepo = new Mock<IRepository<Team>>();
             userList = new List<User>();

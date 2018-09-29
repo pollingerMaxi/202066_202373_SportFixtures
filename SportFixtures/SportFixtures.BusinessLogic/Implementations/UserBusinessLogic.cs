@@ -1,4 +1,5 @@
 ﻿using SportFixtures.BusinessLogic.Interfaces;
+using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.UserExceptions;
@@ -79,6 +80,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         public void Update(User user)
         {
             CheckIfUserExists(user);
+            CheckIfUserIsAdmin(user.Role);
             repository.Update(user);
             repository.Save();
         }
@@ -93,6 +95,14 @@ namespace SportFixtures.BusinessLogic.Implementations
             CheckIfUserExists(user);
             repository.Delete(user);
             repository.Save();
+        }
+
+        private void CheckIfUserIsAdmin(Role role)
+        {
+            if (role != Role.Admin)
+            {
+                throw new UserIsNotAdminException();
+            }
         }
     }
 }

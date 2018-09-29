@@ -11,6 +11,7 @@ namespace SportFixtures.Data.Entities
         public string Password { get; set; }
         public string Email { get; set; }
         public ICollection<Team> FollowedTeams { get; set; }
+        public Role Role { get; set; }
 
         public User()
         {
