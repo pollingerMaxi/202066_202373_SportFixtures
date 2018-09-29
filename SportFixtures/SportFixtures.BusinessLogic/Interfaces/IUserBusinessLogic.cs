@@ -11,5 +11,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void FollowTeam(User user, Team team);
         void Update(User user);
         void Delete(User user);
+        void CheckIfUserExists(User user);
     }
 }

@@ -57,7 +57,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         public void CheckIfExists(Encounter encounter){
             if (repository.GetById(encounter.Id) == null)
             {
-                throw new EncounterDoesNotExistsException();
+                throw new EncounterDoesNotExistException();
             }
         }
 

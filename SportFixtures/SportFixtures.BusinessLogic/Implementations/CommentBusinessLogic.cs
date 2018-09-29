@@ -30,6 +30,8 @@ namespace SportFixtures.BusinessLogic.Implementations
             if(string.IsNullOrWhiteSpace(comment.Text)){
                 throw new InvalidCommentTextException();
             }
+            encounterBL.CheckIfExists(new Encounter(){ Id = comment.EncounterId });
+            userBL.CheckIfUserExists(new User(){ Id = comment.UserId });
         }
 
     }

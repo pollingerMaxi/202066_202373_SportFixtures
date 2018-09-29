@@ -60,7 +60,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             return Regex.IsMatch(email, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
         }
 
-        private void CheckIfUserExists(User user)
+        public void CheckIfUserExists(User user)
         {
             if (repository.GetById(user.Id) == null)
             {

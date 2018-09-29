@@ -6,6 +6,8 @@ using SportFixtures.Data.Access;
 using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.CommentExceptions;
+using SportFixtures.Exceptions.UserExceptions;
+using SportFixtures.Exceptions.EncounterExceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,8 @@ namespace SportFixtures.Test.BusinessLogicTests
         private ITeamBusinessLogic teamBL;
         private IUserBusinessLogic userBL;
         private List<Comment> commentList;
+        private User user;
+        private Encounter encounter;
 
         [TestInitialize]
         public void TestInitialize(){
@@ -44,6 +48,8 @@ namespace SportFixtures.Test.BusinessLogicTests
             userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL);
             commentBL = new CommentBusinessLogic(mockCommentRepo.Object, encounterBL, userBL);
             commentList = new List<Comment>();
+            user = new User(){Id = 1};
+            encounter = new Encounter(){Id = 1};
             mockCommentRepo.Setup(r => r.Get(null, null, "")).Returns(commentList);
         }
 
@@ -52,6 +58,8 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             Comment comment = new Comment() { Id = 1, EncounterId = 1, UserId = 1, Text = "This is a comment." };
             mockCommentRepo.Setup(x => x.Insert(It.IsAny<Comment>())).Callback<Comment>(x => commentList.Add(comment));
+            mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
+            mockUserRepo.Setup(x => x.GetById(It.IsAny<int>())).Returns(user);
             commentBL.Add(comment);
             mockCommentRepo.Verify(x => x.Insert(It.IsAny<Comment>()), Times.Once());
             mockCommentRepo.Verify(x => x.Save(), Times.Once());
@@ -73,6 +81,26 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             Comment comment = new Comment() { Id = 1, EncounterId = 1, UserId = 1, Text = "      " };
             mockCommentRepo.Setup(x => x.Insert(It.IsAny<Comment>())).Callback<Comment>(x => commentList.Add(comment));
+            commentBL.Add(comment);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserDoesNotExistException))]
+        public void AddCommentUserDoesntExistsShouldReturnExceptionTest()
+        {
+            Comment comment = new Comment() { Id = 1, EncounterId = 1, UserId = 1, Text = "This is a comment." };
+            mockCommentRepo.Setup(x => x.Insert(It.IsAny<Comment>())).Callback<Comment>(x => commentList.Add(comment));
+            mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
+            commentBL.Add(comment);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EncounterDoesNotExistException))]
+        public void AddCommentEncounterDoesntExistsShouldReturnExceptionTest()
+        {
+            Comment comment = new Comment() { Id = 1, EncounterId = 1, UserId = 1, Text = "This is a comment." };
+            mockCommentRepo.Setup(x => x.Insert(It.IsAny<Comment>())).Callback<Comment>(x => commentList.Add(comment));
+            mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(user);
             commentBL.Add(comment);
         }
     }

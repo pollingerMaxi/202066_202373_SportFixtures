@@ -187,7 +187,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EncounterDoesNotExistsException))]
+        [ExpectedException(typeof(EncounterDoesNotExistException))]
         public void UpdateEncounterThatDoesntExistsReturnsExceptionTest()
         {
             var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1};
@@ -224,7 +224,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EncounterDoesNotExistsException))]
+        [ExpectedException(typeof(EncounterDoesNotExistException))]
         public void DeleteEncounterThatDoesntExistsReturnsExceptionTest()
         {
             var team = new Team() { Id = 1, Name = "Nacional", SportId = 1};
