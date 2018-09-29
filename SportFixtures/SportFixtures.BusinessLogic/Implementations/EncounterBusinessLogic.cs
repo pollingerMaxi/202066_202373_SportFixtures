@@ -38,6 +38,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             if(encounter.SportId != encounter.Team1.SportId){
                 throw new EncounterSportDifferentFromTeamsSportException();
             }
+            CheckTeamsEncountersDate(encounter);
         }
 
         public void Update(Encounter encounter){
@@ -60,12 +61,13 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
         }
 
-        private bool CheckIfTeamHasEncounterOnTheSameDay(Team team, DateTime date){
-            return repository.Get().Any(e => ((e.Date.Date == date.Date) && (e.Team1.Equals(team) || e.Team2.Equals(team))));
+        private bool CheckIfTeamHasEncounterOnTheSameDay(Team team, DateTime date, int encounterId){
+            return repository.Get().Any(e => ((e.Id != encounterId) && (e.Date.Date == date.Date) && (e.Team1.Equals(team) || e.Team2.Equals(team))));
         }
 
         public void CheckTeamsEncountersDate(Encounter encounter){
-            if(CheckIfTeamHasEncounterOnTheSameDay(encounter.Team1, encounter.Date) ||CheckIfTeamHasEncounterOnTheSameDay(encounter.Team2, encounter.Date)){
+            if(CheckIfTeamHasEncounterOnTheSameDay(encounter.Team1, encounter.Date, encounter.Id) 
+                ||CheckIfTeamHasEncounterOnTheSameDay(encounter.Team2, encounter.Date, encounter.Id)){
                 throw new TeamAlreadyHasAnEncounterOnTheSameDayException();
             }
         }

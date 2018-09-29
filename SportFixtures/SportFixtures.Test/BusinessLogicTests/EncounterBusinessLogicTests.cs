@@ -249,7 +249,8 @@ namespace SportFixtures.Test.BusinessLogicTests
             encounterBL.Add(encounter);
             mockEncounterRepo.Verify(x => x.Insert(It.IsAny<Encounter>()), Times.Once());
             mockEncounterRepo.Verify(x => x.Save(), Times.Once());
-            encounterBL.CheckTeamsEncountersDate(encounter2);
+            encounterBL.Add(encounter2);
+            Assert.IsTrue(encounterList.Count() == 2);
         }
 
         [TestMethod]
@@ -266,7 +267,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             encounterBL.Add(encounter);
             mockEncounterRepo.Verify(x => x.Insert(It.IsAny<Encounter>()), Times.Once());
             mockEncounterRepo.Verify(x => x.Save(), Times.Once());
-            encounterBL.CheckTeamsEncountersDate(encounter2);
+            encounterBL.Add(encounter2);
         }
     }
 }
