@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SportFixtures.Data.Entities
 {
@@ -12,6 +13,7 @@ namespace SportFixtures.Data.Entities
         public string Email { get; set; }
         public ICollection<Team> FollowedTeams { get; set; }
         public Role Role { get; set; }
+        public Guid? Token { get; set; }
 
         public User()
         {
