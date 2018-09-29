@@ -125,7 +125,6 @@ namespace SportFixtures.Test.BusinessLogicTests
             userBL.FollowTeam(userWithAllData, team);
             mockTeamRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
             mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
-            Assert.IsTrue(userWithAllData.FollowedTeams.Contains(team));
         }
 
         [TestMethod]
