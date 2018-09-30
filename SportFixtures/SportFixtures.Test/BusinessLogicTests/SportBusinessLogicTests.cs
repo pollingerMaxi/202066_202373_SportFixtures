@@ -107,7 +107,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockRepo.Setup(r => r.Update(It.IsAny<Sport>())).Callback<Sport>(x => list.First().Teams.Add(team));
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
             sportBL.AddTeamToSport(team);
-            mockRepo.Verify(r => r.GetById(team.SportId), Times.Once);
+            mockRepo.Verify(r => r.GetById(team.SportId), Times.AtLeast(2));
             mockRepo.Verify(r => r.Update(It.IsAny<Sport>()), Times.Once);
         }
 

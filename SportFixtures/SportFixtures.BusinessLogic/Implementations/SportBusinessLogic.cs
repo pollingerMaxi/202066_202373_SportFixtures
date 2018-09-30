@@ -57,8 +57,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             var sport = GetSportById(team.SportId);
             ValidateTeamInSport(team, sport);
             sport.Teams.Add(team);
-            repository.Update(sport);
-            repository.Save();
+            Update(sport);
         }
 
         private Sport GetSportById(int sportId)

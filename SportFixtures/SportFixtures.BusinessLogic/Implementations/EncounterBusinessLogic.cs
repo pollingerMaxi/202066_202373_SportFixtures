@@ -42,20 +42,20 @@ namespace SportFixtures.BusinessLogic.Implementations
         }
 
         public void Update(Encounter encounter){
-            CheckIfExists(encounter);
+            CheckIfExists(encounter.Id);
             Validate(encounter);
             repository.Update(encounter);
             repository.Save();
         }
 
         public void Delete(Encounter encounter){
-            CheckIfExists(encounter);
+            CheckIfExists(encounter.Id);
             repository.Delete(encounter);
             repository.Save();
         }
 
-        public void CheckIfExists(Encounter encounter){
-            if (repository.GetById(encounter.Id) == null)
+        public void CheckIfExists(int encounterId){
+            if (repository.GetById(encounterId) == null)
             {
                 throw new EncounterDoesNotExistException();
             }
@@ -70,6 +70,17 @@ namespace SportFixtures.BusinessLogic.Implementations
                 ||CheckIfTeamHasEncounterOnTheSameDay(encounter.Team2, encounter.Date, encounter.Id)){
                 throw new TeamAlreadyHasAnEncounterOnTheSameDayException();
             }
+        }
+
+        public void AddCommentToEncounter(Comment comment){
+            Encounter encounter = GetEncounterById(comment.EncounterId);
+            encounter.Comments.Add(comment);
+            Update(encounter);
+        }
+
+        private Encounter GetEncounterById(int encounterId)
+        {
+            return repository.GetById(encounterId);
         }
     }
 }
