@@ -22,6 +22,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void Add(Comment comment){
             Validate(comment);
+            encounterBL.AddCommentToEncounter(comment);
             repository.Insert(comment);
             repository.Save();
         }
@@ -30,7 +31,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             if(string.IsNullOrWhiteSpace(comment.Text)){
                 throw new InvalidCommentTextException();
             }
-            encounterBL.CheckIfExists(new Encounter(){ Id = comment.EncounterId });
+            encounterBL.CheckIfExists(comment.EncounterId);
             userBL.CheckIfUserExists(new User(){ Id = comment.UserId });
         }
 

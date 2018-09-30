@@ -8,6 +8,7 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void Add(Encounter encounter);
         void Update(Encounter encounter);
         void Delete(Encounter encounter);
-        void CheckIfExists(Encounter encounter);
+        void CheckIfExists(int encounterId);
+        void AddCommentToEncounter(Comment comment);
     }
 }
