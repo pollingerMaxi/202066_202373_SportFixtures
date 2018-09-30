@@ -1,4 +1,5 @@
 ﻿using SportFixtures.BusinessLogic.Interfaces;
+using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.UserExceptions;
@@ -14,6 +15,8 @@ namespace SportFixtures.BusinessLogic.Implementations
         private IRepository<User> repository;
         private ITeamBusinessLogic teamBusinessLogic;
 
+        public User LoggedUser { get; private set; }
+
         public UserBusinessLogic(IRepository<User> repository, ITeamBusinessLogic teamBL)
         {
             this.repository = repository;
@@ -27,6 +30,10 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
+        /// <summary>
+        /// Validates business rules for a user.
+        /// </summary>
+        /// <param name="user"></param>
         private void ValidateUser(User user)
         {
             if (String.IsNullOrWhiteSpace(user.Name))
@@ -55,6 +62,11 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
         }
 
+        /// <summary>
+        /// Validates with a regex that the string passed satisfies the basic email rules (alphanumeric@alphanumeric.com).
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         private bool ValidateEmail(string email)
         {
             return Regex.IsMatch(email, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
@@ -79,6 +91,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         public void Update(User user)
         {
             CheckIfUserExists(user);
+            CheckIfLoggedUserIsAdmin();
             repository.Update(user);
             repository.Save();
         }
@@ -92,6 +105,52 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             CheckIfUserExists(user);
             repository.Delete(user);
+            repository.Save();
+        }
+
+        /// <summary>
+        /// Throws exception if LoggedUser is not an admin.
+        /// </summary>
+        private void CheckIfLoggedUserIsAdmin()
+        {
+            if (LoggedUser.Role != Role.Admin)
+            {
+                throw new LoggedUserIsNotAdminException();
+            }
+        }
+
+        public void Login(User user)
+        {
+            CheckIfUserExists(user);
+            var userFromDb = repository.GetById(user.Id);
+            if (!user.Email.Equals(userFromDb.Email) && !user.Password.Equals(userFromDb.Password))
+            {
+                throw new EmailOrPasswordException();
+            }
+            UpdateUsers(user, userFromDb);
+        }
+
+        /// <summary>
+        /// Updates LoggedUser and user's token.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="userFromDb"></param>
+        private void UpdateUsers(User user, User userFromDb)
+        {
+            LoggedUser = user;
+            userFromDb.Token = new Guid();
+            UpdateUserToken(userFromDb);
+        }
+
+        /// <summary>
+        /// If we call this method means that we don't need to validate if logged user is admin
+        /// because this should only be called from the Login.
+        /// Also, user existance was already checked => we can skip checking again.
+        /// </summary>
+        /// <param name="user"></param>
+        private void UpdateUserToken(User user)
+        {
+            repository.Update(user);
             repository.Save();
         }
     }
