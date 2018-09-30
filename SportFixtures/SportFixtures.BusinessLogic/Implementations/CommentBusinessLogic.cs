@@ -32,7 +32,7 @@ namespace SportFixtures.BusinessLogic.Implementations
                 throw new InvalidCommentTextException();
             }
             encounterBL.CheckIfExists(comment.EncounterId);
-            userBL.CheckIfUserExists(new User(){ Id = comment.UserId });
+            userBL.CheckIfExists(comment.UserId);
         }
 
     }

@@ -72,9 +72,9 @@ namespace SportFixtures.BusinessLogic.Implementations
             return Regex.IsMatch(email, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
         }
 
-        public void CheckIfUserExists(User user)
+        public void CheckIfExists(int userId)
         {
-            if (repository.GetById(user.Id) == null)
+            if (repository.GetById(userId) == null)
             {
                 throw new UserDoesNotExistException();
             }
@@ -83,14 +83,14 @@ namespace SportFixtures.BusinessLogic.Implementations
         public void FollowTeam(User user, Team team)
         {
             teamBusinessLogic.CheckIfTeamExists(team);
-            CheckIfUserExists(user);
+            CheckIfExists(user.Id);
             user.FollowedTeams.Add(team);
             repository.Save();
         }
 
         public void Update(User user)
         {
-            CheckIfUserExists(user);
+            CheckIfExists(user.Id);
             CheckIfLoggedUserIsAdmin();
             repository.Update(user);
             repository.Save();
@@ -103,7 +103,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void Delete(User user)
         {
-            CheckIfUserExists(user);
+            CheckIfExists(user.Id);
             repository.Delete(user);
             repository.Save();
         }
@@ -121,7 +121,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void Login(User user)
         {
-            CheckIfUserExists(user);
+            CheckIfExists(user.Id);
             var userFromDb = repository.GetById(user.Id);
             if (!user.Email.Equals(userFromDb.Email) && !user.Password.Equals(userFromDb.Password))
             {

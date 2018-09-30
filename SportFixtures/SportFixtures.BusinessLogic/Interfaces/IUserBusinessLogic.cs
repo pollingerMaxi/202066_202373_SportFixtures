@@ -36,7 +36,7 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// Throws exception if the given user is not in the system.
         /// </summary>
         /// <param name="user"></param>
-        void CheckIfUserExists(User user);
+        void CheckIfExists(int userId);
 
         /// <summary>
         /// Login a user and generates the token.
