@@ -57,7 +57,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         public void CheckIfExists(Encounter encounter){
             if (repository.GetById(encounter.Id) == null)
             {
-                throw new EncounterDoesNotExistsException();
+                throw new EncounterDoesNotExistException();
             }
         }
 
@@ -65,7 +65,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             return repository.Get().Any(e => ((e.Id != encounterId) && (e.Date.Date == date.Date) && (e.Team1.Equals(team) || e.Team2.Equals(team))));
         }
 
-        public void CheckTeamsEncountersDate(Encounter encounter){
+        private void CheckTeamsEncountersDate(Encounter encounter){
             if(CheckIfTeamHasEncounterOnTheSameDay(encounter.Team1, encounter.Date, encounter.Id) 
                 ||CheckIfTeamHasEncounterOnTheSameDay(encounter.Team2, encounter.Date, encounter.Id)){
                 throw new TeamAlreadyHasAnEncounterOnTheSameDayException();
