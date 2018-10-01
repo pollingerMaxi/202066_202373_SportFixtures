@@ -62,14 +62,10 @@ namespace SportFixtures.Test.BusinessLogicTests
             Comment comment = new Comment() { Id = 1, EncounterId = 1, UserId = 1, Text = "This is a comment." };
             mockCommentRepo.Setup(x => x.Insert(It.IsAny<Comment>())).Callback<Comment>(x => commentList.Add(comment));
             mockEncounterRepo.Setup(e => e.Update(It.IsAny<Encounter>())).Callback<Encounter>(e => encounter.Comments.Add(comment));
-            mockEncounterRepo.Setup(e => e.GetById(1)).Returns(encounter);
+            mockEncounterRepo.Setup(e => e.GetById(It.IsAny<int>())).Returns(encounter);
             mockUserRepo.Setup(x => x.GetById(It.IsAny<int>())).Returns(user);
             commentBL.Add(comment);
             mockCommentRepo.Verify(x => x.Insert(It.IsAny<Comment>()), Times.Once());
-            mockEncounterRepo.Verify(x => x.Update(It.IsAny<Encounter>()), Times.Once());
-            mockCommentRepo.Verify(x => x.Save(), Times.Once());
-            mockCommentRepo.Verify(x => x.Save(), Times.Once());
-            Assert.IsTrue(commentList.Count() == 1);
         }
 
         [TestMethod]
