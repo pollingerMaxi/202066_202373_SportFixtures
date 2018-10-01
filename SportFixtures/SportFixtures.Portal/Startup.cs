@@ -26,6 +26,19 @@ namespace SportFixtures.Portal
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            ResolveRepositoryDependencies(services);
+            ResolveBusinessLogicDependencies(services);
+            services.AddDbContext<Context>(o => o.UseSqlServer(@"Server=.;Database=SportFixturesTest;Trusted_Connection=True;Integrated Security=True"));
+        }
+
+        private void ResolveBusinessLogicDependencies(IServiceCollection services)
+        {
+            services.AddScoped<ISportBusinessLogic, SportBusinessLogic>();
+        }
+
+        private void ResolveRepositoryDependencies(IServiceCollection services)
+        {
+            services.AddScoped<IRepository<Sport>, GenericRepository<Sport>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
