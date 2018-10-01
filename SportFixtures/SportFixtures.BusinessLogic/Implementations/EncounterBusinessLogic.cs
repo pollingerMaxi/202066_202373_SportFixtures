@@ -74,9 +74,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void AddCommentToEncounter(Comment comment){
             Encounter encounter = GetEncounterById(comment.EncounterId);
-            repository.Attach(encounter);
             encounter.Comments.Add(comment);
-            repository.Save();
         }
 
         private Encounter GetEncounterById(int encounterId)
