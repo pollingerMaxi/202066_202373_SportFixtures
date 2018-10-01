@@ -11,7 +11,7 @@ namespace SportFixtures.Data.Repository
     public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         internal Context context;
-        internal DbSet<TEntity> dbSet;    
+        internal DbSet<TEntity> dbSet;
 
         public GenericRepository(Context context)
         {
@@ -50,6 +50,11 @@ namespace SportFixtures.Data.Repository
         public virtual TEntity GetById(object id)
         {
             return dbSet.Find(id);
+        }
+
+        public virtual void Attach(TEntity entity)
+        {
+            dbSet.Attach(entity);
         }
 
         public virtual void Insert(TEntity entity)

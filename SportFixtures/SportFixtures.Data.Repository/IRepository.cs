@@ -56,5 +56,7 @@ namespace SportFixtures.Data.Repository
         /// Saves changes
         /// </summary>
         void Save();
+
+        void Attach(TEntity entity);
     }
 }
