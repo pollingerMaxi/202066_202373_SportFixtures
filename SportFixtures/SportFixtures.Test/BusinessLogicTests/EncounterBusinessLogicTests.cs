@@ -41,8 +41,6 @@ namespace SportFixtures.Test.BusinessLogicTests
             encounterBL.Add(encounter);
             mockEncounterRepo.Verify(x => x.Insert(It.IsAny<Encounter>()), Times.Once());
             mockEncounterRepo.Verify(x => x.Save(), Times.Once());
-            int result = encounterBL.GetAll().Count();
-            Assert.IsTrue(result == 1);
         }
 
         [TestMethod]
