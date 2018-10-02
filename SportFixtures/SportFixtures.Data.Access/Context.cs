@@ -26,6 +26,7 @@ namespace SportFixtures.Data.Access
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Encounter>().HasMany(c => c.Comments).WithOne().HasForeignKey(c => c.EncounterId);
+            builder.Entity<Sport>().HasMany(t => t.Teams).WithOne().HasForeignKey(t => t.SportId);
         }
 
         public Context() { }
