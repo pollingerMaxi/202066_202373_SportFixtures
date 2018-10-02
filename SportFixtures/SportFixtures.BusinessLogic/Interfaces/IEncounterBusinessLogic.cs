@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SportFixtures.Data.Entities;
 
 namespace SportFixtures.BusinessLogic.Interfaces
@@ -10,5 +11,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void Delete(Encounter encounter);
         void CheckIfExists(int encounterId);
         void AddCommentToEncounter(Comment comment);
+        IEnumerable<Encounter> GetAll();
     }
 }
