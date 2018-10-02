@@ -51,8 +51,6 @@ namespace SportFixtures.Test.BusinessLogicTests
             teamBL.Add(team);
             mockTeamRepo.Verify(x => x.Insert(It.IsAny<Team>()), Times.Once());
             mockTeamRepo.Verify(x => x.Save(), Times.Once());
-            int result = teamBL.GetAll().Count();
-            Assert.IsTrue(result == 2);
         }
 
         [TestMethod]
@@ -114,6 +112,13 @@ namespace SportFixtures.Test.BusinessLogicTests
             //TestInitialize already adds this team to the list and has a mock.setup configured 
             //to return the sport and the list of teams
             teamBL.Add(teamWithAllData);
+        }
+        
+        [TestMethod]
+        public void GetAllTest()
+        {
+            teamBL.GetAll();
+            mockTeamRepo.Verify(x => x.Get(null, null, ""), Times.Once());
         }
 
     }
