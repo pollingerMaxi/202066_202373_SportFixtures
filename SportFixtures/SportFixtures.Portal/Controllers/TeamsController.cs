@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Entities;
+using SportFixtures.Exceptions.SportExceptions;
+using SportFixtures.Exceptions.TeamExceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +13,13 @@ namespace SportFixtures.Portal.Controllers
     [Route("api/teams")]
     public class TeamsController : ControllerBase
     {
+        private ITeamBusinessLogic teamBusinessLogic;
+
+        public TeamsController(ITeamBusinessLogic teamBL)
+        {
+            teamBusinessLogic = teamBL;
+        }
+
         [HttpGet]
         public ActionResult<ICollection<Team>> GetAllTeams()
         {
@@ -23,21 +33,84 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPost]
-        public void CreateTeam([FromBody]Team team)
+        public ActionResult CreateTeam([FromBody]Team team)
         {
-            //TeamBL.Add(team);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                teamBusinessLogic.Add(team);
+                return Ok();
+            }
+            catch (TeamException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (SportDoesNotExistException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (TeamAlreadyInSportException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPut("{id}")]
-        public void UpdateTeam(int id, [FromBody]Team team)
+        public ActionResult UpdateTeam(int id, [FromBody]Team team)
         {
-            //TeamBL.Update(team);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                teamBusinessLogic.Update(team);
+                return Ok();
+            }
+            catch (TeamDoesNotExistsException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (TeamException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete("{id}")]
-        public void DeleteTeam(int id)
+        public ActionResult DeleteTeam(int id)
         {
-            //TeamBL.Delete(new Team() { Id = id });
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                teamBusinessLogic.Delete(new Team() { Id = id });
+                return Ok();
+            }
+            catch (TeamDoesNotExistsException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

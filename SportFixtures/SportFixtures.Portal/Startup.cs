@@ -6,10 +6,16 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SportFixtures.BusinessLogic.Implementations;
+using SportFixtures.BusinessLogic.Interfaces;
+using SportFixtures.Data.Access;
+using SportFixtures.Data.Entities;
+using SportFixtures.Data.Repository;
 
 namespace SportFixtures.Portal
 {
@@ -34,10 +40,12 @@ namespace SportFixtures.Portal
         private void ResolveBusinessLogicDependencies(IServiceCollection services)
         {
             services.AddScoped<ISportBusinessLogic, SportBusinessLogic>();
+            services.AddScoped<ITeamBusinessLogic, TeamBusinessLogic>();
         }
 
         private void ResolveRepositoryDependencies(IServiceCollection services)
         {
+            services.AddScoped<IRepository<Team>, GenericRepository<Team>>();
             services.AddScoped<IRepository<Sport>, GenericRepository<Sport>>();
         }
 
