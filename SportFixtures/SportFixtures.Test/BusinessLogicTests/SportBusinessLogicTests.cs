@@ -25,7 +25,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var mockRepo = new Mock<IRepository<Sport>>();
             mockRepo.Setup(un => un.Get(null, null, "")).Returns(sports);
             ISportBusinessLogic sportBL = new SportBusinessLogic(mockRepo.Object);
-            Assert.IsTrue(sports.Count == 1);
+            Assert.IsTrue(sportBL.GetAll().Count() == 1);
         }
 
         [TestMethod]

@@ -90,5 +90,9 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
+        public IEnumerable<Sport> GetAll(){
+            return repository.Get(null, null, "");
+        }
+
     }
 }
