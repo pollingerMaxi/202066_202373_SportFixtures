@@ -223,8 +223,9 @@ namespace SportFixtures.Test.BusinessLogicTests
             DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
             DateTime date2 = new DateTime(2018, 9, 28, 8, 30, 00);
             var encounter = new Encounter() { Id = 1, Date = date, SportId = sport.Id, Team1 = team1, Team2 = team2 };
-            var encounter2 = new Encounter() { Id = 1, Date = date2, SportId = sport.Id, Team1 = team1, Team2 = team2 };
-            mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
+            var encounter2 = new Encounter() { Id = 2, Date = date2, SportId = sport.Id, Team1 = team1, Team2 = team2 };
+            mockEncounterRepo.Setup(x => x.Insert(encounter)).Callback<Encounter>(x => encounterList.Add(encounter));
+            mockEncounterRepo.Setup(x => x.Insert(encounter2)).Callback<Encounter>(x => encounterList.Add(encounter2));
             encounterBL.Add(encounter);
             mockEncounterRepo.Verify(x => x.Insert(It.IsAny<Encounter>()), Times.Once());
             mockEncounterRepo.Verify(x => x.Save(), Times.Once());
@@ -240,12 +241,39 @@ namespace SportFixtures.Test.BusinessLogicTests
             var sport = new Sport() { Id = 1, Name = "Futbol" };
             DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
             var encounter = new Encounter() { Id = 1, Date = date, SportId = sport.Id, Team1 = team1, Team2 = team2 };
-            var encounter2 = new Encounter() { Id = 2, Date = date, SportId = sport.Id, Team1 = team1, Team2 = team2 };
-            mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
+            var encounter2 = new Encounter() { Id = 2, Date = date, SportId = sport.Id, Team1 = team2, Team2 = team1 };
+            mockEncounterRepo.Setup(x => x.Insert(encounter)).Callback<Encounter>(x => encounterList.Add(encounter));
+            mockEncounterRepo.Setup(x => x.Insert(encounter2)).Callback<Encounter>(x => encounterList.Add(encounter2));
             encounterBL.Add(encounter);
             mockEncounterRepo.Verify(x => x.Insert(It.IsAny<Encounter>()), Times.Once());
             mockEncounterRepo.Verify(x => x.Save(), Times.Once());
             encounterBL.Add(encounter2);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamAlreadyHasAnEncounterOnTheSameDayException))]
+        public void CheckTeamHasEncounterSameDateShouldReturnExceptionTest()
+        {
+            var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            var team3 = new Team() { Id = 3, Name = "Cerro", SportId = 1 };
+            var sport = new Sport() { Id = 1, Name = "Futbol" };
+            DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
+            DateTime date2 = new DateTime(2018, 9, 28, 8, 30, 00);
+            var encounter = new Encounter() { Id = 1, Date = date, SportId = sport.Id, Team1 = team1, Team2 = team2 };
+            var encounter2 = new Encounter() { Id = 2, Date = date2, SportId = sport.Id, Team1 = team1, Team2 = team2 };
+            var encounter3 = new Encounter() { Id = 3, Date = date2, SportId = sport.Id, Team1 = team1, Team2 = team3 };
+            mockEncounterRepo.Setup(x => x.Insert(encounter)).Callback<Encounter>(x => encounterList.Add(encounter));
+            mockEncounterRepo.Setup(x => x.Insert(encounter2)).Callback<Encounter>(x => encounterList.Add(encounter2));
+            encounterBL.Add(encounter);
+            encounterBL.Add(encounter2);
+            encounterBL.Add(encounter3);
+        }
+
+        [TestMethod]
+        public void GetAllTest(){
+            encounterBL.GetAll();
+            mockEncounterRepo.Verify(x => x.Get(null, null, ""), Times.Once());
         }
     }
 }

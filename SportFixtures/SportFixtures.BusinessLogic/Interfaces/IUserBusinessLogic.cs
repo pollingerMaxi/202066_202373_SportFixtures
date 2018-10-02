@@ -43,5 +43,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// </summary>
         /// <param name="user"></param>
         void Login(User user);
+        IEnumerable<User> GetAll();
     }
 }

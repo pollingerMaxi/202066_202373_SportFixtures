@@ -80,5 +80,10 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Delete(team);
             repository.Save();
         }
+
+        public IEnumerable<Team> GetAll()
+        {
+            return repository.Get(null, null, "");
+        }
     }
 }
