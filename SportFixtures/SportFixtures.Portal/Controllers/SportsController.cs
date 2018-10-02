@@ -22,21 +22,20 @@ namespace SportFixtures.Portal.Controllers
         [HttpGet]
         public ActionResult<ICollection<Sport>> GetAllSports()
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            //try
-            //{
-            //    var sports = sportBusinessLogic.GetAllSports();
-            //    return Ok(sports);
-            //}
-            //catch (Exception e)
-            //{
-            //    return BadRequest(e.Message);
-            //}
-            return null;
+            try
+            {
+                var sports = sportBusinessLogic.GetAll();
+                return Ok(sports);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("{id}")]
