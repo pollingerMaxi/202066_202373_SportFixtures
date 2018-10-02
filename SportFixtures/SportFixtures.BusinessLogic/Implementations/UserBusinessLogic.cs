@@ -94,5 +94,20 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Delete(user);
             repository.Save();
         }
+
+        public void CheckIfExists(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Login(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<User> GetAll()
+        {
+            return repository.Get(null, null, "");
+        }
     }
 }
