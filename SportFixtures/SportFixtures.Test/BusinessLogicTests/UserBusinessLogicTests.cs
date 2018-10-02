@@ -241,5 +241,12 @@ namespace SportFixtures.Test.BusinessLogicTests
             userBLWithoutTeamBL.Login(userWithAllData);
             mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.AtLeastOnce);
         }
+
+        [TestMethod]
+        public void GetAllTest()
+        {
+            userBLWithoutTeamBL.GetAll();
+            mockUserRepo.Verify(r => r.Get(null, null, ""), Times.Once);
+        }
     }
 }
