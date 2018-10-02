@@ -22,12 +22,40 @@ namespace SportFixtures.Portal.Controllers
         [HttpGet]
         public ActionResult<ICollection<Sport>> GetAllSports()
         {
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
+
+            //try
+            //{
+            //    var sports = sportBusinessLogic.GetAllSports();
+            //    return Ok(sports);
+            //}
+            //catch (Exception e)
+            //{
+            //    return BadRequest(e.Message);
+            //}
             return null;
         }
 
         [HttpGet("{id}")]
         public ActionResult<Sport> GetSport(int id)
         {
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
+
+            //try
+            //{
+            //    var sport = sportBusinessLogic.GetById(id);
+            //    return Ok(sport);
+            //}
+            //catch (Exception e)
+            //{
+            //    return BadRequest(e.Message);
+            //}
             return null;
         }
 
@@ -36,8 +64,9 @@ namespace SportFixtures.Portal.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
+
             try
             {
                 sportBusinessLogic.Add(sport);
@@ -47,18 +76,56 @@ namespace SportFixtures.Portal.Controllers
             {
                 return BadRequest(e.Message);
             }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
-        [HttpPut("{id}")]
-        public void UpdateSport(int id, [FromBody]Sport sport)
+        [HttpPut]
+        public ActionResult UpdateSport(int id, [FromBody]Sport sport)
         {
-            //SportBL.Update(sport);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                sportBusinessLogic.Update(sport);
+                return Ok();
+            }
+            catch (SportDoesNotExistException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete("{id}")]
-        public void DeleteSport(int id)
+        public ActionResult DeleteSport(int id)
         {
-            //SportBL.Delete(new Sport() { Id = id });
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                sportBusinessLogic.Delete(new Sport() { Id = id });
+                return Ok();
+            }
+            catch (SportDoesNotExistException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
