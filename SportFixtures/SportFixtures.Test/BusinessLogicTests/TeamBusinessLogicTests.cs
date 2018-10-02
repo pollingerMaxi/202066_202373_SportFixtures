@@ -48,11 +48,11 @@ namespace SportFixtures.Test.BusinessLogicTests
             var sport = new Sport() { Id = 1, Name = "SportName" };
             var teamsList = new List<Team>();
             mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
-            //mockSportRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
             teamBL.Add(team);
             mockTeamRepo.Verify(x => x.Insert(It.IsAny<Team>()), Times.Once());
             mockTeamRepo.Verify(x => x.Save(), Times.Once());
-            Assert.IsTrue(teamsList.First().Id == team.Id);
+            int result = teamBL.GetAll().Count();
+            Assert.IsTrue(result == 2);
         }
 
         [TestMethod]
