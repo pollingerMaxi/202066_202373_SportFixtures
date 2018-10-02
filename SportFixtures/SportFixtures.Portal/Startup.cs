@@ -41,12 +41,14 @@ namespace SportFixtures.Portal
         {
             services.AddScoped<ISportBusinessLogic, SportBusinessLogic>();
             services.AddScoped<ITeamBusinessLogic, TeamBusinessLogic>();
+            services.AddScoped<IUserBusinessLogic, UserBusinessLogic>();
         }
 
         private void ResolveRepositoryDependencies(IServiceCollection services)
         {
             services.AddScoped<IRepository<Team>, GenericRepository<Team>>();
             services.AddScoped<IRepository<Sport>, GenericRepository<Sport>>();
+            services.AddScoped<IRepository<User>, GenericRepository<User>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
