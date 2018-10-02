@@ -153,5 +153,10 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Update(user);
             repository.Save();
         }
+
+        public IEnumerable<User> GetAll()
+        {
+            return repository.Get(null, null, "");
+        }
     }
 }
