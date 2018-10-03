@@ -160,5 +160,10 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             return repository.Get(null, null, "");
         }
+
+        public User GetById(int userId)
+        {
+            return repository.GetById(userId) ?? throw new UserDoesNotExistException();
+        }
     }
 }

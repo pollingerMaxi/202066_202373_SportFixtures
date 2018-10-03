@@ -251,5 +251,20 @@ namespace SportFixtures.Test.BusinessLogicTests
             userBLWithoutTeamBL.GetAll();
             mockUserRepo.Verify(r => r.Get(null, null, ""), Times.Once);
         }
+
+        [TestMethod]
+        public void GetUserByIdTest()
+        {
+            var user = userBLWithoutTeamBL.GetById(userWithAllData.Id);
+            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserDoesNotExistException))]
+        public void GetUserByIdWithInvalidUserIdTest()
+        {
+            var user = userBLWithoutTeamBL.GetById(99999999);
+            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
+        }
     }
 }
