@@ -85,5 +85,10 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             return repository.Get(null, null, "");
         }
+
+        public Team GetById(int teamId)
+        {
+            return repository.GetById(teamId) ?? throw new TeamDoesNotExistsException();
+        }
     }
 }

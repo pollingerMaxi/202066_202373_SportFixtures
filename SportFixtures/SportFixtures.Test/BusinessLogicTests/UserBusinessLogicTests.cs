@@ -256,15 +256,16 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void GetUserByIdTest()
         {
             var user = userBLWithoutTeamBL.GetById(userWithAllData.Id);
-            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
+            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.AtLeastOnce);
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserDoesNotExistException))]
         public void GetUserByIdWithInvalidUserIdTest()
         {
+            mockUserRepo.Reset();
             var user = userBLWithoutTeamBL.GetById(99999999);
-            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
+            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.AtLeastOnce);
         }
     }
 }
