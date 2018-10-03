@@ -289,5 +289,12 @@ namespace SportFixtures.Test.BusinessLogicTests
             encounterBL.GetAllEncountersOfTeam(teamId);
             mockEncounterRepo.Verify(x => x.Get(It.IsAny<System.Linq.Expressions.Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
         }
+
+        [TestMethod]
+        public void GetAllEncountersOfTheDay(){
+            DateTime date = DateTime.Now;
+            encounterBL.GetAllEncountersOfTheDay(date);
+            mockEncounterRepo.Verify(x => x.Get(It.IsAny<System.Linq.Expressions.Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
+        }
     }
 }

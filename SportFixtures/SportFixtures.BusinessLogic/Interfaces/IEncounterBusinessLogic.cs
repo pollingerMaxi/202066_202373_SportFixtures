@@ -14,5 +14,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
         IEnumerable<Encounter> GetAll();
         IEnumerable<Encounter> GetAllEncountersOfSport(int sportId);
         IEnumerable<Encounter> GetAllEncountersOfTeam(int teamId);
+        IEnumerable<Encounter> GetAllEncountersOfTheDay(DateTime date);
     }
 }
