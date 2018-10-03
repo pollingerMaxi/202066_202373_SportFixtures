@@ -15,7 +15,7 @@ namespace SportFixtures.Data.Access.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -88,13 +88,9 @@ namespace SportFixtures.Data.Access.Migrations
 
                     b.Property<int>("SportId");
 
-                    b.Property<int?>("UserId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("SportId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Teams");
                 });
@@ -124,6 +120,19 @@ namespace SportFixtures.Data.Access.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("SportFixtures.Data.Entities.UsersTeams", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("TeamId");
+
+                    b.HasKey("UserId", "TeamId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("UsersTeams");
+                });
+
             modelBuilder.Entity("SportFixtures.Data.Entities.Comment", b =>
                 {
                     b.HasOne("SportFixtures.Data.Entities.Encounter")
@@ -149,10 +158,19 @@ namespace SportFixtures.Data.Access.Migrations
                         .WithMany("Teams")
                         .HasForeignKey("SportId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
 
-                    b.HasOne("SportFixtures.Data.Entities.User")
-                        .WithMany("FollowedTeams")
-                        .HasForeignKey("UserId");
+            modelBuilder.Entity("SportFixtures.Data.Entities.UsersTeams", b =>
+                {
+                    b.HasOne("SportFixtures.Data.Entities.Team", "Team")
+                        .WithMany("FavoritedBy")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SportFixtures.Data.Entities.User", "User")
+                        .WithMany("Favorites")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
