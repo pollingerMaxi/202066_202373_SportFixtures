@@ -275,5 +275,12 @@ namespace SportFixtures.Test.BusinessLogicTests
             encounterBL.GetAll();
             mockEncounterRepo.Verify(x => x.Get(null, null, ""), Times.Once());
         }
+
+        [TestMethod]
+        public void GetAllEncountersOfSportTest(){
+            int sportId = 1;
+            encounterBL.GetAllEncountersOfSport(sportId);
+            mockEncounterRepo.Verify(x => x.Get(It.IsAny<System.Linq.Expressions.Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
+        }
     }
 }
