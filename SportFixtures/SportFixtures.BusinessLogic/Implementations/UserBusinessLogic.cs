@@ -13,15 +13,15 @@ namespace SportFixtures.BusinessLogic.Implementations
     public class UserBusinessLogic : IUserBusinessLogic
     {
         private IRepository<User> repository;
-        private IRepository<UsersTeams> utRepository;
+        private IRepository<UsersTeams> favoritesRepository;
         private ITeamBusinessLogic teamBusinessLogic;
 
         public User LoggedUser { get; private set; }
 
-        public UserBusinessLogic(IRepository<User> repository, ITeamBusinessLogic teamBL, IRepository<UsersTeams> utrepository)
+        public UserBusinessLogic(IRepository<User> repository, ITeamBusinessLogic teamBL, IRepository<UsersTeams> favsRepo)
         {
             this.repository = repository;
-            utRepository = utrepository;
+            favoritesRepository = favsRepo;
             this.teamBusinessLogic = teamBL;
         }
 
@@ -86,8 +86,8 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             teamBusinessLogic.CheckIfExists(teamId);
             CheckIfExists(userId);
-            utRepository.Insert(new UsersTeams() { UserId = userId, TeamId = teamId });
-            utRepository.Save();
+            favoritesRepository.Insert(new UsersTeams() { UserId = userId, TeamId = teamId });
+            favoritesRepository.Save();
         }
 
         public void Update(User user)
