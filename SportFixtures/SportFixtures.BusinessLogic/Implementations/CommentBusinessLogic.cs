@@ -20,15 +20,18 @@ namespace SportFixtures.BusinessLogic.Implementations
             this.userBL = userBL;
         }
 
-        public void Add(Comment comment){
+        public void Add(Comment comment)
+        {
             Validate(comment);
             encounterBL.AddCommentToEncounter(comment);
             repository.Insert(comment);
             repository.Save();
         }
-        
-        private void Validate(Comment comment){
-            if(string.IsNullOrWhiteSpace(comment.Text)){
+
+        private void Validate(Comment comment)
+        {
+            if (string.IsNullOrWhiteSpace(comment.Text))
+            {
                 throw new InvalidCommentTextException();
             }
             encounterBL.CheckIfExists(comment.EncounterId);

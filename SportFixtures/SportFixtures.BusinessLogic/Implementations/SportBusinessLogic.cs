@@ -69,8 +69,9 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
             return sport;
         }
-        
-        public void Update(Sport sport){
+
+        public void Update(Sport sport)
+        {
             CheckIfSportExists(sport);
             repository.Update(sport);
             repository.Save();
@@ -78,18 +79,21 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         private void CheckIfSportExists(Sport sport)
         {
-            if(repository.GetById(sport.Id) == null){
+            if (repository.GetById(sport.Id) == null)
+            {
                 throw new SportDoesNotExistException();
             }
         }
-        
-        public void Delete(Sport sport){
+
+        public void Delete(Sport sport)
+        {
             CheckIfSportExists(sport);
             repository.Delete(sport);
             repository.Save();
         }
 
-        public IEnumerable<Sport> GetAll(){
+        public IEnumerable<Sport> GetAll()
+        {
             return repository.Get(null, null, "");
         }
 
