@@ -12,5 +12,8 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void CheckIfExists(int encounterId);
         void AddCommentToEncounter(Comment comment);
         IEnumerable<Encounter> GetAll();
+        IEnumerable<Encounter> GetAllEncountersOfSport(int sportId);
+        IEnumerable<Encounter> GetAllEncountersOfTeam(int teamId);
+        IEnumerable<Encounter> GetAllEncountersOfTheDay(DateTime date);
     }
 }
