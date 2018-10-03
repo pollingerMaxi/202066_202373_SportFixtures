@@ -42,21 +42,20 @@ namespace SportFixtures.Portal.Controllers
         [HttpGet("{id}")]
         public ActionResult<Team> GetTeam(int id)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            //try
-            //{
-            //    var team = teamBusinessLogic.GetById(id);
-            //    return Ok(team);
-            //}
-            //catch (Exception e)
-            //{
-            //    return BadRequest(e.Message);
-            //}
-            return null;
+            try
+            {
+                var team = teamBusinessLogic.GetById(id);
+                return Ok(team);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost]
