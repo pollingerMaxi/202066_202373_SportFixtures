@@ -4,6 +4,7 @@ using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.CommentExceptions;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace SportFixtures.BusinessLogic.Implementations
 {
@@ -33,6 +34,17 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
             encounterBL.CheckIfExists(comment.EncounterId);
             userBL.CheckIfExists(comment.UserId);
+        }
+
+        public IEnumerable<Comment> GetAll(){
+            return repository.Get(null, null, "");
+        }
+        public Comment GetById(int id){
+            return repository.GetById(id);
+        }
+        public IEnumerable<Comment> GetAllCommentsOfEncounter(int encounterId)
+        {
+            return repository.Get(c => (c.EncounterId == encounterId), null, "");
         }
 
     }
