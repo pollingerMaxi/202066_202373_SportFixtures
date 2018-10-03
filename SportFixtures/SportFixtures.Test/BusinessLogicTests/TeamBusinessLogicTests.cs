@@ -113,7 +113,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             //to return the sport and the list of teams
             teamBL.Add(teamWithAllData);
         }
-        
+
         [TestMethod]
         public void GetAllTest()
         {
@@ -121,5 +121,11 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockTeamRepo.Verify(x => x.Get(null, null, ""), Times.Once());
         }
 
+        [TestMethod]
+        public void EqualsTest()
+        {
+            var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            Assert.IsFalse(team1.Equals(null));
+        }
     }
 }

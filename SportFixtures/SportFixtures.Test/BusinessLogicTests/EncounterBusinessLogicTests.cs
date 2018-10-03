@@ -9,6 +9,7 @@ using SportFixtures.Exceptions.EncounterExceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace SportFixtures.Test.BusinessLogicTests
@@ -271,30 +272,34 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
-        public void GetAllTest(){
+        public void GetAllTest()
+        {
             encounterBL.GetAll();
             mockEncounterRepo.Verify(x => x.Get(null, null, ""), Times.Once());
         }
 
         [TestMethod]
-        public void GetAllEncountersOfSportTest(){
+        public void GetAllEncountersOfSportTest()
+        {
             int sportId = 1;
             encounterBL.GetAllEncountersOfSport(sportId);
-            mockEncounterRepo.Verify(x => x.Get(It.IsAny<System.Linq.Expressions.Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
+            mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
         }
 
         [TestMethod]
-        public void GetAllEncountersOfTeamTest(){
+        public void GetAllEncountersOfTeamTest()
+        {
             int teamId = 1;
             encounterBL.GetAllEncountersOfTeam(teamId);
-            mockEncounterRepo.Verify(x => x.Get(It.IsAny<System.Linq.Expressions.Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
+            mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
         }
 
         [TestMethod]
-        public void GetAllEncountersOfTheDay(){
+        public void GetAllEncountersOfTheDay()
+        {
             DateTime date = DateTime.Now;
             encounterBL.GetAllEncountersOfTheDay(date);
-            mockEncounterRepo.Verify(x => x.Get(It.IsAny<System.Linq.Expressions.Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
+            mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
         }
     }
 }
