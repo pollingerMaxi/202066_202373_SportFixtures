@@ -42,21 +42,20 @@ namespace SportFixtures.Portal.Controllers
         [HttpGet("{id}")]
         public ActionResult<User> GetUser(int id)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            //try
-            //{
-            //    var user = userBusinessLogic.GetById(id);
-            //    return Ok(user);
-            //}
-            //catch (Exception e)
-            //{
-            //    return BadRequest(e.Message);
-            //}
-            return null;
+            try
+            {
+                var user = userBusinessLogic.GetById(id);
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost]
