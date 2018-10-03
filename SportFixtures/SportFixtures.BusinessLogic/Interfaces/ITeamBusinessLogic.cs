@@ -11,5 +11,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void Delete(Team team);
         void CheckIfExists(int teamId);
         IEnumerable<Team> GetAll();
+        Team GetById(int teamId);
     }
 }

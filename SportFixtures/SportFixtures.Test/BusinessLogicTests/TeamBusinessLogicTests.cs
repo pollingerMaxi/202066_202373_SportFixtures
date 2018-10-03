@@ -127,5 +127,21 @@ namespace SportFixtures.Test.BusinessLogicTests
             var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
             Assert.IsFalse(team1.Equals(null));
         }
+
+        [TestMethod]
+        public void GetTeamByIdTest()
+        {
+            var team = teamBL.GetById(teamWithAllData.Id);
+            mockTeamRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamDoesNotExistsException))]
+        public void GetTeamByIdWithInvalidTeamIdTest()
+        {
+            mockTeamRepo.Reset();
+            var team = teamBL.GetById(99999999);
+            mockTeamRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
+        }
     }
 }
