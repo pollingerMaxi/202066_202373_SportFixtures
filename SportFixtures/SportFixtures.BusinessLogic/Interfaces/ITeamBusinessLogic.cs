@@ -9,7 +9,7 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void Add(Team team);
         void Update(Team team);
         void Delete(Team team);
-        void CheckIfTeamExists(Team team);
+        void CheckIfExists(int teamId);
         IEnumerable<Team> GetAll();
     }
 }

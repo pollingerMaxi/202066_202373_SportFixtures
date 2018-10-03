@@ -13,13 +13,15 @@ namespace SportFixtures.BusinessLogic.Implementations
     public class UserBusinessLogic : IUserBusinessLogic
     {
         private IRepository<User> repository;
+        private IRepository<UsersTeams> utRepository;
         private ITeamBusinessLogic teamBusinessLogic;
 
         public User LoggedUser { get; private set; }
 
-        public UserBusinessLogic(IRepository<User> repository, ITeamBusinessLogic teamBL)
+        public UserBusinessLogic(IRepository<User> repository, ITeamBusinessLogic teamBL, IRepository<UsersTeams> utrepository)
         {
             this.repository = repository;
+            utRepository = utrepository;
             this.teamBusinessLogic = teamBL;
         }
 
@@ -80,12 +82,12 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
         }
 
-        public void FollowTeam(User user, Team team)
+        public void FollowTeam(int userId, int teamId)
         {
-            teamBusinessLogic.CheckIfTeamExists(team);
-            CheckIfExists(user.Id);
-            user.FollowedTeams.Add(team);
-            repository.Save();
+            teamBusinessLogic.CheckIfExists(teamId);
+            CheckIfExists(userId);
+            utRepository.Insert(new UsersTeams() { UserId = userId, TeamId = teamId });
+            utRepository.Save();
         }
 
         public void Update(User user)

@@ -14,11 +14,11 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void AddUser(User user);
 
         /// <summary>
-        /// Adds the given team to the user's FollowedTeams.
+        /// Adds the given team to the user's Favorites.
         /// </summary>
         /// <param name="user"></param>
         /// <param name="team"></param>
-        void FollowTeam(User user, Team team);
+        void FollowTeam(int userId, int teamId);
 
         /// <summary>
         /// Updates a user.

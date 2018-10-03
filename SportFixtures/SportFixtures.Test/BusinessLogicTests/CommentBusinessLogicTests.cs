@@ -19,8 +19,7 @@ namespace SportFixtures.Test.BusinessLogicTests
     public class CommentBusinessLogicTests
     {
         private const dynamic NO_BUSINESS_LOGIC = null;
-        private Context context;
-        private IRepository<Comment> repository;
+        private const dynamic NO_UT_REPOSITORY = null;
         private Mock<IRepository<Comment>> mockCommentRepo;
         private Mock<IRepository<Encounter>> mockEncounterRepo;
         private Mock<IRepository<Sport>> mockSportRepo;
@@ -36,7 +35,8 @@ namespace SportFixtures.Test.BusinessLogicTests
         private Encounter encounter;
 
         [TestInitialize]
-        public void TestInitialize(){
+        public void TestInitialize()
+        {
             mockCommentRepo = new Mock<IRepository<Comment>>();
             mockEncounterRepo = new Mock<IRepository<Encounter>>();
             mockSportRepo = new Mock<IRepository<Sport>>();
@@ -45,10 +45,10 @@ namespace SportFixtures.Test.BusinessLogicTests
             encounterBL = new EncounterBusinessLogic(mockEncounterRepo.Object);
             sportBL = new SportBusinessLogic(mockSportRepo.Object);
             teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
-            userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL);
+            userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL, NO_UT_REPOSITORY);
             commentBL = new CommentBusinessLogic(mockCommentRepo.Object, encounterBL, userBL);
             commentList = new List<Comment>();
-            user = new User(){Id = 1};
+            user = new User() { Id = 1 };
             var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
             var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
             var sport = new Sport() { Id = 1, Name = "Futbol" };

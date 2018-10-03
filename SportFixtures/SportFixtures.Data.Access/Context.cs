@@ -14,6 +14,7 @@ namespace SportFixtures.Data.Access
         public DbSet<User> Users { get; set; }
         public DbSet<Encounter> Encounters { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<UsersTeams> UsersTeams { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,6 +28,9 @@ namespace SportFixtures.Data.Access
         {
             builder.Entity<Encounter>().HasMany(c => c.Comments).WithOne().HasForeignKey(c => c.EncounterId);
             builder.Entity<Sport>().HasMany(t => t.Teams).WithOne().HasForeignKey(t => t.SportId);
+            builder.Entity<UsersTeams>().HasKey(ut => new { ut.UserId, ut.TeamId });
+            builder.Entity<UsersTeams>().HasOne<User>(ut => ut.User).WithMany(u => u.Favorites).HasForeignKey(ut => ut.UserId);
+            builder.Entity<UsersTeams>().HasOne<Team>(ut => ut.Team).WithMany(u => u.FavoritedBy).HasForeignKey(ut => ut.TeamId);
         }
 
         public Context() { }

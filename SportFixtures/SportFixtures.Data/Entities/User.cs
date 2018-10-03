@@ -11,13 +11,13 @@ namespace SportFixtures.Data.Entities
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-        public ICollection<Team> FollowedTeams { get; set; }
+        public ICollection<UsersTeams> Favorites { get; set; }
         public Role Role { get; set; }
         public Guid? Token { get; set; }
 
         public User()
         {
-            FollowedTeams = new List<Team>();
+            Favorites = new List<UsersTeams>();
         }
     }
 }

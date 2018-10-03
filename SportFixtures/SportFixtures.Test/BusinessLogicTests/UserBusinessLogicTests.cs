@@ -16,11 +16,13 @@ namespace SportFixtures.Test.BusinessLogicTests
     public class UserBusinessLogicTests
     {
         private const dynamic NO_BUSINESS_LOGIC = null;
+        private const dynamic NO_UT_REPOSITORY = null;
         private User userWithAllData;
         private User adminWithAllData;
         private IUserBusinessLogic userBLWithoutTeamBL;
         private Mock<IRepository<User>> mockUserRepo;
         private Mock<IRepository<Team>> mockTeamRepo;
+        private Mock<IRepository<UsersTeams>> mockUTRepo;
         private List<User> userList;
 
         [TestInitialize]
@@ -46,8 +48,9 @@ namespace SportFixtures.Test.BusinessLogicTests
             };
             mockUserRepo = new Mock<IRepository<User>>();
             mockTeamRepo = new Mock<IRepository<Team>>();
+            mockUTRepo = new Mock<IRepository<UsersTeams>>();
             userList = new List<User>();
-            userBLWithoutTeamBL = new UserBusinessLogic(mockUserRepo.Object, NO_BUSINESS_LOGIC);
+            userBLWithoutTeamBL = new UserBusinessLogic(mockUserRepo.Object, NO_BUSINESS_LOGIC, NO_UT_REPOSITORY);
             mockUserRepo.Setup(r => r.Get(null, null, "")).Returns(userList);
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
             userBLWithoutTeamBL.Login(adminWithAllData);
@@ -137,10 +140,10 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             var team = new Team();
             var teamBL = new TeamBusinessLogic(mockTeamRepo.Object, NO_BUSINESS_LOGIC);
-            var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL);
+            var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL, mockUTRepo.Object);
             mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
-            userBL.FollowTeam(userWithAllData, team);
+            userBL.FollowTeam(userWithAllData.Id, team.Id);
             mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.AtLeastOnce);
             mockTeamRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
         }
@@ -152,10 +155,10 @@ namespace SportFixtures.Test.BusinessLogicTests
             var user = new User() { Name = "Name", Username = "nick33", LastName = "surname", Password = "hash", Email = "a@a.com" };
             var team = new Team();
             var teamBL = new TeamBusinessLogic(mockTeamRepo.Object, NO_BUSINESS_LOGIC);
-            var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL);
+            var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL, mockUTRepo.Object);
             mockUserRepo.Reset();
             mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
-            userBL.FollowTeam(user, team);
+            userBL.FollowTeam(user.Id, team.Id);
             mockTeamRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
         }
 

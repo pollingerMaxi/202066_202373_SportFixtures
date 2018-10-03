@@ -10,6 +10,12 @@ namespace SportFixtures.Data.Entities
         public string Name { get; set; }
         public string PhotoPath { get; set; }
         public int SportId { get; set; }
+        public ICollection<UsersTeams> FavoritedBy { get; set; }
+
+        public Team()
+        {
+            FavoritedBy = new List<UsersTeams>();
+        }
 
         public override bool Equals(object obj)
         {
