@@ -90,5 +90,10 @@ namespace SportFixtures.BusinessLogic.Implementations
         public IEnumerable<Encounter> GetAllEncountersOfSport(int sportId){
             return repository.Get(e => (e.SportId == sportId), null, "");
         }
+
+        public IEnumerable<Encounter> GetAllEncountersOfTeam(int teamId)
+        {
+            return repository.Get(e => ((e.Team1.Id == teamId) || (e.Team2.Id == teamId)), null, "");
+        }
     }
 }

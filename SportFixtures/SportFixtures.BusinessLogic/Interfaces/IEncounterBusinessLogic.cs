@@ -13,5 +13,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void AddCommentToEncounter(Comment comment);
         IEnumerable<Encounter> GetAll();
         IEnumerable<Encounter> GetAllEncountersOfSport(int sportId);
+        IEnumerable<Encounter> GetAllEncountersOfTeam(int teamId);
     }
 }
