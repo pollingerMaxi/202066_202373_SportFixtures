@@ -51,6 +51,7 @@ namespace SportFixtures.Portal
             services.AddScoped<IRepository<Sport>, GenericRepository<Sport>>();
             services.AddScoped<IRepository<User>, GenericRepository<User>>();
             services.AddScoped<IRepository<Comment>, GenericRepository<Comment>>();
+            services.AddScoped<IRepository<UsersTeams>, GenericRepository<UsersTeams>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

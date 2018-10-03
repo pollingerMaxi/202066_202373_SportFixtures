@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Entities;
+using SportFixtures.Exceptions.TeamExceptions;
 using SportFixtures.Exceptions.UserExceptions;
 using System;
 using System.Collections.Generic;
@@ -120,6 +121,33 @@ namespace SportFixtures.Portal.Controllers
             {
                 userBusinessLogic.Delete(new User() { Id = id });
                 return Ok();
+            }
+            catch (UserDoesNotExistException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("favorite")]
+        public ActionResult FavoriteTeam([FromBody]UsersTeams userteam)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                userBusinessLogic.FollowTeam(userteam.UserId, userteam.TeamId);
+                return Ok();
+            }
+            catch (TeamDoesNotExistsException e)
+            {
+                return NotFound(e.Message);
             }
             catch (UserDoesNotExistException e)
             {
