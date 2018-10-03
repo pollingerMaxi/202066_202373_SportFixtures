@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Linq.Expressions;
 
 namespace SportFixtures.Test.BusinessLogicTests
 {
@@ -104,6 +105,27 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockCommentRepo.Setup(x => x.Insert(It.IsAny<Comment>())).Callback<Comment>(x => commentList.Add(comment));
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(user);
             commentBL.Add(comment);
+        }
+
+        [TestMethod]
+        public void GetAllCommentsTest()
+        {
+            var comments = commentBL.GetAll();
+            mockCommentRepo.Verify(x => x.Get(null, null, ""), Times.Once());
+        }
+
+        [TestMethod]
+        public void GetCommentByIdTest()
+        {
+            var comment = commentBL.GetById(1);
+            mockCommentRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once());
+        }
+        
+        [TestMethod]
+        public void GetAllCommentsOfEncounterTest()
+        {
+            var comments = commentBL.GetAllCommentsOfEncounter(1);
+            mockCommentRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Comment, bool>>>(), null, ""), Times.Once());
         }
     }
 }

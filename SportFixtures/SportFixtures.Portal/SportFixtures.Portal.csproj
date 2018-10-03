@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SportFixtures.BusinessLogic\SportFixtures.BusinessLogic.csproj" />
     <ProjectReference Include="..\SportFixtures.Data.Access\SportFixtures.Data.Access.csproj" />
+    <ProjectReference Include="..\SportFixtures.Data\SportFixtures.Data.csproj" />
   </ItemGroup>
 
 </Project>

@@ -29,8 +29,8 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                //var comments = commentBusinessLogic.GetAll();
-                return null; // Ok(comments);
+                var comments = commentBusinessLogic.GetAll();
+                return Ok(comments);
             }
             catch (Exception e)
             {
@@ -41,20 +41,20 @@ namespace SportFixtures.Portal.Controllers
         [HttpGet("{id}")]
         public ActionResult<Comment> GetComment(int id)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            //try
-            //{
-            //    var comment  = commentBusinessLogic.GetById(id);
-            //    return Ok(comment);
-            //}
-            //catch (Exception e)
-            //{
-            //    return BadRequest(e.Message);
-            //}
+            try
+            {
+               var comment  = commentBusinessLogic.GetById(id);
+               return Ok(comment);
+            }
+            catch (Exception e)
+            {
+               return BadRequest(e.Message);
+            }
             return null;
         }
 
@@ -74,6 +74,25 @@ namespace SportFixtures.Portal.Controllers
             catch (CommentException e)
             {
                 return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("encounter/{encounterId}")]
+        public ActionResult<ICollection<Comment>> GetCommentsOfEncounter(int encounterId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var comments = commentBusinessLogic.GetAllCommentsOfEncounter(encounterId);
+                return Ok(comments);
             }
             catch (Exception e)
             {
