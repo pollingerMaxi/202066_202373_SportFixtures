@@ -51,6 +51,10 @@ namespace SportFixtures.Portal.Controllers
                 var encounter = encounterBusinessLogic.GetById(id);
                 return Ok(encounter);
             }
+            catch (EncounterDoesNotExistException e)
+            {
+                return NotFound(e.Message);
+            }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
@@ -134,12 +138,22 @@ namespace SportFixtures.Portal.Controllers
                 return BadRequest(ModelState);
             }
 
-            var encounters = encounterBusinessLogic.GetAllEncountersOfSport(sportId);
-            return Ok();
-            //ACA CAPAZ TENDRIAMOS QUE CHEQUEAR QUE EXISTA EL SPORT
+            try
+            {
+                var encounters = encounterBusinessLogic.GetAllEncountersOfSport(sportId);
+                return Ok();
+            }
+            catch (NoEncountersFoundForSportException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
-        [HttpDelete("teams/{sportId}")]
+        [HttpDelete("teams/{teamId}")]
         public ActionResult GetAllEncountersOfTeam(int teamId)
         {
             if (!ModelState.IsValid)
@@ -147,12 +161,22 @@ namespace SportFixtures.Portal.Controllers
                 return BadRequest(ModelState);
             }
 
-            var encounters = encounterBusinessLogic.GetAllEncountersOfTeam(teamId);
-            return Ok();
-            //ACA CAPAZ TENDRIAMOS QUE CHEQUEAR QUE EXISTA EL TEAM
+            try
+            {
+                var encounters = encounterBusinessLogic.GetAllEncountersOfTeam(teamId);
+                return Ok();
+            }
+            catch (NoEncountersFoundForTeamException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
-        [HttpDelete("teams/{sportId}")]
+        [HttpDelete("teams/{date}")]
         public ActionResult GetAllEncountersOfTheDay(DateTime date)
         {
             if (!ModelState.IsValid)
@@ -160,8 +184,19 @@ namespace SportFixtures.Portal.Controllers
                 return BadRequest(ModelState);
             }
 
-            var encounters = encounterBusinessLogic.GetAllEncountersOfTheDay(date);
-            return Ok();
+            try
+            {
+                var encounters = encounterBusinessLogic.GetAllEncountersOfTheDay(date);
+                return Ok();
+            }
+            catch (NoEncountersFoundForDateException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
