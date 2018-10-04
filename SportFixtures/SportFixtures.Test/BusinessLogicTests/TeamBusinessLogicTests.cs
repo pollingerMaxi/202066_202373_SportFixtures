@@ -92,9 +92,9 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void DeleteTeamOkTest()
         {
-            mockTeamRepo.Setup(x => x.Delete(It.IsAny<Team>())).Callback<Team>(x => teamList.Remove(teamWithAllData));
+            mockTeamRepo.Setup(x => x.Delete(It.IsAny<int>())).Callback<object>(x => teamList.Remove(teamWithAllData));
             teamBL.Delete(teamWithAllData.Id);
-            mockTeamRepo.Verify(x => x.Delete(It.IsAny<Team>()), Times.Once());
+            mockTeamRepo.Verify(x => x.Delete(It.IsAny<int>()), Times.Once());
         }
 
         [TestMethod]

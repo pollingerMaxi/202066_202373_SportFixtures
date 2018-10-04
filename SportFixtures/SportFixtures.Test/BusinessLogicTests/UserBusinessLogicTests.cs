@@ -201,7 +201,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void DeleteUserTest()
         {
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
-            mockUserRepo.Setup(r => r.Delete(It.IsAny<int>())).Callback<int>(x => userList.RemoveAt(0));
+            mockUserRepo.Setup(r => r.Delete(It.IsAny<int>())).Callback<object>(x => userList.Clear());
             userBLWithoutTeamBL.Delete(userWithAllData.Id);
             mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.AtLeastOnce);
             mockUserRepo.Verify(x => x.Delete(It.IsAny<int>()), Times.Once);
