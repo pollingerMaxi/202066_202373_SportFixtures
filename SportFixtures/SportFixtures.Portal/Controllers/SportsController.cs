@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
+using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Exceptions.SportExceptions;
+using SportFixtures.Portal.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +60,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPost]
+        [AuthorizedRoles(Role.Admin)]
         public ActionResult CreateSport([FromBody]Sport sport)
         {
             if (!ModelState.IsValid)
@@ -81,6 +84,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPut]
+        [AuthorizedRoles(Role.Admin)]
         public ActionResult UpdateSport(int id, [FromBody]Sport sport)
         {
             if (!ModelState.IsValid)
@@ -104,6 +108,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpDelete("{id}")]
+        [AuthorizedRoles(Role.Admin)]
         public ActionResult DeleteSport(int id)
         {
             if (!ModelState.IsValid)

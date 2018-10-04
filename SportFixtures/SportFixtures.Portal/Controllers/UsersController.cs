@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
+using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Exceptions.TeamExceptions;
 using SportFixtures.Exceptions.UserExceptions;
+using SportFixtures.Portal.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +61,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPost]
+        [AuthorizedRoles(Role.Admin)]
         public ActionResult CreateUser([FromBody]User user)
         {
             if (!ModelState.IsValid)
@@ -82,6 +85,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPut]
+        [AuthorizedRoles(Role.Admin)]
         public ActionResult UpdateUser(int id, [FromBody]User user)
         {
             if (!ModelState.IsValid)
@@ -109,6 +113,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpDelete("{id}")]
+        [AuthorizedRoles(Role.Admin)]
         public ActionResult DeleteUser(int id)
         {
             if (!ModelState.IsValid)

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
+using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Exceptions.EncounterExceptions;
+using SportFixtures.Portal.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,6 +64,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPost]
+        [AuthorizedRoles(Role.Admin)]
         public ActionResult CreateEncounter([FromBody]Encounter encounter)
         {
             if (!ModelState.IsValid)
@@ -85,6 +88,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPut]
+        [AuthorizedRoles(Role.Admin)]
         public ActionResult UpdateSport(int id, [FromBody]Encounter encounter)
         {
             if (!ModelState.IsValid)
@@ -108,6 +112,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpDelete("{id}")]
+        [AuthorizedRoles(Role.Admin)]
         public ActionResult DeleteEncounter(int id)
         {
             if (!ModelState.IsValid)
@@ -130,7 +135,7 @@ namespace SportFixtures.Portal.Controllers
             }
         }
 
-        [HttpDelete("sports/{sportId}")]
+        [HttpGet("sports/{sportId}")]
         public ActionResult GetAllEncountersOfSport(int sportId)
         {
             if (!ModelState.IsValid)
@@ -153,7 +158,7 @@ namespace SportFixtures.Portal.Controllers
             }
         }
 
-        [HttpDelete("teams/{teamId}")]
+        [HttpGet("teams/{teamId}")]
         public ActionResult GetAllEncountersOfTeam(int teamId)
         {
             if (!ModelState.IsValid)
@@ -176,7 +181,7 @@ namespace SportFixtures.Portal.Controllers
             }
         }
 
-        [HttpDelete("teams/{date}")]
+        [HttpGet("teams/{date}")]
         public ActionResult GetAllEncountersOfTheDay(DateTime date)
         {
             if (!ModelState.IsValid)

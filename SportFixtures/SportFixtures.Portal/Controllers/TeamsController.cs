@@ -93,6 +93,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPut("{id}")]
+        [AuthorizedRoles(Role.Admin)]
         public ActionResult UpdateTeam(int id, [FromBody]Team team)
         {
             if (!ModelState.IsValid)
@@ -120,6 +121,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpDelete("{id}")]
+        [AuthorizedRoles(Role.Admin)]
         public ActionResult DeleteTeam(int id)
         {
             if (!ModelState.IsValid)
