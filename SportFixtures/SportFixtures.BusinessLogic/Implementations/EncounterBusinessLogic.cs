@@ -90,7 +90,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public Encounter GetById(int id)
         {
-            return repository.GetById(id);
+            return repository.GetById(id) ?? throw new EncounterDoesNotExistException();
         }
 
         public IEnumerable<Encounter> GetAll()
@@ -100,17 +100,17 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public IEnumerable<Encounter> GetAllEncountersOfSport(int sportId)
         {
-            return repository.Get(e => (e.SportId == sportId), null, "");
+            return repository.Get(e => e.SportId == sportId, null, "") ?? throw new NoEncountersFoundForSportException();
         }
 
         public IEnumerable<Encounter> GetAllEncountersOfTeam(int teamId)
         {
-            return repository.Get(e => ((e.Team1.Id == teamId) || (e.Team2.Id == teamId)), null, "");
+            return repository.Get(e => ((e.Team1.Id == teamId) || (e.Team2.Id == teamId)), null, "") ?? throw new NoEncountersFoundForTeamException();
         }
 
         public IEnumerable<Encounter> GetAllEncountersOfTheDay(DateTime date)
         {
-            return repository.Get(e => (e.Date.Date == date.Date), null, "");
+            return repository.Get(e => (e.Date.Date == date.Date), null, "") ?? throw new NoEncountersFoundForDateException();
         }
     }
 }

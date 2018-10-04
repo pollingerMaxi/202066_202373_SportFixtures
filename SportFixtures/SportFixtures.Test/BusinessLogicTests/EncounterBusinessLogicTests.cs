@@ -29,6 +29,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             encounterBL = new EncounterBusinessLogic(mockEncounterRepo.Object);
             encounterList = new List<Encounter>();
             mockEncounterRepo.Setup(r => r.Get(null, null, "")).Returns(encounterList);
+            mockEncounterRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, "")).Returns(encounterList);
         }
 
         [TestMethod]
@@ -299,6 +300,33 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             DateTime date = DateTime.Now;
             encounterBL.GetAllEncountersOfTheDay(date);
+            mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NoEncountersFoundForSportException))]
+        public void GetAllEncountersOfSportShouldReturnExceptionTest()
+        {
+            mockEncounterRepo.Reset();
+            encounterBL.GetAllEncountersOfSport(1231412);
+            mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NoEncountersFoundForTeamException))]
+        public void GetAllEncountersOfTeamShouldReturnExceptionTest()
+        {
+            //mockEncounterRepo.Reset();
+            encounterBL.GetAllEncountersOfTeam(It.IsAny<int>());
+            mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NoEncountersFoundForDateException))]
+        public void GetAllEncountersOfTheDayShouldReturnExceptionTest()
+        {
+            //mockEncounterRepo.Reset();
+            encounterBL.GetAllEncountersOfTheDay(It.IsAny<DateTime>());
             mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
         }
     }
