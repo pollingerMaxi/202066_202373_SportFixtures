@@ -126,7 +126,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                teamBusinessLogic.Delete(new Team() { Id = id });
+                teamBusinessLogic.Delete(id);
                 return Ok();
             }
             catch (TeamDoesNotExistsException e)

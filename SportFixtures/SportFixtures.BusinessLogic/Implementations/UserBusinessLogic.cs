@@ -103,10 +103,10 @@ namespace SportFixtures.BusinessLogic.Implementations
             return repository.Get(null, null, "").FirstOrDefault(u => u.Username == username) == null;
         }
 
-        public void Delete(User user)
+        public void Delete(int id)
         {
-            CheckIfExists(user.Id);
-            repository.Delete(user);
+            CheckIfExists(id);
+            repository.Delete(id);
             repository.Save();
         }
 

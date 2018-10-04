@@ -9,7 +9,8 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void Add(Sport sport);
         void AddTeamToSport(Team team);
         void Update(Sport sport);
-        void Delete(Sport sport);
+        void Delete(int id);
+        Sport GetById(int id);
         IEnumerable<Sport> GetAll();
     }
 }

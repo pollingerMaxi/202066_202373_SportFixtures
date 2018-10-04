@@ -55,7 +55,6 @@ namespace SportFixtures.Portal.Controllers
             {
                return BadRequest(e.Message);
             }
-            return null;
         }
 
         [HttpPost]

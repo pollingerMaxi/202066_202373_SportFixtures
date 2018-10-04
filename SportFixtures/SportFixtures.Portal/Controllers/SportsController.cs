@@ -41,21 +41,20 @@ namespace SportFixtures.Portal.Controllers
         [HttpGet("{id}")]
         public ActionResult<Sport> GetSport(int id)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            //try
-            //{
-            //    var sport = sportBusinessLogic.GetById(id);
-            //    return Ok(sport);
-            //}
-            //catch (Exception e)
-            //{
-            //    return BadRequest(e.Message);
-            //}
-            return null;
+            try
+            {
+                var sport = sportBusinessLogic.GetById(id);
+                return Ok(sport);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost]
@@ -114,10 +113,10 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                sportBusinessLogic.Delete(new Sport() { Id = id });
+                sportBusinessLogic.Delete(id);
                 return Ok();
             }
-            catch (SportDoesNotExistException e)
+            catch (SportException e) //CREO QUE ACA IRIA SportException porque tiene las exceptions del validate
             {
                 return NotFound(e.Message);
             }

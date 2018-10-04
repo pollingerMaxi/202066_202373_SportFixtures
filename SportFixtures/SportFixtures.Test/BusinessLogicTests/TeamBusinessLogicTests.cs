@@ -93,7 +93,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void DeleteTeamOkTest()
         {
             mockTeamRepo.Setup(x => x.Delete(It.IsAny<Team>())).Callback<Team>(x => teamList.Remove(teamWithAllData));
-            teamBL.Delete(teamWithAllData);
+            teamBL.Delete(teamWithAllData.Id);
             mockTeamRepo.Verify(x => x.Delete(It.IsAny<Team>()), Times.Once());
         }
 
@@ -102,7 +102,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void DeleteTeamWithInvalidTeamTest()
         {
             mockTeamRepo.Reset();
-            teamBL.Delete(teamWithAllData);
+            teamBL.Delete(teamWithAllData.Id);
         }
 
         [TestMethod]

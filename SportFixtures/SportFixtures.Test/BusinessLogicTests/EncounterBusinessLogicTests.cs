@@ -198,9 +198,9 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockEncounterRepo.Setup(x => x.Delete(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.RemoveAt(0));
             mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
             encounterBL.Add(encounter);
-            encounterBL.Delete(encounter);
+            encounterBL.Delete(encounter.Id);
             mockEncounterRepo.Verify(x => x.Insert(It.IsAny<Encounter>()), Times.Once());
-            mockEncounterRepo.Verify(x => x.Delete(It.IsAny<Encounter>()), Times.Once());
+            mockEncounterRepo.Verify(x => x.Delete(It.IsAny<int>()), Times.Once());
             mockEncounterRepo.Verify(x => x.Save(), Times.AtLeast(2));
         }
 
@@ -212,7 +212,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var team2 = new Team() { Id = 1, Name = "River", SportId = 1 };
             var sport = new Sport() { Id = 1, Name = "Futbol" };
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id, Team1 = team, Team2 = team2 };
-            encounterBL.Delete(encounter);
+            encounterBL.Delete(encounter.Id);
         }
 
         [TestMethod]

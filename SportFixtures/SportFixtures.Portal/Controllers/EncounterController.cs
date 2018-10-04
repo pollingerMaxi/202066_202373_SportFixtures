@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Entities;
-using SportFixtures.Exceptions.TeamExceptions;
-using SportFixtures.Exceptions.UserExceptions;
+using SportFixtures.Exceptions.EncounterExceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace SportFixtures.Portal.Controllers
 {
-    [Route("api/users")]
-    public class UsersController : ControllerBase
+    [Route("api/encounter")]
+    public class EncounterController : ControllerBase
     {
-        private IUserBusinessLogic userBusinessLogic;
+        private IEncounterBusinessLogic encounterBusinessLogic;
 
-        public UsersController(IUserBusinessLogic userBL)
+        public EncounterController(IEncounterBusinessLogic encounterBL)
         {
-            userBusinessLogic = userBL;
+            this.encounterBusinessLogic = encounterBL;
         }
 
         [HttpGet]
-        public ActionResult<ICollection<User>> GetAllUsers()
+        public ActionResult<ICollection<Encounter>> GetAllEncounters()
         {
             if (!ModelState.IsValid)
             {
@@ -30,8 +29,8 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var users = userBusinessLogic.GetAll();
-                return Ok(users);
+                var encounters = encounterBusinessLogic.GetAll();
+                return Ok(encounters);
             }
             catch (Exception e)
             {
@@ -40,7 +39,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<User> GetUser(int id)
+        public ActionResult<Encounter> GetEncounterById(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -49,8 +48,8 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var user = userBusinessLogic.GetById(id);
-                return Ok(user);
+                var encounter = encounterBusinessLogic.GetById(id);
+                return Ok(encounter);
             }
             catch (Exception e)
             {
@@ -59,7 +58,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateUser([FromBody]User user)
+        public ActionResult CreateEncounter([FromBody]Encounter encounter)
         {
             if (!ModelState.IsValid)
             {
@@ -68,10 +67,10 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                userBusinessLogic.AddUser(user);
+                encounterBusinessLogic.Add(encounter);
                 return Ok();
             }
-            catch (UserException e)
+            catch (EncounterException e)
             {
                 return BadRequest(e.Message);
             }
@@ -82,7 +81,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPut]
-        public ActionResult UpdateUser(int id, [FromBody]User user)
+        public ActionResult UpdateSport(int id, [FromBody]Encounter encounter)
         {
             if (!ModelState.IsValid)
             {
@@ -91,37 +90,10 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                userBusinessLogic.Update(user);
+                encounterBusinessLogic.Update(encounter);
                 return Ok();
             }
-            catch (UserDoesNotExistException e)
-            {
-                return NotFound(e.Message);
-            }
-            catch (LoggedUserIsNotAdminException e)
-            {
-                return BadRequest(e.Message);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-        [HttpDelete("{id}")]
-        public ActionResult DeleteUser(int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                userBusinessLogic.Delete(id);
-                return Ok();
-            }
-            catch (UserDoesNotExistException e)
+            catch (EncounterException e)
             {
                 return NotFound(e.Message);
             }
@@ -131,8 +103,8 @@ namespace SportFixtures.Portal.Controllers
             }
         }
 
-        [HttpPost("favorite")]
-        public ActionResult FavoriteTeam([FromBody]UsersTeams userteam)
+        [HttpDelete("{id}")]
+        public ActionResult DeleteEncounter(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -141,14 +113,10 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                userBusinessLogic.FollowTeam(userteam.UserId, userteam.TeamId);
+                encounterBusinessLogic.Delete(id);
                 return Ok();
             }
-            catch (TeamDoesNotExistsException e)
-            {
-                return NotFound(e.Message);
-            }
-            catch (UserDoesNotExistException e)
+            catch (EncounterException e)
             {
                 return NotFound(e.Message);
             }
@@ -156,6 +124,44 @@ namespace SportFixtures.Portal.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        [HttpDelete("sports/{sportId}")]
+        public ActionResult GetAllEncountersOfSport(int sportId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var encounters = encounterBusinessLogic.GetAllEncountersOfSport(sportId);
+            return Ok();
+            //ACA CAPAZ TENDRIAMOS QUE CHEQUEAR QUE EXISTA EL SPORT
+        }
+
+        [HttpDelete("teams/{sportId}")]
+        public ActionResult GetAllEncountersOfTeam(int teamId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var encounters = encounterBusinessLogic.GetAllEncountersOfTeam(teamId);
+            return Ok();
+            //ACA CAPAZ TENDRIAMOS QUE CHEQUEAR QUE EXISTA EL TEAM
+        }
+
+        [HttpDelete("teams/{sportId}")]
+        public ActionResult GetAllEncountersOfTheDay(DateTime date)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var encounters = encounterBusinessLogic.GetAllEncountersOfTheDay(date);
+            return Ok();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// Deletes a user.
         /// </summary>
         /// <param name="user"></param>
-        void Delete(User user);
+        void Delete(int id);
 
         /// <summary>
         /// Throws exception if the given user is not in the system.

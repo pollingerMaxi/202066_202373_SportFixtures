@@ -53,10 +53,10 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
-        public void Delete(Encounter encounter)
+        public void Delete(int id)
         {
-            CheckIfExists(encounter.Id);
-            repository.Delete(encounter);
+            CheckIfExists(id);
+            repository.Delete(id);
             repository.Save();
         }
 
@@ -84,13 +84,13 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void AddCommentToEncounter(Comment comment)
         {
-            Encounter encounter = GetEncounterById(comment.EncounterId);
+            Encounter encounter = GetById(comment.EncounterId);
             encounter.Comments.Add(comment);
         }
 
-        private Encounter GetEncounterById(int encounterId)
+        public Encounter GetById(int id)
         {
-            return repository.GetById(encounterId);
+            return repository.GetById(id);
         }
 
         public IEnumerable<Encounter> GetAll()

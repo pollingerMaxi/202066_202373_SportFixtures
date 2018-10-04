@@ -40,17 +40,18 @@ namespace SportFixtures.Test.BusinessLogicTests
         [ExpectedException(typeof(DuplicatedSportNameException))]
         public void AddTeamNotUniqueNameShouldReturnExceptionTest()
         {
-            Sport sport = new Sport(){ Name = "Futbol" };
+            Sport sport = new Sport(){Id = 1, Name = "Futbol" };
+            Sport sport2 = new Sport(){Id = 2, Name = "Futbol" };
             sportList.Add(sport);
-            sportBL.Add(sport);
+            sportBL.Add(sport2);
         }
 
         [TestMethod]
         public void AddSportOkTest()
         {
             var sportName = "Futbol";
-            mockSportRepo.Setup(x => x.Insert(It.IsAny<Sport>())).Callback<Sport>(x => sportList.Add(new Sport() { Name = sportName }));
-            sportBL.Add(new Sport() { Name = sportName });
+            mockSportRepo.Setup(x => x.Insert(It.IsAny<Sport>())).Callback<Sport>(x => sportList.Add(new Sport() {Id = 1, Name = sportName }));
+            sportBL.Add(new Sport() {Id = 2, Name = sportName });
             mockSportRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Once());
             mockSportRepo.Verify(x => x.Save(), Times.Once());
         }
@@ -60,12 +61,13 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void AddSportWithDuplicatedNameTest()
         {
             var sportName = "Futbol";
-            var sport = new Sport() { Name = sportName };
+            var sport = new Sport() {Id = 1, Name = sportName };
+            var sport2 = new Sport() {Name = sportName };
             mockSportRepo.Setup(x => x.Insert(It.IsAny<Sport>())).Callback<Sport>(x => sportList.Add(sport));
             sportBL.Add(sport);
             mockSportRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Once());
             mockSportRepo.Verify(x => x.Save(), Times.Once());
-            sportBL.Add(sport);
+            sportBL.Add(sport2);
             mockSportRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Exactly(2));
             mockSportRepo.Verify(x => x.Save(), Times.Exactly(2));
         }
@@ -205,14 +207,13 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             Sport sport = new Sport(){Id = 1, Name = "Futbol"};
             mockSportRepo.Setup(x => x.Insert(It.IsAny<Sport>())).Callback<Sport>(x => sportList.Add(sport));
-            mockSportRepo.Setup(x => x.Delete(It.IsAny<Sport>())).Callback<Sport>(x => sportList.Remove(sport));
+            mockSportRepo.Setup(x => x.Delete(It.IsAny<int>())).Callback<int>(x => sportList.RemoveAt(0));
             mockSportRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
             sportBL.Add(sport);
-            sportBL.Delete(sport);
+            sportBL.Delete(sport.Id);
             mockSportRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Once());
-            mockSportRepo.Verify(x => x.Delete(It.IsAny<Sport>()), Times.Once());
+            mockSportRepo.Verify(x => x.Delete(It.IsAny<int>()), Times.Once());
             mockSportRepo.Verify(x => x.Save(), Times.AtLeastOnce());
-            Assert.IsTrue(sportList.Count() == 0);
         }
 
         [TestMethod]

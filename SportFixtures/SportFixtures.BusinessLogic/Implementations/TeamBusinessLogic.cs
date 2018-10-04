@@ -74,10 +74,10 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
         }
 
-        public void Delete(Team team)
+        public void Delete(int id)
         {
-            CheckIfExists(team.Id);
-            repository.Delete(team);
+            CheckIfExists(id);
+            repository.Delete(id);
             repository.Save();
         }
 

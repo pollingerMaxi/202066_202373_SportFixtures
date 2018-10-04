@@ -8,9 +8,10 @@ namespace SportFixtures.BusinessLogic.Interfaces
     {
         void Add(Encounter encounter);
         void Update(Encounter encounter);
-        void Delete(Encounter encounter);
+        void Delete(int id);
         void CheckIfExists(int encounterId);
         void AddCommentToEncounter(Comment comment);
+        Encounter GetById(int id);
         IEnumerable<Encounter> GetAll();
         IEnumerable<Encounter> GetAllEncountersOfSport(int sportId);
         IEnumerable<Encounter> GetAllEncountersOfTeam(int teamId);
