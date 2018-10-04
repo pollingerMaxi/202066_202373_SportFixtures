@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
+using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Exceptions.SportExceptions;
 using SportFixtures.Exceptions.TeamExceptions;
+using SportFixtures.Portal.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +61,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPost]
+        [AuthorizedRoles(Role.Admin)]
         public ActionResult CreateTeam([FromBody]Team team)
         {
             if (!ModelState.IsValid)
