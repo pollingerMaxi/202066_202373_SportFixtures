@@ -1,8 +1,10 @@
 ﻿using System;
 using SportFixtures.FixtureGenerator;
 using System.Collections;
-using SportFixtures.BusinessLogic;
-using SportFixtures.Data;
+using SportFixtures.BusinessLogic.Interfaces;
+using SportFixtures.Data.Entities;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SportFixtures.FixtureGenerator.Implementations
 {
@@ -18,14 +20,15 @@ namespace SportFixtures.FixtureGenerator.Implementations
             ICollection<Encounter> encounters = new List<Encounter>();
             int teamsCount = teams.Count();
             int lastTeam = 0;
-            for(int i = 0; i++; i == teamsCount){
-                team = teams[i];
-                for(lastTeam; i++; i == teamsCount){
-                    
-                    Encounter encounter = new Encounter(){};
-                }
-                
-            }
+            //for(int i = 0; i++; i == teamsCount){
+            //    team = teams[i];
+            //    for(lastTeam; i++; i == teamsCount){
+
+            //        Encounter encounter = new Encounter(){};
+            //    }
+
+            //}
+            return null;
         }
     }
 }

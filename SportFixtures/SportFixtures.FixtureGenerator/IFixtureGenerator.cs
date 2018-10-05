@@ -6,6 +6,6 @@ namespace SportFixtures.FixtureGenerator
 {
     public interface IFixtureGenerator
     {
-        ICollection<Encounter> GenerateFixture(ICollection<Team> teams);
+        ICollection<Encounter> GenerateFixture(ICollection<Team> teams, DateTime date);
     }
 }
