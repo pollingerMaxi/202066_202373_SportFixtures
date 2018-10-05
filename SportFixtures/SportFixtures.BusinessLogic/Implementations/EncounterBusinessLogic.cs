@@ -42,7 +42,9 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 throw new EncounterSportDifferentFromTeamsSportException();
             }
-            CheckTeamsEncountersDate(encounter);
+            if (TeamsHaveEncountersOnTheSameDay(encounter)){
+                throw new TeamAlreadyHasAnEncounterOnTheSameDayException();
+            }
         }
 
         public void Update(Encounter encounter)
@@ -68,18 +70,16 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
         }
 
-        public bool CheckIfTeamHasEncounterOnTheSameDay(Team team, DateTime date, int encounterId)
+        private bool CheckIfTeamHasEncounterOnTheSameDay(Team team, DateTime date, int encounterId)
         {
             return repository.Get().Any(e => ((e.Id != encounterId) && (e.Date.Date == date.Date) && (e.Team1.Equals(team) || e.Team2.Equals(team))));
         }
 
-        private void CheckTeamsEncountersDate(Encounter encounter)
+        public bool TeamsHaveEncountersOnTheSameDay(Encounter encounter)
         {
-            if (CheckIfTeamHasEncounterOnTheSameDay(encounter.Team1, encounter.Date, encounter.Id)
-                || CheckIfTeamHasEncounterOnTheSameDay(encounter.Team2, encounter.Date, encounter.Id))
-            {
-                throw new TeamAlreadyHasAnEncounterOnTheSameDayException();
-            }
+            return CheckIfTeamHasEncounterOnTheSameDay(encounter.Team1, encounter.Date, encounter.Id)
+                || CheckIfTeamHasEncounterOnTheSameDay(encounter.Team2, encounter.Date, encounter.Id);
+         
         }
 
         public void AddCommentToEncounter(Comment comment)
@@ -112,5 +112,17 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             return repository.Get(e => (e.Date.Date == date.Date), null, "") ?? throw new NoEncountersFoundForDateException();
         }
+
+        // public bool TeamsHaveEncountersOnTheSameDay(Team team, Team rival, DateTime date)
+        // {
+        //     bool result = false;
+        //     if (repository.Get().Any(e => ((e.Date.Date == date.Date) && 
+        //         ((e.Team1.Equals(team) || e.Team2.Equals(team)) || 
+        //         (e.Team1.Equals(team) || e.Team2.Equals(team))))))
+        //         {
+        //         result = true;
+        //     }
+        //     return result;
+        // }
     }
 }
