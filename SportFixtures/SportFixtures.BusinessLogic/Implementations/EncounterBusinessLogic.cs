@@ -70,16 +70,10 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
         }
 
-        private bool CheckIfTeamHasEncounterOnTheSameDay(Team team, DateTime date, int encounterId)
-        {
-            return repository.Get().Any(e => ((e.Id != encounterId) && (e.Date.Date == date.Date) && (e.Team1.Equals(team) || e.Team2.Equals(team))));
-        }
-
         public bool TeamsHaveEncountersOnTheSameDay(Encounter encounter)
         {
-            return CheckIfTeamHasEncounterOnTheSameDay(encounter.Team1, encounter.Date, encounter.Id)
-                || CheckIfTeamHasEncounterOnTheSameDay(encounter.Team2, encounter.Date, encounter.Id);
-         
+            return (repository.Get().Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team1) || e.Team2.Equals(encounter.Team1))))
+                ||  repository.Get().Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team2) || e.Team2.Equals(encounter.Team2)))));
         }
 
         public void AddCommentToEncounter(Comment comment)
@@ -112,17 +106,5 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             return repository.Get(e => (e.Date.Date == date.Date), null, "") ?? throw new NoEncountersFoundForDateException();
         }
-
-        // public bool TeamsHaveEncountersOnTheSameDay(Team team, Team rival, DateTime date)
-        // {
-        //     bool result = false;
-        //     if (repository.Get().Any(e => ((e.Date.Date == date.Date) && 
-        //         ((e.Team1.Equals(team) || e.Team2.Equals(team)) || 
-        //         (e.Team1.Equals(team) || e.Team2.Equals(team))))))
-        //         {
-        //         result = true;
-        //     }
-        //     return result;
-        // }
     }
 }
