@@ -1,15 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using SportFixtures.BusinessLogic.Implementations;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data;
-using SportFixtures.Data.Access;
 using SportFixtures.Data.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SportFixtures.Portal.Filters
 {
