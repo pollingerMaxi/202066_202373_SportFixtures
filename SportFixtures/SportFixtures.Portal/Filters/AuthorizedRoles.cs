@@ -40,8 +40,6 @@ namespace SportFixtures.Portal.Filters
                 user = logic.TokenIsValid(token);
             }
 
-            //var user = userBL.TokenIsValid(token);
-
             if (user == null)
             {
                 context.Result = new ContentResult()

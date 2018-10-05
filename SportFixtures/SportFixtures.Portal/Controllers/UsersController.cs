@@ -54,6 +54,10 @@ namespace SportFixtures.Portal.Controllers
                 var user = userBusinessLogic.GetById(id);
                 return Ok(user);
             }
+            catch (UserDoesNotExistException e)
+            {
+                return NotFound(e.Message);
+            }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
@@ -61,7 +65,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPost]
-        //[AuthorizedRoles(Role.Admin)]
+        [AuthorizedRoles(Role.Admin)]
         public ActionResult CreateUser([FromBody]User user)
         {
             if (!ModelState.IsValid)

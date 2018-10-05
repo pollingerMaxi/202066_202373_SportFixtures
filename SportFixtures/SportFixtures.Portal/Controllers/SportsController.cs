@@ -53,6 +53,10 @@ namespace SportFixtures.Portal.Controllers
                 var sport = sportBusinessLogic.GetById(id);
                 return Ok(sport);
             }
+            catch (SportDoesNotExistException e)
+            {
+                return NotFound(e.Message);
+            }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
@@ -101,6 +105,10 @@ namespace SportFixtures.Portal.Controllers
             {
                 return NotFound(e.Message);
             }
+            catch (SportException e)
+            {
+                return BadRequest(e.Message);
+            }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
@@ -121,7 +129,7 @@ namespace SportFixtures.Portal.Controllers
                 sportBusinessLogic.Delete(id);
                 return Ok();
             }
-            catch (SportException e) //CREO QUE ACA IRIA SportException porque tiene las exceptions del validate
+            catch (SportDoesNotExistException e)
             {
                 return NotFound(e.Message);
             }

@@ -54,6 +54,10 @@ namespace SportFixtures.Portal.Controllers
                 var team = teamBusinessLogic.GetById(id);
                 return Ok(team);
             }
+            catch (TeamDoesNotExistsException e)
+            {
+                return NotFound(e.Message);
+            }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
@@ -74,15 +78,15 @@ namespace SportFixtures.Portal.Controllers
                 teamBusinessLogic.Add(team);
                 return Ok();
             }
-            catch (TeamException e)
-            {
-                return BadRequest(e.Message);
-            }
             catch (SportDoesNotExistException e)
             {
                 return NotFound(e.Message);
             }
             catch (TeamAlreadyInSportException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (TeamException e)
             {
                 return BadRequest(e.Message);
             }
