@@ -61,7 +61,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPost]
-        [AuthorizedRoles(Role.Admin)]
+        //[AuthorizedRoles(Role.Admin)]
         public ActionResult CreateUser([FromBody]User user)
         {
             if (!ModelState.IsValid)

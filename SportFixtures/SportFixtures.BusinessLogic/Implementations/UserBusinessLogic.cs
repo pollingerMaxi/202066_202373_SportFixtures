@@ -28,6 +28,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         public void AddUser(User user)
         {
             ValidateUser(user);
+            user.Token = Guid.NewGuid();
             repository.Insert(user);
             repository.Save();
         }
@@ -140,7 +141,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         private void UpdateUsers(User user, User userFromDb)
         {
             LoggedUser = user;
-            userFromDb.Token = new Guid();
+            userFromDb.Token = Guid.NewGuid();
             UpdateUserToken(userFromDb);
         }
 
@@ -164,6 +165,17 @@ namespace SportFixtures.BusinessLogic.Implementations
         public User GetById(int userId)
         {
             return repository.GetById(userId) ?? throw new UserDoesNotExistException();
+        }
+
+        public User TokenIsValid(string token)
+        {
+            var tkn = Guid.Parse(token);
+            return repository.Get(null, null, "").FirstOrDefault(u => u.Token == tkn);
+        }
+
+        public void Dispose()
+        {
+            repository.Dispose();
         }
     }
 }

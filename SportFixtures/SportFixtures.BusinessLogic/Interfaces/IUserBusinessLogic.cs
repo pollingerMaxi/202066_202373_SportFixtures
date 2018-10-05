@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SportFixtures.BusinessLogic.Interfaces
 {
-    public interface IUserBusinessLogic
+    public interface IUserBusinessLogic : IDisposable
     {
         /// <summary>
         /// Adds a user to the system.
@@ -46,5 +46,7 @@ namespace SportFixtures.BusinessLogic.Interfaces
         IEnumerable<User> GetAll();
 
         User GetById(int userId);
+
+        User TokenIsValid(string token);
     }
 }
