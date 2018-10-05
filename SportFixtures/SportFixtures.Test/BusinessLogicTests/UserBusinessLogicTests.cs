@@ -35,7 +35,8 @@ namespace SportFixtures.Test.BusinessLogicTests
                 LastName = "lastname",
                 Password = "hash",
                 Email = "email@email.com",
-                Role = Role.User
+                Role = Role.User,
+                Token = Guid.NewGuid()
             };
             adminWithAllData = new User()
             {
@@ -44,7 +45,8 @@ namespace SportFixtures.Test.BusinessLogicTests
                 LastName = "lastname",
                 Password = "hash",
                 Email = "admin@email.com",
-                Role = Role.Admin
+                Role = Role.Admin,
+                Token = Guid.NewGuid()
             };
             mockUserRepo = new Mock<IRepository<User>>();
             mockTeamRepo = new Mock<IRepository<Team>>();
@@ -264,8 +266,39 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void GetUserByIdWithInvalidUserIdTest()
         {
             mockUserRepo.Reset();
-            var user = userBLWithoutTeamBL.GetById(99999999);
+            var user = userBLWithoutTeamBL.GetById(It.IsAny<int>());
             mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.AtLeastOnce);
+        }
+
+        [TestMethod]
+        public void TokenIsValidTest()
+        {
+            mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
+            var user = userBLWithoutTeamBL.TokenIsValid(It.IsAny<Guid>().ToString());
+            mockUserRepo.Verify(x => x.Get(null, null, ""), Times.Once);
+        }
+
+        [TestMethod]
+        public void TokenIsInvalidTest()
+        {
+            mockUserRepo.Reset();
+            var user = userBLWithoutTeamBL.TokenIsValid(It.IsAny<Guid>().ToString());
+            mockUserRepo.Verify(x => x.Get(null, null, ""), Times.Once);
+        }
+
+        [TestMethod]
+        public void TokenIsInvalidSecondTestTest()
+        {
+            mockUserRepo.Reset();
+            var user = userBLWithoutTeamBL.TokenIsValid(It.IsAny<Guid>().ToString());
+            mockUserRepo.Verify(x => x.Get(null, null, ""), Times.Once);
+        }
+
+        [TestMethod]
+        public void RepositoryIsDisposed()
+        {
+            userBLWithoutTeamBL.Dispose();
+            mockUserRepo.Verify(x => x.Dispose(), Times.Once);
         }
     }
 }
