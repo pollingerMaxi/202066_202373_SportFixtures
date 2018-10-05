@@ -56,6 +56,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             userList = new List<User>();
             userBLWithoutTeamBL = new UserBusinessLogic(mockUserRepo.Object, NO_BUSINESS_LOGIC, NO_UT_REPOSITORY);
             mockUserRepo.Setup(r => r.Get(null, null, "")).Returns(userList);
+            mockUserRepo.Setup(r => r.Get(It.IsAny<Expression<Func<User, bool>>>(), null, "")).Returns(userList);
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
             userBLWithoutTeamBL.Login(adminWithAllData);
         }
@@ -302,6 +303,16 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             userBLWithoutTeamBL.Dispose();
             mockUserRepo.Verify(x => x.Dispose(), Times.Once);
+        }
+
+        [TestMethod]
+        public void LogoutTest()
+        {
+            mockUserRepo.Setup(r => r.Update(It.IsAny<User>())).Callback<User>(x => userList.First().Token = null);
+            userList.Add(adminWithAllData);
+            userBLWithoutTeamBL.Logout(adminWithAllData.Email);
+            mockUserRepo.Verify(x => x.Get(It.IsAny<Expression<Func<User, bool>>>(), null, ""), Times.Once);
+            mockUserRepo.Verify(x => x.Update(It.IsAny<User>()), Times.AtLeastOnce);
         }
     }
 }

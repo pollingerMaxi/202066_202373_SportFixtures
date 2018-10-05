@@ -177,5 +177,27 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             repository.Dispose();
         }
+
+        public void Logout(string email)
+        {
+            var userFromDb = repository.Get(e => e.Email == email, null, "").FirstOrDefault();
+            if (userFromDb == null)
+            {
+                throw new UserDoesNotExistException();
+            }
+            if (userFromDb.Token == null)
+            {
+                throw new UserIsNotLoggedInException();
+            }
+            LogoutUser(userFromDb);
+        }
+
+        private void LogoutUser(User user)
+        {
+            user.Token = null;
+            repository.Update(user);
+            repository.Save();
+            LoggedUser = null;
+        }
     }
 }

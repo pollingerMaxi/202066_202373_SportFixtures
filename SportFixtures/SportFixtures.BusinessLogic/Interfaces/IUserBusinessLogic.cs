@@ -48,5 +48,7 @@ namespace SportFixtures.BusinessLogic.Interfaces
         User GetById(int userId);
 
         User TokenIsValid(string token);
+
+        void Logout(string email);
     }
 }
