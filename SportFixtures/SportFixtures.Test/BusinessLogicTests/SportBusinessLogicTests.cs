@@ -57,6 +57,15 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidSportNameException))]
+        public void AddSportInvalidNameTest()
+        {
+            sportList.Add(new Sport() { Name = "name" });
+            mockSportRepo.Setup(x => x.Insert(It.IsAny<Sport>())).Callback<Sport>(x => sportList.Add(new Sport() { Id = 1, Name = null }));
+            sportBL.Add(new Sport() { Id = 2, Name = null });
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(DuplicatedSportNameException))]
         public void AddSportWithDuplicatedNameTest()
         {

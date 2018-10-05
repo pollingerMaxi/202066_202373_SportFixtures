@@ -7,8 +7,10 @@ using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.UserExceptions;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq.Expressions;
 
 namespace SportFixtures.Test.BusinessLogicTests
 {
@@ -289,13 +291,14 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void TokenIsInvalidSecondTestTest()
         {
-            mockUserRepo.Reset();
-            var user = userBLWithoutTeamBL.TokenIsValid(It.IsAny<Guid>().ToString());
+            mockUserRepo.Setup(r => r.Get(null, null, "")).Returns(userList);
+            userList.Add(userWithAllData);
+            var user = userBLWithoutTeamBL.TokenIsValid("ab498bbf-ae0d-4d48-a0f1-e55bdad922a3");
             mockUserRepo.Verify(x => x.Get(null, null, ""), Times.Once);
         }
 
         [TestMethod]
-        public void RepositoryIsDisposed()
+        public void RepositoryIsDisposedTest()
         {
             userBLWithoutTeamBL.Dispose();
             mockUserRepo.Verify(x => x.Dispose(), Times.Once);
