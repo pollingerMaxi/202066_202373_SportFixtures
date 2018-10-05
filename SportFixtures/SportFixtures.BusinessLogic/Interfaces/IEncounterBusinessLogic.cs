@@ -12,6 +12,7 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void CheckIfExists(int encounterId);
         void AddCommentToEncounter(Comment comment);
         Encounter GetById(int id);
+        bool CheckIfTeamHasEncounterOnTheSameDay(Team team, DateTime date, int encounterId);
         IEnumerable<Encounter> GetAll();
         IEnumerable<Encounter> GetAllEncountersOfSport(int sportId);
         IEnumerable<Encounter> GetAllEncountersOfTeam(int teamId);
