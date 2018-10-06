@@ -314,5 +314,22 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockUserRepo.Verify(x => x.Get(It.IsAny<Expression<Func<User, bool>>>(), null, ""), Times.Once);
             mockUserRepo.Verify(x => x.Update(It.IsAny<User>()), Times.AtLeastOnce);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserDoesNotExistException))]
+        public void LogoutWithInvalidUserTest()
+        {
+            userBLWithoutTeamBL.Logout(adminWithAllData.Email);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserIsNotLoggedInException))]
+        public void LogoutWithUserNotLoggedInTest()
+        {
+            mockUserRepo.Setup(r => r.Get(It.IsAny<Expression<Func<User, bool>>>(), null, "")).Returns(userList);
+            adminWithAllData.Token = null;
+            userList.Add(adminWithAllData);
+            userBLWithoutTeamBL.Logout(adminWithAllData.Email);
+        }
     }
 }
