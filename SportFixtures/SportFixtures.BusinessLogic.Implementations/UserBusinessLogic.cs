@@ -124,8 +124,12 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public Guid Login(User user)
         {
-            CheckIfExists(user.Id);
-            var userFromDb = repository.GetById(user.Id);
+            var users = repository.Get(u => u.Email == user.Email, null, "");
+            if (users.Count() == 0)
+            {
+                throw new UserDoesNotExistException();
+            }
+            var userFromDb = users.FirstOrDefault();
             if (!user.Email.Equals(userFromDb.Email) && !user.Password.Equals(userFromDb.Password))
             {
                 throw new EmailOrPasswordException();

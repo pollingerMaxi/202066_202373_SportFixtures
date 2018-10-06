@@ -11,6 +11,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq.Expressions;
+using System.Collections;
 
 namespace SportFixtures.Test.BusinessLogicTests
 {
@@ -25,6 +26,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         private Mock<IRepository<User>> mockUserRepo;
         private Mock<IRepository<Team>> mockTeamRepo;
         private Mock<IRepository<UsersTeams>> mockUTRepo;
+        private Mock<IUserBusinessLogic> mockUserBL;
         private List<User> userList;
 
         [TestInitialize]
@@ -53,12 +55,14 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockUserRepo = new Mock<IRepository<User>>();
             mockTeamRepo = new Mock<IRepository<Team>>();
             mockUTRepo = new Mock<IRepository<UsersTeams>>();
+            mockUserBL = new Mock<IUserBusinessLogic>();
             userList = new List<User>();
             userBLWithoutTeamBL = new UserBusinessLogic(mockUserRepo.Object, NO_BUSINESS_LOGIC, NO_UT_REPOSITORY);
             mockUserRepo.Setup(r => r.Get(null, null, "")).Returns(userList);
             mockUserRepo.Setup(r => r.Get(It.IsAny<Expression<Func<User, bool>>>(), null, "")).Returns(userList);
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
-            userBLWithoutTeamBL.Login(adminWithAllData);
+            mockUserBL.Setup(r => r.Login(It.IsAny<User>())).Returns(Guid.NewGuid());
+            //userBLWithoutTeamBL.Login(adminWithAllData);
         }
 
         [TestMethod]
@@ -170,6 +174,8 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void UpdateUserTest()
         {
+            userList.Add(adminWithAllData);
+            userBLWithoutTeamBL.Login(adminWithAllData);
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
             userBLWithoutTeamBL.Update(userWithAllData);
             mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.AtLeastOnce);
@@ -224,7 +230,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         [ExpectedException(typeof(LoggedUserIsNotAdminException))]
         public void UpdateUserWithUserLoggedInNotAdminTest()
         {
-            mockUserRepo.Reset();
+            userList.Add(userWithAllData);
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
             userBLWithoutTeamBL.Login(userWithAllData);
             userBLWithoutTeamBL.Update(userWithAllData);
@@ -236,8 +242,8 @@ namespace SportFixtures.Test.BusinessLogicTests
         [ExpectedException(typeof(EmailOrPasswordException))]
         public void LoginWithInvalidCredentialsTest()
         {
-            mockUserRepo.Setup(r => r.GetById(It.IsAny<int>()))
-                .Returns(new User()
+            mockUserRepo.Setup(r => r.Get(It.IsAny<Expression<Func<User, bool>>>(), null, ""))
+                .Returns(new List<User>(){new User()
                 {
                     Name = "name",
                     Username = "username",
@@ -245,9 +251,10 @@ namespace SportFixtures.Test.BusinessLogicTests
                     Password = "invalidPWHash",
                     Email = "invalid@email.com",
                     Role = Role.User
-                });
+                } });
+            userList.Add(userWithAllData);
             userBLWithoutTeamBL.Login(userWithAllData);
-            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.AtLeastOnce);
+            mockUserRepo.Verify(x => x.Get(It.IsAny<Expression<Func<User, bool>>>(), null, ""), Times.AtLeastOnce);
         }
 
         [TestMethod]
@@ -330,6 +337,13 @@ namespace SportFixtures.Test.BusinessLogicTests
             adminWithAllData.Token = null;
             userList.Add(adminWithAllData);
             userBLWithoutTeamBL.Logout(adminWithAllData.Email);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserDoesNotExistException))]
+        public void LoginWithInvalidUserTest()
+        {
+            userBLWithoutTeamBL.Login(adminWithAllData);
         }
     }
 }
