@@ -282,6 +282,11 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void GetAllEncountersOfSportTest()
         {
+            var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            var sport = new Sport() { Id = 1, Name = "Futbol" };
+            var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id, Team1 = team1, Team2 = team2 };
+            encounterList.Add(encounter);
             int sportId = 1;
             encounterBL.GetAllEncountersOfSport(sportId);
             mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
@@ -290,6 +295,11 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void GetAllEncountersOfTeamTest()
         {
+            var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            var sport = new Sport() { Id = 1, Name = "Futbol" };
+            var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id, Team1 = team1, Team2 = team2 };
+            encounterList.Add(encounter);
             int teamId = 1;
             encounterBL.GetAllEncountersOfTeam(teamId);
             mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
@@ -298,6 +308,11 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void GetAllEncountersOfTheDay()
         {
+            var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            var sport = new Sport() { Id = 1, Name = "Futbol" };
+            var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id, Team1 = team1, Team2 = team2 };
+            encounterList.Add(encounter);
             DateTime date = DateTime.Now;
             encounterBL.GetAllEncountersOfTheDay(date);
             mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
@@ -308,7 +323,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void GetAllEncountersOfSportShouldReturnExceptionTest()
         {
             mockEncounterRepo.Reset();
-            encounterBL.GetAllEncountersOfSport(1231412);
+            encounterBL.GetAllEncountersOfSport(It.IsAny<int>());
             mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
         }
 
@@ -316,7 +331,6 @@ namespace SportFixtures.Test.BusinessLogicTests
         [ExpectedException(typeof(NoEncountersFoundForTeamException))]
         public void GetAllEncountersOfTeamShouldReturnExceptionTest()
         {
-            //mockEncounterRepo.Reset();
             encounterBL.GetAllEncountersOfTeam(It.IsAny<int>());
             mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
         }
@@ -325,9 +339,29 @@ namespace SportFixtures.Test.BusinessLogicTests
         [ExpectedException(typeof(NoEncountersFoundForDateException))]
         public void GetAllEncountersOfTheDayShouldReturnExceptionTest()
         {
-            //mockEncounterRepo.Reset();
             encounterBL.GetAllEncountersOfTheDay(It.IsAny<DateTime>());
             mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
+        }
+
+        [TestMethod]
+        public void GetEncounterByIdTest()
+        {
+            var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            var sport = new Sport() { Id = 1, Name = "Futbol" };
+            var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id, Team1 = team1, Team2 = team2 };
+            mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
+            var encounterFromDb = encounterBL.GetById(It.IsAny<int>());
+            mockEncounterRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(EncounterDoesNotExistException))]
+        public void GetEncounterByIdWithInvalidEncounterTest()
+        {
+            var encounterFromDb = encounterBL.GetById(It.IsAny<int>());
+            mockEncounterRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
         }
     }
 }

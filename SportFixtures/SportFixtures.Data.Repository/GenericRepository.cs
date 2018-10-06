@@ -87,5 +87,10 @@ namespace SportFixtures.Data.Repository
         {
             context.SaveChanges();
         }
+
+        public void Dispose()
+        {
+            context.Dispose();
+        }
     }
 }

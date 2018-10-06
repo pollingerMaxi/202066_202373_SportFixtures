@@ -101,9 +101,13 @@ namespace SportFixtures.Portal.Controllers
                 encounterBusinessLogic.Update(encounter);
                 return Ok();
             }
-            catch (EncounterException e)
+            catch (EncounterDoesNotExistException e)
             {
                 return NotFound(e.Message);
+            }
+            catch (EncounterException e)
+            {
+                return BadRequest(e.Message);
             }
             catch (Exception e)
             {
@@ -125,7 +129,7 @@ namespace SportFixtures.Portal.Controllers
                 encounterBusinessLogic.Delete(id);
                 return Ok();
             }
-            catch (EncounterException e)
+            catch (EncounterDoesNotExistException e)
             {
                 return NotFound(e.Message);
             }

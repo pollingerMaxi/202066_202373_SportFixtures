@@ -7,8 +7,11 @@ using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.UserExceptions;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq.Expressions;
+using System.Collections;
 
 namespace SportFixtures.Test.BusinessLogicTests
 {
@@ -23,6 +26,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         private Mock<IRepository<User>> mockUserRepo;
         private Mock<IRepository<Team>> mockTeamRepo;
         private Mock<IRepository<UsersTeams>> mockUTRepo;
+        private Mock<IUserBusinessLogic> mockUserBL;
         private List<User> userList;
 
         [TestInitialize]
@@ -35,7 +39,8 @@ namespace SportFixtures.Test.BusinessLogicTests
                 LastName = "lastname",
                 Password = "hash",
                 Email = "email@email.com",
-                Role = Role.User
+                Role = Role.User,
+                Token = Guid.NewGuid()
             };
             adminWithAllData = new User()
             {
@@ -44,16 +49,20 @@ namespace SportFixtures.Test.BusinessLogicTests
                 LastName = "lastname",
                 Password = "hash",
                 Email = "admin@email.com",
-                Role = Role.Admin
+                Role = Role.Admin,
+                Token = Guid.NewGuid()
             };
             mockUserRepo = new Mock<IRepository<User>>();
             mockTeamRepo = new Mock<IRepository<Team>>();
             mockUTRepo = new Mock<IRepository<UsersTeams>>();
+            mockUserBL = new Mock<IUserBusinessLogic>();
             userList = new List<User>();
             userBLWithoutTeamBL = new UserBusinessLogic(mockUserRepo.Object, NO_BUSINESS_LOGIC, NO_UT_REPOSITORY);
             mockUserRepo.Setup(r => r.Get(null, null, "")).Returns(userList);
+            mockUserRepo.Setup(r => r.Get(It.IsAny<Expression<Func<User, bool>>>(), null, "")).Returns(userList);
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
-            userBLWithoutTeamBL.Login(adminWithAllData);
+            mockUserBL.Setup(r => r.Login(It.IsAny<User>())).Returns(Guid.NewGuid());
+            //userBLWithoutTeamBL.Login(adminWithAllData);
         }
 
         [TestMethod]
@@ -165,6 +174,8 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void UpdateUserTest()
         {
+            userList.Add(adminWithAllData);
+            userBLWithoutTeamBL.Login(adminWithAllData);
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
             userBLWithoutTeamBL.Update(userWithAllData);
             mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.AtLeastOnce);
@@ -219,7 +230,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         [ExpectedException(typeof(LoggedUserIsNotAdminException))]
         public void UpdateUserWithUserLoggedInNotAdminTest()
         {
-            mockUserRepo.Reset();
+            userList.Add(userWithAllData);
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
             userBLWithoutTeamBL.Login(userWithAllData);
             userBLWithoutTeamBL.Update(userWithAllData);
@@ -231,8 +242,8 @@ namespace SportFixtures.Test.BusinessLogicTests
         [ExpectedException(typeof(EmailOrPasswordException))]
         public void LoginWithInvalidCredentialsTest()
         {
-            mockUserRepo.Setup(r => r.GetById(It.IsAny<int>()))
-                .Returns(new User()
+            mockUserRepo.Setup(r => r.Get(It.IsAny<Expression<Func<User, bool>>>(), null, ""))
+                .Returns(new List<User>(){new User()
                 {
                     Name = "name",
                     Username = "username",
@@ -240,9 +251,10 @@ namespace SportFixtures.Test.BusinessLogicTests
                     Password = "invalidPWHash",
                     Email = "invalid@email.com",
                     Role = Role.User
-                });
+                } });
+            userList.Add(userWithAllData);
             userBLWithoutTeamBL.Login(userWithAllData);
-            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.AtLeastOnce);
+            mockUserRepo.Verify(x => x.Get(It.IsAny<Expression<Func<User, bool>>>(), null, ""), Times.AtLeastOnce);
         }
 
         [TestMethod]
@@ -264,8 +276,74 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void GetUserByIdWithInvalidUserIdTest()
         {
             mockUserRepo.Reset();
-            var user = userBLWithoutTeamBL.GetById(99999999);
+            var user = userBLWithoutTeamBL.GetById(It.IsAny<int>());
             mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.AtLeastOnce);
+        }
+
+        [TestMethod]
+        public void TokenIsValidTest()
+        {
+            mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
+            var user = userBLWithoutTeamBL.TokenIsValid(It.IsAny<Guid>().ToString());
+            mockUserRepo.Verify(x => x.Get(null, null, ""), Times.Once);
+        }
+
+        [TestMethod]
+        public void TokenIsInvalidTest()
+        {
+            mockUserRepo.Reset();
+            var user = userBLWithoutTeamBL.TokenIsValid(It.IsAny<Guid>().ToString());
+            mockUserRepo.Verify(x => x.Get(null, null, ""), Times.Once);
+        }
+
+        [TestMethod]
+        public void TokenIsInvalidSecondTestTest()
+        {
+            mockUserRepo.Setup(r => r.Get(null, null, "")).Returns(userList);
+            userList.Add(userWithAllData);
+            var user = userBLWithoutTeamBL.TokenIsValid("ab498bbf-ae0d-4d48-a0f1-e55bdad922a3");
+            mockUserRepo.Verify(x => x.Get(null, null, ""), Times.Once);
+        }
+
+        [TestMethod]
+        public void RepositoryIsDisposedTest()
+        {
+            userBLWithoutTeamBL.Dispose();
+            mockUserRepo.Verify(x => x.Dispose(), Times.Once);
+        }
+
+        [TestMethod]
+        public void LogoutTest()
+        {
+            mockUserRepo.Setup(r => r.Update(It.IsAny<User>())).Callback<User>(x => userList.First().Token = null);
+            userList.Add(adminWithAllData);
+            userBLWithoutTeamBL.Logout(adminWithAllData.Email);
+            mockUserRepo.Verify(x => x.Get(It.IsAny<Expression<Func<User, bool>>>(), null, ""), Times.Once);
+            mockUserRepo.Verify(x => x.Update(It.IsAny<User>()), Times.AtLeastOnce);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserDoesNotExistException))]
+        public void LogoutWithInvalidUserTest()
+        {
+            userBLWithoutTeamBL.Logout(adminWithAllData.Email);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserIsNotLoggedInException))]
+        public void LogoutWithUserNotLoggedInTest()
+        {
+            mockUserRepo.Setup(r => r.Get(It.IsAny<Expression<Func<User, bool>>>(), null, "")).Returns(userList);
+            adminWithAllData.Token = null;
+            userList.Add(adminWithAllData);
+            userBLWithoutTeamBL.Logout(adminWithAllData.Email);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserDoesNotExistException))]
+        public void LoginWithInvalidUserTest()
+        {
+            userBLWithoutTeamBL.Login(adminWithAllData);
         }
     }
 }

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace SportFixtures.Portal.Controllers
 {
-    [Route("api/login")]
     public class LoginController : ControllerBase
     {
         private IUserBusinessLogic userBusinessLogic;
@@ -20,6 +19,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPost]
+        [Route("api/login")]
         public ActionResult Login([FromBody]User user)
         {
             if (!ModelState.IsValid)
@@ -29,14 +29,42 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                userBusinessLogic.Login(user);
-                return Ok();
+                var loginSuccessful = userBusinessLogic.Login(user);
+                return Ok(loginSuccessful);
             }
             catch (UserDoesNotExistException e)
             {
                 return NotFound(e.Message);
             }
             catch (EmailOrPasswordException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/logout")]
+        public ActionResult Logout([FromBody]string email)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                userBusinessLogic.Logout(email);
+                return Ok();
+            }
+            catch (UserDoesNotExistException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (UserIsNotLoggedInException e)
             {
                 return BadRequest(e.Message);
             }

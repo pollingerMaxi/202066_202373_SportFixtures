@@ -20,7 +20,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         private bool UniqueName(Sport sport)
         {
-            return !repository.Get().Any(s => ((s.Name == sport.Name) && (s.Id != sport.Id)));
+            return !repository.Get(null, null, "").Any(s => ((s.Name == sport.Name) && (s.Id != sport.Id)));
         }
 
         private void ValidateSport(Sport sport)

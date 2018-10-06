@@ -28,6 +28,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         public void AddUser(User user)
         {
             ValidateUser(user);
+            user.Token = Guid.NewGuid();
             repository.Insert(user);
             repository.Save();
         }
@@ -121,15 +122,20 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
         }
 
-        public void Login(User user)
+        public Guid Login(User user)
         {
-            CheckIfExists(user.Id);
-            var userFromDb = repository.GetById(user.Id);
+            var users = repository.Get(u => u.Email == user.Email, null, "");
+            if (users.Count() == 0)
+            {
+                throw new UserDoesNotExistException();
+            }
+            var userFromDb = users.FirstOrDefault();
             if (!user.Email.Equals(userFromDb.Email) && !user.Password.Equals(userFromDb.Password))
             {
                 throw new EmailOrPasswordException();
             }
-            UpdateUsers(user, userFromDb);
+            var token = GenerateToken(user, userFromDb);
+            return token;
         }
 
         /// <summary>
@@ -137,11 +143,13 @@ namespace SportFixtures.BusinessLogic.Implementations
         /// </summary>
         /// <param name="user"></param>
         /// <param name="userFromDb"></param>
-        private void UpdateUsers(User user, User userFromDb)
+        private Guid GenerateToken(User user, User userFromDb)
         {
+            var token = Guid.NewGuid();
             LoggedUser = user;
-            userFromDb.Token = new Guid();
+            userFromDb.Token = token;
             UpdateUserToken(userFromDb);
+            return token;
         }
 
         /// <summary>
@@ -164,6 +172,39 @@ namespace SportFixtures.BusinessLogic.Implementations
         public User GetById(int userId)
         {
             return repository.GetById(userId) ?? throw new UserDoesNotExistException();
+        }
+
+        public User TokenIsValid(string token)
+        {
+            var tkn = Guid.Parse(token);
+            return repository.Get(null, null, "").FirstOrDefault(u => u.Token == tkn);
+        }
+
+        public void Dispose()
+        {
+            repository.Dispose();
+        }
+
+        public void Logout(string email)
+        {
+            var userFromDb = repository.Get(e => e.Email == email, null, "").FirstOrDefault();
+            if (userFromDb == null)
+            {
+                throw new UserDoesNotExistException();
+            }
+            if (userFromDb.Token == null)
+            {
+                throw new UserIsNotLoggedInException();
+            }
+            LogoutUser(userFromDb);
+        }
+
+        private void LogoutUser(User user)
+        {
+            user.Token = null;
+            repository.Update(user);
+            repository.Save();
+            LoggedUser = null;
         }
     }
 }

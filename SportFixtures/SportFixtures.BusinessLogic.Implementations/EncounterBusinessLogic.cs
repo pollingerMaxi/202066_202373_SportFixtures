@@ -94,17 +94,32 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public IEnumerable<Encounter> GetAllEncountersOfSport(int sportId)
         {
-            return repository.Get(e => e.SportId == sportId, null, "") ?? throw new NoEncountersFoundForSportException();
+            var encounters = repository.Get(e => e.SportId == sportId, null, "");
+            if (encounters.Count() == 0)
+            {
+                throw new NoEncountersFoundForSportException();
+            }
+            return encounters;
         }
 
         public IEnumerable<Encounter> GetAllEncountersOfTeam(int teamId)
         {
-            return repository.Get(e => ((e.Team1.Id == teamId) || (e.Team2.Id == teamId)), null, "") ?? throw new NoEncountersFoundForTeamException();
+            var encounters = repository.Get(e => ((e.Team1.Id == teamId) || (e.Team2.Id == teamId)), null, "");
+            if (encounters.Count() == 0)
+            {
+                throw new NoEncountersFoundForTeamException();
+            }
+            return encounters;
         }
 
         public IEnumerable<Encounter> GetAllEncountersOfTheDay(DateTime date)
         {
-            return repository.Get(e => (e.Date.Date == date.Date), null, "") ?? throw new NoEncountersFoundForDateException();
+            var encounters = repository.Get(e => (e.Date.Date == date.Date), null, "");
+            if (encounters.Count() == 0)
+            {
+                throw new NoEncountersFoundForDateException();
+            }
+            return encounters;
         }
     }
 }
