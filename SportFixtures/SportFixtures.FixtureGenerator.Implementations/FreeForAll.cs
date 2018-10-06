@@ -23,12 +23,10 @@ namespace SportFixtures.FixtureGenerator.Implementations
             foreach(Team team in teams){
                 teamList.Remove(team);
                 foreach(Team rival in teamList){
-                    //DateTime date2 = date;
                     Encounter encounter = new Encounter(){ Team1 = team, Team2 = rival, SportId = sportId, Date = date};
                     while(encounterBL.TeamsHaveEncountersOnTheSameDay(encounter) || TeamsHaveEncountersOnTheSameDay(encounters, encounter)){
                         encounter.Date = encounter.Date.AddDays(1);
                     }
-                    //encounter.Date = date2;
                     encounters.Add(encounter);
                 }
             }
