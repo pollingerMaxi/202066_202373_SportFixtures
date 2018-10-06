@@ -22,6 +22,7 @@ namespace SportFixtures.Test.FreeForAllTests
         private IRepository<Encounter> encounterRepository;
         private IRepository<Team> teamRepository;
         private IFixtureGenerator freeForAll;
+        private IEnumerable<Team> teamList;
 
         [TestInitialize]
         public void TestInitialize()
@@ -36,27 +37,29 @@ namespace SportFixtures.Test.FreeForAllTests
             //mockEncounterRepo.Setup(r => r.Get(null, null, "")).Returns(encounterList);
             //mockEncounterRepo.Setup(r => r.Get(null, null, "")).Returns(encounterList);
 
-            //Team nacional = new Team{Id = 1, Name = "Nacional", SportId = 1};
-            //Team peñarol = new Team{Id = 2, Name = "Peñarol", SportId = 1};
-            //Team defensor = new Team{Id = 3, Name = "Defensor", SportId = 1};
-            //Team danubio = new Team{Id = 4, Name = "Danubio", SportId = 1};
+            Team nacional = new Team{Id = 1, Name = "Nacional", SportId = 1};
+            Team peñarol = new Team{Id = 2, Name = "Peñarol", SportId = 1};
+            Team defensor = new Team{Id = 3, Name = "Defensor", SportId = 1};
+            Team danubio = new Team{Id = 4, Name = "Danubio", SportId = 1};
+            Team cerro = new Team{Id = 5, Name = "Cerro", SportId = 1};
             freeForAll = new FreeForAll(encounterBL);
 
             
-            //teamList = new List<Team>(){nacional, peñarol, danubio, defensor};
+            teamList = new List<Team>(){nacional, peñarol, danubio, defensor, otro};
+
+            // teamRepository.Insert(new Team{Id = 1, Name = "Nacional", SportId = 1});
+            // teamRepository.Insert(new Team{Id = 2, Name = "Peñarol", SportId = 1});
+            // teamRepository.Insert(new Team{Id = 3, Name = "Defensor", SportId = 1});
+            // teamRepository.Insert(new Team{Id = 4, Name = "Danubio", SportId = 1});
+            // IEnumerable<Team> teamList = teamRepository.Get(null, null, "");
            
         }
 
         [TestMethod]
         public void GenerateFixtureOk(){
-            teamRepository.Insert(new Team{Id = 1, Name = "Nacional", SportId = 1});
-            teamRepository.Insert(new Team{Id = 2, Name = "Peñarol", SportId = 1});
-            teamRepository.Insert(new Team{Id = 3, Name = "Defensor", SportId = 1});
-            teamRepository.Insert(new Team{Id = 4, Name = "Danubio", SportId = 1});
-            IEnumerable<Team> teamList = teamRepository.Get(null, null, "");
             ICollection<Encounter> encounters = freeForAll.GenerateFixture(teamList, DateTime.Now, 1);
             int count = encounters.Count;
-            Assert.IsTrue(count == 6);
+            Assert.IsTrue(count == 10);
         }
     }
 }
