@@ -17,6 +17,8 @@
   <ItemGroup>
     <ProjectReference Include="..\SportFixtures.Data.Repository\SportFixtures.Data.Repository.csproj" />
     <ProjectReference Include="..\SportFixtures.BusinessLogic\SportFixtures.BusinessLogic.csproj" />
+    <ProjectReference Include="..\SportFixtures.FixtureGenerator\SportFixtures.FixtureGenerator.csproj" />
+    <ProjectReference Include="..\SportFixtures.FixtureGenerator.Implementations\SportFixtures.FixtureGenerator.Implementations.csproj" />
   </ItemGroup>
 
 </Project>

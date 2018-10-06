@@ -15,13 +15,14 @@ namespace SportFixtures.FixtureGenerator.Implementations
         public FreeForAll(IEncounterBusinessLogic encounterBL){
             this.encounterBL = encounterBL;
         }
-        public ICollection<Encounter> GenerateFixture(ICollection<Team> teams, DateTime date, int sportId)
+        public ICollection<Encounter> GenerateFixture(IEnumerable<Team> teams, DateTime date, int sportId)
         {
-            ICollection<Encounter> encounters = new List<Encounter>();
             DateTime newDate = date.AddDays(1);
+            List<Team> teamList = teams.ToList();
+            ICollection<Encounter> encounters = new List<Encounter>();
             foreach(Team team in teams){
-                teams.Remove(team);
-                foreach(Team rival in teams){
+                teamList.Remove(team);
+                foreach(Team rival in teamList){
                     DateTime date2 = date;
                     Encounter encounter = new Encounter(){ Team1 = team, Team2 = rival, SportId = sportId};
                     while(encounterBL.TeamsHaveEncountersOnTheSameDay(encounter)){
