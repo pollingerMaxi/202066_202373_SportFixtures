@@ -363,5 +363,33 @@ namespace SportFixtures.Test.BusinessLogicTests
             var encounterFromDb = encounterBL.GetById(It.IsAny<int>());
             mockEncounterRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
         }
+
+        [TestMethod]
+        public void CheckTeamsHaveEncountersOnTheSameDayOnAGivenListShouldReturnFalse(){
+            var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
+            ICollection<Encounter> encounterList = new List<Encounter>();
+            Encounter encounter = new Encounter(){Id = 1, Team1 = team1, Team2 = team2, SportId = 1, Date = date};
+            Encounter encounter2 = new Encounter(){Id = 2, Team1 = team1, Team2 = team2, SportId = 1, Date = date.AddDays(1)};
+            encounterList.Add(encounter);
+            encounterList.Add(encounter2);
+            Encounter newEncounter = new Encounter(){Id = 3, Team1 = team1, Team2 = team2, SportId = 1, Date = date.AddDays(2)};
+            Assert.IsFalse(encounterBL.TeamsHaveEncountersOnTheSameDay(encounterList, newEncounter));
+        }
+
+        [TestMethod]
+        public void CheckTeamsHaveEncountersOnTheSameDayOnAGivenListShouldReturnTrue(){
+            var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
+            ICollection<Encounter> encounterList = new List<Encounter>();
+            Encounter encounter = new Encounter(){Id = 1, Team1 = team1, Team2 = team2, SportId = 1, Date = date};
+            Encounter encounter2 = new Encounter(){Id = 2, Team1 = team1, Team2 = team2, SportId = 1, Date = date.AddDays(1)};
+            encounterList.Add(encounter);
+            encounterList.Add(encounter2);
+
+            Assert.IsTrue(encounterBL.TeamsHaveEncountersOnTheSameDay(encounterList, encounter));
+        }
     }
 }
