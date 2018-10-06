@@ -13,6 +13,7 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void AddCommentToEncounter(Comment comment);
         Encounter GetById(int id);
         bool TeamsHaveEncountersOnTheSameDay(Encounter encounter);
+        bool TeamsHaveEncountersOnTheSameDay(ICollection<Encounter> encounters, Encounter encounter);
         IEnumerable<Encounter> GetAll();
         IEnumerable<Encounter> GetAllEncountersOfSport(int sportId);
         IEnumerable<Encounter> GetAllEncountersOfTeam(int teamId);

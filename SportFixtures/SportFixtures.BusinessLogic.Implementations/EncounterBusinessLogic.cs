@@ -121,5 +121,11 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
             return encounters;
         }
+
+        public bool TeamsHaveEncountersOnTheSameDay(ICollection<Encounter> encounters, Encounter encounter)
+        {
+            return (encounters.Any(e => ((e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team1) || e.Team2.Equals(encounter.Team1))))
+                ||  encounters.Any(e => ((e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team2) || e.Team2.Equals(encounter.Team2)))));
+        }
     }
 }
