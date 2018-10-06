@@ -122,7 +122,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
         }
 
-        public void Login(User user)
+        public Guid Login(User user)
         {
             CheckIfExists(user.Id);
             var userFromDb = repository.GetById(user.Id);
@@ -130,7 +130,8 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 throw new EmailOrPasswordException();
             }
-            UpdateUsers(user, userFromDb);
+            var token = GenerateToken(user, userFromDb);
+            return token;
         }
 
         /// <summary>
@@ -138,11 +139,13 @@ namespace SportFixtures.BusinessLogic.Implementations
         /// </summary>
         /// <param name="user"></param>
         /// <param name="userFromDb"></param>
-        private void UpdateUsers(User user, User userFromDb)
+        private Guid GenerateToken(User user, User userFromDb)
         {
+            var token = Guid.NewGuid();
             LoggedUser = user;
-            userFromDb.Token = Guid.NewGuid();
+            userFromDb.Token = token;
             UpdateUserToken(userFromDb);
+            return token;
         }
 
         /// <summary>

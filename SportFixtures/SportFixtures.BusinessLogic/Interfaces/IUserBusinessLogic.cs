@@ -39,10 +39,10 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void CheckIfExists(int userId);
 
         /// <summary>
-        /// Login a user and generates the token.
+        /// Login a user, generates and returns the token.
         /// </summary>
         /// <param name="user"></param>
-        void Login(User user);
+        Guid Login(User user);
         IEnumerable<User> GetAll();
 
         User GetById(int userId);

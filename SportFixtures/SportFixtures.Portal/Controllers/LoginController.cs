@@ -29,8 +29,8 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                userBusinessLogic.Login(user);
-                return Ok();
+                var loginSuccessful = userBusinessLogic.Login(user);
+                return Ok(loginSuccessful);
             }
             catch (UserDoesNotExistException e)
             {
