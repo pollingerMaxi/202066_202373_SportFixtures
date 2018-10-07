@@ -49,6 +49,13 @@ namespace SportFixtures.Test.FixtureTests
             teamList = new List<Team>() { nacional, peñarol, danubio, defensor, cerro };
         }
 
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            context.RemoveRange(encounterRepository.Get(null, null, ""));
+            context.SaveChanges();
+        }
+
         [TestMethod]
         public void GenerateFixtureWithNoEncountersOnRepoTest()
         {

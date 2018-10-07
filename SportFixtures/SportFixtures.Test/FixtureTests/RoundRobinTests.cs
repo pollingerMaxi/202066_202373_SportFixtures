@@ -49,6 +49,13 @@ namespace SportFixtures.Test.FixtureTests
             roundRobin = new RoundRobin(encounterBL);
         }
 
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            context.RemoveRange(encounterRepository.Get(null, null, ""));
+            context.SaveChanges();
+        }
+
         [TestMethod]
         public void GenerateRoundRobinWithFiveTeamsTest()
         {
