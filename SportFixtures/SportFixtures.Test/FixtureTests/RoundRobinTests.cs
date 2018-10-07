@@ -5,6 +5,7 @@ using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Access;
 using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
+using SportFixtures.Exceptions.EncounterExceptions;
 using SportFixtures.FixtureGenerator;
 using SportFixtures.FixtureGenerator.Implementations;
 using System;
@@ -31,7 +32,7 @@ namespace SportFixtures.Test.FixtureTests
         [TestInitialize]
         public void TestInitialize()
         {
-            var options = new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(databaseName: "encounterDB").Options;
+            var options = new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(databaseName: "roundRobinDB").Options;
             context = new Context(options);
             encounterRepository = new GenericRepository<Encounter>(context);
             encounterBL = new EncounterBusinessLogic(encounterRepository);
@@ -51,6 +52,38 @@ namespace SportFixtures.Test.FixtureTests
         [TestMethod]
         public void GenerateRoundRobinWithFiveTeamsTest()
         {
+            var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now, 1);
+            var NtimesNminus1 = teamList.Count * (teamList.Count - 1);
+            Assert.IsTrue(encounters.Count == NtimesNminus1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotEnoughTeamsForEncounterException))]
+        public void GenerateRoundRobinWithZeroTeamsTest()
+        {
+            teamList.Clear();
+            var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now, 1);
+            var NtimesNminus1 = teamList.Count * (teamList.Count - 1);
+            Assert.IsTrue(encounters.Count == NtimesNminus1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotEnoughTeamsForEncounterException))]
+        public void GenerateRoundRobinWithOneTeamTest()
+        {
+            teamList.Clear();
+            teamList.Add(nacional);
+            var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now, 1);
+            var NtimesNminus1 = teamList.Count * (teamList.Count - 1);
+            Assert.IsTrue(encounters.Count == NtimesNminus1);
+        }
+
+        [TestMethod]
+        public void GenerateRoundRobinWithTwoTeamsTest()
+        {
+            teamList.Clear();
+            teamList.Add(nacional);
+            teamList.Add(peñarol);
             var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now, 1);
             var NtimesNminus1 = teamList.Count * (teamList.Count - 1);
             Assert.IsTrue(encounters.Count == NtimesNminus1);

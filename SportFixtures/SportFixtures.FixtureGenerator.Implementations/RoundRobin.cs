@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Entities;
+using SportFixtures.Exceptions.EncounterExceptions;
 
 namespace SportFixtures.FixtureGenerator.Implementations
 {
@@ -18,6 +19,11 @@ namespace SportFixtures.FixtureGenerator.Implementations
 
         public ICollection<Encounter> GenerateFixture(IEnumerable<Team> teams, DateTime date, int sportId)
         {
+            if (teams.Count() < 2)
+            {
+                throw new NotEnoughTeamsForEncounterException("Not enough teams to create round robin encounters.");
+            }
+
             DateTime newDate = date.AddDays(1);
             List<Team> teamList = teams.ToList();
             ICollection<Encounter> encounters = new List<Encounter>();

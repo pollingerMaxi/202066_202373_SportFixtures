@@ -38,41 +38,32 @@ namespace SportFixtures.Test.FixtureTests
             encounterRepository = new GenericRepository<Encounter>(context);
             encounterBL = new EncounterBusinessLogic(encounterRepository);
             teamRepository = new GenericRepository<Team>(context);
-            //encounterList = new List<Encounter>();
-            
-            //mockEncounterRepo.Setup(r => r.Get(null, null, "")).Returns(encounterList);
-            //mockEncounterRepo.Setup(r => r.Get(null, null, "")).Returns(encounterList);
 
-            nacional = new Team{Id = 1, Name = "Nacional", SportId = 1};
-            peñarol = new Team{Id = 2, Name = "Peñarol", SportId = 1};
-            defensor = new Team{Id = 3, Name = "Defensor", SportId = 1};
-            danubio = new Team{Id = 4, Name = "Danubio", SportId = 1};
-            cerro = new Team{Id = 5, Name = "Cerro", SportId = 1};
+            nacional = new Team { Id = 1, Name = "Nacional", SportId = 1 };
+            peñarol = new Team { Id = 2, Name = "Peñarol", SportId = 1 };
+            defensor = new Team { Id = 3, Name = "Defensor", SportId = 1 };
+            danubio = new Team { Id = 4, Name = "Danubio", SportId = 1 };
+            cerro = new Team { Id = 5, Name = "Cerro", SportId = 1 };
             freeForAll = new FreeForAll(encounterBL);
 
-            
-            teamList = new List<Team>(){nacional, peñarol, danubio, defensor, cerro};
-
-            // teamRepository.Insert(new Team{Id = 1, Name = "Nacional", SportId = 1});
-            // teamRepository.Insert(new Team{Id = 2, Name = "Peñarol", SportId = 1});
-            // teamRepository.Insert(new Team{Id = 3, Name = "Defensor", SportId = 1});
-            // teamRepository.Insert(new Team{Id = 4, Name = "Danubio", SportId = 1});
-            // IEnumerable<Team> teamList = teamRepository.Get(null, null, "");
-           
+            teamList = new List<Team>() { nacional, peñarol, danubio, defensor, cerro };
         }
 
         [TestMethod]
-        public void GenerateFixtureWithNoEncountersOnRepoTest(){
+        public void GenerateFixtureWithNoEncountersOnRepoTest()
+        {
             DateTime date = new DateTime(2018, 10, 1, 12, 00, 00);
             ICollection<Encounter> encounters = freeForAll.GenerateFixture(teamList, date, 1);
             int count = encounters.Count;
-            Assert.IsTrue(count == 10);
+            var NtimesNminus1By2 = (teamList.Count() * (teamList.Count() - 1)) / 2;
+            Assert.IsTrue(count == NtimesNminus1By2);
         }
 
         [TestMethod]
-        public void GenerateFixtureWithEncountersOnRepoTest(){
+        public void GenerateFixtureWithEncountersOnRepoTest()
+        {
             DateTime date = new DateTime(2018, 10, 1, 12, 00, 00);
-            encounterBL.Add(new Encounter{Id = 1, Team1 = nacional, Team2 = peñarol, Date = date, SportId = 1});
+            encounterBL.Add(new Encounter { Id = 1, Team1 = nacional, Team2 = peñarol, Date = date, SportId = 1 });
             ICollection<Encounter> generatedEncounters = freeForAll.GenerateFixture(teamList, date, 1);
             List<Encounter> encountersToList = generatedEncounters.ToList();
             //Sabemos que el primer partido va a ser Nacional Peñarol
