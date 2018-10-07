@@ -16,13 +16,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.BusinessLogic", "SportFixtures.BusinessLogic\SportFixtures.BusinessLogic.csproj", "{52ACEE54-4702-40E2-97EF-82771FDBD17C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportFixtures.Exceptions", "SportFixtures.Exceptions\SportFixtures.Exceptions.csproj", "{E24242AC-D897-4124-9D21-2D833B154F2D}"
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.Exceptions", "SportFixtures.Exceptions\SportFixtures.Exceptions.csproj", "{E24242AC-D897-4124-9D21-2D833B154F2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportFixtures.BusinessLogic.Implementations", "SportFixtures.BusinessLogic.Implementations\SportFixtures.BusinessLogic.Implementations.csproj", "{F5DC6992-2A14-4B87-840D-1C3D7B9E98F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.BusinessLogic.Implementations", "SportFixtures.BusinessLogic.Implementations\SportFixtures.BusinessLogic.Implementations.csproj", "{F5DC6992-2A14-4B87-840D-1C3D7B9E98F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportFixtures.FixtureGenerator", "SportFixtures.FixtureGenerator\SportFixtures.FixtureGenerator.csproj", "{5DD3CAC6-53C6-4D0B-B227-C0DA5134DB7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.FixtureGenerator", "SportFixtures.FixtureGenerator\SportFixtures.FixtureGenerator.csproj", "{5DD3CAC6-53C6-4D0B-B227-C0DA5134DB7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportFixtures.FixtureGenerator.Implementations", "SportFixtures.FixtureGenerator.Implementations\SportFixtures.FixtureGenerator.Implementations.csproj", "{361A4109-333B-4226-9BA1-B825BA165E4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.FixtureGenerator.Implementations", "SportFixtures.FixtureGenerator.Implementations\SportFixtures.FixtureGenerator.Implementations.csproj", "{361A4109-333B-4226-9BA1-B825BA165E4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +61,14 @@ Global
 		{F5DC6992-2A14-4B87-840D-1C3D7B9E98F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5DC6992-2A14-4B87-840D-1C3D7B9E98F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5DC6992-2A14-4B87-840D-1C3D7B9E98F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DD3CAC6-53C6-4D0B-B227-C0DA5134DB7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DD3CAC6-53C6-4D0B-B227-C0DA5134DB7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DD3CAC6-53C6-4D0B-B227-C0DA5134DB7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DD3CAC6-53C6-4D0B-B227-C0DA5134DB7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{361A4109-333B-4226-9BA1-B825BA165E4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{361A4109-333B-4226-9BA1-B825BA165E4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{361A4109-333B-4226-9BA1-B825BA165E4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{361A4109-333B-4226-9BA1-B825BA165E4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

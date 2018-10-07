@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace SportFixtures.Test.FreeForAllTests
+namespace SportFixtures.Test.FixtureTests
 {
     [TestClass]
     public class FreeForAllTests
