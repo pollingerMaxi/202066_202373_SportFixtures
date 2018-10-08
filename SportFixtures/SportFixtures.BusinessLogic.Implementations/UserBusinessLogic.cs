@@ -129,11 +129,13 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 throw new UserDoesNotExistException();
             }
+
             var userFromDb = users.FirstOrDefault();
             if (!user.Email.Equals(userFromDb.Email) && !user.Password.Equals(userFromDb.Password))
             {
                 throw new EmailOrPasswordException();
             }
+
             var token = GenerateToken(user, userFromDb);
             return token;
         }
@@ -192,10 +194,12 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 throw new UserDoesNotExistException();
             }
+
             if (userFromDb.Token == null)
             {
                 throw new UserIsNotLoggedInException();
             }
+
             LogoutUser(userFromDb);
         }
 

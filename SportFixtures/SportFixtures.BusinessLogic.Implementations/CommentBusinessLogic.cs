@@ -35,6 +35,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 throw new InvalidCommentTextException();
             }
+
             encounterBL.CheckIfExists(comment.EncounterId);
             userBL.CheckIfExists(comment.UserId);
         }

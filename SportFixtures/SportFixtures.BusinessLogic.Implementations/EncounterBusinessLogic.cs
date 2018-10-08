@@ -30,19 +30,24 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 throw new EncounterTeamsCantBeNullException();
             }
+
             if (encounter.Team1 == encounter.Team2)
             {
                 throw new EncounterSameTeamException();
             }
+
             if (encounter.Team1.SportId != encounter.Team2.SportId)
             {
                 throw new EncounterTeamsDifferentSportException();
             }
+
             if (encounter.SportId != encounter.Team1.SportId)
             {
                 throw new EncounterSportDifferentFromTeamsSportException();
             }
-            if (TeamsHaveEncountersOnTheSameDay(encounter)){
+
+            if (TeamsHaveEncountersOnTheSameDay(encounter))
+            {
                 throw new TeamAlreadyHasAnEncounterOnTheSameDayException();
             }
         }
@@ -73,7 +78,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         public bool TeamsHaveEncountersOnTheSameDay(Encounter encounter)
         {
             return (repository.Get().Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team1) || e.Team2.Equals(encounter.Team1))))
-                ||  repository.Get().Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team2) || e.Team2.Equals(encounter.Team2)))));
+                || repository.Get().Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team2) || e.Team2.Equals(encounter.Team2)))));
         }
 
         public void AddCommentToEncounter(Comment comment)
@@ -125,7 +130,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         public bool TeamsHaveEncountersOnTheSameDay(ICollection<Encounter> encounters, Encounter encounter)
         {
             return (encounters.Any(e => ((e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team1) || e.Team2.Equals(encounter.Team1))))
-                ||  encounters.Any(e => ((e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team2) || e.Team2.Equals(encounter.Team2)))));
+                || encounters.Any(e => ((e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team2) || e.Team2.Equals(encounter.Team2)))));
         }
     }
 }

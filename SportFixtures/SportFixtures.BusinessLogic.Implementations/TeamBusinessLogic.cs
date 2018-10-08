@@ -34,6 +34,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 throw new InvalidTeamNameException();
             }
+
             if (!ValidatePhotoPath(team.PhotoPath))
             {
                 throw new InvalidPhotoPathException();
