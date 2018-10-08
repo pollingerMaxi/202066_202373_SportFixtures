@@ -49,7 +49,6 @@ namespace SportFixtures.BusinessLogic.Implementations
             ValidateSport(sport);
             repository.Insert(sport);
             repository.Save();
-
         }
 
         public void AddTeamToSport(Team team)

@@ -31,7 +31,7 @@ namespace SportFixtures.Portal
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             ResolveRepositoryDependencies(services);
             ResolveBusinessLogicDependencies(services);
-            services.AddDbContext<Context>(o => o.UseSqlServer(@"Server=.;Database=SportFixturesTest;Trusted_Connection=True;Integrated Security=True"));
+            services.AddDbContext<Context>(o => o.UseSqlServer(Configuration.GetSection("ConnectionString").Value));
         }
 
         private void ResolveBusinessLogicDependencies(IServiceCollection services)

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SportFixtures.Portal.Controllers
 {
-    [Route("api/encounter")]
+    [Route("api/encounters")]
     public class EncounterController : ControllerBase
     {
         private IEncounterBusinessLogic encounterBusinessLogic;
@@ -185,7 +185,7 @@ namespace SportFixtures.Portal.Controllers
             }
         }
 
-        [HttpGet("teams/{date}")]
+        [HttpGet("bydate/{date}")]
         public ActionResult GetAllEncountersOfTheDay(DateTime date)
         {
             if (!ModelState.IsValid)

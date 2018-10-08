@@ -18,10 +18,6 @@ namespace SportFixtures.Data.Access
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(@"Server=.;Database=SportFixturesTest;Trusted_Connection=True;Integrated Security=True");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
