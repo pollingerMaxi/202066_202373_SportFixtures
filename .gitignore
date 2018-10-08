@@ -331,3 +331,6 @@ ASALocalRun/
 
 # Apple trash files
 .DS_Store
+/SportFixtures/SportFixtures.FixtureGenerator/._.DS_Store
+/SportFixtures/._.DS_Store
+/._.DS_Store

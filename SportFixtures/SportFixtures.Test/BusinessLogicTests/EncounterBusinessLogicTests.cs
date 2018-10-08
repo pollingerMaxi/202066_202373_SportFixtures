@@ -278,6 +278,26 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(TeamAlreadyHasAnEncounterOnTheSameDayException))]
+        public void CheckTeamHasEncounterSameDateShouldReturnException2Test()
+        {
+            var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            var team3 = new Team() { Id = 3, Name = "Cerro", SportId = 1 };
+            var sport = new Sport() { Id = 1, Name = "Futbol" };
+            DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
+            DateTime date2 = new DateTime(2018, 9, 28, 8, 30, 00);
+            var encounter = new Encounter() { Id = 1, Date = date, SportId = sport.Id, Team1 = team1, Team2 = team2 };
+            var encounter2 = new Encounter() { Id = 2, Date = date2, SportId = sport.Id, Team1 = team1, Team2 = team2 };
+            var encounter3 = new Encounter() { Id = 3, Date = date2, SportId = sport.Id, Team1 = team3, Team2 = team1 };
+            mockEncounterRepo.Setup(x => x.Insert(encounter)).Callback<Encounter>(x => encounterList.Add(encounter));
+            mockEncounterRepo.Setup(x => x.Insert(encounter2)).Callback<Encounter>(x => encounterList.Add(encounter2));
+            encounterBL.Add(encounter);
+            encounterBL.Add(encounter2);
+            encounterBL.Add(encounter3);
+        }
+
+        [TestMethod]
         public void GetAllTest()
         {
             encounterBL.GetAll();
@@ -450,5 +470,18 @@ namespace SportFixtures.Test.BusinessLogicTests
         //     var expectedEncountersCount = teamList.Count * (teamList.Count - 1);
         //     Assert.IsTrue(generatedEncounters.Count == expectedEncountersCount);
         // }
+        public void CheckTeamsHaveEncountersOnTheSameDayOnAGivenListTeamsShouldReturnTrue2(){
+            var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            var team3 = new Team() { Id = 3, Name = "Danubio", SportId = 1 };
+            DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
+            ICollection<Encounter> encounterList = new List<Encounter>();
+            Encounter encounter = new Encounter(){Id = 1, Team1 = team1, Team2 = team2, SportId = 1, Date = date};
+            Encounter encounter2 = new Encounter(){Id = 2, Team1 = team1, Team2 = team2, SportId = 1, Date = date.AddDays(1)};
+            encounterList.Add(encounter);
+            encounterList.Add(encounter2);
+            Encounter newEncounter = new Encounter(){Id = 3, Team1 = team3, Team2 = team1, SportId = 1, Date = date.AddDays(1)};
+            Assert.IsTrue(encounterBL.TeamsHaveEncountersOnTheSameDay(encounterList, newEncounter));
+        }
     }
 }

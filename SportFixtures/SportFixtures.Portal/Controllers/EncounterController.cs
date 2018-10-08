@@ -89,7 +89,7 @@ namespace SportFixtures.Portal.Controllers
 
         [HttpPut]
         [AuthorizedRoles(Role.Admin)]
-        public ActionResult UpdateSport(int id, [FromBody]Encounter encounter)
+        public ActionResult UpdateEncounter(int id, [FromBody]Encounter encounter)
         {
             if (!ModelState.IsValid)
             {
