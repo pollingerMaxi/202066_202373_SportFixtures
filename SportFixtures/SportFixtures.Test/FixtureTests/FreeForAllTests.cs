@@ -36,7 +36,7 @@ namespace SportFixtures.Test.FixtureTests
             var options = new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(databaseName: "encounterDB").Options;
             context = new Context(options);
             encounterRepository = new GenericRepository<Encounter>(context);
-            encounterBL = new EncounterBusinessLogic(encounterRepository);
+            encounterBL = new EncounterBusinessLogic(encounterRepository, null);
             teamRepository = new GenericRepository<Team>(context);
 
             nacional = new Team { Id = 1, Name = "Nacional", SportId = 1 };
@@ -60,7 +60,7 @@ namespace SportFixtures.Test.FixtureTests
         public void GenerateFixtureWithNoEncountersOnRepoTest()
         {
             DateTime date = new DateTime(2018, 10, 1, 12, 00, 00);
-            ICollection<Encounter> encounters = freeForAll.GenerateFixture(teamList, date, 1);
+            ICollection<Encounter> encounters = freeForAll.GenerateFixture(teamList, date);
             int count = encounters.Count;
             var NtimesNminus1By2 = (teamList.Count() * (teamList.Count() - 1)) / 2;
             Assert.IsTrue(count == NtimesNminus1By2);
@@ -71,7 +71,7 @@ namespace SportFixtures.Test.FixtureTests
         {
             DateTime date = new DateTime(2018, 10, 1, 12, 00, 00);
             encounterBL.Add(new Encounter { Id = 1, Team1 = nacional, Team2 = peñarol, Date = date, SportId = 1 });
-            ICollection<Encounter> generatedEncounters = freeForAll.GenerateFixture(teamList, date, 1);
+            ICollection<Encounter> generatedEncounters = freeForAll.GenerateFixture(teamList, date);
             List<Encounter> encountersToList = generatedEncounters.ToList();
             //Sabemos que el primer partido va a ser Nacional Peñarol
             Assert.IsTrue(generatedEncounters.ElementAt(0).Date == new DateTime(2018, 10, 2, 12, 00, 00));

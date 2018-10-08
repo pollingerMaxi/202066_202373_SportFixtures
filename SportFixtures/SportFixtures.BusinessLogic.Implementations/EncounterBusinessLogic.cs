@@ -3,6 +3,8 @@ using SportFixtures.Data.Entities;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.EncounterExceptions;
+using SportFixtures.FixtureGenerator;
+using SportFixtures.FixtureGenerator.Implementations;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,10 +13,12 @@ namespace SportFixtures.BusinessLogic.Implementations
     public class EncounterBusinessLogic : IEncounterBusinessLogic
     {
         private IRepository<Encounter> repository;
+        private ISportBusinessLogic sportBL;
 
-        public EncounterBusinessLogic(IRepository<Encounter> repository)
+        public EncounterBusinessLogic(IRepository<Encounter> repository, ISportBusinessLogic sportBL)
         {
             this.repository = repository;
+            this.sportBL = sportBL;
         }
 
         public void Add(Encounter encounter)
@@ -42,7 +46,8 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 throw new EncounterSportDifferentFromTeamsSportException();
             }
-            if (TeamsHaveEncountersOnTheSameDay(encounter)){
+            if (TeamsHaveEncountersOnTheSameDay(encounter))
+            {
                 throw new TeamAlreadyHasAnEncounterOnTheSameDayException();
             }
         }
@@ -73,7 +78,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         public bool TeamsHaveEncountersOnTheSameDay(Encounter encounter)
         {
             return (repository.Get().Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team1) || e.Team2.Equals(encounter.Team1))))
-                ||  repository.Get().Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team2) || e.Team2.Equals(encounter.Team2)))));
+                || repository.Get().Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team2) || e.Team2.Equals(encounter.Team2)))));
         }
 
         public void AddCommentToEncounter(Comment comment)
@@ -125,7 +130,26 @@ namespace SportFixtures.BusinessLogic.Implementations
         public bool TeamsHaveEncountersOnTheSameDay(ICollection<Encounter> encounters, Encounter encounter)
         {
             return (encounters.Any(e => ((e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team1) || e.Team2.Equals(encounter.Team1))))
-                ||  encounters.Any(e => ((e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team2) || e.Team2.Equals(encounter.Team2)))));
+                || encounters.Any(e => ((e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team2) || e.Team2.Equals(encounter.Team2)))));
+        }
+
+        public ICollection<Encounter> GenerateFixture(DateTime date, int sportId, Algorithm fixtureGenerator)
+        {
+            ICollection<Team> teams = sportBL.GetById(sportId).Teams;
+            IFixtureGenerator generator = null;
+            if (fixtureGenerator == Algorithm.FreeForAll)
+            {
+                generator = new FreeForAll(this);
+            }
+            else if (fixtureGenerator == Algorithm.RoundRobin)
+            {
+                generator = new RoundRobin(this);
+            }
+            else
+            {
+                throw new FixtureGeneratorAlgorithmDoesNotExist();
+            }
+            return generator.GenerateFixture(teams, date);
         }
     }
 }
