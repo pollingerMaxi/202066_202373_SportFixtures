@@ -73,7 +73,8 @@ namespace SportFixtures.Test.FixtureTests
             encounterBL.Add(new Encounter { Id = 1, Team1 = nacional, Team2 = peñarol, Date = date, SportId = 1 });
             ICollection<Encounter> generatedEncounters = freeForAll.GenerateFixture(teamList, date, 1);
             List<Encounter> encountersToList = generatedEncounters.ToList();
-            //Sabemos que el primer partido va a ser Nacional Peñarol
+            //Sabemos que el primer partido va a ser Nacional Peñarol porque ya esta en el repositorio
+            //entonces la fecha del primer encuentro generado por el algoritmo debe ser un dia mas.
             Assert.IsTrue(generatedEncounters.ElementAt(0).Date == new DateTime(2018, 10, 2, 12, 00, 00));
         }
     }
