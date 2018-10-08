@@ -70,8 +70,8 @@ namespace SportFixtures.Test.FixtureTests
         {
             teamList.Clear();
             var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now);
-            var NtimesNminus1 = teamList.Count * (teamList.Count - 1);
-            Assert.IsTrue(encounters.Count == NtimesNminus1);
+            var expectedGeneratedEncountersCount = teamList.Count * (teamList.Count - 1);
+            Assert.IsTrue(encounters.Count == expectedGeneratedEncountersCount);
         }
 
         [TestMethod]
@@ -81,8 +81,8 @@ namespace SportFixtures.Test.FixtureTests
             teamList.Clear();
             teamList.Add(nacional);
             var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now);
-            var NtimesNminus1 = teamList.Count * (teamList.Count - 1);
-            Assert.IsTrue(encounters.Count == NtimesNminus1);
+            var expectedGeneratedEncountersCount = teamList.Count * (teamList.Count - 1);
+            Assert.IsTrue(encounters.Count == expectedGeneratedEncountersCount);
         }
 
         [TestMethod]
@@ -92,8 +92,8 @@ namespace SportFixtures.Test.FixtureTests
             teamList.Add(nacional);
             teamList.Add(peñarol);
             var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now);
-            var NtimesNminus1 = teamList.Count * (teamList.Count - 1);
-            Assert.IsTrue(encounters.Count == NtimesNminus1);
+            var expectedGeneratedEncountersCount = teamList.Count * (teamList.Count - 1);
+            Assert.IsTrue(encounters.Count == expectedGeneratedEncountersCount);
         }
     }
 }

@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using SportFixtures.Exceptions.EncounterExceptions;
 
 namespace SportFixtures.Test.FixtureTests
 {
@@ -23,7 +24,7 @@ namespace SportFixtures.Test.FixtureTests
         private IRepository<Encounter> encounterRepository;
         private IRepository<Team> teamRepository;
         private IFixtureGenerator freeForAll;
-        private IEnumerable<Team> teamList;
+        private List<Team> teamList;
         private Team nacional;
         private Team peñarol;
         private Team defensor;
@@ -62,8 +63,8 @@ namespace SportFixtures.Test.FixtureTests
             DateTime date = new DateTime(2018, 10, 1, 12, 00, 00);
             ICollection<Encounter> encounters = freeForAll.GenerateFixture(teamList, date);
             int count = encounters.Count;
-            var NtimesNminus1By2 = (teamList.Count() * (teamList.Count() - 1)) / 2;
-            Assert.IsTrue(count == NtimesNminus1By2);
+            var expectedGeneratedEncountersCount = (teamList.Count() * (teamList.Count() - 1)) / 2;
+            Assert.IsTrue(count == expectedGeneratedEncountersCount);
         }
 
         [TestMethod]
@@ -75,6 +76,17 @@ namespace SportFixtures.Test.FixtureTests
             List<Encounter> encountersToList = generatedEncounters.ToList();
             //Sabemos que el primer partido va a ser Nacional Peñarol
             Assert.IsTrue(generatedEncounters.ElementAt(0).Date == new DateTime(2018, 10, 2, 12, 00, 00));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotEnoughTeamsForEncounterException))]
+        public void GenerateRoundRobinWithOneTeamTest()
+        {
+            teamList.Clear();
+            teamList.Add(nacional);
+            var encounters = freeForAll.GenerateFixture(teamList, DateTime.Now);
+            var expectedGeneratedEncountersCount = (teamList.Count() * (teamList.Count() - 1)) / 2;
+            Assert.IsTrue(encounters.Count == expectedGeneratedEncountersCount);
         }
     }
 }
