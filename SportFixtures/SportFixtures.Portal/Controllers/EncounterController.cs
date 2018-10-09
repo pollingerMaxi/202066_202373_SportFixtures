@@ -3,6 +3,8 @@ using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Exceptions.EncounterExceptions;
+using SportFixtures.Exceptions.SportExceptions;
+using SportFixtures.Portal.DTOs;
 using SportFixtures.Portal.Filters;
 using System;
 using System.Collections.Generic;
@@ -89,7 +91,7 @@ namespace SportFixtures.Portal.Controllers
 
         [HttpPut]
         [AuthorizedRoles(Role.Admin)]
-        public ActionResult UpdateSport(int id, [FromBody]Encounter encounter)
+        public ActionResult UpdateEncounter(int id, [FromBody]Encounter encounter)
         {
             if (!ModelState.IsValid)
             {
@@ -199,6 +201,37 @@ namespace SportFixtures.Portal.Controllers
                 return Ok();
             }
             catch (NoEncountersFoundForDateException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("fixture/")]
+        public ActionResult GenerateFixture([FromBody] FixtureDTO data)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var encounters = encounterBusinessLogic.GenerateFixture(data.Date, data.SportId, data.Algorithm);
+                return Ok(encounters);
+            }
+            catch (SportDoesNotExistException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (FixtureGeneratorAlgorithmDoesNotExist e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (NotEnoughTeamsForEncounterException e)
             {
                 return NotFound(e.Message);
             }

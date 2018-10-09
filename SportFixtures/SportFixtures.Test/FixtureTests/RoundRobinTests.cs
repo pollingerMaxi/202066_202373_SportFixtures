@@ -35,7 +35,7 @@ namespace SportFixtures.Test.FixtureTests
             var options = new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(databaseName: "roundRobinDB").Options;
             context = new Context(options);
             encounterRepository = new GenericRepository<Encounter>(context);
-            encounterBL = new EncounterBusinessLogic(encounterRepository);
+            encounterBL = new EncounterBusinessLogic(encounterRepository, null);
             teamRepository = new GenericRepository<Team>(context);
 
             nacional = new Team { Id = 1, Name = "Nacional", SportId = 1 };
@@ -59,7 +59,7 @@ namespace SportFixtures.Test.FixtureTests
         [TestMethod]
         public void GenerateRoundRobinWithFiveTeamsTest()
         {
-            var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now, 1);
+            var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now);
             var NtimesNminus1 = teamList.Count * (teamList.Count - 1);
             Assert.IsTrue(encounters.Count == NtimesNminus1);
         }
@@ -69,9 +69,9 @@ namespace SportFixtures.Test.FixtureTests
         public void GenerateRoundRobinWithZeroTeamsTest()
         {
             teamList.Clear();
-            var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now, 1);
-            var NtimesNminus1 = teamList.Count * (teamList.Count - 1);
-            Assert.IsTrue(encounters.Count == NtimesNminus1);
+            var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now);
+            var expectedGeneratedEncountersCount = teamList.Count * (teamList.Count - 1);
+            Assert.IsTrue(encounters.Count == expectedGeneratedEncountersCount);
         }
 
         [TestMethod]
@@ -80,9 +80,9 @@ namespace SportFixtures.Test.FixtureTests
         {
             teamList.Clear();
             teamList.Add(nacional);
-            var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now, 1);
-            var NtimesNminus1 = teamList.Count * (teamList.Count - 1);
-            Assert.IsTrue(encounters.Count == NtimesNminus1);
+            var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now);
+            var expectedGeneratedEncountersCount = teamList.Count * (teamList.Count - 1);
+            Assert.IsTrue(encounters.Count == expectedGeneratedEncountersCount);
         }
 
         [TestMethod]
@@ -91,9 +91,9 @@ namespace SportFixtures.Test.FixtureTests
             teamList.Clear();
             teamList.Add(nacional);
             teamList.Add(peñarol);
-            var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now, 1);
-            var NtimesNminus1 = teamList.Count * (teamList.Count - 1);
-            Assert.IsTrue(encounters.Count == NtimesNminus1);
+            var encounters = roundRobin.GenerateFixture(teamList, DateTime.Now);
+            var expectedGeneratedEncountersCount = teamList.Count * (teamList.Count - 1);
+            Assert.IsTrue(encounters.Count == expectedGeneratedEncountersCount);
         }
     }
 }

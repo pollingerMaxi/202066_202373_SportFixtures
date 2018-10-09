@@ -17,7 +17,7 @@ namespace SportFixtures.FixtureGenerator.Implementations
             this.encounterBL = encounterBL;
         }
 
-        public ICollection<Encounter> GenerateFixture(IEnumerable<Team> teams, DateTime date, int sportId)
+        public ICollection<Encounter> GenerateFixture(IEnumerable<Team> teams, DateTime date)
         {
             if (teams.Count() < 2)
             {
@@ -32,13 +32,13 @@ namespace SportFixtures.FixtureGenerator.Implementations
                 teamList.Remove(team);
                 foreach (Team rival in teamList)
                 {
-                    Encounter encounter = new Encounter() { Team1 = team, Team2 = rival, SportId = sportId, Date = date };
+                    Encounter encounter = new Encounter() { Team1 = team, Team2 = rival, SportId = team.SportId, Date = date };
                     while (encounterBL.TeamsHaveEncountersOnTheSameDay(encounter) || encounterBL.TeamsHaveEncountersOnTheSameDay(encounters, encounter))
                     {
                         encounter.Date = encounter.Date.AddDays(1);
                     }
 
-                    Encounter encounter2 = new Encounter() { Team1 = rival, Team2 = team, SportId = sportId, Date = date };
+                    Encounter encounter2 = new Encounter() { Team1 = rival, Team2 = team, SportId = team.SportId, Date = date };
                     while (encounterBL.TeamsHaveEncountersOnTheSameDay(encounter) || encounterBL.TeamsHaveEncountersOnTheSameDay(encounters, encounter))
                     {
                         encounter2.Date = encounter2.Date.AddDays(1);

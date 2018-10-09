@@ -40,14 +40,16 @@ namespace SportFixtures.BusinessLogic.Implementations
             userBL.CheckIfExists(comment.UserId);
         }
 
-        public IEnumerable<Comment> GetAll(){
+        public IEnumerable<Comment> GetAll()
+        {
             return repository.Get(null, null, "");
         }
 
-        public Comment GetById(int id){
+        public Comment GetById(int id)
+        {
             return repository.GetById(id);
         }
-        
+
         public IEnumerable<Comment> GetAllCommentsOfEncounter(int encounterId)
         {
             return repository.Get(c => (c.EncounterId == encounterId), null, "");

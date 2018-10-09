@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SportFixtures.Data.Entities;
+using SportFixtures.FixtureGenerator;
 
 namespace SportFixtures.BusinessLogic.Interfaces
 {
@@ -18,5 +19,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
         IEnumerable<Encounter> GetAllEncountersOfSport(int sportId);
         IEnumerable<Encounter> GetAllEncountersOfTeam(int teamId);
         IEnumerable<Encounter> GetAllEncountersOfTheDay(DateTime date);
+        ICollection<Encounter> GenerateFixture(DateTime date, int sportId, Algorithm fixtureGenerator);
     }
 }
