@@ -18,6 +18,15 @@ namespace SportFixtures.Portal.Filters
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
+        }
+
+        private static IUserBusinessLogic GetLogic(ActionExecutingContext context)
+        {
+            return (IUserBusinessLogic)context.HttpContext.RequestServices.GetService(typeof(IUserBusinessLogic));
+        }
+
+        public void OnActionExecuting(ActionExecutingContext context)
+        {
             string token = context.HttpContext.Request.Headers["Authorization"];
 
             if (token == null)
@@ -28,11 +37,8 @@ namespace SportFixtures.Portal.Filters
                 };
             }
 
-            User user;
-            using (var logic = GetLogic(context))
-            {
-                user = logic.TokenIsValid(token);
-            }
+            var logic = GetLogic(context);
+            var user = logic.TokenIsValid(token);
 
             if (user == null)
             {
@@ -49,16 +55,6 @@ namespace SportFixtures.Portal.Filters
                     Content = $"User is not in role: {_role}",
                 };
             }
-        }
-
-        private static IUserBusinessLogic GetLogic(ActionExecutedContext context)
-        {
-            return (IUserBusinessLogic)context.HttpContext.RequestServices.GetService(typeof(IUserBusinessLogic));
-        }
-
-        public void OnActionExecuting(ActionExecutingContext context)
-        {
-
         }
     }
 }

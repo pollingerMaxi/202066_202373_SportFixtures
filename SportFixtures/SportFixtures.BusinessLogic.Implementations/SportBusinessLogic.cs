@@ -55,13 +55,13 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             var sport = GetById(team.SportId);
             ValidateTeamInSport(team, sport);
-            sport.Teams.Add(team);
-            Update(sport);
+            //sport.Teams.Add(team);
+            //Update(sport);
         }
 
         public Sport GetById(int id)
         {
-            var sport = repository.GetById(id);
+            var sport = repository.Get(s => s.Id == id, null, "Teams").FirstOrDefault();
             if (sport == null)
             {
                 throw new SportDoesNotExistException();
