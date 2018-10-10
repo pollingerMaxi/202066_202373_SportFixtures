@@ -101,9 +101,9 @@ namespace SportFixtures.Portal.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         [AuthorizedRoles(Role.Admin)]
-        public ActionResult UpdateTeam(int id, [FromBody]TeamDTO data)
+        public ActionResult UpdateTeam([FromBody]TeamDTO data)
         {
             if (!ModelState.IsValid)
             {

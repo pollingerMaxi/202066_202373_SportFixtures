@@ -95,7 +95,7 @@ namespace SportFixtures.Portal.Controllers
 
         [HttpPut]
         [AuthorizedRoles(Role.Admin)]
-        public ActionResult UpdateUser(int id, [FromBody]UserDTO data)
+        public ActionResult UpdateUser([FromBody]UserDTO data)
         {
             if (!ModelState.IsValid)
             {
