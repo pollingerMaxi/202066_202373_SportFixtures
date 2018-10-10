@@ -168,7 +168,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest("User is already following this team.");
             }
         }
     }
