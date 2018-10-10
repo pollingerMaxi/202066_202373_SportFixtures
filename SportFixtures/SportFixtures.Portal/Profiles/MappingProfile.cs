@@ -21,6 +21,9 @@ namespace SportFixtures.Portal.Profiles
             CreateMap<User, UserDTO>();
             CreateMap<UserDTO, User>();
 
+            CreateMap<Comment, CommentDTO>();
+            CreateMap<CommentDTO, Comment>();
+
             CreateMap<User, LoginDTO>()
                 .ForMember(e => e.Email, src => src.MapFrom(u => u.Email))
                 .ForMember(e => e.Password, src => src.MapFrom(u => u.Password));

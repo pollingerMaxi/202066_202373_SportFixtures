@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Entities;
 using SportFixtures.Exceptions.CommentExceptions;
+using SportFixtures.Portal.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +15,16 @@ namespace SportFixtures.Portal.Controllers
     public class CommentsController : ControllerBase
     {
         private ICommentBusinessLogic commentBusinessLogic;
+        private readonly IMapper mapper;
 
-        public CommentsController(ICommentBusinessLogic commentsBL)
+        public CommentsController(ICommentBusinessLogic commentsBL, IMapper mapper)
         {
             commentBusinessLogic = commentsBL;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<ICollection<Comment>> GetAllComments()
+        public ActionResult<ICollection<CommentDTO>> GetAllComments()
         {
             if (!ModelState.IsValid)
             {
@@ -29,7 +33,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var comments = commentBusinessLogic.GetAll();
+                var comments = mapper.Map<CommentDTO[]>(commentBusinessLogic.GetAll());
                 return Ok(comments);
             }
             catch (Exception e)
@@ -39,7 +43,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Comment> GetComment(int id)
+        public ActionResult<CommentDTO> GetComment(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -48,17 +52,17 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-               var comment  = commentBusinessLogic.GetById(id);
-               return Ok(comment);
+                var comment = mapper.Map<CommentDTO>(commentBusinessLogic.GetById(id));
+                return Ok(comment);
             }
             catch (Exception e)
             {
-               return BadRequest(e.Message);
+                return BadRequest(e.Message);
             }
         }
 
         [HttpPost]
-        public ActionResult CreateComment([FromBody]Comment comment)
+        public ActionResult CreateComment([FromBody]CommentDTO data)
         {
             if (!ModelState.IsValid)
             {
@@ -67,8 +71,9 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
+                var comment = mapper.Map<Comment>(data);
                 commentBusinessLogic.Add(comment);
-                return Ok();
+                return Ok(mapper.Map<CommentDTO>(comment));
             }
             catch (CommentException e)
             {
@@ -81,7 +86,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpGet("encounter/{encounterId}")]
-        public ActionResult<ICollection<Comment>> GetCommentsOfEncounter(int encounterId)
+        public ActionResult<ICollection<CommentDTO>> GetCommentsOfEncounter(int encounterId)
         {
             if (!ModelState.IsValid)
             {
@@ -90,7 +95,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var comments = commentBusinessLogic.GetAllCommentsOfEncounter(encounterId);
+                var comments = mapper.Map<CommentDTO[]>(commentBusinessLogic.GetAllCommentsOfEncounter(encounterId));
                 return Ok(comments);
             }
             catch (Exception e)
