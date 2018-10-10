@@ -81,8 +81,8 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public bool TeamsHaveEncountersOnTheSameDay(Encounter encounter)
         {
-            return (repository.Get().Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team1) || e.Team2.Equals(encounter.Team1))))
-                || repository.Get().Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team2) || e.Team2.Equals(encounter.Team2)))));
+            return (repository.Get(null, null, "Team1,Team2").Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team1) || e.Team2.Equals(encounter.Team1))))
+                || repository.Get(null, null, "Team1,Team2").Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Team1.Equals(encounter.Team2) || e.Team2.Equals(encounter.Team2)))));
         }
 
         public void AddCommentToEncounter(Comment comment)
