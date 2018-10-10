@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Exceptions.SportExceptions;
+using SportFixtures.Portal.DTOs;
 using SportFixtures.Portal.Filters;
 using System;
 using System.Collections.Generic;
@@ -15,14 +17,16 @@ namespace SportFixtures.Portal.Controllers
     public class SportsController : ControllerBase
     {
         private ISportBusinessLogic sportBusinessLogic;
+        private readonly IMapper mapper;
 
-        public SportsController(ISportBusinessLogic sportBL)
+        public SportsController(ISportBusinessLogic sportBL, IMapper mapper)
         {
             sportBusinessLogic = sportBL;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<ICollection<Sport>> GetAllSports()
+        public ActionResult<ICollection<SportDTO>> GetAllSports()
         {
             if (!ModelState.IsValid)
             {
@@ -31,7 +35,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var sports = sportBusinessLogic.GetAll();
+                var sports = mapper.Map<SportDTO[]>(sportBusinessLogic.GetAll());
                 return Ok(sports);
             }
             catch (Exception e)
@@ -41,7 +45,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Sport> GetSport(int id)
+        public ActionResult<SportDTO> GetSport(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -50,7 +54,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var sport = sportBusinessLogic.GetById(id);
+                var sport = mapper.Map<SportDTO>(sportBusinessLogic.GetById(id));
                 return Ok(sport);
             }
             catch (SportDoesNotExistException e)
@@ -65,7 +69,7 @@ namespace SportFixtures.Portal.Controllers
 
         [HttpPost]
         [AuthorizedRoles(Role.Admin)]
-        public ActionResult CreateSport([FromBody]Sport sport)
+        public ActionResult CreateSport([FromBody]SportDTO data)
         {
             if (!ModelState.IsValid)
             {
@@ -74,8 +78,9 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
+                var sport = mapper.Map<Sport>(data);
                 sportBusinessLogic.Add(sport);
-                return Ok();
+                return Ok(mapper.Map<SportDTO>(sport));
             }
             catch (SportException e)
             {
@@ -89,7 +94,7 @@ namespace SportFixtures.Portal.Controllers
 
         [HttpPut]
         [AuthorizedRoles(Role.Admin)]
-        public ActionResult UpdateSport(int id, [FromBody]Sport sport)
+        public ActionResult UpdateSport(int id, [FromBody]SportDTO data)
         {
             if (!ModelState.IsValid)
             {
@@ -98,8 +103,9 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
+                var sport = mapper.Map<Sport>(data);
                 sportBusinessLogic.Update(sport);
-                return Ok();
+                return Ok(mapper.Map<SportDTO>(sport));
             }
             catch (SportDoesNotExistException e)
             {
