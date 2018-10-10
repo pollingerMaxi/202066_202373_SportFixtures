@@ -7,6 +7,7 @@ using SportFixtures.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace SportFixtures.Test.DataTests
@@ -23,14 +24,6 @@ namespace SportFixtures.Test.DataTests
             var options = new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(databaseName: "sportDB").Options;
             context = new Context(options);
             repository = new GenericRepository<Sport>(context);
-        }
-
-        [TestCleanup]
-        public void TestCleanup()
-        {
-            var teams = repository.Get();
-            context.RemoveRange(teams);
-            context.SaveChanges();
         }
 
         [TestMethod]
@@ -72,6 +65,34 @@ namespace SportFixtures.Test.DataTests
             Assert.IsTrue(sports.Count() == 1);
             //var sport = new Sport() { Name = "SportName" };
             repository.Insert(sport);
+        }
+
+        //[TestMethod]
+        //public void GetSportsIncludeTeamsTest()
+        //{
+        //    var mockRepo = new Mock<IRepository<Sport>>();
+        //    var list = new List<Sport>() { new Sport() { Name = "name" } };
+        //    //mockRepo.Setup(r => r.Get(null, null, It.IsAny<string>())).Returns(list);
+        //    var sports = (List<Sport>)mockRepo.Object.Get(null, null, "Teams");
+        //    //mockRepo.Verify(x => x.Get(null, null, It.IsAny<string>()), Times.Once);
+        //    Assert.IsTrue(sports.Count == 1);
+        //}
+
+        [TestMethod]
+        public void AttachSportTest()
+        {
+            var sport = new Sport();
+            repository.Attach(sport);
+            repository.Save();
+            Assert.IsTrue(context.Entry(sport).State == EntityState.Unchanged);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ObjectDisposedException))]
+        public void DisposeRepositoryTest()
+        {
+            repository.Dispose();
+            repository.Insert(new Sport());
         }
     }
 }

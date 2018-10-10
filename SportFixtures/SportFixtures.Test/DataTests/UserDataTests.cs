@@ -7,6 +7,7 @@ using SportFixtures.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace SportFixtures.Test.DataTests
@@ -88,6 +89,29 @@ namespace SportFixtures.Test.DataTests
             repository.Delete(user.Id);
             repository.Save();
             Assert.IsTrue(repository.Get().Count() == 0);
+        }
+
+        [TestMethod]
+        public void DeleteDetachedUserTest()
+        {
+            var user = new User();
+            repository.Insert(user);
+            repository.Save();
+            context.Entry(user).State = EntityState.Detached;
+            repository.Delete(user);
+            repository.Save();
+            Assert.IsTrue(repository.Get().Count() == 0);
+        }
+
+        [TestMethod]
+        public void GetUsersWithFiltersTest()
+        {
+            var mockRepo = new Mock<IRepository<User>>();
+            var list = new List<User>() { new User() { Name = "name" } };
+            mockRepo.Setup(r => r.Get(It.IsAny<Expression<Func<User, bool>>>(), null, "")).Returns(list);
+            var users = (List<User>)mockRepo.Object.Get(u => u.Name == "name", null, "");
+            mockRepo.Verify(x => x.Get(It.IsAny<Expression<Func<User, bool>>>(), null, ""), Times.Once);
+            Assert.IsTrue(users.Count == 1);
         }
     }
 }
