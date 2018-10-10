@@ -430,9 +430,9 @@ namespace SportFixtures.Test.BusinessLogicTests
             Team cerro = new Team { Id = 5, Name = "Cerro", SportId = 1 };
             var teamList = new List<Team>() { nacional, peñarol, defensor, danubio, cerro };
             Sport sport = new Sport() { Id = 1, Name = "Futbol", Teams = teamList };
-            List<Sport> sports = new List<Sport>(){sport};
+            List<Sport> sports = new List<Sport>() { sport };
             mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(sports);
-            
+
             var generatedEncounters = encounterBL.GenerateFixture(DateTime.Now, sport.Id, Algorithm.FreeForAll);
             var expectedEncountersCount = (teamList.Count() * (teamList.Count() - 1)) / 2;
             Assert.IsTrue(generatedEncounters.Count == expectedEncountersCount);
@@ -450,7 +450,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var teamList = new List<Team>() { nacional, peñarol, defensor, danubio, cerro };
             Sport sport = new Sport() { Id = 1, Name = "Futbol", Teams = teamList };
 
-            List<Sport> sports = new List<Sport>(){sport};
+            List<Sport> sports = new List<Sport>() { sport };
             mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(sports);
 
             var generatedEncounters = encounterBL.GenerateFixture(DateTime.Now, 1, Algorithm.RoundRobin);
@@ -458,24 +458,23 @@ namespace SportFixtures.Test.BusinessLogicTests
             Assert.IsTrue(generatedEncounters.Count == expectedEncountersCount);
         }
 
-        // [TestMethod]
-        // public void GenerateFixtureShouldReturnExceptionTest(){
+        [TestMethod]
+        [ExpectedException(typeof(FixtureGeneratorAlgorithmDoesNotExist))]
+        public void GenerateFixtureShouldReturnExceptionTest()
+        {
+            Team nacional = new Team { Id = 1, Name = "Nacional", SportId = 1 };
+            Team peñarol = new Team { Id = 2, Name = "Peñarol", SportId = 1 };
+            Team defensor = new Team { Id = 3, Name = "Defensor", SportId = 1 };
+            Team danubio = new Team { Id = 4, Name = "Danubio", SportId = 1 };
+            Team cerro = new Team { Id = 5, Name = "Cerro", SportId = 1 };
+            var teamList = new List<Team>() { nacional, peñarol, defensor, danubio, cerro };
+            Sport sport = new Sport() { Id = 1, Name = "Futbol", Teams = teamList };
+            mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(new List<Sport>() { sport });
+            var generatedEncounters = encounterBL.GenerateFixture(DateTime.Now, 1, (Algorithm)2);
+        }
 
-        //     Team nacional = new Team { Id = 1, Name = "Nacional", SportId = 1 };
-        //     Team peñarol = new Team { Id = 2, Name = "Peñarol", SportId = 1 };
-        //     Team defensor = new Team { Id = 3, Name = "Defensor", SportId = 1 };
-        //     Team danubio = new Team { Id = 4, Name = "Danubio", SportId = 1 };
-        //     Team cerro = new Team { Id = 5, Name = "Cerro", SportId = 1 };
-        //     var teamList = new List<Team>(){nacional, peñarol, defensor, danubio, cerro};
-        //     Sport sport = new Sport(){Id = 1, Name = "Futbol", Teams = teamList};
-
-        //     mockSportRepo.Setup(r => r.GetById(1)).Returns(sport);
-
-        //     var generatedEncounters = encounterBL.GenerateFixture(DateTime.Now, 1);
-        //     var expectedEncountersCount = teamList.Count * (teamList.Count - 1);
-        //     Assert.IsTrue(generatedEncounters.Count == expectedEncountersCount);
-        // }
-        public void CheckTeamsHaveEncountersOnTheSameDayOnAGivenListTeamsShouldReturnTrue2()
+        [TestMethod]
+        public void CheckTeamsHaveEncountersOnTheSameDayOnAGivenListTeamsShouldReturnTrue()
         {
             var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
             var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
