@@ -37,14 +37,13 @@ namespace SportFixtures.FixtureGenerator.Implementations
                     {
                         encounter.Date = encounter.Date.AddDays(1);
                     }
+                    encounters.Add(encounter);
 
                     Encounter encounter2 = new Encounter() { Team1 = rival, Team2 = team, SportId = team.SportId, Date = date };
-                    while (encounterBL.TeamsHaveEncountersOnTheSameDay(encounter) || encounterBL.TeamsHaveEncountersOnTheSameDay(encounters, encounter))
+                    while (encounterBL.TeamsHaveEncountersOnTheSameDay(encounter2) || encounterBL.TeamsHaveEncountersOnTheSameDay(encounters, encounter2))
                     {
                         encounter2.Date = encounter2.Date.AddDays(1);
                     }
-
-                    encounters.Add(encounter);
                     encounters.Add(encounter2);
                 }
             }
