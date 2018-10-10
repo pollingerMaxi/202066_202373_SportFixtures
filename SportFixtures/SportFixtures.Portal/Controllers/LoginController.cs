@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Entities;
 using SportFixtures.Exceptions.UserExceptions;
+using SportFixtures.Portal.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +14,17 @@ namespace SportFixtures.Portal.Controllers
     public class LoginController : ControllerBase
     {
         private IUserBusinessLogic userBusinessLogic;
+        private readonly IMapper mapper;
 
-        public LoginController(IUserBusinessLogic userBL)
+        public LoginController(IUserBusinessLogic userBL, IMapper mapper)
         {
             userBusinessLogic = userBL;
+            this.mapper = mapper;
         }
 
         [HttpPost]
         [Route("api/login")]
-        public ActionResult Login([FromBody]User user)
+        public ActionResult Login([FromBody]LoginDTO data)
         {
             if (!ModelState.IsValid)
             {
@@ -29,7 +33,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var loginSuccessful = userBusinessLogic.Login(user);
+                var loginSuccessful = userBusinessLogic.Login(mapper.Map<User>(data));
                 return Ok(loginSuccessful);
             }
             catch (UserDoesNotExistException e)
