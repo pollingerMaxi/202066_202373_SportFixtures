@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data;
@@ -17,14 +18,16 @@ namespace SportFixtures.Portal.Controllers
     public class EncounterController : ControllerBase
     {
         private IEncounterBusinessLogic encounterBusinessLogic;
+        private readonly IMapper mapper;
 
-        public EncounterController(IEncounterBusinessLogic encounterBL)
+        public EncounterController(IEncounterBusinessLogic encounterBL, IMapper mapper)
         {
             this.encounterBusinessLogic = encounterBL;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<ICollection<Encounter>> GetAllEncounters()
+        public ActionResult<ICollection<EncounterDTO>> GetAllEncounters()
         {
             if (!ModelState.IsValid)
             {
@@ -33,7 +36,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var encounters = encounterBusinessLogic.GetAll();
+                var encounters = mapper.Map<EncounterDTO[]>(encounterBusinessLogic.GetAll());
                 return Ok(encounters);
             }
             catch (Exception e)
@@ -43,7 +46,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Encounter> GetEncounterById(int id)
+        public ActionResult<EncounterDTO> GetEncounterById(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -52,7 +55,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var encounter = encounterBusinessLogic.GetById(id);
+                var encounter = mapper.Map<EncounterDTO>(encounterBusinessLogic.GetById(id));
                 return Ok(encounter);
             }
             catch (EncounterDoesNotExistException e)
@@ -67,7 +70,7 @@ namespace SportFixtures.Portal.Controllers
 
         [HttpPost]
         [AuthorizedRoles(Role.Admin)]
-        public ActionResult CreateEncounter([FromBody]Encounter encounter)
+        public ActionResult CreateEncounter([FromBody]EncounterDTO data)
         {
             if (!ModelState.IsValid)
             {
@@ -76,8 +79,9 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
+                var encounter = mapper.Map<Encounter>(data);
                 encounterBusinessLogic.Add(encounter);
-                return Ok();
+                return Ok(mapper.Map<EncounterDTO>(encounter));
             }
             catch (EncounterException e)
             {
@@ -91,7 +95,7 @@ namespace SportFixtures.Portal.Controllers
 
         [HttpPut]
         [AuthorizedRoles(Role.Admin)]
-        public ActionResult UpdateEncounter(int id, [FromBody]Encounter encounter)
+        public ActionResult UpdateEncounter([FromBody]EncounterDTO data)
         {
             if (!ModelState.IsValid)
             {
@@ -100,8 +104,9 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
+                var encounter = mapper.Map<Encounter>(data);
                 encounterBusinessLogic.Update(encounter);
-                return Ok();
+                return Ok(mapper.Map<EncounterDTO>(encounter));
             }
             catch (EncounterDoesNotExistException e)
             {
@@ -142,7 +147,8 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpGet("sports/{sportId}")]
-        public ActionResult GetAllEncountersOfSport(int sportId)
+        [AuthorizedRoles(Role.Admin)]
+        public ActionResult<ICollection<EncounterDTO>> GetAllEncountersOfSport(int sportId)
         {
             if (!ModelState.IsValid)
             {
@@ -151,8 +157,8 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var encounters = encounterBusinessLogic.GetAllEncountersOfSport(sportId);
-                return Ok();
+                var encounters = mapper.Map<EncounterDTO[]>(encounterBusinessLogic.GetAllEncountersOfSport(sportId));
+                return Ok(encounters);
             }
             catch (NoEncountersFoundForSportException e)
             {
@@ -165,7 +171,8 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpGet("teams/{teamId}")]
-        public ActionResult GetAllEncountersOfTeam(int teamId)
+        [AuthorizedRoles(Role.Admin)]
+        public ActionResult<ICollection<EncounterDTO>> GetAllEncountersOfTeam(int teamId)
         {
             if (!ModelState.IsValid)
             {
@@ -174,8 +181,8 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var encounters = encounterBusinessLogic.GetAllEncountersOfTeam(teamId);
-                return Ok();
+                var encounters = mapper.Map<EncounterDTO[]>(encounterBusinessLogic.GetAllEncountersOfTeam(teamId));
+                return Ok(encounters);
             }
             catch (NoEncountersFoundForTeamException e)
             {
@@ -188,7 +195,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpGet("bydate/{date}")]
-        public ActionResult GetAllEncountersOfTheDay(DateTime date)
+        public ActionResult<ICollection<EncounterDTO>> GetAllEncountersOfTheDay(DateTime date)
         {
             if (!ModelState.IsValid)
             {
@@ -197,8 +204,8 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var encounters = encounterBusinessLogic.GetAllEncountersOfTheDay(date);
-                return Ok();
+                var encounters = mapper.Map<EncounterDTO[]>(encounterBusinessLogic.GetAllEncountersOfTheDay(date));
+                return Ok(encounters);
             }
             catch (NoEncountersFoundForDateException e)
             {
@@ -210,8 +217,9 @@ namespace SportFixtures.Portal.Controllers
             }
         }
 
-        [HttpGet("fixture/")]
-        public ActionResult GenerateFixture([FromBody] FixtureDTO data)
+        [HttpPost("fixture/")]
+        [AuthorizedRoles(Role.Admin)]
+        public ActionResult<ICollection<EncounterDTO>> GenerateFixture([FromBody]FixtureDTO data)
         {
             if (!ModelState.IsValid)
             {
@@ -220,7 +228,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var encounters = encounterBusinessLogic.GenerateFixture(data.Date, data.SportId, data.Algorithm);
+                var encounters = mapper.Map<EncounterDTO[]>(encounterBusinessLogic.GenerateFixture(data.Date, data.SportId, data.Algorithm));
                 return Ok(encounters);
             }
             catch (SportDoesNotExistException e)
