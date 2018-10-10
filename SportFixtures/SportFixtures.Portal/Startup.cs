@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Access;
 using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
+using SportFixtures.Portal.Profiles;
 
 namespace SportFixtures.Portal
 {
@@ -31,6 +33,9 @@ namespace SportFixtures.Portal
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             ResolveRepositoryDependencies(services);
             ResolveBusinessLogicDependencies(services);
+            var mappingConfig = new MapperConfiguration(c => c.AddProfile(new MappingProfile()));
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
             services.AddDbContext<Context>(o => o.UseSqlServer(Configuration.GetSection("ConnectionString").Value));
         }
 
@@ -40,6 +45,7 @@ namespace SportFixtures.Portal
             services.AddScoped<ITeamBusinessLogic, TeamBusinessLogic>();
             services.AddScoped<IUserBusinessLogic, UserBusinessLogic>();
             services.AddScoped<ICommentBusinessLogic, CommentBusinessLogic>();
+            services.AddScoped<IEncounterBusinessLogic, EncounterBusinessLogic>();
         }
 
         private void ResolveRepositoryDependencies(IServiceCollection services)
@@ -49,6 +55,7 @@ namespace SportFixtures.Portal
             services.AddScoped<IRepository<User>, GenericRepository<User>>();
             services.AddScoped<IRepository<Comment>, GenericRepository<Comment>>();
             services.AddScoped<IRepository<UsersTeams>, GenericRepository<UsersTeams>>();
+            services.AddScoped<IRepository<Encounter>, GenericRepository<Encounter>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
