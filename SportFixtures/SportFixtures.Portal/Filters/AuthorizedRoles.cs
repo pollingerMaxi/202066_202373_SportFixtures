@@ -37,11 +37,8 @@ namespace SportFixtures.Portal.Filters
                 };
             }
 
-            User user;
-            using (var logic = GetLogic(context))
-            {
-                user = logic.TokenIsValid(token);
-            }
+            var logic = GetLogic(context);
+            var user = logic.TokenIsValid(token);
 
             if (user == null)
             {

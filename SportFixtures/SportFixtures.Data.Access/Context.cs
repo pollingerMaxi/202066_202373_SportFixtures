@@ -22,10 +22,8 @@ namespace SportFixtures.Data.Access
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Encounter>().HasMany(c => c.Comments).WithOne().HasForeignKey(c => c.EncounterId);
             builder.Entity<Encounter>().HasMany(c => c.Comments).WithOne().HasForeignKey(c => c.EncounterId).OnDelete(DeleteBehavior.Cascade);
-            
-            builder.Entity<Sport>().HasMany(t => t.Teams).WithOne().HasForeignKey(t => t.SportId);
+
             builder.Entity<Sport>().HasMany(t => t.Teams).WithOne().HasForeignKey(t => t.SportId).OnDelete(DeleteBehavior.Cascade);
             
             builder.Entity<UsersTeams>().HasKey(ut => new { ut.UserId, ut.TeamId });
