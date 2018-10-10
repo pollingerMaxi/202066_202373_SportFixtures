@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Exceptions.TeamExceptions;
 using SportFixtures.Exceptions.UserExceptions;
+using SportFixtures.Portal.DTOs;
 using SportFixtures.Portal.Filters;
 using System;
 using System.Collections.Generic;
@@ -16,14 +18,16 @@ namespace SportFixtures.Portal.Controllers
     public class UsersController : ControllerBase
     {
         private IUserBusinessLogic userBusinessLogic;
+        private readonly IMapper mapper;
 
-        public UsersController(IUserBusinessLogic userBL)
+        public UsersController(IUserBusinessLogic userBL, IMapper mapper)
         {
             userBusinessLogic = userBL;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<ICollection<User>> GetAllUsers()
+        public ActionResult<ICollection<UserDTO>> GetAllUsers()
         {
             if (!ModelState.IsValid)
             {
@@ -32,7 +36,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var users = userBusinessLogic.GetAll();
+                var users = mapper.Map<UserDTO[]>(userBusinessLogic.GetAll());
                 return Ok(users);
             }
             catch (Exception e)
@@ -51,7 +55,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var user = userBusinessLogic.GetById(id);
+                var user = mapper.Map<UserDTO>(userBusinessLogic.GetById(id));
                 return Ok(user);
             }
             catch (UserDoesNotExistException e)
@@ -66,7 +70,7 @@ namespace SportFixtures.Portal.Controllers
 
         [HttpPost]
         [AuthorizedRoles(Role.Admin)]
-        public ActionResult CreateUser([FromBody]User user)
+        public ActionResult CreateUser([FromBody]UserDTO data)
         {
             if (!ModelState.IsValid)
             {
@@ -75,8 +79,9 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
+                var user = mapper.Map<User>(data);
                 userBusinessLogic.AddUser(user);
-                return Ok();
+                return Ok(mapper.Map<UserDTO>(user));
             }
             catch (UserException e)
             {
@@ -90,7 +95,7 @@ namespace SportFixtures.Portal.Controllers
 
         [HttpPut]
         [AuthorizedRoles(Role.Admin)]
-        public ActionResult UpdateUser(int id, [FromBody]User user)
+        public ActionResult UpdateUser(int id, [FromBody]UserDTO data)
         {
             if (!ModelState.IsValid)
             {
@@ -99,8 +104,9 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
+                var user = mapper.Map<User>(data);
                 userBusinessLogic.Update(user);
-                return Ok();
+                return Ok(mapper.Map<UserDTO>(user));
             }
             catch (UserDoesNotExistException e)
             {

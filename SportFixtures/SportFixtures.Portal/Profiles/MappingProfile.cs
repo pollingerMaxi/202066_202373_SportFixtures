@@ -17,6 +17,9 @@ namespace SportFixtures.Portal.Profiles
 
             CreateMap<Sport, SportDTO>();
             CreateMap<SportDTO, Sport>();
+
+            CreateMap<User, UserDTO>();
+            CreateMap<UserDTO, User>();
         }
     }
 }
