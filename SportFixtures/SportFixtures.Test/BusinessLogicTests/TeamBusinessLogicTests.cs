@@ -33,8 +33,8 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             teamWithAllData = new Team() { Name = "TeamName", PhotoPath = @"C:\path\to\file.jpg", SportId = 1 };
             teamList = new List<Team>() { teamWithAllData };
-            sport = new Sport() { Id = 1, Name = "SportName", Teams = teamList, IsDeleted = false };
-            sportList = new List<Sport>(){sport};
+            sport = new Sport() { Id = 1, Name = "SportName", Teams = teamList };
+            sportList = new List<Sport>() { sport };
             mockTeamRepo = new Mock<IRepository<Team>>();
             mockSportRepo = new Mock<IRepository<Sport>>();
             sportBL = new SportBusinessLogic(mockSportRepo.Object);
