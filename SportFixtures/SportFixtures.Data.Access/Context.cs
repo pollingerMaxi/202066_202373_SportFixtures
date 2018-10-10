@@ -29,6 +29,8 @@ namespace SportFixtures.Data.Access
             builder.Entity<UsersTeams>().HasKey(ut => new { ut.UserId, ut.TeamId });
             builder.Entity<UsersTeams>().HasOne<User>(ut => ut.User).WithMany(u => u.Favorites).HasForeignKey(ut => ut.UserId);
             builder.Entity<UsersTeams>().HasOne<Team>(ut => ut.Team).WithMany(u => u.FavoritedBy).HasForeignKey(ut => ut.TeamId);
+
+            builder.Entity<Encounter>().HasMany(c => c.Comments).WithOne().HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.Cascade);
         }
 
         public Context() { }
