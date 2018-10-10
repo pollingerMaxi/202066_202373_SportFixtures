@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SportFixtures.Exceptions.SportExceptions;
+using System.Linq.Expressions;
 
 namespace SportFixtures.Test.BusinessLogicTests
 {
@@ -105,8 +106,9 @@ namespace SportFixtures.Test.BusinessLogicTests
             sportList.Add(sport);
             mockSportRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
             mockSportRepo.Setup(r => r.Update(It.IsAny<Sport>())).Callback<Sport>(x => sportList.First().Teams.Add(team));
+            mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(sportList);
             sportBL.AddTeamToSport(team);
-            mockSportRepo.Verify(r => r.GetById(team.SportId), Times.AtLeast(2));
+            mockSportRepo.Verify(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams"), Times.AtLeast(1));
             mockSportRepo.Verify(r => r.Update(It.IsAny<Sport>()), Times.Once);
         }
 
@@ -120,6 +122,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             ITeamBusinessLogic teamBl = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
             mockSportRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
             mockSportRepo.Setup(r => r.Update(It.IsAny<Sport>())).Callback<Sport>(x => sportList.First().Teams.Add(team));
+            mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(sportList);
             sportBL.AddTeamToSport(team);
             mockSportRepo.Verify(x => x.Update(sport), Times.Once);
             mockSportRepo.Verify(x => x.Save(), Times.Once);
@@ -136,6 +139,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             ITeamBusinessLogic teamBl = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
             mockSportRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
             mockSportRepo.Setup(r => r.Update(It.IsAny<Sport>())).Callback<Sport>(x => sportList.First().Teams.Add(team));
+            mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(sportList);
             sportBL.AddTeamToSport(team);
             sportBL.AddTeamToSport(team);
             mockSportRepo.Verify(x => x.Update(sport), Times.Exactly(2));

@@ -430,10 +430,10 @@ namespace SportFixtures.Test.BusinessLogicTests
             Team cerro = new Team { Id = 5, Name = "Cerro", SportId = 1 };
             var teamList = new List<Team>() { nacional, peñarol, defensor, danubio, cerro };
             Sport sport = new Sport() { Id = 1, Name = "Futbol", Teams = teamList };
-
-            mockSportRepo.Setup(r => r.GetById(1)).Returns(sport);
-
-            var generatedEncounters = encounterBL.GenerateFixture(DateTime.Now, 1, Algorithm.FreeForAll);
+            List<Sport> sports = new List<Sport>(){sport};
+            mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(sports);
+            
+            var generatedEncounters = encounterBL.GenerateFixture(DateTime.Now, sport.Id, Algorithm.FreeForAll);
             var expectedEncountersCount = (teamList.Count() * (teamList.Count() - 1)) / 2;
             Assert.IsTrue(generatedEncounters.Count == expectedEncountersCount);
         }
@@ -450,7 +450,8 @@ namespace SportFixtures.Test.BusinessLogicTests
             var teamList = new List<Team>() { nacional, peñarol, defensor, danubio, cerro };
             Sport sport = new Sport() { Id = 1, Name = "Futbol", Teams = teamList };
 
-            mockSportRepo.Setup(r => r.GetById(1)).Returns(sport);
+            List<Sport> sports = new List<Sport>(){sport};
+            mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(sports);
 
             var generatedEncounters = encounterBL.GenerateFixture(DateTime.Now, 1, Algorithm.RoundRobin);
             var expectedEncountersCount = teamList.Count * (teamList.Count - 1);

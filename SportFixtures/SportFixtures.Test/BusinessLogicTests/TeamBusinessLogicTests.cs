@@ -10,6 +10,7 @@ using SportFixtures.Exceptions.TeamExceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace SportFixtures.Test.BusinessLogicTests
@@ -25,6 +26,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         private ISportBusinessLogic sportBL;
         private ITeamBusinessLogic teamBL;
         private List<Team> teamList;
+        private List<Sport> sportList;
 
         [TestInitialize]
         public void TestInitialize()
@@ -32,6 +34,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             teamWithAllData = new Team() { Name = "TeamName", PhotoPath = @"C:\path\to\file.jpg", SportId = 1 };
             teamList = new List<Team>() { teamWithAllData };
             sport = new Sport() { Id = 1, Name = "SportName", Teams = teamList, IsDeleted = false };
+            sportList = new List<Sport>(){sport};
             mockTeamRepo = new Mock<IRepository<Team>>();
             mockSportRepo = new Mock<IRepository<Sport>>();
             sportBL = new SportBusinessLogic(mockSportRepo.Object);
@@ -48,6 +51,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var sport = new Sport() { Id = 1, Name = "SportName" };
             var teamsList = new List<Team>();
             mockTeamRepo.Setup(x => x.Insert(It.IsAny<Team>())).Callback<Team>(x => teamsList.Add(team));
+            mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(sportList);
             teamBL.Add(team);
             mockTeamRepo.Verify(x => x.Insert(It.IsAny<Team>()), Times.Once());
             mockTeamRepo.Verify(x => x.Save(), Times.Once());
@@ -111,6 +115,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             //TestInitialize already adds this team to the list and has a mock.setup configured 
             //to return the sport and the list of teams
+            mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(sportList);
             teamBL.Add(teamWithAllData);
         }
 
