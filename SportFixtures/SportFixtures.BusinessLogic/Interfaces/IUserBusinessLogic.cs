@@ -43,12 +43,31 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// </summary>
         /// <param name="user"></param>
         Guid Login(User user);
+
+        /// <summary>
+        /// Returns all the users in the repository.
+        /// </summary>
+        /// <returns></returns>
         IEnumerable<User> GetAll();
 
+        /// <summary>
+        /// Returns the user with the given ID.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         User GetById(int userId);
 
+        /// <summary>
+        /// If the given token is valid, returns the user with said token.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         User TokenIsValid(string token);
 
+        /// <summary>
+        /// Logouts a user.
+        /// </summary>
+        /// <param name="email"></param>
         void Logout(string email);
     }
 }
