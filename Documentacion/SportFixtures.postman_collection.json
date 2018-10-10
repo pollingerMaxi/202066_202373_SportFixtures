@@ -1,0 +1,1614 @@
+{
+	"info": {
+		"_postman_id": "c9a6352f-5cf6-411a-bc9c-5a961654ba8d",
+		"name": "SportFixtures",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Adds",
+			"item": [
+				{
+					"name": "Add Favorite User Peñarol",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"UserId\": {{userId}},\n    \"TeamId\": {{peñarolFId}}\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/users/favorite/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"favorite",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Comment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"UserId\": {{userId}},\n    \"EncounterId\":{{encounterNPId}},\n    \"Text\": \"Good game, well played\"\n}\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/comments/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"comments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Encounter Basquetbol Nac Agu",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc7cee55-4362-4220-82de-68d3da89c4ad",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"encounterNAId\", jsonData.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"DateTime\": \"2017-09-08T19:04:14\",\n\t\"SportId\": {{basquetbolId}},\n\t\"Home\": {{nacionalB}},\n\t\"Visitor\": {{aguadaB}},\n\t\"Comments\": []\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/encounters/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"encounters",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Encounter Futbol Nac Peñ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eef26172-1188-4293-84d1-776c667097ed",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"encounterNPId\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Date\": \"2018-09-09T19:04:14\",\n\t\"SportId\": {{futbolId}},\n\t\"Home\": {{nacionalF}},\n\t\"Visitor\": {{peñarolF}},\n\t\"Comments\": []\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/encounters/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"encounters",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add user2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "85a43037-33ef-4a1d-a3f2-0b558dab751c",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"userId\", jsonData.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"user2\",\n\t\"lastName\":\"Perez\",\n\t\"userName\":\"user2\",\n\t\"password\":\"user2\",\n\t\"email\":\"user2@user2.com\",\n\t\"role\":\"User\"\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/users/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add admin2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6ee20df9-5f52-4df4-8d31-85fd0d44f52a",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"adminId\", jsonData.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"admin2\",\n\t\"lastName\":\"Gonzalez\",\n\t\"userName\":\"admin2\",\n\t\"password\":\"admin2\",\n\t\"email\":\"admin2@admin2.com\",\n\t\"role\":\"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/users/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add team sport no existe",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Nacional\",\n    \"photoPath\":\"C:\\\\b\\\\nacional.jpg\",\n    \"sportId\": 34534563\n}\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/teams/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add team Nacional Basquetbol",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c086643c-f238-4fe1-a7c9-8780bdc92472",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"nacionalBId\", jsonData.id);",
+									"postman.setGlobalVariable(\"nacionalB\", responseBody);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Nacional\",\n    \"photoPath\":\"C:\\\\b\\\\nacional.jpg\",\n    \"sportId\": {{basquetbolId}}\n}\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/teams/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add team Atenas Basquetbol",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1a4a3d8e-be98-4c66-ad31-374ce3e11c70",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"atenasBId\", jsonData.id);",
+									"postman.setGlobalVariable(\"atenasB\", responseBody);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Atenas\",\n    \"photoPath\":\"C:\\\\b\\\\atenas.jpg\",\n    \"sportId\": {{basquebolId}}\n}\n\n\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/teams/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add team Aguada Basquetbol",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d904f447-b27c-4b55-bfaa-b739e10f1d3a",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"aguadaBId\", jsonData.id);",
+									"postman.setGlobalVariable(\"aguadaB\", responseBody);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Aguada\",\n    \"photoPath\":\"C:\\\\b\\\\aguada.jpg\",\n    \"sportId\": {{basquetbolId}}\n}\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/teams/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add team Danubio Futbol",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "29c3ea68-4544-4b03-9e6a-c53ec8062a5e",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"danubioFId\", jsonData.id);",
+									"postman.setGlobalVariable(\"danubioF\", responseBody);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Danubio\",\n    \"photoPath\":\"C:\\\\path\\\\photo.jpg\",\n    \"sportId\": {{futbolId}}\n}\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/teams/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add team Peñarol Futbol",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f0412fa4-962a-4538-b9cd-2e176fcfedb9",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"peñarolFId\", jsonData.id);",
+									"postman.setGlobalVariable(\"peñarolF\", responseBody);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Peñarol\",\n    \"photoPath\":\"C:\\\\f\\\\peniarol.jpg\",\n    \"sportId\": {{futbolId}}\n}\n\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/teams/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add team Nacional Futbol",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8164cf61-0f49-4aca-9a18-b7f5492d5424",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"nacionalFId\", jsonData.id);",
+									"postman.setGlobalVariable(\"nacionalF\", responseBody);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Nacional\",\n    \"photoPath\":\"C:\\\\f\\\\nacional.jpg\",\n    \"sportId\": {{futbolId}}\n}\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/teams/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add sport Basquetbol",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9ff31d9b-e65d-44dc-802b-7db04e37d71d",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"basquetbolId\", jsonData.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Basquetbol\",\n\t\"teams\":[]\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/sports/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"sports",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add sport no name",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"\",\n\t\"teams\":[]\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/sports/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"sports",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add sport Futbol",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "af206cc0-e9ea-4e8a-9f6e-27bec51a05a3",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"futbolId\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Futbol\",\n\t\"teams\":[]\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/sports/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"sports",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Gets",
+			"item": [
+				{
+					"name": "Get all encounters of team",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n    \"name\":\"Atenas\",\n    \"photoPath\":\"C:\\\\b\\\\atenas.jpg\",\n    \"sportId\": 2\n}\n\n\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/encounters/team/{{nacionalFId}}",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"encounters",
+								"team",
+								"{{nacionalFId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all encounters of sport",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n    \"name\":\"Atenas\",\n    \"photoPath\":\"C:\\\\b\\\\atenas.jpg\",\n    \"sportId\": 2\n}\n\n\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/encounters/sport/{{futbolId}}",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"encounters",
+								"sport",
+								"{{futbolId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all comments of encounter",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n    \"name\":\"Atenas\",\n    \"photoPath\":\"C:\\\\b\\\\atenas.jpg\",\n    \"sportId\": 2\n}\n\n\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/comments/encounter/{{encounterNPId}}",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"comments",
+								"encounter",
+								"{{encounterNPId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all comments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n    \"name\":\"Atenas\",\n    \"photoPath\":\"C:\\\\b\\\\atenas.jpg\",\n    \"sportId\": 2\n}\n\n\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/comments/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"comments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get encounter Futbol Nac Peñ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n    \"name\":\"Atenas\",\n    \"photoPath\":\"C:\\\\b\\\\atenas.jpg\",\n    \"sportId\": 2\n}\n\n\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/encounters/{{encounterNPId}}",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"encounters",
+								"{{encounterNPId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get encounters",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n    \"name\":\"Atenas\",\n    \"photoPath\":\"C:\\\\b\\\\atenas.jpg\",\n    \"sportId\": 2\n}\n\n\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/encounters/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"encounters",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n    \"name\":\"Atenas\",\n    \"photoPath\":\"C:\\\\b\\\\atenas.jpg\",\n    \"sportId\": 2\n}\n\n\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/users/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get teams",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n    \"name\":\"Atenas\",\n    \"photoPath\":\"C:\\\\b\\\\atenas.jpg\",\n    \"sportId\": 2\n}\n\n\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/teams/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n    \"name\":\"Atenas\",\n    \"photoPath\":\"C:\\\\b\\\\atenas.jpg\",\n    \"sportId\": 2\n}\n\n\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/users/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get team by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/teams/{{teamId}}",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								"{{teamId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get sport by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/sports/{{basquetbolId}}",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"sports",
+								"{{basquetbolId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get sport no existe",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/sports/1412412414",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"sports",
+								"1412412414"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get sports",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n    \"name\":\"Atenas\",\n    \"photoPath\":\"C:\\\\b\\\\atenas.jpg\",\n    \"sportId\": 2\n}\n\n\n\n\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/sports/",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"sports",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fixture",
+			"item": [
+				{
+					"name": "Generate free for all",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"date\":\"10/10/2018 2:02:28 AM\",\n\t\"sportId\":{{futbolId}},\n\t\"algorithm\":\"FreeForAll\"\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/encounters/fixture",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"encounters",
+								"fixture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate roundrobin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"date\":\"10/10/2018 2:02:28 AM\",\n\t\"sportId\":{{futbolId}},\n\t\"algorithm\":\"RoundRobin\"\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/encounters/fixture",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"encounters",
+								"fixture"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "User login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b11d9de1-9ae4-4679-b3af-b155516a6b9a",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"token\", jsonData);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user2@user2.com\",\n\t\"password\": \"user2\"\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/login",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "850f9d78-ecaf-4681-a6bd-e0e3f619c621",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"token\", jsonData);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"admin@admin.com\",\n\t\"password\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/login",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Updates",
+			"item": [
+				{
+					"name": "Update sport name basket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "93a98326-e633-4e33-971b-5e2a77798cb3",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"basketId\", jsonData.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Basketball\",\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/sports/{{basquetbolId}}",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"sports",
+								"{{basquetbolId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update team Atenas to Malvin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "11d612dc-e773-43b1-bb3e-50e89295a6e4",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"malvinBId\", jsonData.id);",
+									"postman.setGlobalVariable(\"malvinB\", jsonData);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Malvin\",\n\t\"photoPath\":\"C:\\\\b\\\\malvin.jpg\"\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/teams/{{atenasBId}}",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								"{{atenasBId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user name lastname",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63267d6e-b842-4c8b-9c22-4f57cec7118e",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"adminId\", jsonData.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Jose Admin\",\n\t\"lastName\":\"Gonzalez Admin\",\n}\n"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/users/{{adminId}}",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{adminId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update date Encounter Nac Peñ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eef26172-1188-4293-84d1-776c667097ed",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"encounterNPId\", jsonData.id);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"DateTime\": \"2018/11/11\"\n}"
+						},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/encounters/{{encounterNPId}}",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"encounters",
+								"{{encounterNPId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Deletes",
+			"item": [
+				{
+					"name": "Delete Encounter",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/encounters/{{encounterNAId}}",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"encounters",
+								"{{encounterNAId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/users/{{userId}}",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Team",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/teams/{{atenasBId}}",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								"{{atenasBId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Sport",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{IPMaxi}}/api/sports/{{futbolId}}",
+							"protocol": "http",
+							"host": [
+								"{{IPMaxi}}"
+							],
+							"path": [
+								"api",
+								"sports",
+								"{{futbolId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "18b15391-4cd3-476f-b3f1-bf6f7b3511cf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3198f30d-328c-4478-be61-eef043cde665",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
