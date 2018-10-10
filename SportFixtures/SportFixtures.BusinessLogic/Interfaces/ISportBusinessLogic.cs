@@ -17,9 +17,30 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// </summary>
         /// <param name="team"></param>
         void AddTeamToSport(Team team);
+
+        /// <summary>
+        /// Updates a sport.
+        /// </summary>
+        /// <param name="sport"></param>
         void Update(Sport sport);
+
+        /// <summary>
+        /// Deletes a sport.
+        /// </summary>
+        /// <param name="id"></param>
         void Delete(int id);
+
+        /// <summary>
+        /// Returns the sport with given ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Sport GetById(int id);
+
+        /// <summary>
+        /// Returns all the sports in the repository.
+        /// </summary>
+        /// <returns></returns>
         IEnumerable<Sport> GetAll();
     }
 }
