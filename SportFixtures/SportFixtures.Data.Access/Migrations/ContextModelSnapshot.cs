@@ -33,7 +33,7 @@ namespace SportFixtures.Data.Access.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EncounterId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
@@ -116,6 +116,11 @@ namespace SportFixtures.Data.Access.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new { Id = 1, Email = "admin@admin.com", LastName = "Admins LastName", Name = "Admins Name", Password = "admin", Role = 1, Username = "admin" },
+                        new { Id = 2, Email = "user@user.com", LastName = "Users LastName", Name = "Normal user", Password = "user", Role = 0, Username = "user" }
+                    );
                 });
 
             modelBuilder.Entity("SportFixtures.Data.Entities.UsersTeams", b =>
@@ -135,7 +140,7 @@ namespace SportFixtures.Data.Access.Migrations
                 {
                     b.HasOne("SportFixtures.Data.Entities.Encounter")
                         .WithMany("Comments")
-                        .HasForeignKey("EncounterId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

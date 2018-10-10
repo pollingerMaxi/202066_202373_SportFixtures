@@ -25,34 +25,36 @@ namespace SportFixtures.Data.Access
             builder.Entity<Encounter>().HasMany(c => c.Comments).WithOne().HasForeignKey(c => c.EncounterId).OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Sport>().HasMany(t => t.Teams).WithOne().HasForeignKey(t => t.SportId).OnDelete(DeleteBehavior.Cascade);
-            
+
             builder.Entity<UsersTeams>().HasKey(ut => new { ut.UserId, ut.TeamId });
             builder.Entity<UsersTeams>().HasOne<User>(ut => ut.User).WithMany(u => u.Favorites).HasForeignKey(ut => ut.UserId);
             builder.Entity<UsersTeams>().HasOne<Team>(ut => ut.Team).WithMany(u => u.FavoritedBy).HasForeignKey(ut => ut.TeamId);
 
             builder.Entity<Encounter>().HasMany(c => c.Comments).WithOne().HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.Cascade);
-            
+
             builder.Entity<User>().HasData(
-                new User 
+                new User
                 {
+                    Id = 1,
                     Name = "Admins Name",
                     LastName = "Admins LastName",
                     Username = "admin",
                     Email = "admin@admin.com",
                     Password = "admin",
                     Role = Role.Admin,
-            });
+                });
 
             builder.Entity<User>().HasData(
-                new User 
+                new User
                 {
+                    Id = 2,
                     Name = "Normal user",
                     LastName = "Users LastName",
                     Username = "user",
                     Email = "user@user.com",
                     Password = "user",
                     Role = Role.User,
-            });
+                });
 
         }
 

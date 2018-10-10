@@ -70,7 +70,7 @@ namespace SportFixtures.Portal.Controllers
 
         [HttpPost]
         [AuthorizedRoles(Role.Admin)]
-        public ActionResult CreateUser([FromBody]UserDTO data)
+        public ActionResult CreateUser([FromBody]User data)
         {
             if (!ModelState.IsValid)
             {
@@ -79,9 +79,8 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var user = mapper.Map<User>(data);
-                userBusinessLogic.AddUser(user);
-                return Ok(mapper.Map<UserDTO>(user));
+                userBusinessLogic.AddUser(data);
+                return Ok(mapper.Map<UserDTO>(data));
             }
             catch (UserException e)
             {
