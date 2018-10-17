@@ -132,7 +132,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
 
             var userFromDb = users.FirstOrDefault();
-            if (!user.Email.Equals(userFromDb.Email) && !user.Password.Equals(userFromDb.Password))
+            if (!user.Email.Equals(userFromDb.Email) || !user.Password.Equals(userFromDb.Password))
             {
                 throw new EmailOrPasswordException();
             }
