@@ -5,8 +5,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AppSettings } from './config/appSettings';
 import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DefaultComponent } from './shared/default/default.component';
+import { LoginService } from './services';
+import { HttpModule } from '@angular/http';
 
 
 const routes: Routes = [
@@ -17,6 +19,10 @@ const routes: Routes = [
   {
     path: AppSettings.RouterUrls.login,
     component: LoginComponent
+  },
+  {
+    path: '**',
+    redirectTo: ''
   }
 ];
 
@@ -29,10 +35,11 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
-    NgbModule.forRoot(),
+    //NgbModule.forRoot(),
+    HttpModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

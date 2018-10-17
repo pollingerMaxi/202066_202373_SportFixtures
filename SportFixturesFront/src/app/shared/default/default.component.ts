@@ -11,7 +11,7 @@ import { AppSettings } from 'src/app/config/appSettings';
 export class DefaultComponent extends BaseComponent implements OnInit {
   constructor(protected router: Router, protected _route: ActivatedRoute) {
     super(_route);
-    this.router.navigateByUrl(AppSettings.RouterUrls.login);
+    //this.router.navigateByUrl(AppSettings.RouterUrls.login);
   }
 
   ngOnInit() {
