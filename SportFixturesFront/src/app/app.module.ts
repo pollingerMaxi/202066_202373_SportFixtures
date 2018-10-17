@@ -5,10 +5,11 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AppSettings } from './config/appSettings';
 import { FormsModule } from '@angular/forms';
-//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {ToasterModule, ToasterService} from 'angular2-toaster';
 import { DefaultComponent } from './shared/default/default.component';
 import { LoginService } from './services';
 import { HttpModule } from '@angular/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 const routes: Routes = [
@@ -35,7 +36,8 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
-    //NgbModule.forRoot(),
+    ToasterModule.forRoot(),
+    BrowserAnimationsModule,
     HttpModule,
     RouterModule.forRoot(routes)
   ],
