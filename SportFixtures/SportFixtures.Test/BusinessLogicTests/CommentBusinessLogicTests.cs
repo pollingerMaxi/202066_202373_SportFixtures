@@ -52,8 +52,9 @@ namespace SportFixtures.Test.BusinessLogicTests
             user = new User() { Id = 1 };
             var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
             var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            ICollection<Team> teams = new List<Team>(){team1, team2};
             var sport = new Sport() { Id = 1, Name = "Futbol" };
-            encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id, Team1 = team1, Team2 = team2 };
+            encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id, Teams = teams };
             mockCommentRepo.Setup(r => r.Get(null, null, "")).Returns(commentList);
         }
 

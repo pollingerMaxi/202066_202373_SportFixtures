@@ -32,14 +32,15 @@ namespace SportFixtures.FixtureGenerator.Implementations
                 teamList.Remove(team);
                 foreach (Team rival in teamList)
                 {
-                    Encounter encounter = new Encounter() { Team1 = team, Team2 = rival, SportId = team.SportId, Date = date };
+                    ICollection<Team> opponents = new List<Team>(){team, rival};
+                    Encounter encounter = new Encounter() { Teams = opponents, SportId = team.SportId, Date = date };
                     while (encounterBL.TeamsHaveEncountersOnTheSameDay(encounter) || encounterBL.TeamsHaveEncountersOnTheSameDay(encounters, encounter))
                     {
                         encounter.Date = encounter.Date.AddDays(1);
                     }
                     encounters.Add(encounter);
 
-                    Encounter encounter2 = new Encounter() { Team1 = rival, Team2 = team, SportId = team.SportId, Date = date };
+                    Encounter encounter2 = new Encounter() { Teams = opponents, SportId = team.SportId, Date = date };
                     while (encounterBL.TeamsHaveEncountersOnTheSameDay(encounter2) || encounterBL.TeamsHaveEncountersOnTheSameDay(encounters, encounter2))
                     {
                         encounter2.Date = encounter2.Date.AddDays(1);
