@@ -40,7 +40,7 @@ namespace SportFixtures.BusinessLogic.Implementations
                 throw new EncounterSameTeamException();
             }
 
-            if (!TeamsAreOnTheSameSport(encounter))
+            if (TeamsHaveDifferentSport(encounter))
             {
                 throw new EncounterTeamsDifferentSportException();
             }
@@ -60,8 +60,9 @@ namespace SportFixtures.BusinessLogic.Implementations
             return encounter.Teams.GroupBy(n => n.Id).Any(c => c.Count() > 1);
         }
 
-        private bool TeamsAreOnTheSameSport(Encounter encounter){
-            return encounter.Teams.GroupBy(n => n.SportId).Any(c => c.Count() == 1);
+        private bool TeamsHaveDifferentSport(Encounter encounter){
+            var duplicates = encounter.Teams.GroupBy(s => s.SportId).ToList();
+            return duplicates.Count() > 1; 
         }
 
         public void Update(Encounter encounter)

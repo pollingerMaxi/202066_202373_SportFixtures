@@ -31,7 +31,8 @@ namespace SportFixtures.FixtureGenerator.Implementations
                 teamList.Remove(team);
                 foreach (Team rival in teamList)
                 {
-                    Encounter encounter = new Encounter() { Team1 = team, Team2 = rival, SportId = team.SportId, Date = date };
+                    ICollection<Team> opponents = new List<Team>() { team, rival };
+                    Encounter encounter = new Encounter() { Teams = opponents, SportId = team.SportId, Date = date };
                     while (encounterBL.TeamsHaveEncountersOnTheSameDay(encounter) || encounterBL.TeamsHaveEncountersOnTheSameDay(generatedEncounters, encounter))
                     {
                         encounter.Date = encounter.Date.AddDays(1);

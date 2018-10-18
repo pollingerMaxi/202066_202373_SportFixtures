@@ -90,7 +90,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void AddEncounterWithTeamsFromDifferentSportsShouldReturnExceptionTest()
         {
             var team = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
-            var team2 = new Team() { Id = 1, Name = "Aguada", SportId = 2 };
+            var team2 = new Team() { Id = 2, Name = "Aguada", SportId = 2 };
             var sport = new Sport() { Id = 1, Name = "Futbol" };
             ICollection<Team> teams = new List<Team>(){team, team2};
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id, Teams = teams };
@@ -103,7 +103,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void AddEncounterWithDifferentSportAsTeamsSportShouldReturnExceptionTest()
         {
             var team = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
-            var team2 = new Team() { Id = 1, Name = "Peñarol", SportId = 1 };
+            var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
             ICollection<Team> teams = new List<Team>(){team, team2};
             var sport = new Sport() { Id = 1, Name = "Futbol" };
             var sport2 = new Sport() { Id = 2, Name = "Basquetbol" };
@@ -205,7 +205,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void DeleteEncounterOkTest()
         {
             var team = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
-            var team2 = new Team() { Id = 1, Name = "River", SportId = 1 };
+            var team2 = new Team() { Id = 2, Name = "River", SportId = 1 };
             ICollection<Team> teams = new List<Team>(){team, team2};
             var sport = new Sport() { Id = 1, Name = "Futbol" };
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id, Teams = teams };
@@ -426,15 +426,17 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
             var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            var team3 = new Team() { Id = 3, Name = "Peñarol", SportId = 1 };
             ICollection<Team> teams = new List<Team>(){team1, team2};
+            ICollection<Team> teamsEncounter3 = new List<Team>() { team3, team2 };
             DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
             ICollection<Encounter> encounterList = new List<Encounter>();
             Encounter encounter = new Encounter() { Id = 1, Teams = teams, SportId = 1, Date = date };
             Encounter encounter2 = new Encounter() { Id = 2, Teams = teams, SportId = 1, Date = date.AddDays(1) };
             encounterList.Add(encounter);
             encounterList.Add(encounter2);
-
-            Assert.IsTrue(encounterBL.TeamsHaveEncountersOnTheSameDay(encounterList, encounter));
+            Encounter encounterSameDate = new Encounter() { Id = 3, Teams = teamsEncounter3, SportId = 1, Date = date };
+            Assert.IsTrue(encounterBL.TeamsHaveEncountersOnTheSameDay(encounterList, encounterSameDate));
         }
 
         // [TestMethod]
