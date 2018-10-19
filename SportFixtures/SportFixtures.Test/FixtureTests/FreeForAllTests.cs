@@ -57,37 +57,37 @@ namespace SportFixtures.Test.FixtureTests
             context.SaveChanges();
         }
 
-        //[TestMethod]
-        //public void GenerateFixtureWithNoEncountersOnRepoTest()
-        //{
-        //    DateTime date = new DateTime(2018, 10, 1, 12, 00, 00);
-        //    ICollection<Encounter> encounters = freeForAll.GenerateFixture(teamList, date);
-        //    int count = encounters.Count;
-        //    var expectedGeneratedEncountersCount = (teamList.Count() * (teamList.Count() - 1)) / 2;
-        //    Assert.IsTrue(count == expectedGeneratedEncountersCount);
-        //}
+        [TestMethod]
+        public void GenerateFixtureWithNoEncountersOnRepoTest()
+        {
+            DateTime date = new DateTime(2018, 10, 1, 12, 00, 00);
+            ICollection<Encounter> encounters = freeForAll.GenerateFixture(teamList, date);
+            int count = encounters.Count;
+            var expectedGeneratedEncountersCount = (teamList.Count() * (teamList.Count() - 1)) / 2;
+            Assert.IsTrue(count == expectedGeneratedEncountersCount);
+        }
 
-        //[TestMethod]
-        //public void GenerateFixtureWithEncountersOnRepoTest()
-        //{
-        //    DateTime date = new DateTime(2018, 10, 1, 12, 00, 00);
-        //    encounterBL.Add(new Encounter { Id = 1, Team1 = nacional, Team2 = peñarol, Date = date, SportId = 1 });
-        //    ICollection<Encounter> generatedEncounters = freeForAll.GenerateFixture(teamList, date);
-        //    List<Encounter> encountersToList = generatedEncounters.ToList();
-        //    //Sabemos que el primer partido va a ser Nacional Peñarol porque ya esta en el repositorio
-        //    //entonces la fecha del primer encuentro generado por el algoritmo debe ser un dia mas.
-        //    Assert.IsTrue(generatedEncounters.ElementAt(0).Date == new DateTime(2018, 10, 2, 12, 00, 00));
-        //}
+        [TestMethod]
+        public void GenerateFixtureWithEncountersOnRepoTest()
+        {
+            DateTime date = new DateTime(2018, 10, 1, 12, 00, 00);
+            encounterBL.Add(new Encounter { Id = 1, Teams = { nacional, peñarol }, Date = date, SportId = 1 });
+            ICollection<Encounter> generatedEncounters = freeForAll.GenerateFixture(teamList, date);
+            List<Encounter> encountersToList = generatedEncounters.ToList();
+            //Sabemos que el primer partido va a ser Nacional Peñarol porque ya esta en el repositorio
+            //entonces la fecha del primer encuentro generado por el algoritmo debe ser un dia mas.
+            Assert.IsTrue(generatedEncounters.ElementAt(0).Date == new DateTime(2018, 10, 2, 12, 00, 00));
+        }
 
-        //[TestMethod]
-        //[ExpectedException(typeof(NotEnoughTeamsForEncounterException))]
-        //public void GenerateRoundRobinWithOneTeamTest()
-        //{
-        //    teamList.Clear();
-        //    teamList.Add(nacional);
-        //    var encounters = freeForAll.GenerateFixture(teamList, DateTime.Now);
-        //    var expectedGeneratedEncountersCount = (teamList.Count() * (teamList.Count() - 1)) / 2;
-        //    Assert.IsTrue(encounters.Count == expectedGeneratedEncountersCount);
-        //}
+        [TestMethod]
+        [ExpectedException(typeof(NotEnoughTeamsForEncounterException))]
+        public void GenerateRoundRobinWithOneTeamTest()
+        {
+            teamList.Clear();
+            teamList.Add(nacional);
+            var encounters = freeForAll.GenerateFixture(teamList, DateTime.Now);
+            var expectedGeneratedEncountersCount = (teamList.Count() * (teamList.Count() - 1)) / 2;
+            Assert.IsTrue(encounters.Count == expectedGeneratedEncountersCount);
+        }
     }
 }
