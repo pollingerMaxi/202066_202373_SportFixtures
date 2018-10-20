@@ -434,5 +434,16 @@ namespace SportFixtures.Test.BusinessLogicTests
             Encounter newEncounter = new Encounter() { Id = 3, Teams = teams2, SportId = 1, Date = date.AddDays(1) };
             Assert.IsTrue(encounterBL.TeamsHaveEncountersOnTheSameDay(encounterList, newEncounter));
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(SportDoesNotSupportMultipleTeamsEncounters))]
+        public void AddEncounterMultipleTeamsOnSportDoubleModeShouldReturnExceptionTest()
+        {
+            ICollection<Team> teams = new List<Team>() { nacional, peñarol, cerro };
+            var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = football.Id, Teams = teams };
+
+            encounterBL.Add(encounter);
+        }
+
     }
 }

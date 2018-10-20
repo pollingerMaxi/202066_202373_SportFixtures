@@ -7,6 +7,7 @@ using SportFixtures.FixtureGenerator;
 using SportFixtures.FixtureGenerator.Implementations;
 using System.Collections.Generic;
 using System.Linq;
+using SportFixtures.Data;
 
 namespace SportFixtures.BusinessLogic.Implementations
 {
@@ -60,7 +61,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         private void CheckSportEncounterModeAndTeamCount(Encounter encounter)
         {
             Sport sport = sportBL.GetById(encounter.SportId);
-            if(sport.EncounterMode.Equals("Double") && encounter.Teams.Count() > 2)
+            if(sport.EncounterMode == EncounterMode.Double && encounter.Teams.Count() > 2)
             {
                 throw new SportDoesNotSupportMultipleTeamsEncounters();
             }
