@@ -30,6 +30,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         private void Validate(Encounter encounter)
         {
+            CheckSportEncounterModeAndTeamCount(encounter);
             if (encounter.Teams.Count < 2)
             {
                 throw new EncounterTeamsCantBeNullException();
@@ -54,6 +55,16 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 throw new TeamAlreadyHasAnEncounterOnTheSameDayException();
             }
+        }
+
+        private void CheckSportEncounterModeAndTeamCount(Encounter encounter)
+        {
+            Sport sport = sportBL.GetById(encounter.SportId);
+            if(sport.EncounterMode.Equals("Double") && encounter.Teams.Count() > 2)
+            {
+                throw new SportDoesNotSupportMultipleTeamsEncounters();
+            }
+            
         }
 
         private bool CheckDuplicatedTeams(Encounter encounter){

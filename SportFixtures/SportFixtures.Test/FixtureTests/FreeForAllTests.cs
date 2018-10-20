@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using SportFixtures.Exceptions.EncounterExceptions;
+using SportFixtures.Data;
 
 namespace SportFixtures.Test.FixtureTests
 {
@@ -24,7 +25,10 @@ namespace SportFixtures.Test.FixtureTests
         private IRepository<Encounter> encounterRepository;
         private IRepository<Team> teamRepository;
         private IFixtureGenerator freeForAll;
+        private Mock<IRepository<Sport>> mockSportRepo;
+        private Mock<ISportBusinessLogic> mockSportBL;
         private List<Team> teamList;
+        private Sport football;
         private Team nacional;
         private Team peñarol;
         private Team defensor;
@@ -36,9 +40,14 @@ namespace SportFixtures.Test.FixtureTests
         {
             var options = new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(databaseName: "encounterDB").Options;
             context = new Context(options);
+            mockSportRepo = new Mock<IRepository<Sport>>();
+            mockSportBL = new Mock<ISportBusinessLogic>();
             encounterRepository = new GenericRepository<Encounter>(context);
-            encounterBL = new EncounterBusinessLogic(encounterRepository, null);
+            encounterBL = new EncounterBusinessLogic(encounterRepository, mockSportBL.Object);
             teamRepository = new GenericRepository<Team>(context);
+
+            football = new Sport() { Id = 1, Name = "Football", EncounterMode = EncounterMode.Double };
+            mockSportBL.Setup(s => s.GetById(1)).Returns(football);
 
             nacional = new Team { Id = 1, Name = "Nacional", SportId = 1 };
             peñarol = new Team { Id = 2, Name = "Peñarol", SportId = 1 };
