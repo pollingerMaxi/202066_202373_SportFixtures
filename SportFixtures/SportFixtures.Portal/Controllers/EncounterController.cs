@@ -146,7 +146,7 @@ namespace SportFixtures.Portal.Controllers
             }
         }
 
-        [HttpGet("sports/{sportId}")]
+        [HttpGet("sport/{sportId}")]
         [AuthorizedRoles(Role.Admin)]
         public ActionResult<ICollection<EncounterDTO>> GetAllEncountersOfSport(int sportId)
         {
@@ -170,7 +170,7 @@ namespace SportFixtures.Portal.Controllers
             }
         }
 
-        [HttpGet("teams/{teamId}")]
+        [HttpGet("team/{teamId}")]
         [AuthorizedRoles(Role.Admin)]
         public ActionResult<ICollection<EncounterDTO>> GetAllEncountersOfTeam(int teamId)
         {

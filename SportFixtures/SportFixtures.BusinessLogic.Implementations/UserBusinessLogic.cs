@@ -95,7 +95,6 @@ namespace SportFixtures.BusinessLogic.Implementations
         public void Update(User user)
         {
             CheckIfExists(user.Id);
-            CheckIfLoggedUserIsAdmin();
             repository.Update(user);
             repository.Save();
         }
@@ -132,7 +131,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
 
             var userFromDb = users.FirstOrDefault();
-            if (!user.Email.Equals(userFromDb.Email) && !user.Password.Equals(userFromDb.Password))
+            if (!user.Email.Equals(userFromDb.Email) || !user.Password.Equals(userFromDb.Password))
             {
                 throw new EmailOrPasswordException();
             }
@@ -149,7 +148,6 @@ namespace SportFixtures.BusinessLogic.Implementations
         private Guid GenerateToken(User user, User userFromDb)
         {
             var token = Guid.NewGuid();
-            LoggedUser = user;
             userFromDb.Token = token;
             UpdateUserToken(userFromDb);
             return token;

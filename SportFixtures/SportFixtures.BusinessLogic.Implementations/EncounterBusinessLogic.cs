@@ -24,6 +24,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         public void Add(Encounter encounter)
         {
             Validate(encounter);
+            repository.Attach(encounter);
             repository.Insert(encounter);
             repository.Save();
         }
