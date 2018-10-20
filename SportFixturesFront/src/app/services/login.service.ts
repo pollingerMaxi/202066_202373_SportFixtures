@@ -29,6 +29,12 @@ export class LoginService {
 
     logout() {
         console.log("logout");
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let opt = new RequestOptions({ headers: headers, withCredentials: true });
+        this.http.post(AppSettings.ApiEndpoints.logout, {}, opt)
+            .subscribe(response => {
+                let res = response;
+            });
     }
 
 }

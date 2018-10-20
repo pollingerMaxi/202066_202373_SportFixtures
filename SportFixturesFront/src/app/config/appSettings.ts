@@ -4,6 +4,7 @@ export class AppSettings {
 
     public static readonly ApiEndpoints: any = {
         login: `${AppSettings.BaseUrl}login`,
+        logout: `${AppSettings.BaseUrl}logout`,
         getAllUsers: `${AppSettings.BaseUrl}users`,
     };
 
