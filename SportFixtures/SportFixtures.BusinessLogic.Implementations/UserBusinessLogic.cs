@@ -111,17 +111,6 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
-        /// <summary>
-        /// Throws exception if LoggedUser is not an admin.
-        /// </summary>
-        private void CheckIfLoggedUserIsAdmin()
-        {
-            if (LoggedUser.Role != Role.Admin)
-            {
-                throw new LoggedUserIsNotAdminException();
-            }
-        }
-
         public Guid Login(User user)
         {
             var users = repository.Get(u => u.Email == user.Email, null, "");

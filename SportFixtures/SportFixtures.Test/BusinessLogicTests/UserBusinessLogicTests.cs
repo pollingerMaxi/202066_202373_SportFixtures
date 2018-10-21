@@ -227,18 +227,6 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(LoggedUserIsNotAdminException))]
-        public void UpdateUserWithUserLoggedInNotAdminTest()
-        {
-            userList.Add(userWithAllData);
-            mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
-            userBLWithoutTeamBL.Login(userWithAllData);
-            userBLWithoutTeamBL.Update(userWithAllData);
-            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.AtLeastOnce);
-            mockUserRepo.Verify(x => x.Update(It.IsAny<User>()), Times.Once);
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(EmailOrPasswordException))]
         public void LoginWithInvalidCredentialsTest()
         {
