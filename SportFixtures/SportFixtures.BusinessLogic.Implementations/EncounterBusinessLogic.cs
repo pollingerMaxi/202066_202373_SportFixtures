@@ -31,6 +31,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         private void Validate(Encounter encounter)
         {
+            ValidateResults(encounter);
             CheckSportEncounterModeAndTeamCount(encounter);
             if (encounter.Teams.Count < 2)
             {
@@ -94,10 +95,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void CheckIfExists(int encounterId)
         {
-            if (repository.GetById(encounterId) == null)
-            {
-                throw new EncounterDoesNotExistException();
-            }
+            GetById(encounterId);
         }
 
         public bool TeamsHaveEncountersOnTheSameDay(Encounter encounter)
@@ -118,7 +116,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public Encounter GetById(int id)
         {
-            return repository.GetById(id) ?? throw new EncounterDoesNotExistException();
+            return repository.Get(e => e.Id == id, null, "Teams").FirstOrDefault() ?? throw new EncounterDoesNotExistException();
         }
 
         public IEnumerable<Encounter> GetAll()
@@ -183,6 +181,21 @@ namespace SportFixtures.BusinessLogic.Implementations
                 throw new FixtureGeneratorAlgorithmDoesNotExist();
             }
             return generator.GenerateFixture(teams, date);
+        }
+
+        private void ValidateResults(Encounter encounter)
+        {
+            if (encounter.Results.Count > 0)
+            {
+                foreach (Score result in encounter.Results)
+                {
+                    if (!encounter.Teams.Any(t => t.Id == result.TeamId))
+                    {
+                        throw new InvalidResultsForEncounterException();
+                    }
+                }
+            }
+            
         }
     }
 }

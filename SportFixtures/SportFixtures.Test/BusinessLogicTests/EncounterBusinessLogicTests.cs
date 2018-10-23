@@ -37,6 +37,11 @@ namespace SportFixtures.Test.BusinessLogicTests
         private Sport basketball;
         private Team aguada;
 
+        private Sport golf;
+        private Team golfTeam1;
+        private Team golfTeam2;
+        private Team golfTeam3;
+
         [TestInitialize]
         public void TestInitialize()
         {
@@ -53,7 +58,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockSportBL.Setup(s => s.GetById(1)).Returns(football);
 
             basketball = new Sport() { Id = 2, Name = "Basketball", EncounterMode = EncounterMode.Double };
-            mockSportBL.Setup(s => s.GetById(2)).Returns(football);
+            mockSportBL.Setup(s => s.GetById(2)).Returns(basketball);
 
             nacional = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
             peñarol = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
@@ -65,7 +70,14 @@ namespace SportFixtures.Test.BusinessLogicTests
             footballWithTeams = new Sport() { Id = 3, Name = "Football", EncounterMode = EncounterMode.Double, Teams = teamList };
             mockSportBL.Setup(s => s.GetById(3)).Returns(footballWithTeams);
 
-            aguada = new Team() { Id = 2, Name = "Aguada", SportId = 2 };
+            aguada = new Team() { Id = 6, Name = "Aguada", SportId = 2 };
+
+            golf = new Sport() { Id = 4, Name = "Golf", EncounterMode = EncounterMode.Multiple };
+            mockSportBL.Setup(s => s.GetById(4)).Returns(golf); 
+
+            golfTeam1 = new Team() { Id = 7, Name = "golfTeam1", SportId = 4 };
+            golfTeam2 = new Team { Id = 8, Name = "golfTeam2", SportId = 4 };
+            golfTeam3 = new Team { Id = 9, Name = "golfTeam3", SportId = 4 };
         }
 
         [TestMethod]
@@ -136,9 +148,11 @@ namespace SportFixtures.Test.BusinessLogicTests
             ICollection<Team> teams = new List<Team>() { nacional, peñarol};
             ICollection<Team> updatedTeamList = new List<Team>() { cerro, peñarol };
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = football.Id, Teams = teams };
+            encounterList.Add(encounter);
             mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
             mockEncounterRepo.Setup(x => x.Update(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.First().Teams = updatedTeamList);
             mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
+            mockEncounterRepo.Setup(e => e.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, "Teams")).Returns(encounterList);
             encounterBL.Add(encounter);
             encounter.Teams = updatedTeamList;
             encounterBL.Update(encounter);
@@ -153,9 +167,11 @@ namespace SportFixtures.Test.BusinessLogicTests
             ICollection<Team> teams = new List<Team>() { nacional, peñarol };
             DateTime updatedDate = new DateTime(2018, 9, 27, 8, 30, 00);
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = football.Id, Teams = teams };
+            encounterList.Add(encounter);
             mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
             mockEncounterRepo.Setup(x => x.Update(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.First().Date = updatedDate);
             mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
+            mockEncounterRepo.Setup(e => e.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, "Teams")).Returns(encounterList);
             encounterBL.Add(encounter);
             encounter.Date = updatedDate;
             encounterBL.Update(encounter);
@@ -171,8 +187,11 @@ namespace SportFixtures.Test.BusinessLogicTests
             ICollection<Team> teams = new List<Team>() { nacional, peñarol };
             ICollection<Team> teamsDifferentSports = new List<Team>() { nacional, aguada };
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = football.Id, Teams = teams };
+            encounterList.Add(encounter);
+            encounterList.Add(encounter);
             mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
             mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
+            mockEncounterRepo.Setup(e => e.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, "Teams")).Returns(encounterList);
             encounterBL.Add(encounter);
             encounter.Teams = teamsDifferentSports;
             encounterBL.Update(encounter);
@@ -186,6 +205,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = football.Id, Teams = teams };
             mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
             mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
+            mockEncounterRepo.Setup(e => e.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, "Teams")).Returns(encounterList);
             encounterBL.Add(encounter);
             encounter.SportId = basketball.Id;
             encounterBL.Update(encounter);
@@ -208,9 +228,10 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             ICollection<Team> teams = new List<Team>() { nacional, peñarol };
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = football.Id, Teams = teams };
+            encounterList.Add(encounter);
             mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
             mockEncounterRepo.Setup(x => x.Delete(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.RemoveAt(0));
-            mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
+            mockEncounterRepo.Setup(e => e.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, "Teams")).Returns(encounterList);
             encounterBL.Add(encounter);
             encounterBL.Delete(encounter.Id);
             mockEncounterRepo.Verify(x => x.Insert(It.IsAny<Encounter>()), Times.Once());
@@ -344,9 +365,11 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             ICollection<Team> teams = new List<Team>() { nacional, peñarol };
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = football.Id, Teams = teams };
+            encounterList.Add(encounter);
             mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
+            mockEncounterRepo.Setup(e => e.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, "Teams")).Returns(encounterList);
             var encounterFromDb = encounterBL.GetById(It.IsAny<int>());
-            mockEncounterRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
+            mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, "Teams"), Times.Once);
         }
 
 
@@ -442,6 +465,44 @@ namespace SportFixtures.Test.BusinessLogicTests
             ICollection<Team> teams = new List<Team>() { nacional, peñarol, cerro };
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = football.Id, Teams = teams };
 
+            encounterBL.Add(encounter);
+        }
+
+        [TestMethod]
+        public void AddEncounterMultipleTeamsOkTest()
+        {
+            ICollection<Team> teams = new List<Team>() { golfTeam1, golfTeam2, golfTeam3 };
+            var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = golf.Id, Teams = teams };
+
+            encounterBL.Add(encounter);
+        }
+
+        [TestMethod]
+        public void AddScoreOk()
+        {
+            ICollection<Team> teams = new List<Team>() { nacional, peñarol };
+            DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
+            Score scoreNacional = new Score() { TeamId = nacional.Id, Position = 3 };
+            Score scorePeñarol = new Score() { TeamId = peñarol.Id, Position = 0 };
+            ICollection<Score> results = new List<Score>() { scoreNacional, scorePeñarol };
+            ICollection<Encounter> encounterList = new List<Encounter>();
+            Encounter encounter = new Encounter() { Id = 1, Teams = teams, SportId = football.Id, Date = date, Results = results };
+            encounterList.Add(encounter);
+            encounterBL.Add(encounter);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidResultsForEncounterException))]
+        public void AddScoreWithDifferentTeamsThanEncounterShouldReturnExceptionTest()
+        {
+            ICollection<Team> teams = new List<Team>() { cerro, danubio };
+            DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
+            Score scoreNacional = new Score() { TeamId = nacional.Id, Position = 3 };
+            Score scorePeñarol = new Score() { TeamId = peñarol.Id, Position = 0 };
+            ICollection<Score> results = new List<Score>() { scoreNacional, scorePeñarol };
+            ICollection<Encounter> encounterList = new List<Encounter>();
+            Encounter encounter = new Encounter() { Id = 1, Teams = teams, SportId = football.Id, Date = date, Results = results };
+            encounterList.Add(encounter);
             encounterBL.Add(encounter);
         }
 
