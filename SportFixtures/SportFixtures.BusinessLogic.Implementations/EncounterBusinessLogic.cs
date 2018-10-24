@@ -197,5 +197,13 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
             
         }
+
+        public void AddResults(ICollection<Score> results, int encounterId)
+        {
+            Encounter encounter = GetById(encounterId);
+            encounter.Results = results;
+            ValidateResults(encounter);
+            Update(encounter);
+        }
     }
 }
