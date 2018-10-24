@@ -7,9 +7,10 @@ import { AppSettings } from './config/appSettings';
 import { FormsModule } from '@angular/forms';
 import {ToasterModule, ToasterService} from 'angular2-toaster';
 import { DefaultComponent } from './shared/default/default.component';
-import { LoginService } from './services';
+import { LoginService, UserService } from './services';
 import { HttpModule } from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { UserComponent } from './user/user.component';
 
 
 const routes: Routes = [
@@ -31,7 +32,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     LoginComponent,
-    DefaultComponent
+    DefaultComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,7 @@ const routes: Routes = [
     HttpModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [LoginService],
+  providers: [LoginService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

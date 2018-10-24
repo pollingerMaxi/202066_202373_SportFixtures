@@ -3,7 +3,6 @@ import { LoginService } from '../services';
 import { LoginModel } from '../shared/models/login';
 import { AppSettings } from '../config/appSettings';
 import { ToasterService } from 'angular2-toaster';
-//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-login',
