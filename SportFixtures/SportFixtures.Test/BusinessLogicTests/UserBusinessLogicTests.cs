@@ -353,5 +353,15 @@ namespace SportFixtures.Test.BusinessLogicTests
             userBLWithoutTeamBL.GetFavoritesOfUser(adminWithAllData.Id);
             mockUTRepo.Verify(x => x.Get(It.IsAny<Expression<Func<UsersTeams, bool>>>(), null, It.IsAny<string>()), Times.Once);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserDoesNotExistException))]
+        public void GetFavoritesUserDoesNotExistTest()
+        {
+            mockUserRepo.Reset();
+            mockUTRepo.Setup(r => r.Get(It.IsAny<Expression<Func<UsersTeams, bool>>>(), null, It.IsAny<string>())).Returns(new List<UsersTeams>());
+            userBLWithoutTeamBL.GetFavoritesOfUser(adminWithAllData.Id);
+            mockUTRepo.Verify(x => x.Get(It.IsAny<Expression<Func<UsersTeams, bool>>>(), null, It.IsAny<string>()), Times.Once);
+        }
     }
 }

@@ -214,6 +214,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public IEnumerable<UsersTeams> GetFavoritesOfUser(int userId)
         {
+            CheckIfExists(userId);
             return favoritesRepository.Get(f => f.UserId == userId, null, "Team");
         }
     }
