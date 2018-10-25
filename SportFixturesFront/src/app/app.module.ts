@@ -5,12 +5,11 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AppSettings } from './config/appSettings';
 import { FormsModule } from '@angular/forms';
-import {ToasterModule, ToasterService} from 'angular2-toaster';
+import { ToasterModule } from 'angular2-toaster';
 import { DefaultComponent } from './shared/default/default.component';
 import { LoginService, UserService } from './services';
 import { HttpModule } from '@angular/http';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { UserComponent } from './user/user.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 const routes: Routes = [
@@ -32,8 +31,7 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     LoginComponent,
-    DefaultComponent,
-    UserComponent
+    DefaultComponent
   ],
   imports: [
     BrowserModule,

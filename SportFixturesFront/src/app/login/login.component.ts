@@ -23,11 +23,8 @@ export class LoginComponent implements OnInit {
       .subscribe(
         body => {
           this.toasterService.pop("success", "Success!", "User successfully logged in!");
-          console.log(body);
-          localStorage.setItem(AppSettings.localstorageToken, JSON.stringify(body));
         },
         error => {
-          console.log("error");
           this.toasterService.pop("error", "Error!", "Login failed!");
         }
       );
