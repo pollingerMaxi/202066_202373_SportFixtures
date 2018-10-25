@@ -43,7 +43,7 @@ namespace SportFixtures.Test.FixtureTests
             mockSportRepo = new Mock<IRepository<Sport>>();
             mockSportBL = new Mock<ISportBusinessLogic>();
             encounterRepository = new GenericRepository<Encounter>(context);
-            encounterBL = new EncounterBusinessLogic(encounterRepository, mockSportBL.Object);
+            encounterBL = new EncounterBusinessLogic(encounterRepository, mockSportBL.Object, null);
             teamRepository = new GenericRepository<Team>(context);
 
             football = new Sport() { Id = 1, Name = "Football", EncounterMode = EncounterMode.Double };

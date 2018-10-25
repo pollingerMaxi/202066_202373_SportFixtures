@@ -35,7 +35,7 @@ namespace SportFixtures.Test.FixtureTests
             var options = new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(databaseName: "roundRobinDB").Options;
             context = new Context(options);
             encounterRepository = new GenericRepository<Encounter>(context);
-            encounterBL = new EncounterBusinessLogic(encounterRepository, null);
+            encounterBL = new EncounterBusinessLogic(encounterRepository, null, null);
             teamRepository = new GenericRepository<Team>(context);
 
             nacional = new Team { Id = 1, Name = "Nacional", SportId = 1 };
