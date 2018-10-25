@@ -15,11 +15,13 @@ namespace SportFixtures.BusinessLogic.Implementations
     {
         private IRepository<Encounter> repository;
         private ISportBusinessLogic sportBL;
+        private IPositionBusinessLogic positionBL;
 
-        public EncounterBusinessLogic(IRepository<Encounter> repository, ISportBusinessLogic sportBL)
+        public EncounterBusinessLogic(IRepository<Encounter> repository, ISportBusinessLogic sportBL, IPositionBusinessLogic positionBL)
         {
             this.repository = repository;
             this.sportBL = sportBL;
+            this.positionBL = positionBL;
         }
 
         public void Add(Encounter encounter)
@@ -27,6 +29,14 @@ namespace SportFixtures.BusinessLogic.Implementations
             Validate(encounter);
             repository.Insert(encounter);
             repository.Save();
+            UpdatePositions(encounter);
+        }
+
+        private void UpdatePositions(Encounter encounter)
+        {
+            if(encounter.Results.Count > 0){
+                positionBL.UpdatePositions(encounter.SportId);
+            }
         }
 
         private void Validate(Encounter encounter)
@@ -84,6 +94,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             Validate(encounter);
             repository.Update(encounter);
             repository.Save();
+            UpdatePositions(encounter);
         }
 
         public void Delete(int id)
@@ -204,6 +215,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             encounter.Results = results;
             ValidateResults(encounter);
             Update(encounter);
+            UpdatePositions(encounter);
         }
     }
 }
