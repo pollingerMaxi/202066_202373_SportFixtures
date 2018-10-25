@@ -9,10 +9,11 @@ namespace SportFixtures.Data.Entities
     {
         public int Id { get; set; }
         public Team Team { get; set; }
-        public int points { get; set; }
+        public int SportId { get; set; }
+        public int Points { get; set; }
 
         public Position(){
-            this.points = 0;
+            this.Points = 0;
         }
     }
 }

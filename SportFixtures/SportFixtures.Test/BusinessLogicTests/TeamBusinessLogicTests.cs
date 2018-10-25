@@ -38,7 +38,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockTeamRepo = new Mock<IRepository<Team>>();
             mockSportRepo = new Mock<IRepository<Sport>>();
             sportBL = new SportBusinessLogic(mockSportRepo.Object);
-            teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL, null);
+            teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
             mockTeamRepo.Setup(r => r.Get(null, null, "")).Returns(teamList);
             mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(teamWithAllData);
             mockSportRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);

@@ -44,9 +44,9 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockSportRepo = new Mock<IRepository<Sport>>();
             mockTeamRepo = new Mock<IRepository<Team>>();
             mockUserRepo = new Mock<IRepository<User>>();
-            encounterBL = new EncounterBusinessLogic(mockEncounterRepo.Object, NO_BUSINESS_LOGIC, null);
+            encounterBL = new EncounterBusinessLogic(mockEncounterRepo.Object, NO_BUSINESS_LOGIC);
             sportBL = new SportBusinessLogic(mockSportRepo.Object);
-            teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL, null);
+            teamBL = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
             userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL, NO_UT_REPOSITORY);
             commentBL = new CommentBusinessLogic(mockCommentRepo.Object, encounterBL, userBL);
             commentList = new List<Comment>();

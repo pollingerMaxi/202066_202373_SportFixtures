@@ -116,7 +116,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var sport = new Sport() { Name = "SportName" };
             sportList.Add(sport);
             var mockTeamRepo = new Mock<IRepository<Team>>();
-            ITeamBusinessLogic teamBl = new TeamBusinessLogic(mockTeamRepo.Object, sportBL, null);
+            ITeamBusinessLogic teamBl = new TeamBusinessLogic(mockTeamRepo.Object, sportBL);
             mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(sportList);
             sportBL.AddTeamToSport(team);
             mockSportRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams"), Times.Once);

@@ -49,7 +49,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockSportRepo = new Mock<IRepository<Sport>>();
             sportBL = new SportBusinessLogic(mockSportRepo.Object);
             mockSportBL = new Mock<ISportBusinessLogic>();
-            encounterBL = new EncounterBusinessLogic(mockEncounterRepo.Object, mockSportBL.Object, null);
+            encounterBL = new EncounterBusinessLogic(mockEncounterRepo.Object, mockSportBL.Object);
             encounterList = new List<Encounter>();
             mockEncounterRepo.Setup(r => r.Get(null, null, It.IsAny<string>())).Returns(encounterList);
             mockEncounterRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, "")).Returns(encounterList);

@@ -148,7 +148,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void FollowTeamTest()
         {
             var team = new Team();
-            var teamBL = new TeamBusinessLogic(mockTeamRepo.Object, NO_BUSINESS_LOGIC, null);
+            var teamBL = new TeamBusinessLogic(mockTeamRepo.Object, NO_BUSINESS_LOGIC);
             var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL, mockUTRepo.Object);
             mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
@@ -163,7 +163,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             var user = new User() { Name = "Name", Username = "nick33", LastName = "surname", Password = "hash", Email = "a@a.com" };
             var team = new Team();
-            var teamBL = new TeamBusinessLogic(mockTeamRepo.Object, NO_BUSINESS_LOGIC, null);
+            var teamBL = new TeamBusinessLogic(mockTeamRepo.Object, NO_BUSINESS_LOGIC);
             var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL, mockUTRepo.Object);
             mockUserRepo.Reset();
             mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);

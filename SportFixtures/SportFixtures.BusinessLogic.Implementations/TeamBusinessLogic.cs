@@ -13,13 +13,11 @@ namespace SportFixtures.BusinessLogic.Implementations
     {
         private IRepository<Team> repository;
         private ISportBusinessLogic sportBL;
-        private IPositionBusinessLogic positionBL;
 
-        public TeamBusinessLogic(IRepository<Team> repository, ISportBusinessLogic sportBl, IPositionBusinessLogic positionBL)
+        public TeamBusinessLogic(IRepository<Team> repository, ISportBusinessLogic sportBl)
         {
             this.repository = repository;
             this.sportBL = sportBl;
-            this.positionBL = positionBL;
         }
 
         public void Add(Team team)
