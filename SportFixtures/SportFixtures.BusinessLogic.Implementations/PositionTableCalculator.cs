@@ -19,7 +19,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             this.encounterBL = encounterBL;
         }
 
-        public ICollection<Position> GeneratePositionTable(int sportId)
+        public ICollection<Position> GeneratePositionTableForSport(int sportId)
         {
             ICollection<Position> positions = new List<Position>();
             Sport sport = sportBL.GetById(sportId);
@@ -30,7 +30,7 @@ namespace SportFixtures.BusinessLogic.Implementations
                 foreach (Encounter encounter in encounters)
                 {
                     Position position = new Position() { Team = team };
-                    int teamPosition = encounter.Results.First(t => t.Id == team.Id).Position;
+                    int teamPosition = encounter.Results.First(t => t.TeamId == team.Id).Position;
                     if (sport.EncounterMode == EncounterMode.Double)
                     {
                         if (teamPosition == 2)

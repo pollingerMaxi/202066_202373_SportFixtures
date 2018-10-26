@@ -35,6 +35,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         private Team golfTeam1;
         private Team golfTeam2;
         private Team golfTeam3;
+        private Team golfTeam4;
 
         [TestInitialize]
         public void TestInitialize()
@@ -53,7 +54,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             defensor = new Team { Id = 4, Name = "Defensor", SportId = 1 };
             danubio = new Team { Id = 5, Name = "Danubio", SportId = 1 };
 
-            football.Teams = new List<Team>(){nacional, peñarol, cerro, danubio, defensor};
+            football.Teams = new List<Team>(){nacional, cerro};
 
             
 
@@ -63,8 +64,9 @@ namespace SportFixtures.Test.BusinessLogicTests
             golfTeam1 = new Team() { Id = 7, Name = "golfTeam1", SportId = 4 };
             golfTeam2 = new Team { Id = 8, Name = "golfTeam2", SportId = 4 };
             golfTeam3 = new Team { Id = 9, Name = "golfTeam3", SportId = 4 };
+            golfTeam4 = new Team { Id = 10, Name = "golfTeam4", SportId = 4 };
 
-            golf.Teams = new List<Team>(){golfTeam1, golfTeam2, golfTeam3};
+            golf.Teams = new List<Team>(){golfTeam1, golfTeam2, golfTeam3, golfTeam4};
 
             mockSportBL.Setup(s => s.GetById(1)).Returns(football);
             mockSportBL.Setup(s => s.GetById(2)).Returns(golf);
@@ -80,6 +82,20 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockEncounterBL.Setup(s => s.GetAllEncountersOfTeam(cerro.Id)).Returns(encounterList);
             ICollection<Position> positionTable = positionTableCalculator.GeneratePositionTable(football.Id);
             Assert.IsTrue(positionTable.Count() == 2);
+        }
+
+        [TestMethod]
+        public void GeneratePositionTableForMultipleEncounterMode()
+        {
+            Score scoreGolfTeam1 = new Score { Id = 1, Position = 1, TeamId = golfTeam1.Id };
+            Score scoreGolfTeam2 = new Score { Id = 2, Position = 2, TeamId = golfTeam2.Id };
+            Score scoreGolfTeam3 = new Score { Id = 3, Position = 3, TeamId = golfTeam3.Id };
+            Score scoreGolfTeam4 = new Score { Id = 4, Position = 4, TeamId = golfTeam4.Id };
+            Encounter encounter = new Encounter() { Id = 1, Teams = { golfTeam1, golfTeam2, golfTeam3, golfTeam4 }, Results = { scoreGolfTeam1, scoreGolfTeam2, scoreGolfTeam3, scoreGolfTeam4 } };
+            encounterList.Add(encounter);
+            mockEncounterBL.Setup(s => s.GetAllEncountersOfTeam(It.IsAny<int>())).Returns(encounterList);
+            ICollection<Position> positionTable = positionTableCalculator.GeneratePositionTable(golf.Id);
+            Assert.IsTrue(positionTable.Count() == 4);
         }
 
     }
