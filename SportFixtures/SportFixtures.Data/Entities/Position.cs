@@ -6,7 +6,7 @@ namespace SportFixtures.Data.Entities
 {
     public class Position
     {
-        Team Team { get; set; }
-        int Points { get; set; }
+        public Team Team { get; set; }
+        public int Points { get; set; }
     }
 }
