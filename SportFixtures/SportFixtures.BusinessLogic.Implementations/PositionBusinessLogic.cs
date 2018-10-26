@@ -31,7 +31,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         private void CheckIfExists(Position position)
         {
-            if(repository.Get(p => ((p.Id != position.Id) && (p.Team.Id == position.Id)), null, "Team").Any()){
+            if(repository.Get(null, null, "Team").Any(p => ((p.Id != position.Id) && (p.Team.Id == position.Id)))){
                 throw new TeamPositionAlreadyExistsExeption();
             }
         }
@@ -42,7 +42,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Update(position);
             repository.Save();
         }
-        public Position GetTeamPosition(int teamId)
+        private Position GetTeamPosition(int teamId)
         {
             return repository.Get(p => p.Team.Id == teamId, null, "Team").FirstOrDefault();
         }
@@ -57,19 +57,21 @@ namespace SportFixtures.BusinessLogic.Implementations
                 foreach(Encounter encounter in encounters){
                     int teamPosition = encounter.Results.First(t => t.Id == team.Id).Position;
                     if(sport.EncounterMode == EncounterMode.Double){
-                        if(position.Points == 2){
+                        if(teamPosition == 2){
                             position.Points += 3;
                         }
-                        else if(position.Points == 1){
+                        else if(teamPosition == 1){
                             position.Points += 1;
+                        }else if(teamPosition == 0){
+                            position.Points += 3;
                         }
                     }else if(sport.EncounterMode == EncounterMode.Multiple){
-                        if(position.Points == 1){
+                        if(teamPosition == 1){
                             position.Points += 3;
                         }
-                        else if(position.Points == 2){
+                        else if(teamPosition == 2){
                             position.Points += 2;
-                        }else{
+                        }else if(teamPosition == 3){
                             position.Points += 1;
                         }
                     }

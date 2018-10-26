@@ -67,10 +67,39 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             Position position = new Position() {Id = 1, Team = nacional, SportId = futbol.Id, Points = 1};
             mockPositionRepo.Setup(x => x.Insert(It.IsAny<Position>())).Callback<Position>(x => positionList.Add(position));
-            mockPositionRepo.Setup(e => e.Get(It.IsAny<Expression<Func<Position, bool>>>(), null, "Teams")).Returns(positionList);
+            mockPositionRepo.Setup(e => e.Get(null, null, "Teams")).Returns(positionList);
             positionBL.Add(position);
             Position position2 = new Position() {Id = 2, Team = nacional, SportId = futbol.Id, Points = 1};
             positionBL.Add(position2);
+        }
+
+        [TestMethod]
+        public void UpdatePositionOkTest()
+        {
+            Position position = new Position() {Id = 1, Team = nacional, SportId = futbol.Id, Points = 1};
+            mockPositionRepo.Setup(x => x.Insert(It.IsAny<Position>())).Callback<Position>(x => positionList.Add(position));
+            mockPositionRepo.Setup(e => e.Get(It.IsAny<Expression<Func<Position, bool>>>(), null, "Teams")).Returns(positionList);
+            positionBL.Add(position);
+            mockPositionRepo.Setup(x => x.Update(It.IsAny<Position>())).Verifiable();
+            positionBL.Update(position);
+            mockPositionRepo.Verify(x => x.Insert(It.IsAny<Position>()), Times.Once());
+            mockPositionRepo.Verify(x => x.Update(It.IsAny<Position>()), Times.Once());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamPositionAlreadyExistsExeption))]
+        public void UpdatePositionShouldReturnExceptionTest()
+        {
+            Position position = new Position() {Id = 1, Team = nacional, SportId = futbol.Id, Points = 1};
+            Position position2 = new Position() {Id = 2, Team = peñarol, SportId = futbol.Id, Points = 1};
+            mockPositionRepo.Setup(x => x.Insert(It.IsAny<Position>())).Callback<Position>(x => positionList.Add(position));
+            mockPositionRepo.Setup(e => e.Get(It.IsAny<Expression<Func<Position, bool>>>(), null, "Teams")).Returns(positionList);
+            positionBL.Add(position);
+            positionBL.Add(position2);
+            mockPositionRepo.Setup(x => x.Update(It.IsAny<Position>())).Verifiable();
+            position.Team = peñarol;
+            positionBL.Update(position);
+            mockPositionRepo.Verify(x => x.Insert(It.IsAny<Position>()), Times.Exactly(2));
         }
     }
 }
