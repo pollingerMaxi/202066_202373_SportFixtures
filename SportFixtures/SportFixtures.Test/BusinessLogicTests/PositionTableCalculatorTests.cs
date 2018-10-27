@@ -74,27 +74,27 @@ namespace SportFixtures.Test.BusinessLogicTests
 
         [TestMethod]
         public void GeneratePositionTableForDoubleEncounterMode(){
-            Score scoreNacional = new Score {Id = 1, Position = 0, TeamId = nacional.Id};
-            Score scoreCerro = new Score {Id = 2, Position = 2, TeamId = cerro.Id};
+            PositionInEncounter scoreNacional = new PositionInEncounter {Id = 1, Position = 0, TeamId = nacional.Id};
+            PositionInEncounter scoreCerro = new PositionInEncounter {Id = 2, Position = 2, TeamId = cerro.Id};
             Encounter encounter = new Encounter(){Id = 1, Teams = {nacional, cerro}, Results = {scoreNacional, scoreCerro}};
             encounterList.Add(encounter);
             mockEncounterBL.Setup(s => s.GetAllEncountersOfTeam(nacional.Id)).Returns(encounterList);
             mockEncounterBL.Setup(s => s.GetAllEncountersOfTeam(cerro.Id)).Returns(encounterList);
-            ICollection<Position> positionTable = positionTableCalculator.GeneratePositionTable(football.Id);
+            ICollection<Score> positionTable = positionTableCalculator.GeneratePositionTableForSport(football.Id);
             Assert.IsTrue(positionTable.Count() == 2);
         }
 
         [TestMethod]
         public void GeneratePositionTableForMultipleEncounterMode()
         {
-            Score scoreGolfTeam1 = new Score { Id = 1, Position = 1, TeamId = golfTeam1.Id };
-            Score scoreGolfTeam2 = new Score { Id = 2, Position = 2, TeamId = golfTeam2.Id };
-            Score scoreGolfTeam3 = new Score { Id = 3, Position = 3, TeamId = golfTeam3.Id };
-            Score scoreGolfTeam4 = new Score { Id = 4, Position = 4, TeamId = golfTeam4.Id };
+            PositionInEncounter scoreGolfTeam1 = new PositionInEncounter { Id = 1, Position = 1, TeamId = golfTeam1.Id };
+            PositionInEncounter scoreGolfTeam2 = new PositionInEncounter { Id = 2, Position = 2, TeamId = golfTeam2.Id };
+            PositionInEncounter scoreGolfTeam3 = new PositionInEncounter { Id = 3, Position = 3, TeamId = golfTeam3.Id };
+            PositionInEncounter scoreGolfTeam4 = new PositionInEncounter { Id = 4, Position = 4, TeamId = golfTeam4.Id };
             Encounter encounter = new Encounter() { Id = 1, Teams = { golfTeam1, golfTeam2, golfTeam3, golfTeam4 }, Results = { scoreGolfTeam1, scoreGolfTeam2, scoreGolfTeam3, scoreGolfTeam4 } };
             encounterList.Add(encounter);
             mockEncounterBL.Setup(s => s.GetAllEncountersOfTeam(It.IsAny<int>())).Returns(encounterList);
-            ICollection<Position> positionTable = positionTableCalculator.GeneratePositionTable(golf.Id);
+            ICollection<Score> positionTable = positionTableCalculator.GeneratePositionTableForSport(golf.Id);
             Assert.IsTrue(positionTable.Count() == 4);
         }
 

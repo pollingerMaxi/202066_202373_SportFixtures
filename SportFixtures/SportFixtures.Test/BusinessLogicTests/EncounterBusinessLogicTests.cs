@@ -482,9 +482,9 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             ICollection<Team> teams = new List<Team>() { nacional, peñarol };
             DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
-            Score scoreNacional = new Score() { TeamId = nacional.Id, Position = 3 };
-            Score scorePeñarol = new Score() { TeamId = peñarol.Id, Position = 0 };
-            ICollection<Score> results = new List<Score>() { scoreNacional, scorePeñarol };
+            PositionInEncounter scoreNacional = new PositionInEncounter() { TeamId = nacional.Id, Position = 3 };
+            PositionInEncounter scorePeñarol = new PositionInEncounter() { TeamId = peñarol.Id, Position = 0 };
+            ICollection<PositionInEncounter> results = new List<PositionInEncounter>() { scoreNacional, scorePeñarol };
             ICollection<Encounter> encounterList = new List<Encounter>();
             Encounter encounter = new Encounter() { Id = 1, Teams = teams, SportId = football.Id, Date = date, Results = results };
             encounterList.Add(encounter);
@@ -499,9 +499,9 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             ICollection<Team> teams = new List<Team>() { cerro, danubio };
             DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
-            Score scoreNacional = new Score() { TeamId = nacional.Id, Position = 3 };
-            Score scorePeñarol = new Score() { TeamId = peñarol.Id, Position = 0 };
-            ICollection<Score> results = new List<Score>() { scoreNacional, scorePeñarol };
+            PositionInEncounter scoreNacional = new PositionInEncounter() { TeamId = nacional.Id, Position = 3 };
+            PositionInEncounter scorePeñarol = new PositionInEncounter() { TeamId = peñarol.Id, Position = 0 };
+            ICollection<PositionInEncounter> results = new List<PositionInEncounter>() { scoreNacional, scorePeñarol };
             ICollection<Encounter> encounterList = new List<Encounter>();
             Encounter encounter = new Encounter() { Id = 1, Teams = teams, SportId = football.Id, Date = date, Results = results };
             encounterList.Add(encounter);
@@ -513,9 +513,9 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             ICollection<Team> teams = new List<Team>() { nacional, peñarol };
             DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
-            Score scoreNacional = new Score() { TeamId = nacional.Id, Position = 3 };
-            Score scorePeñarol = new Score() { TeamId = peñarol.Id, Position = 0 };
-            ICollection<Score> results = new List<Score>() { scoreNacional, scorePeñarol };
+            PositionInEncounter scoreNacional = new PositionInEncounter() { TeamId = nacional.Id, Position = 3 };
+            PositionInEncounter scorePeñarol = new PositionInEncounter() { TeamId = peñarol.Id, Position = 0 };
+            ICollection<PositionInEncounter> results = new List<PositionInEncounter>() { scoreNacional, scorePeñarol };
             ICollection<Encounter> encounterList = new List<Encounter>();
             Encounter encounter = new Encounter() { Id = 1, Teams = teams, SportId = football.Id, Date = date};
             encounterList.Add(encounter);
@@ -533,9 +533,9 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             ICollection<Team> teams = new List<Team>() { nacional, peñarol };
             DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
-            Score scoreDanubio = new Score() { TeamId = danubio.Id, Position = 3 };
-            Score scoreCerro = new Score() { TeamId = cerro.Id, Position = 0 };
-            ICollection<Score> results = new List<Score>() { scoreDanubio, scoreCerro };
+            PositionInEncounter scoreDanubio = new PositionInEncounter() { TeamId = danubio.Id, Position = 3 };
+            PositionInEncounter scoreCerro = new PositionInEncounter() { TeamId = cerro.Id, Position = 0 };
+            ICollection<PositionInEncounter> results = new List<PositionInEncounter>() { scoreDanubio, scoreCerro };
             ICollection<Encounter> encounterList = new List<Encounter>();
             Encounter encounter = new Encounter() { Id = 1, Teams = teams, SportId = football.Id, Date = date };
             encounterList.Add(encounter);

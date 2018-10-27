@@ -8,7 +8,7 @@ using System.Text;
 
 namespace SportFixtures.BusinessLogic.Implementations
 {
-    public class PositionTableCalculator:IPositionTableCalculator
+    public class PositionTableCalculator : IPositionTableCalculator
     {
         private ISportBusinessLogic sportBL;
         private IEncounterBusinessLogic encounterBL;
@@ -19,9 +19,9 @@ namespace SportFixtures.BusinessLogic.Implementations
             this.encounterBL = encounterBL;
         }
 
-        public ICollection<Position> GeneratePositionTableForSport(int sportId)
+        public ICollection<Score> GeneratePositionTableForSport(int sportId)
         {
-            ICollection<Position> positions = new List<Position>();
+            ICollection<Score> positions = new List<Score>();
             Sport sport = sportBL.GetById(sportId);
             List<Team> teams = sport.Teams.ToList();
             foreach (Team team in teams)
@@ -29,7 +29,7 @@ namespace SportFixtures.BusinessLogic.Implementations
                 List<Encounter> encounters = encounterBL.GetAllEncountersOfTeam(team.Id).ToList();
                 foreach (Encounter encounter in encounters)
                 {
-                    Position position = new Position() { Team = team };
+                    Score position = new Score() { Team = team };
                     int teamPosition = encounter.Results.First(t => t.TeamId == team.Id).Position;
                     if (sport.EncounterMode == EncounterMode.Double)
                     {
@@ -40,7 +40,9 @@ namespace SportFixtures.BusinessLogic.Implementations
                         else if (teamPosition == 1)
                         {
                             position.Points = 1;
-                        }else{
+                        }
+                        else
+                        {
                             position.Points = 0;
                         }
                     }
@@ -57,7 +59,9 @@ namespace SportFixtures.BusinessLogic.Implementations
                         else if (teamPosition == 3)
                         {
                             position.Points = 1;
-                        }else{
+                        }
+                        else
+                        {
                             position.Points = 0;
                         }
                     }

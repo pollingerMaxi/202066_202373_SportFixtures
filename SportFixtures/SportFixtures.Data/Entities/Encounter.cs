@@ -11,12 +11,12 @@ namespace SportFixtures.Data.Entities
         public int SportId { get; set; }
         public ICollection<Team> Teams { get; set; }
         public ICollection<Comment> Comments { get; set; }
-        public ICollection<Score> Results { get; set; }
+        public ICollection<PositionInEncounter> Results { get; set; }
 
         public Encounter(){
             Teams = new List<Team>();
             Comments = new List<Comment>();
-            Results = new List<Score>();
+            Results = new List<PositionInEncounter>();
         }
     }
 }

@@ -6,6 +6,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
 {
     public interface IPositionTableCalculator
     {
-        ICollection<Position> GeneratePositionTable(int sportId);
+        ICollection<Score> GeneratePositionTableForSport(int sportId);
     }
 }

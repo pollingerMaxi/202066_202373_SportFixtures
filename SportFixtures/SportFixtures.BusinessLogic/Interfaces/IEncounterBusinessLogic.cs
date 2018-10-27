@@ -95,6 +95,6 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// <returns></returns>
         ICollection<Encounter> GenerateFixture(DateTime date, int sportId, Algorithm fixtureGenerator);
 
-        void AddResults(ICollection<Score> results, int encounterId);
+        void AddResults(ICollection<PositionInEncounter> results, int encounterId);
     }
 }
