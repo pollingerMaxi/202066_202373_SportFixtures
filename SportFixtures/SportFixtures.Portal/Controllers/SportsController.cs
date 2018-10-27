@@ -69,7 +69,7 @@ namespace SportFixtures.Portal.Controllers
 
         [HttpPost]
         [AuthorizedRoles(Role.Admin)]
-        public ActionResult CreateSport([FromBody]SportDTO data)
+        public ActionResult CreateSport([FromBody]SportCreateDTO data)
         {
             if (!ModelState.IsValid)
             {

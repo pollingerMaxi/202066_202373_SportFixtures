@@ -37,6 +37,11 @@ namespace SportFixtures.Portal.Profiles
             // CreateMap<EncounterDTO, Encounter>()
             //     .ForMember(e => e.Team1, src => src.MapFrom(u => u.Home))
             //     .ForMember(e => e.Team2, src => src.MapFrom(u => u.Visitor));
+
+            CreateMap<Sport, SportCreateDTO>()
+                .ForMember(e => e.Name, src => src.MapFrom(u => u.Name));
+            CreateMap<SportCreateDTO, Sport>()
+                .ForMember(e => e.Name, src => src.MapFrom(u => u.Name));
         }
     }
 }

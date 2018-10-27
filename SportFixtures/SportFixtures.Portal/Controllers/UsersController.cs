@@ -171,5 +171,28 @@ namespace SportFixtures.Portal.Controllers
                 return BadRequest("User is already following this team.");
             }
         }
+
+        [HttpGet("favorites/{userId}")]
+        public ActionResult GetFavorites([FromRoute]int userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var favorites = userBusinessLogic.GetFavoritesOfUser(userId);
+                return Ok(favorites);
+            }
+            catch (UserDoesNotExistException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

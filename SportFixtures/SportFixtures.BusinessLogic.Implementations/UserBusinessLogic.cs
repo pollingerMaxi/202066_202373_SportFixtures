@@ -72,7 +72,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         /// <returns></returns>
         private bool ValidateEmail(string email)
         {
-            return Regex.IsMatch(email, 
+            return Regex.IsMatch(email,
                 @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
         }
 
@@ -95,7 +95,6 @@ namespace SportFixtures.BusinessLogic.Implementations
         public void Update(User user)
         {
             CheckIfExists(user.Id);
-            CheckIfLoggedUserIsAdmin();
             repository.Update(user);
             repository.Save();
         }
@@ -112,17 +111,6 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
-        /// <summary>
-        /// Throws exception if LoggedUser is not an admin.
-        /// </summary>
-        private void CheckIfLoggedUserIsAdmin()
-        {
-            if (LoggedUser.Role != Role.Admin)
-            {
-                throw new LoggedUserIsNotAdminException();
-            }
-        }
-
         public Guid Login(User user)
         {
             var users = repository.Get(u => u.Email == user.Email, null, "");
@@ -132,7 +120,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
 
             var userFromDb = users.FirstOrDefault();
-            if (!user.Email.Equals(userFromDb.Email) && !user.Password.Equals(userFromDb.Password))
+            if (!user.Email.Equals(userFromDb.Email) || !user.Password.Equals(userFromDb.Password))
             {
                 throw new EmailOrPasswordException();
             }
@@ -149,7 +137,6 @@ namespace SportFixtures.BusinessLogic.Implementations
         private Guid GenerateToken(User user, User userFromDb)
         {
             var token = Guid.NewGuid();
-            LoggedUser = user;
             userFromDb.Token = token;
             UpdateUserToken(userFromDb);
             return token;
@@ -210,6 +197,12 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Update(user);
             repository.Save();
             LoggedUser = null;
+        }
+
+        public IEnumerable<UsersTeams> GetFavoritesOfUser(int userId)
+        {
+            CheckIfExists(userId);
+            return favoritesRepository.Get(f => f.UserId == userId, null, "Team");
         }
     }
 }

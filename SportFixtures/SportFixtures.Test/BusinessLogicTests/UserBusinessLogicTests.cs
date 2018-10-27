@@ -57,7 +57,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockUTRepo = new Mock<IRepository<UsersTeams>>();
             mockUserBL = new Mock<IUserBusinessLogic>();
             userList = new List<User>();
-            userBLWithoutTeamBL = new UserBusinessLogic(mockUserRepo.Object, NO_BUSINESS_LOGIC, NO_UT_REPOSITORY);
+            userBLWithoutTeamBL = new UserBusinessLogic(mockUserRepo.Object, NO_BUSINESS_LOGIC, mockUTRepo.Object);
             mockUserRepo.Setup(r => r.Get(null, null, "")).Returns(userList);
             mockUserRepo.Setup(r => r.Get(It.IsAny<Expression<Func<User, bool>>>(), null, "")).Returns(userList);
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
@@ -227,18 +227,6 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(LoggedUserIsNotAdminException))]
-        public void UpdateUserWithUserLoggedInNotAdminTest()
-        {
-            userList.Add(userWithAllData);
-            mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
-            userBLWithoutTeamBL.Login(userWithAllData);
-            userBLWithoutTeamBL.Update(userWithAllData);
-            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.AtLeastOnce);
-            mockUserRepo.Verify(x => x.Update(It.IsAny<User>()), Times.Once);
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(EmailOrPasswordException))]
         public void LoginWithInvalidCredentialsTest()
         {
@@ -344,6 +332,24 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void LoginWithInvalidUserTest()
         {
             userBLWithoutTeamBL.Login(adminWithAllData);
+        }
+
+        [TestMethod]
+        public void GetFavoritesOkTest()
+        {
+            mockUTRepo.Setup(r => r.Get(It.IsAny<Expression<Func<UsersTeams, bool>>>(), null, It.IsAny<string>())).Returns(new List<UsersTeams>());
+            userBLWithoutTeamBL.GetFavoritesOfUser(adminWithAllData.Id);
+            mockUTRepo.Verify(x => x.Get(It.IsAny<Expression<Func<UsersTeams, bool>>>(), null, It.IsAny<string>()), Times.Once);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserDoesNotExistException))]
+        public void GetFavoritesUserDoesNotExistTest()
+        {
+            mockUserRepo.Reset();
+            mockUTRepo.Setup(r => r.Get(It.IsAny<Expression<Func<UsersTeams, bool>>>(), null, It.IsAny<string>())).Returns(new List<UsersTeams>());
+            userBLWithoutTeamBL.GetFavoritesOfUser(adminWithAllData.Id);
+            mockUTRepo.Verify(x => x.Get(It.IsAny<Expression<Func<UsersTeams, bool>>>(), null, It.IsAny<string>()), Times.Once);
         }
     }
 }
