@@ -10,6 +10,7 @@ import { DefaultComponent } from './shared/default/default.component';
 import { LoginService, UserService } from './services';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 const routes: Routes = [
@@ -23,7 +24,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: ''
+    component: PageNotFoundComponent
   }
 ];
 
@@ -31,7 +32,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     LoginComponent,
-    DefaultComponent
+    DefaultComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
