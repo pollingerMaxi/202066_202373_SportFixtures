@@ -1,18 +1,24 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-offset-4 col-md-4">
+  <div class="row justify-content-md-center">
+    <div class="col-md-3">
       <div class="well">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input id="email" class="form-control" type="email" [(ngModel)]="loginParams.email">
+        <div class="center">
+          <h3>
+            Login
+          </h3>
+          <hr />
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input id="password" class="form-control" type="password" [(ngModel)]="loginParams.password">
-        </div>
-        <hr />
-        <a class="btn btn-primary btn-lg btn-block waves-effect waves-light" (click)="login()">Login!</a>
       </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" class="form-control" type="email" [(ngModel)]="loginParams.email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" class="form-control" type="password" [(ngModel)]="loginParams.password">
+      </div>
+      <hr />
+      <a class="btn btn-primary btn-lg btn-block waves-effect waves-light" (click)="login()">Login!</a>
     </div>
   </div>
 </div>
