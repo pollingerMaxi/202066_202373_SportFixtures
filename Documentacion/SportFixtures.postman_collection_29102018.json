@@ -1,0 +1,2319 @@
+{
+	"info": {
+		"_postman_id": "c9a6352f-5cf6-411a-bc9c-5a961654ba8d",
+		"name": "SportFixtures",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Adds",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Logged as admin, correct user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "85a43037-33ef-4a1d-a3f2-0b558dab751c",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"user2Id\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\":\"user2\",\n\t\"lastName\":\"Perez\",\n\t\"userName\":\"user2\",\n\t\"password\":\"user2\",\n\t\"email\":\"user2@user2.com\",\n\t\"role\":\"User\"\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/users/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logged as admin, invalid user data (should fail)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "85a43037-33ef-4a1d-a3f2-0b558dab751c",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"user2Id\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\":\"\",\n\t\"lastName\":\"\",\n\t\"userName\":\"\",\n\t\"password\":\"user2\",\n\t\"email\":\"user2@user2.com\",\n\t\"role\":\"User\"\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/users/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logged as admin, invalid email (should fail)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "85a43037-33ef-4a1d-a3f2-0b558dab751c",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"user2Id\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\":\"user2\",\n\t\"lastName\":\"Perez\",\n\t\"userName\":\"user2\",\n\t\"password\":\"user2\",\n\t\"email\":\"use@r2@user2.com\",\n\t\"role\":\"User\"\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/users/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logged as user, correct user (should fail)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "85a43037-33ef-4a1d-a3f2-0b558dab751c",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"user2Id\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\":\"random\",\n\t\"lastName\":\"random\",\n\t\"userName\":\"random\",\n\t\"password\":\"random\",\n\t\"email\":\"random@random.com\",\n\t\"role\":\"User\"\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/users/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logged as user, invalid user data (should fail) Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "85a43037-33ef-4a1d-a3f2-0b558dab751c",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"user2Id\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\":\"\",\n\t\"lastName\":\"\",\n\t\"userName\":\"\",\n\t\"password\":\"user2\",\n\t\"email\":\"user2@user2.com\",\n\t\"role\":\"User\"\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/users/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Sport",
+					"item": [
+						{
+							"name": "Add sport Basquetbol",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9ff31d9b-e65d-44dc-802b-7db04e37d71d",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"basquetbolId\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\":\"Basquetbol\",\n\t\"teams\":[]\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/sports/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"sports",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add sport no name",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\":\"\",\n\t\"teams\":[]\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/sports/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"sports",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add sport Futbol",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "af206cc0-e9ea-4e8a-9f6e-27bec51a05a3",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"futbolId\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\":\"Futbol\",\n\t\"teams\":[]\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/sports/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"sports",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Encounter",
+					"item": [
+						{
+							"name": "Add Encounter Futbol Nac Peñ",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "eef26172-1188-4293-84d1-776c667097ed",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"encounterNPId\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"Date\": \"2018-09-09T19:04:14\",\n\t\"SportId\": {{futbolId}},\n\t\"Home\": {{nacionalF}},\n\t\"Visitor\": {{peñarolF}},\n\t\"Comments\": []\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/encounters/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"encounters",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Encounter Basquetbol Nac Agu",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "dc7cee55-4362-4220-82de-68d3da89c4ad",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"encounterNAId\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"Date\": \"2017-09-08T19:04:14\",\n\t\"SportId\": {{basquetbolId}},\n\t\"Home\": {{nacionalB}},\n\t\"Visitor\": {{aguadaB}},\n\t\"Comments\": []\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/encounters/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"encounters",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Team",
+					"item": [
+						{
+							"name": "Add team sport no existe",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Nacional\",\n    \"photoPath\":\"C:\\\\b\\\\nacional.jpg\",\n    \"sportId\": 34534563\n}\n\n\n"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/teams/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"teams",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add team Nacional Basquetbol",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c086643c-f238-4fe1-a7c9-8780bdc92472",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"nacionalBId\", jsonData.id);",
+											"postman.setGlobalVariable(\"nacionalB\", responseBody);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Nacional\",\n    \"photoPath\":\"C:\\\\b\\\\nacional.jpg\",\n    \"sportId\": {{basquetbolId}}\n}\n\n\n"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/teams/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"teams",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add team Atenas Basquetbol",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1a4a3d8e-be98-4c66-ad31-374ce3e11c70",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"atenasBId\", jsonData.id);",
+											"postman.setGlobalVariable(\"atenasB\", responseBody);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Atenas\",\n    \"photoPath\":\"C:\\\\b\\\\atenas.jpg\",\n    \"sportId\": {{basquetbolId}}\n}\n\n\n\n\n"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/teams/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"teams",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add team Aguada Basquetbol",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d904f447-b27c-4b55-bfaa-b739e10f1d3a",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"aguadaBId\", jsonData.id);",
+											"postman.setGlobalVariable(\"aguadaB\", responseBody);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Aguada\",\n    \"photoPath\":\"C:\\\\b\\\\aguada.jpg\",\n    \"sportId\": {{basquetbolId}}\n}\n"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/teams/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"teams",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add team Danubio Futbol",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "29c3ea68-4544-4b03-9e6a-c53ec8062a5e",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"danubioFId\", jsonData.id);",
+											"postman.setGlobalVariable(\"danubioF\", responseBody);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Danubio\",\n    \"photoPath\":\"C:\\\\path\\\\photo.jpg\",\n    \"sportId\": {{futbolId}}\n}\n"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/teams/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"teams",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add team Peñarol Futbol",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f0412fa4-962a-4538-b9cd-2e176fcfedb9",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"peñarolFId\", jsonData.id);",
+											"postman.setGlobalVariable(\"peñarolF\", responseBody);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Peñarol\",\n    \"photoPath\":\"C:\\\\f\\\\peniarol.jpg\",\n    \"sportId\": {{futbolId}}\n}\n\n\n\n"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/teams/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"teams",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add team Nacional Futbol",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8164cf61-0f49-4aca-9a18-b7f5492d5424",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"nacionalFId\", jsonData.id);",
+											"postman.setGlobalVariable(\"nacionalF\", responseBody);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Nacional\",\n    \"photoPath\":\"C:\\\\f\\\\nacional.jpg\",\n    \"sportId\": {{futbolId}}\n}\n\n\n"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/teams/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"teams",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add team PhotoPath invalido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8164cf61-0f49-4aca-9a18-b7f5492d5424",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"nacionalFId\", jsonData.id);",
+											"postman.setGlobalVariable(\"nacionalF\", responseBody);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Cerro\",\n    \"photoPath\":\"Cerrito.jpg\",\n    \"sportId\": {{futbolId}}\n}\n\n\n"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/teams/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"teams",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9af37f05-1f42-43b2-ba67-6a8060bdce24",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "4bc08265-f3ed-43f8-8225-db67146abda9",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Comment",
+					"item": [
+						{
+							"name": "Add Comment",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"UserId\": {{userId}},\n    \"EncounterId\":{{encounterNPId}},\n    \"Text\": \"Good game, well played\"\n}\n\n\n"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/comments/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"comments",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Comment user no registrado",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"UserId\": 476,\n    \"EncounterId\":{{encounterNPId}},\n    \"Text\": \"Good game, well played\"\n}\n\n\n"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/comments/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"comments",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Comment encounter no registrado",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"UserId\": 1,\n    \"EncounterId\":6545,\n    \"Text\": \"Good game, well played\"\n}\n\n\n"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/comments/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"comments",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "Gets",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Get user",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/users/{{adminId}}",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"{{adminId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/users/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get invalid user",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/users/99999",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"99999"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Sport",
+					"item": [
+						{
+							"name": "Get sport by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/sports/{{basquetbolId}}",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"sports",
+										"{{basquetbolId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get invalid sport",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/sports/1412412414",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"sports",
+										"1412412414"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get sports",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/sports/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"sports",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Encounter",
+					"item": [
+						{
+							"name": "Get all encounters of team",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/encounters/teams/{{nacionalFId}}",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"encounters",
+										"teams",
+										"{{nacionalFId}}"
+									]
+								},
+								"description": "Returns all encounters of team 'Nacional' from sport 'Futbol'."
+							},
+							"response": []
+						},
+						{
+							"name": "Get all encounters of sport",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/encounters/sports/{{futbolId}}",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"encounters",
+										"sports",
+										"{{futbolId}}"
+									]
+								},
+								"description": "Returns all the encounters for sport 'Futbol'."
+							},
+							"response": []
+						},
+						{
+							"name": "Get encounter Futbol Nac Peñ",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/encounters/{{encounterNPId}}",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"encounters",
+										"{{encounterNPId}}"
+									]
+								},
+								"description": "Returns the encounter data for the encounter between Nacional and Peñarol.\nIf the Id is null, it will return all the encounters in the database."
+							},
+							"response": []
+						},
+						{
+							"name": "Get encounters",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/encounters/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"encounters",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get invalid encounter",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/encounters/9999",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"encounters",
+										"9999"
+									]
+								},
+								"description": "Returns the encounter data for the encounter between Nacional and Peñarol.\nIf the Id is null, it will return all the encounters in the database."
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Team",
+					"item": [
+						{
+							"name": "Get teams",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/teams/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"teams",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get team by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/teams/{{nacionalFId}}",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"teams",
+										"{{nacionalFId}}"
+									]
+								},
+								"description": "Returns the data of team 'Nacional'."
+							},
+							"response": []
+						},
+						{
+							"name": "Get invalid team",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/teams/9999",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"teams",
+										"9999"
+									]
+								},
+								"description": "Returns the data of team 'Nacional'."
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Comment",
+					"item": [
+						{
+							"name": "Get all comments",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/comments/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"comments",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all comments of encounter",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/comments/encounter/{{encounterNPId}}",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"comments",
+										"encounter",
+										"{{encounterNPId}}"
+									]
+								},
+								"description": "Returns all the comments of encounter between Nacional and Peñarol.\nIf the encounterId is null or wrong, the request will fail before send."
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "Fixture",
+			"item": [
+				{
+					"name": "Generate free for all",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"date\":\"10/10/2018 2:02:28 AM\",\n\t\"sportId\":{{futbolId}},\n\t\"algorithm\":\"FreeForAll\"\n}"
+						},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/encounters/fixture",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"encounters",
+								"fixture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate roundrobin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"date\":\"10/10/2018 2:02:28 AM\",\n\t\"sportId\":{{futbolId}},\n\t\"algorithm\":\"RoundRobin\"\n}"
+						},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/encounters/fixture",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"encounters",
+								"fixture"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "User login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b11d9de1-9ae4-4679-b3af-b155516a6b9a",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"token\", jsonData);",
+									"postman.setGlobalVariable(\"userId\", 2);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"user@user.com\",\n\t\"password\": \"user\"\n}"
+						},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/login",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "850f9d78-ecaf-4681-a6bd-e0e3f619c621",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"token\", jsonData);",
+									"postman.setGlobalVariable(\"adminId\", 1);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"admin@admin.com\",\n\t\"password\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/login",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin login with invalid credentials (should fail) (bugged)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"admin@admin.com\",\n\t\"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/login",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						},
+						"description": "Hay un bug que aunque la contraseña sea incorrecta, hace login igual."
+					},
+					"response": []
+				},
+				{
+					"name": "Unregistered user login (should fail)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"unregistered@user.com\",\n\t\"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/login",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Updates",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Logged as admin, update valid user ID (bugged)",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\":{{user2Id}},\n\t\"name\":\"updated\",\n\t\"lastName\":\"updated\",\n\t\"userName\":\"updated\",\n\t\"password\":\"updated\",\n\t\"email\":\"updated@updated.com\",\n\t\"role\":\"User\"\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/users/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Logged as user, update valid user ID (should fail)",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\":{{user2Id}},\n\t\"name\":\"updated\",\n\t\"lastName\":\"updated\",\n\t\"userName\":\"updated\",\n\t\"password\":\"updated\",\n\t\"email\":\"updated@updated.com\",\n\t\"role\":\"User\"\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/users/",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Sport",
+					"item": [
+						{
+							"name": "Update sport name basket",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "93a98326-e633-4e33-971b-5e2a77798cb3",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": {{basquetbolId}},\n\t\"name\":\"Basketball\",\n\t\"teams\":[]\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/sports",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"sports"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update sport no registrado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "93a98326-e633-4e33-971b-5e2a77798cb3",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": {{basquetbolId}},\n\t\"name\":\"Basketball\",\n\t\"teams\":[]\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/sports",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"sports"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Team",
+					"item": [
+						{
+							"name": "Update team Atenas to Malvin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "11d612dc-e773-43b1-bb3e-50e89295a6e4",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"malvinBId\", jsonData.id);",
+											"postman.setGlobalVariable(\"malvinB\", jsonData);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": {{atenasBId}},\n\t\"name\":\"Malvin\",\n\t\"photoPath\":\"C:\\\\b\\\\malvin.jpg\"\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/teams",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"teams"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update team no registrado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "11d612dc-e773-43b1-bb3e-50e89295a6e4",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setGlobalVariable(\"malvinBId\", jsonData.id);",
+											"postman.setGlobalVariable(\"malvinB\", jsonData);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": 35416,\n\t\"name\":\"Malvin\",\n\t\"photoPath\":\"C:\\\\b\\\\malvin.jpg\"\n}"
+								},
+								"url": {
+									"raw": "http://{{WebAPI}}/api/teams",
+									"protocol": "http",
+									"host": [
+										"{{WebAPI}}"
+									],
+									"path": [
+										"api",
+										"teams"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Encounter",
+					"item": [],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Update user name lastname",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63267d6e-b842-4c8b-9c22-4f57cec7118e",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"adminId\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Jose Admin\",\n\t\"lastName\":\"Gonzalez Admin\",\n}\n"
+						},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/users/{{adminId}}",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{adminId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update date Encounter Nac Peñ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eef26172-1188-4293-84d1-776c667097ed",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"encounterNPId\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"DateTime\": \"2018/11/11\"\n}"
+						},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/encounters/{{encounterNPId}}",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"encounters",
+								"{{encounterNPId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Deletes",
+			"item": [
+				{
+					"name": "Delete Encounter",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/encounters/{{encounterNPId}}",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"encounters",
+								"{{encounterNPId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/users/{{user2Id}}",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user2Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Team",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/teams/{{atenasBId}}",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"teams",
+								"{{atenasBId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Sport",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/sports/{{futbolId}}",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"sports",
+								"{{futbolId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Favorites",
+			"item": [
+				{
+					"name": "Favorite team, valid",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\":{{adminId}},\n\t\"teamId\":{{nacionalFId}}\n}"
+						},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/users/favorite",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"favorite"
+							]
+						},
+						"description": "Admin user follows 'Nacional' team from sport 'Futbol'."
+					},
+					"response": []
+				},
+				{
+					"name": "Favorite team, invalid user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\":9999,\n\t\"teamId\":{{nacionalFId}}\n}"
+						},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/users/favorite",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"favorite"
+							]
+						},
+						"description": "Invalid user follows 'Nacional' team from sport 'Futbol'."
+					},
+					"response": []
+				},
+				{
+					"name": "Favorite team, invalid team",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\":{{adminId}},\n\t\"teamId\":99999\n}"
+						},
+						"url": {
+							"raw": "http://{{WebAPI}}/api/users/favorite",
+							"protocol": "http",
+							"host": [
+								"{{WebAPI}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"favorite"
+							]
+						},
+						"description": "Admin user follows invalid team."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "18b15391-4cd3-476f-b3f1-bf6f7b3511cf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3198f30d-328c-4478-be61-eef043cde665",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

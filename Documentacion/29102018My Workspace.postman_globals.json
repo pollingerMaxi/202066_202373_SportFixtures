@@ -1,0 +1,149 @@
+{
+	"id": "5eca0ef3-6b28-459d-8175-a2dbee3333d9",
+	"values": [
+		{
+			"key": "token",
+			"value": "5019803e-1334-4cbd-a258-e78e2750346d",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			},
+			"enabled": true
+		},
+		{
+			"key": "teamId",
+			"value": "23",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			},
+			"enabled": true
+		},
+		{
+			"key": "futbolId",
+			"value": "3",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			},
+			"enabled": true
+		},
+		{
+			"key": "nacionalBId",
+			"value": "6",
+			"enabled": true
+		},
+		{
+			"key": "nacionalFId",
+			"value": "13",
+			"enabled": true
+		},
+		{
+			"key": "basquetbolId",
+			"value": "2",
+			"enabled": true
+		},
+		{
+			"key": "peñarolFId",
+			"value": "9",
+			"enabled": true
+		},
+		{
+			"key": "penarolFId",
+			"value": "2",
+			"enabled": true
+		},
+		{
+			"key": "danubioFId",
+			"value": "3",
+			"enabled": true
+		},
+		{
+			"key": "aguadaBId",
+			"value": "4",
+			"enabled": true
+		},
+		{
+			"key": "atenasBId",
+			"value": "5",
+			"enabled": true
+		},
+		{
+			"key": "adminId",
+			"value": "1",
+			"enabled": true
+		},
+		{
+			"key": "encounterNPId",
+			"value": "2",
+			"enabled": true
+		},
+		{
+			"key": "nacionalF",
+			"value": "{\"id\":13,\"name\":\"hielo\",\"photoPath\":\"C:\\\\h\\\\freeze.jpg\",\"sportId\":3,\"favoritedBy\":[]}",
+			"enabled": true
+		},
+		{
+			"key": "peñarolF",
+			"value": "{\"id\":9,\"name\":\"Peñarol\",\"photoPath\":\"C:\\\\f\\\\peniarol.jpg\",\"sportId\":1,\"favoritedBy\":[]}",
+			"enabled": true
+		},
+		{
+			"key": "encounterNAId",
+			"value": "5",
+			"enabled": true
+		},
+		{
+			"key": "danubioF",
+			"value": "{\"id\":3,\"name\":\"Danubio\",\"photoPath\":\"C:\\\\path\\\\photo.jpg\",\"sportId\":1,\"favoritedBy\":[]}",
+			"enabled": true
+		},
+		{
+			"key": "aguadaB",
+			"value": "{\"id\":4,\"name\":\"Aguada\",\"photoPath\":\"C:\\\\b\\\\aguada.jpg\",\"sportId\":2,\"favoritedBy\":[]}",
+			"enabled": true
+		},
+		{
+			"key": "atenasB",
+			"value": "{\"sportId\":[\"Unexpected character encountered while parsing value: {. Path 'sportId', line 4, position 16.\",\"Invalid JavaScript property identifier character: }. Path 'sportId', line 4, position 28.\"]}",
+			"enabled": true
+		},
+		{
+			"key": "nacionalB",
+			"value": "{\"id\":5,\"name\":\"Nacional\",\"photoPath\":\"C:\\\\b\\\\nacional.jpg\",\"sportId\":2,\"favoritedBy\":[]}",
+			"enabled": true
+		},
+		{
+			"key": "malvinB",
+			"value": "[object Object]",
+			"enabled": true
+		},
+		{
+			"key": "malvinBId",
+			"value": "localhost:50144",
+			"enabled": true
+		},
+		{
+			"key": "userId",
+			"value": "5",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			},
+			"enabled": true
+		},
+		{
+			"key": "user2Id",
+			"value": "3",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			},
+			"enabled": true
+		}
+	],
+	"name": "My Workspace Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2018-10-29T20:38:37.626Z",
+	"_postman_exported_using": "Postman/6.4.4"
+}
