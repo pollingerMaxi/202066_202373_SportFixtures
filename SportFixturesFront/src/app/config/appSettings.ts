@@ -6,6 +6,7 @@ export class AppSettings {
         login: `${AppSettings.BaseUrl}login`,
         logout: `${AppSettings.BaseUrl}logout`,
         getAllUsers: `${AppSettings.BaseUrl}users`,
+        addSport: `${AppSettings.BaseUrl}sports`,
     };
 
     public static readonly RouterUrls: any = {

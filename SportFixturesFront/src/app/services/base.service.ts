@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { AppSettings } from '../config/appSettings';
 
 @Injectable()
 export class BaseService {
@@ -69,6 +70,7 @@ export class BaseService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Access-Control-Allow-Origin', '*');
+        headers.append('Authorization', JSON.parse(localStorage.getItem(AppSettings.localstorageToken)));
         return new RequestOptions({ headers: headers, withCredentials: true });
     }
 

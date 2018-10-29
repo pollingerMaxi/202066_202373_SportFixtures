@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Sport } from '../shared/models/sport';
 import { EncounterMode } from '../shared/models/encounterMode';
 import { SelectItem } from 'primeng/components/common/selectitem';
+import { ToasterService } from 'angular2-toaster';
+import { SportService } from '../services';
 
 @Component({
   selector: 'app-sports-management',
@@ -13,19 +15,24 @@ export class SportsManagementComponent implements OnInit {
   encounterModes: SelectItem[];
   selectedEncounterMode: EncounterMode;
 
-  constructor() {
+  constructor(
+    private sportService: SportService,
+    private toasterService: ToasterService) {
     this.sport = new Sport();
   }
 
   ngOnInit() {
-    this.encounterModes = [
-      { label: EncounterMode.Double, value: EncounterMode.Double },
-      { label: EncounterMode.Multiple, value: EncounterMode.Multiple }
-    ];
+    this.encounterModes = this.sportService.getEncounterModes();
   }
 
   public addSport(sport: Sport) {
-    console.log(sport);
+    this.sportService.addSport(sport)
+      .then(response => {
+        this.toasterService.pop("success", "Success!", "Sport successfully added!");
+      })
+      .catch(error => {
+        this.toasterService.pop("error", "Error!", "Could not add sport.");
+      });
   }
 
 }
