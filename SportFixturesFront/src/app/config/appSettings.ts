@@ -10,5 +10,6 @@ export class AppSettings {
 
     public static readonly RouterUrls: any = {
         login: "login",
+        sportsManagement: "sportsManagement"
     };
 }
