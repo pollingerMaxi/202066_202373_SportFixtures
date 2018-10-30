@@ -14,6 +14,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SportsManagementComponent } from './sports-management/sports-management.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { SportService } from './services/sport.service';
+import { ListboxModule } from 'primeng/listbox';
 
 const routes: Routes = [
   {
@@ -49,7 +50,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     HttpModule,
     RouterModule.forRoot(routes),
-    DropdownModule
+    DropdownModule,
+    ListboxModule
   ],
   providers: [LoginService, UserService, SportService],
   bootstrap: [AppComponent]

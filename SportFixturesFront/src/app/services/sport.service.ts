@@ -23,4 +23,8 @@ export class SportService extends BaseService {
     public async addSport(sport: Sport) {
         return await this.post(AppSettings.ApiEndpoints.addSport, sport);
     }
+
+    public async getSports(): Promise<any> {
+        return await this.getAll(AppSettings.ApiEndpoints.getSports);
+    }
 }

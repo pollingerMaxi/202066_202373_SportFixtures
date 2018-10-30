@@ -12,17 +12,21 @@ import { SportService } from '../services';
 })
 export class SportsManagementComponent implements OnInit {
   public sport: Sport;
-  encounterModes: SelectItem[];
-  selectedEncounterMode: EncounterMode;
+  public encounterModes: SelectItem[];
+  public selectedEncounterMode: EncounterMode;
+  public sports: Sport[];
+  public selectedSport: Sport;
 
   constructor(
     private sportService: SportService,
     private toasterService: ToasterService) {
     this.sport = new Sport();
+    this.selectedSport=new Sport();
   }
-
+  
   ngOnInit() {
     this.encounterModes = this.sportService.getEncounterModes();
+    this.getSports();
   }
 
   public addSport(sport: Sport) {
@@ -33,6 +37,10 @@ export class SportsManagementComponent implements OnInit {
       .catch(error => {
         this.toasterService.pop("error", "Error!", "Could not add sport.");
       });
+  }
+
+  private async getSports() {
+    this.sports = await this.sportService.getSports();
   }
 
 }
