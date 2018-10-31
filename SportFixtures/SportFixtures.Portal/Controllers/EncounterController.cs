@@ -248,5 +248,25 @@ namespace SportFixtures.Portal.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpPost("results")]
+        [AuthorizedRoles(Role.Admin)]
+        public ActionResult AddResultsToEncounter([FromBody]ResultsDTO results)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                encounterBusinessLogic.AddResults(results.Positions, results.EncounterId);
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
