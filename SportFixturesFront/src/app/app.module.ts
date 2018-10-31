@@ -11,7 +11,10 @@ import { LoginService, UserService } from './services';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-
+import { SportsManagementComponent } from './sports-management/sports-management.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { SportService } from './services/sport.service';
+import { ListboxModule } from 'primeng/listbox';
 
 const routes: Routes = [
   {
@@ -21,6 +24,10 @@ const routes: Routes = [
   {
     path: AppSettings.RouterUrls.login,
     component: LoginComponent
+  },
+  {
+    path: AppSettings.RouterUrls.sportsManagement,
+    component: SportsManagementComponent
   },
   {
     path: '**',
@@ -33,7 +40,8 @@ const routes: Routes = [
     AppComponent,
     LoginComponent,
     DefaultComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SportsManagementComponent
   ],
   imports: [
     BrowserModule,
@@ -41,9 +49,11 @@ const routes: Routes = [
     ToasterModule.forRoot(),
     BrowserAnimationsModule,
     HttpModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    DropdownModule,
+    ListboxModule
   ],
-  providers: [LoginService, UserService],
+  providers: [LoginService, UserService, SportService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

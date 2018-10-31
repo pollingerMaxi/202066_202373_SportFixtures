@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { AppSettings } from '../config/appSettings';
 
 @Injectable()
 export class BaseService {
@@ -40,7 +41,7 @@ export class BaseService {
      * @param body Entity to update
      */
     protected async update(url: string, body: any) {
-        let request = await this.http.put(url + body["id"], body, this.jwt()).toPromise();
+        let request = await this.http.put(url, body, this.jwt()).toPromise();
         return this.extractData(request);
     }
 
@@ -60,7 +61,7 @@ export class BaseService {
      * @param url Url endpoint to delete
      * @param id Identitfier of the entity to delete
      */
-    protected async delete(url: string, id: number) {
+    protected async delete(url: string, id: string) {
         let request = await this.http.delete(url + id, this.jwt()).toPromise();
         return this.extractData(request);
     }
@@ -69,6 +70,7 @@ export class BaseService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Access-Control-Allow-Origin', '*');
+        headers.append('Authorization', JSON.parse(localStorage.getItem(AppSettings.localstorageToken)));
         return new RequestOptions({ headers: headers, withCredentials: true });
     }
 
