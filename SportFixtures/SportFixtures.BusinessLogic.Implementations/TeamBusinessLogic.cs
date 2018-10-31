@@ -34,24 +34,6 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 throw new InvalidTeamNameException();
             }
-
-            if (!ValidatePhotoPath(team.PhotoPath))
-            {
-                throw new InvalidPhotoPathException();
-            }
-        }
-
-        private bool ValidatePhotoPath(String path)
-        {
-            bool pathIsValid = true;
-
-            if (!string.IsNullOrWhiteSpace(path))
-            {
-                Regex r = new Regex(@"^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(jpg|gif|jpeg|png)$");
-                pathIsValid = r.IsMatch(path);
-            }
-
-            return pathIsValid;
         }
 
         private void AddTeamToSport(Team team)
