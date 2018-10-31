@@ -59,10 +59,20 @@ namespace SportFixtures.BusinessLogic.Implementations
                 throw new InvalidUserLastNameException();
             }
 
-            if (!UsernameIsUnique(user.Username))
+            if (!UsernameIsUnique(user))
             {
                 throw new UsernameAlreadyInUseException();
             }
+
+            if (!EmailIsUnique(user))
+            {
+                throw new EmailAlreadyRegisteredException();
+            }
+        }
+
+        private bool EmailIsUnique(User user)
+        {
+            return repository.Get(u => u.Id != user.Id, null, "").FirstOrDefault(u => u.Email == user.Email) == null;
         }
 
         /// <summary>
@@ -95,13 +105,14 @@ namespace SportFixtures.BusinessLogic.Implementations
         public void Update(User user)
         {
             CheckIfExists(user.Id);
+            ValidateUser(user);
             repository.Update(user);
             repository.Save();
         }
 
-        private bool UsernameIsUnique(string username)
+        private bool UsernameIsUnique(User user)
         {
-            return repository.Get(null, null, "").FirstOrDefault(u => u.Username == username) == null;
+            return repository.Get(u => u.Id != user.Id, null, "").FirstOrDefault(u => u.Username == user.Username) == null;
         }
 
         public void Delete(int id)
@@ -113,14 +124,14 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public Guid Login(User user)
         {
-            var users = repository.Get(u => u.Email == user.Email, null, "");
+            var users = repository.Get(u => u.Username == user.Username, null, "");
             if (users.Count() == 0)
             {
                 throw new UserDoesNotExistException();
             }
 
             var userFromDb = users.FirstOrDefault();
-            if (!user.Email.Equals(userFromDb.Email) || !user.Password.Equals(userFromDb.Password))
+            if (!user.Username.Equals(userFromDb.Username) || !user.Password.Equals(userFromDb.Password))
             {
                 throw new EmailOrPasswordException();
             }
