@@ -15,6 +15,9 @@ import { SportsManagementComponent } from './sports-management/sports-management
 import { DropdownModule } from 'primeng/dropdown';
 import { SportService } from './services/sport.service';
 import { ListboxModule } from 'primeng/listbox';
+import { TabBarComponent } from './shared/tab-bar/tab-bar.component';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 const routes: Routes = [
   {
@@ -41,7 +44,8 @@ const routes: Routes = [
     LoginComponent,
     DefaultComponent,
     PageNotFoundComponent,
-    SportsManagementComponent
+    SportsManagementComponent,
+    TabBarComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +55,9 @@ const routes: Routes = [
     HttpModule,
     RouterModule.forRoot(routes),
     DropdownModule,
-    ListboxModule
+    ListboxModule,
+    TabMenuModule,
+    AngularFontAwesomeModule
   ],
   providers: [LoginService, UserService, SportService],
   bootstrap: [AppComponent]
