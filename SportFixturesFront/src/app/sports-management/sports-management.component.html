@@ -6,7 +6,7 @@
     <hr />
   </div>
   <div class="row">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
       <div class="white-box">
         <div class="panel-body">
           <div class="form-group">
@@ -15,12 +15,38 @@
             <p-listbox [options]="sports" [(ngModel)]="selectedSport" optionLabel="name"></p-listbox>
           </div>
           <hr />
-          <a class="btn btn-primary btn-lg btn-block waves-effect waves-light" (click)="addSport(sport)">Add sport</a>
         </div>
       </div>
     </div>
-    <div class="divider"></div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="dividerLeft">
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="white-box">
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="selectedSportName">Sport Name</label>
+            <input id="selectedSportName" class="form-control" type="text" [(ngModel)]="selectedSport.name">
+          </div>
+          <div class="form-group">
+            <label for="teams">Teams</label>
+            <br />
+            <p-dropdown [options]="selectedSport.teams"></p-dropdown>
+          </div>
+          <div class="form-group">
+            <label for="encounterMode">Encounter Mode</label>
+            <br />
+            <p-dropdown [options]="encounterModes" [(ngModel)]="selectedSport.encounterMode"></p-dropdown>
+          </div>
+          <hr />
+          <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="updateSport(selectedSport)">Update
+            sport</a>
+          <a class="btn btn-danger btn-lg btn-block waves-effect waves-light" (click)="deleteSport(selectedSport.id)">Delete
+            sport</a>
+        </div>
+      </div>
+    </div>
+    <div class="dividerRight"></div>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
       <div class="white-box">
         <div class="panel-body">
           <div class="form-group">
@@ -33,7 +59,7 @@
             <p-dropdown [options]="encounterModes" [(ngModel)]="sport.encounterMode"></p-dropdown>
           </div>
           <hr />
-          <a class="btn btn-primary btn-lg btn-block waves-effect waves-light" (click)="addSport(sport)">Add sport</a>
+          <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addSport(sport)">Add sport</a>
         </div>
       </div>
     </div>

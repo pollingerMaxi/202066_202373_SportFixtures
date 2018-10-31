@@ -21,9 +21,9 @@ export class SportsManagementComponent implements OnInit {
     private sportService: SportService,
     private toasterService: ToasterService) {
     this.sport = new Sport();
-    this.selectedSport=new Sport();
+    this.selectedSport = new Sport();
   }
-  
+
   ngOnInit() {
     this.encounterModes = this.sportService.getEncounterModes();
     this.getSports();
@@ -41,6 +41,26 @@ export class SportsManagementComponent implements OnInit {
 
   private async getSports() {
     this.sports = await this.sportService.getSports();
+  }
+
+  public updateSport(sport: Sport) {
+    this.sportService.updateSport(sport)
+      .then(response => {
+        this.toasterService.pop("success", "Success!", "Sport successfully updated!");
+      })
+      .catch(error => {
+        this.toasterService.pop("error", "Error!", "Could not update sport.");
+      });
+  }
+
+  public deleteSport(id: string) {
+    this.sportService.deleteSport(id)
+      .then(response => {
+        this.toasterService.pop("success", "Success!", "Sport successfully updated!");
+      })
+      .catch(error => {
+        this.toasterService.pop("error", "Error!", "Could not update sport.");
+      });;
   }
 
 }

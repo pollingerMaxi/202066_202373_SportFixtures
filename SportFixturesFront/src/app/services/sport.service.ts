@@ -27,4 +27,12 @@ export class SportService extends BaseService {
     public async getSports(): Promise<any> {
         return await this.getAll(AppSettings.ApiEndpoints.getSports);
     }
+
+    public async updateSport(sport: Sport) {
+        return await this.update(AppSettings.ApiEndpoints.updateSport, sport);
+    }
+
+    public async deleteSport(id: string) {
+        return await this.delete(AppSettings.ApiEndpoints.deleteSport, id);
+    }
 }

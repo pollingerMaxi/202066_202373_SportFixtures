@@ -41,7 +41,7 @@ export class BaseService {
      * @param body Entity to update
      */
     protected async update(url: string, body: any) {
-        let request = await this.http.put(url + body["id"], body, this.jwt()).toPromise();
+        let request = await this.http.put(url, body, this.jwt()).toPromise();
         return this.extractData(request);
     }
 
@@ -61,7 +61,7 @@ export class BaseService {
      * @param url Url endpoint to delete
      * @param id Identitfier of the entity to delete
      */
-    protected async delete(url: string, id: number) {
+    protected async delete(url: string, id: string) {
         let request = await this.http.delete(url + id, this.jwt()).toPromise();
         return this.extractData(request);
     }
