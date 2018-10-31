@@ -63,20 +63,22 @@ namespace SportFixtures.BusinessLogic.Implementations
         private void CheckSportEncounterModeAndTeamCount(Encounter encounter)
         {
             Sport sport = sportBL.GetById(encounter.SportId);
-            if(sport.EncounterMode == EncounterMode.Double && encounter.Teams.Count() > 2)
+            if (sport.EncounterMode == EncounterMode.Double && encounter.Teams.Count() > 2)
             {
                 throw new SportDoesNotSupportMultipleTeamsEncounters();
             }
-            
+
         }
 
-        private bool CheckDuplicatedTeams(Encounter encounter){
+        private bool CheckDuplicatedTeams(Encounter encounter)
+        {
             return encounter.Teams.GroupBy(n => n.Id).Any(c => c.Count() > 1);
         }
 
-        private bool TeamsHaveDifferentSport(Encounter encounter){
+        private bool TeamsHaveDifferentSport(Encounter encounter)
+        {
             var duplicates = encounter.Teams.GroupBy(s => s.SportId).ToList();
-            return duplicates.Count() > 1; 
+            return duplicates.Count() > 1;
         }
 
         public void Update(Encounter encounter)
@@ -101,8 +103,10 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public bool TeamsHaveEncountersOnTheSameDay(Encounter encounter)
         {
-            foreach(Team team in encounter.Teams){
-                if(repository.Get(null, null, "Teams").Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Teams.Any(t => t.Id == team.Id))))){
+            foreach (Team team in encounter.Teams)
+            {
+                if (repository.Get(null, null, "Teams").Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Teams.Any(t => t.Id == team.Id)))))
+                {
                     return true;
                 }
             }
@@ -157,8 +161,10 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public bool TeamsHaveEncountersOnTheSameDay(ICollection<Encounter> encounters, Encounter encounter)
         {
-            foreach(Team team in encounter.Teams){
-                if(encounters.Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Teams.Any(t => t.Id == team.Id))))){
+            foreach (Team team in encounter.Teams)
+            {
+                if (encounters.Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Teams.Any(t => t.Id == team.Id)))))
+                {
                     return true;
                 }
             }
@@ -188,7 +194,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             if (encounter.Results.Count > 0)
             {
-                foreach (Score result in encounter.Results)
+                foreach (PositionInEncounter result in encounter.Results)
                 {
                     if (!encounter.Teams.Any(t => t.Id == result.TeamId))
                     {
@@ -196,15 +202,15 @@ namespace SportFixtures.BusinessLogic.Implementations
                     }
                 }
             }
-            
         }
 
-        public void AddResults(ICollection<Score> results, int encounterId)
+        public void AddResults(ICollection<PositionInEncounter> results, int encounterId)
         {
             Encounter encounter = GetById(encounterId);
             encounter.Results = results;
             ValidateResults(encounter);
-            Update(encounter);
+            repository.Update(encounter);
+            repository.Save();
         }
     }
 }
