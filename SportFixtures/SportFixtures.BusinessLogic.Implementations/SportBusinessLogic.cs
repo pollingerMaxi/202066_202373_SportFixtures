@@ -71,6 +71,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             ValidateSport(sport);
             CheckIfSportExists(sport.Id);
+            repository.Attach(sport);
             repository.Update(sport);
             repository.Save();
         }

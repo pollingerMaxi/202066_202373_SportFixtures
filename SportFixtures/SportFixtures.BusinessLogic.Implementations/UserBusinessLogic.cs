@@ -106,6 +106,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             CheckIfExists(user.Id);
             ValidateUser(user);
+            repository.Attach(user);
             repository.Update(user);
             repository.Save();
         }

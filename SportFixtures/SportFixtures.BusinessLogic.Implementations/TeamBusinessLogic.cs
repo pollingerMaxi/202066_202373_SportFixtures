@@ -45,6 +45,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             CheckIfExists(team.Id);
             ValidateTeam(team);
+            repository.Attach(team);
             repository.Update(team);
             repository.Save();
         }
