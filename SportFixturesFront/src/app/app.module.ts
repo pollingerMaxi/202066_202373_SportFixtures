@@ -25,6 +25,10 @@ const routes: Routes = [
     component: DefaultComponent
   },
   {
+    path: 'home',
+    component: DefaultComponent
+  },
+  {
     path: AppSettings.RouterUrls.login,
     component: LoginComponent
   },
