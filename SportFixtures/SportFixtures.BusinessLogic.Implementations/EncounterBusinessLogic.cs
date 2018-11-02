@@ -83,10 +83,14 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void Update(Encounter encounter)
         {
-            CheckIfExists(encounter.Id);
             Validate(encounter);
-            repository.Attach(encounter);
-            repository.Update(encounter);
+            Encounter dbEncounter = GetById(encounter.Id);
+            dbEncounter.Date = encounter.Date;
+            dbEncounter.SportId = encounter.SportId;
+            dbEncounter.Date = encounter.Date;
+            dbEncounter.Comments = encounter.Comments;
+            dbEncounter.Teams = encounter.Teams;
+            repository.Update(dbEncounter);
             repository.Save();
         }
 

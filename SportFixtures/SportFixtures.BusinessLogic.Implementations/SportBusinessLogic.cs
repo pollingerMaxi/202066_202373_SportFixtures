@@ -70,9 +70,9 @@ namespace SportFixtures.BusinessLogic.Implementations
         public void Update(Sport sport)
         {
             ValidateSport(sport);
-            CheckIfSportExists(sport.Id);
-            repository.Attach(sport);
-            repository.Update(sport);
+            Sport dbSport = GetById(sport.Id);
+            dbSport.Name = sport.Name;
+            repository.Update(dbSport);
             repository.Save();
         }
 

@@ -104,10 +104,15 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void Update(User user)
         {
-            CheckIfExists(user.Id);
             ValidateUser(user);
-            repository.Attach(user);
-            repository.Update(user);
+            User dbUser = GetById(user.Id);
+            dbUser.Name = user.Name;
+            dbUser.LastName = user.LastName;
+            dbUser.Username = user.Username;
+            dbUser.Email = user.Email;
+            dbUser.Role = user.Role;
+            dbUser.Password = user.Password;
+            repository.Update(dbUser);
             repository.Save();
         }
 

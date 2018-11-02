@@ -43,10 +43,11 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void Update(Team team)
         {
-            CheckIfExists(team.Id);
             ValidateTeam(team);
-            repository.Attach(team);
-            repository.Update(team);
+            Team dbTeam = GetById(team.Id);
+            dbTeam.Name = team.Name;
+            dbTeam.Photo = team.Photo;
+            repository.Update(dbTeam);
             repository.Save();
         }
 
