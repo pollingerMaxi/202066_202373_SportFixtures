@@ -11,13 +11,15 @@ namespace SportFixtures.Portal.DTOs
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public int SportId { get; set; }
-        public Team Home { get; set; }
-        public Team Visitor { get; set; }
+        public ICollection<Team> Teams { get; set; }
         public ICollection<Comment> Comments { get; set; }
+        public ICollection<Score> Results { get; set; }
 
         public EncounterDTO()
         {
+            Teams = new List<Team>();
             Comments = new List<Comment>();
+            Results = new List<Score>();
         }
     }
 }

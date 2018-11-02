@@ -48,17 +48,28 @@ namespace SportFixtures.Data.Access.Migrations
 
                     b.Property<int>("SportId");
 
-                    b.Property<int?>("Team1Id");
+                    b.HasKey("Id");
 
-                    b.Property<int?>("Team2Id");
+                    b.ToTable("Encounters");
+                });
+
+            modelBuilder.Entity("SportFixtures.Data.Entities.PositionInEncounter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("EncounterId");
+
+                    b.Property<int>("Position");
+
+                    b.Property<int>("TeamId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Team1Id");
+                    b.HasIndex("EncounterId");
 
-                    b.HasIndex("Team2Id");
-
-                    b.ToTable("Encounters");
+                    b.ToTable("PositionInEncounter");
                 });
 
             modelBuilder.Entity("SportFixtures.Data.Entities.Sport", b =>
@@ -66,6 +77,8 @@ namespace SportFixtures.Data.Access.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EncounterMode");
 
                     b.Property<string>("Name");
 
@@ -80,13 +93,17 @@ namespace SportFixtures.Data.Access.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("EncounterId");
+
                     b.Property<string>("Name");
 
-                    b.Property<string>("PhotoPath");
+                    b.Property<string>("Photo");
 
                     b.Property<int>("SportId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EncounterId");
 
                     b.HasIndex("SportId");
 
@@ -144,19 +161,19 @@ namespace SportFixtures.Data.Access.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SportFixtures.Data.Entities.Encounter", b =>
+            modelBuilder.Entity("SportFixtures.Data.Entities.PositionInEncounter", b =>
                 {
-                    b.HasOne("SportFixtures.Data.Entities.Team", "Team1")
-                        .WithMany()
-                        .HasForeignKey("Team1Id");
-
-                    b.HasOne("SportFixtures.Data.Entities.Team", "Team2")
-                        .WithMany()
-                        .HasForeignKey("Team2Id");
+                    b.HasOne("SportFixtures.Data.Entities.Encounter")
+                        .WithMany("Results")
+                        .HasForeignKey("EncounterId");
                 });
 
             modelBuilder.Entity("SportFixtures.Data.Entities.Team", b =>
                 {
+                    b.HasOne("SportFixtures.Data.Entities.Encounter")
+                        .WithMany("Teams")
+                        .HasForeignKey("EncounterId");
+
                     b.HasOne("SportFixtures.Data.Entities.Sport")
                         .WithMany("Teams")
                         .HasForeignKey("SportId")

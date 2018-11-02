@@ -192,9 +192,9 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Dispose();
         }
 
-        public void Logout(string email)
+        public void Logout(string username)
         {
-            var userFromDb = repository.Get(e => e.Email == email, null, "").FirstOrDefault();
+            var userFromDb = repository.Get(u => u.Username == username, null, "").FirstOrDefault();
             if (userFromDb == null)
             {
                 throw new UserDoesNotExistException();
