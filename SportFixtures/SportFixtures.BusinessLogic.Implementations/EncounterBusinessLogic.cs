@@ -14,6 +14,7 @@ namespace SportFixtures.BusinessLogic.Implementations
     public class EncounterBusinessLogic : IEncounterBusinessLogic
     {
         private IRepository<Encounter> repository;
+        private IRepository<EncountersTeams> encountersTeamsRepositry;
         private ISportBusinessLogic sportBL;
 
         public EncounterBusinessLogic(IRepository<Encounter> repository, ISportBusinessLogic sportBL)
@@ -25,7 +26,8 @@ namespace SportFixtures.BusinessLogic.Implementations
         public void Add(Encounter encounter)
         {
             Validate(encounter);
-            //repository.Attach(encounter);
+            repository.Attach(encounter);
+            
             repository.Insert(encounter);
             repository.Save();
         }
@@ -49,7 +51,7 @@ namespace SportFixtures.BusinessLogic.Implementations
                 throw new EncounterTeamsDifferentSportException();
             }
 
-            if (encounter.SportId != encounter.Teams.FirstOrDefault().SportId)
+            if (encounter.SportId != encounter.Teams.FirstOrDefault().Team.SportId)
             {
                 throw new EncounterSportDifferentFromTeamsSportException();
             }
@@ -72,12 +74,12 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         private bool CheckDuplicatedTeams(Encounter encounter)
         {
-            return encounter.Teams.GroupBy(n => n.Id).Any(c => c.Count() > 1);
+            return encounter.Teams.GroupBy(n => n.TeamId).Any(c => c.Count() > 1);
         }
 
         private bool TeamsHaveDifferentSport(Encounter encounter)
         {
-            var duplicates = encounter.Teams.GroupBy(s => s.SportId).ToList();
+            var duplicates = encounter.Teams.GroupBy(s => s.Team.SportId).ToList();
             return duplicates.Count() > 1;
         }
 
@@ -108,9 +110,9 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public bool TeamsHaveEncountersOnTheSameDay(Encounter encounter)
         {
-            foreach (Team team in encounter.Teams)
+            foreach (EncountersTeams team in encounter.Teams)
             {
-                if (repository.Get(null, null, "Teams").Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Teams.Any(t => t.Id == team.Id)))))
+                if (repository.Get(null, null, "Teams").Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Teams.Any(t => t.TeamId == team.TeamId)))))
                 {
                     return true;
                 }
@@ -146,7 +148,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public IEnumerable<Encounter> GetAllEncountersOfTeam(int teamId)
         {
-            var encounters = repository.Get(e => (e.Teams.Any(t => t.Id == teamId)), null, "");
+            var encounters = repository.Get(e => (e.Teams.Any(t => t.TeamId == teamId)), null, "");
             if (encounters.Count() == 0)
             {
                 throw new NoEncountersFoundForTeamException();
@@ -166,9 +168,9 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public bool TeamsHaveEncountersOnTheSameDay(ICollection<Encounter> encounters, Encounter encounter)
         {
-            foreach (Team team in encounter.Teams)
+            foreach (EncountersTeams team in encounter.Teams)
             {
-                if (encounters.Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Teams.Any(t => t.Id == team.Id)))))
+                if (encounters.Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Teams.Any(t => t.TeamId == team.TeamId)))))
                 {
                     return true;
                 }
@@ -201,7 +203,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 foreach (PositionInEncounter result in encounter.Results)
                 {
-                    if (!encounter.Teams.Any(t => t.Id == result.TeamId))
+                    if (!encounter.Teams.Any(t => t.TeamId == result.TeamId))
                     {
                         throw new InvalidResultsForEncounterException();
                     }
