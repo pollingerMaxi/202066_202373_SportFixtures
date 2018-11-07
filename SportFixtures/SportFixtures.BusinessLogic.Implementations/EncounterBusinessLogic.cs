@@ -27,7 +27,6 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             Validate(encounter);
             repository.Attach(encounter);
-            
             repository.Insert(encounter);
             repository.Save();
         }

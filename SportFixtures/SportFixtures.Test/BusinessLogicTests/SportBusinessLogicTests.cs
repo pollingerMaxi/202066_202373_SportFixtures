@@ -176,9 +176,11 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void UpdateSportOkTest()
         {
             Sport sport = new Sport() { Id = 1, Name = "Futbol" };
+            List<Sport> returnedSport = new List<Sport> { sport };
             mockSportRepo.Setup(x => x.Insert(It.IsAny<Sport>())).Callback<Sport>(x => sportList.Add(sport));
             mockSportRepo.Setup(x => x.Update(It.IsAny<Sport>())).Callback<Sport>(x => sportList.First().Name = sport.Name);
-            mockSportRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(sport);
+            mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(returnedSport);
+            //repository.Get(s => s.Id == id, null, "Teams")
             sportBL.Add(sport);
             sport.Name = "UpdatedName";
             sportBL.Update(sport);

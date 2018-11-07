@@ -51,11 +51,14 @@ namespace SportFixtures.Test.BusinessLogicTests
             commentBL = new CommentBusinessLogic(mockCommentRepo.Object, encounterBL, userBL);
             commentList = new List<Comment>();
             user = new User() { Id = 1 };
-            var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
-            var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
-            ICollection<Team> teams = new List<Team>(){team1, team2};
+            var nacional = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            var eNacional = new EncountersTeams() { Team = nacional, TeamId = nacional.Id };
+            var peñarol = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            var ePeñarol = new EncountersTeams() { Team = peñarol, TeamId = peñarol.Id };
+            ICollection<EncountersTeams> teams = new List<EncountersTeams>() { eNacional, ePeñarol };
             var sport = new Sport() { Id = 1, Name = "Futbol" };
             encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id, Teams = teams };
+
             encounterList = new List<Encounter>() { encounter };
             mockCommentRepo.Setup(r => r.Get(null, null, "")).Returns(commentList);
         }

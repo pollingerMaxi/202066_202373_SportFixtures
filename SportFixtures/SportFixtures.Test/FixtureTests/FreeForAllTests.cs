@@ -80,7 +80,9 @@ namespace SportFixtures.Test.FixtureTests
         public void GenerateFixtureWithEncountersOnRepoTest()
         {
             DateTime date = new DateTime(2018, 10, 1, 12, 00, 00);
-            encounterBL.Add(new Encounter { Id = 1, Teams = { nacional, peñarol }, Date = date, SportId = 1 });
+            EncountersTeams etNacional = new EncountersTeams { Team = nacional, TeamId = nacional.Id };
+            EncountersTeams etPeñarol = new EncountersTeams { Team = peñarol, TeamId = peñarol.Id };
+            encounterBL.Add(new Encounter { Id = 1, Teams = { etNacional, etPeñarol }, Date = date, SportId = 1 });
             ICollection<Encounter> generatedEncounters = freeForAll.GenerateFixture(teamList, date);
             List<Encounter> encountersToList = generatedEncounters.ToList();
             //Sabemos que el primer partido va a ser Nacional Peñarol porque ya esta en el repositorio
