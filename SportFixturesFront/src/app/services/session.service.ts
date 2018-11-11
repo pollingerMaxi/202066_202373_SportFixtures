@@ -25,4 +25,14 @@ export class SessionService {
         localStorage.removeItem(AppSettings.localstorageUser);
         localStorage.removeItem(AppSettings.localstorageToken);
     }
+
+    public isAdmin(){
+        let user = JSON.parse(localStorage.getItem(AppSettings.localstorageUser));
+        return user.role == 1;
+    }
+
+    public userIsLogged(){
+        let token = JSON.parse(localStorage.getItem(AppSettings.localstorageUser));
+        return token != null || token != undefined;
+    }
 }

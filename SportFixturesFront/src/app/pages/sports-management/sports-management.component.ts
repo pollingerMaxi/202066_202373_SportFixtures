@@ -3,7 +3,7 @@ import { Sport } from '../../shared/models/sport';
 import { EncounterMode } from '../../shared/models/encounterMode';
 import { SelectItem } from 'primeng/components/common/selectitem';
 import { ToasterService } from 'angular2-toaster';
-import { SportService } from '../../services';
+import { SportService, SessionService } from '../../services';
 
 @Component({
   selector: 'app-sports-management',
@@ -19,7 +19,8 @@ export class SportsManagementComponent implements OnInit {
 
   constructor(
     private sportService: SportService,
-    private toasterService: ToasterService) {
+    private toasterService: ToasterService,
+    private sessionService: SessionService) {
     this.sport = new Sport();
     this.selectedSport = new Sport();
   }

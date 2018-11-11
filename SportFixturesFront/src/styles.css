@@ -486,17 +486,16 @@
 
 .dividerLeft {
     position: absolute;
-    left: 40%;
-    top: 15%;
-    bottom: 25%;
+    top: 0%;
+    bottom: 0%;
     border-left: 1px solid rgba(0, 0, 0, .1);
 }
 
 .dividerRight {
     position: absolute;
-    left: 60%;
-    top: 15%;
-    bottom: 25%;
+    left: 50%;
+    top: 0%;
+    bottom: 0%;
     border-left: 1px solid rgba(0, 0, 0, .1);
 }
 

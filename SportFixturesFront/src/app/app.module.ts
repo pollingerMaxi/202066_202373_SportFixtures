@@ -14,15 +14,18 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { TabBarComponent } from './shared/tab-bar/tab-bar.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { AuthenticationGuard } from './shared/guards/authentication.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: DefaultComponent
+    component: DefaultComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: 'home',
-    component: DefaultComponent
+    component: DefaultComponent,
+    canActivate: [AuthenticationGuard]
   },
   {
     path: AppSettings.RouterUrls.login,
@@ -30,7 +33,12 @@ const routes: Routes = [
   },
   {
     path: AppSettings.RouterUrls.sportsManagement,
-    loadChildren: './pages/sports-management/sports-management.module#SportsManagementModule'
+    loadChildren: './pages/sports-management/sports-management.module#SportsManagementModule',
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'logout',
+    component: LoginComponent
   },
   {
     path: '**',

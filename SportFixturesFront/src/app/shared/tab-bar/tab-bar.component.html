@@ -1,1 +1,2 @@
-<p-tabMenu [model]="navOptions"></p-tabMenu>
+<p-tabMenu [model]="navOptions" *ngIf="sessionService.userIsLogged()"></p-tabMenu>
+<p-tabMenu [model]="notAuthOptions" *ngIf="!sessionService.userIsLogged()"></p-tabMenu>
