@@ -7,7 +7,7 @@ import { AppSettings } from './config/appSettings';
 import { FormsModule } from '@angular/forms';
 import { ToasterModule } from 'angular2-toaster';
 import { DefaultComponent } from './shared/default/default.component';
-import { LoginService, UserService } from './services';
+import { LoginService, UserService, SessionService } from './services';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -57,7 +57,7 @@ const routes: Routes = [
     TabMenuModule,
     AngularFontAwesomeModule
   ],
-  providers: [LoginService, UserService],
+  providers: [LoginService, UserService, SessionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

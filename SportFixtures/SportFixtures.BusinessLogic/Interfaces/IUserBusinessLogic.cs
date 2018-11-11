@@ -42,7 +42,7 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// Login a user, generates and returns the token.
         /// </summary>
         /// <param name="user"></param>
-        Guid Login(User user);
+        User Login(User user);
 
         /// <summary>
         /// Returns all the users in the repository.

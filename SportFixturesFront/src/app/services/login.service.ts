@@ -3,11 +3,12 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import 'rxjs/add/operator/map'
 import { LoginModel } from '../shared/models/login';
 import { AppSettings } from '../config/appSettings';
+import { SessionService } from './session.service';
 
 @Injectable()
 export class LoginService {
 
-    constructor(private http: Http) { }
+    constructor(private http: Http, private sessionService: SessionService) { }
 
     /**
      * Login with credentials
@@ -21,7 +22,8 @@ export class LoginService {
             .map((response: Response) => {
                 let body = response.json();
                 if (body) {
-                    localStorage.setItem(AppSettings.localstorageToken, JSON.stringify(body));
+                    this.sessionService.setToken(body.token);
+                    this.sessionService.setUser(body);
                     return body;
                 }
             });
@@ -34,7 +36,7 @@ export class LoginService {
             .subscribe(response => {
                 let res = response;
             });
-        localStorage.removeItem(AppSettings.localstorageToken);
+        this.sessionService.logout();
     }
 
 }

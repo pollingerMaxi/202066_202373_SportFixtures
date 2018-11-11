@@ -34,7 +34,8 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 var loginSuccessful = userBusinessLogic.Login(mapper.Map<User>(data));
-                return Ok(loginSuccessful);
+                var mappedUser = mapper.Map<UserDTO>(loginSuccessful);
+                return Ok(mappedUser);
             }
             catch (UserDoesNotExistException e)
             {

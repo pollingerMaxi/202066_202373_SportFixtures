@@ -123,7 +123,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
         }
 
-        public Guid Login(User user)
+        public User Login(User user)
         {
             var users = repository.Get(u => u.Email == user.Email, null, "");
             if (users.Count() == 0)
@@ -138,7 +138,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
 
             var token = GenerateToken(user, userFromDb);
-            return token;
+            return userFromDb;
         }
 
         /// <summary>

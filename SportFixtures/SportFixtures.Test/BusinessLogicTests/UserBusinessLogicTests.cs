@@ -61,7 +61,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockUserRepo.Setup(r => r.Get(null, null, "")).Returns(userList);
             mockUserRepo.Setup(r => r.Get(It.IsAny<Expression<Func<User, bool>>>(), null, "")).Returns(userList);
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
-            mockUserBL.Setup(r => r.Login(It.IsAny<User>())).Returns(Guid.NewGuid());
+            mockUserBL.Setup(r => r.Login(It.IsAny<User>())).Returns(new User() { Token = Guid.NewGuid() });
             //userBLWithoutTeamBL.Login(adminWithAllData);
         }
 
