@@ -35,4 +35,8 @@ export class SportService extends BaseService {
     public async deleteSport(id: string) {
         return await this.delete(AppSettings.ApiEndpoints.deleteSport, id);
     }
+
+    public async getSportById(id: string): Promise<Sport> {
+        return await this.getById(AppSettings.ApiEndpoints.getSportById, id);
+    }
 }

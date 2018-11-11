@@ -20,7 +20,7 @@ export class BaseService {
      * @param url Url of the endpoint
      * @param id Identifier of the entity to find
      */
-    protected async getById(url: string, id: number | string) {
+    protected async getById(url: string, id: number | string): Promise<any> {
         let request = await this.http.get(url + id, this.jwt()).toPromise();
         return this.extractData(request);
     }

@@ -533,3 +533,7 @@
         transform: rotate(360deg);
     }
 }
+
+.fixer{
+    display: flex;
+}

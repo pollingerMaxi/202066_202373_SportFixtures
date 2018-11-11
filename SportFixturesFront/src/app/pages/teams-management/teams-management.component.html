@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="center">
+    <h3>
+      Teams Management
+    </h3>
+    <hr />
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="white-box">
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="teamsList">Registered teams</label>
+            <br>
+            <p-listbox [options]="teams" [(ngModel)]="selectedTeam" optionLabel="name" (click)="getSport()"></p-listbox>
+          </div>
+          <hr />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 fixer">
+      <div class="dividerLeft"></div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="white-box">
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="selectedTeamName">Team Name</label>
+              <input id="selectedTeamName" class="form-control" type="text" [(ngModel)]="selectedTeam.name">
+            </div>
+            <div class="form-group">
+              <label for="selectedTeamSport">Sport Name</label>
+              <input id="selectedTeamSport" class="form-control" type="text" [(ngModel)]="selectedTeamSport.name">
+            </div>
+            <div class="form-group">
+              <label for="selectedTeamPhoto">Team Photo</label>
+              <img width="260px" [src]="srcData" alt="{{selectedTeam.name}} photo" *ngIf="srcData"/>
+            </div>
+            <hr />
+            <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="followTeam(selectedTeam)">Follow
+              team</a>
+            <!-- <div *ngIf="sessionService.isAdmin()"> -->
+              <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="updateTeam(selectedTeam)">Update
+                team</a>
+              <a class="btn btn-danger btn-lg btn-block waves-effect waves-light" (click)="deleteTeam(selectedTeam.id)">Delete
+                team</a>
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="dividerRight"></div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="white-box">
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="teamName">Team Name</label>
+              <input id="teamName" class="form-control" type="text" [(ngModel)]="team.name">
+            </div>
+            <div class="form-group">
+              <label for="encounterMode">Sport</label>
+              <br>
+              <p-dropdown [options]="sports" [(ngModel)]="selectedSport.name" optionLabel="name"></p-dropdown>
+            </div>
+            <hr />
+            <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addTeam(team)">Add team</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

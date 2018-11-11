@@ -17,7 +17,7 @@ export class TabBarComponent implements OnInit {
     this.navOptions = [
       { label: 'Home', icon: 'fa fa-stumbleupon-circle', routerLink: 'home' },
       { label: 'Sports Management', icon: 'fa fa-stumbleupon-circle', routerLink: '/sportsManagement' },
-      { label: 'Teams Management', icon: 'fa fa-address-card' },
+      { label: 'Teams Management', icon: 'fa fa-address-card', routerLink: '/teamsManagement' },
       { label: 'Encounters Management', icon: 'fa fa-trophy' },
       { label: 'Users Management', icon: 'fa fa-users' },
       { label: 'Logout', icon: 'fa fa-arrow-circle-right', routerLink: ['/logout'] },

@@ -15,6 +15,7 @@ import { TabBarComponent } from './shared/tab-bar/tab-bar.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AuthenticationGuard } from './shared/guards/authentication.guard';
+import { TeamsManagementComponent } from './pages/teams-management/teams-management.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,11 @@ const routes: Routes = [
   {
     path: AppSettings.RouterUrls.sportsManagement,
     loadChildren: './pages/sports-management/sports-management.module#SportsManagementModule',
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: AppSettings.RouterUrls.teamsManagement,
+    loadChildren: './pages/teams-management/teams-management.module#TeamsManagementModule',
     canActivate: [AuthenticationGuard]
   },
   {
