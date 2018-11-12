@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace SportFixtures.Portal.DTOs
 {
-    public class LoginDTO
+    public class SportCreateDTO
     {
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public string Name { get; set; }
     }
 }

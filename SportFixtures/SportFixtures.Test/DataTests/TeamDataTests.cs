@@ -59,12 +59,12 @@ namespace SportFixtures.Test.DataTests
         }
 
         [TestMethod]
-        public void AddTeamWithPhotoPathTest()
+        public void AddTeamWithPhotoTest()
         {
-            var team = new Team() { PhotoPath = @"C:\photos\photo.png" };
+            var team = new Team() { Photo = @"C:\photos\photo.png" };
             repository.Insert(team);
             context.SaveChanges();
-            Assert.IsTrue(repository.Get().First().PhotoPath == team.PhotoPath);
+            Assert.IsTrue(repository.Get().First().Photo == team.Photo);
         }
 
         [TestMethod]

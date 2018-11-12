@@ -31,7 +31,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestInitialize]
         public void TestInitialize()
         {
-            teamWithAllData = new Team() { Name = "TeamName", PhotoPath = @"C:\path\to\file.jpg", SportId = 1 };
+            teamWithAllData = new Team() { Name = "TeamName", Photo = @"C:\path\to\file.jpg", SportId = 1 };
             teamList = new List<Team>() { teamWithAllData };
             sport = new Sport() { Id = 1, Name = "SportName", Teams = teamList };
             sportList = new List<Sport>() { sport };
@@ -67,19 +67,10 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidPhotoPathException))]
-        public void AddTeamInvalidPhotoPathShouldReturnExceptionTest()
-        {
-            var team = new Team() { Id = 1, Name = "TeamName", PhotoPath = "!230#_skdpath" };
-            var teamsList = new List<Team>();
-            teamBL.Add(team);
-        }
-
-        [TestMethod]
         public void UpdateTeamNameOkTest()
         {
             mockTeamRepo.Setup(x => x.Update(It.IsAny<Team>())).Callback<Team>(x => teamList.First().Name = teamWithAllData.Name);
-            mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(new Team() { Name = "TeamName", PhotoPath = "C:\\path\\to\\file.jpg", SportId = 1 });
+            mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(new Team() { Name = "TeamName", Photo = "C:\\path\\to\\file.jpg", SportId = 1 });
             teamWithAllData.Name = "UpdatedName";
             teamBL.Update(teamWithAllData);
             mockTeamRepo.Verify(x => x.Update(It.IsAny<Team>()), Times.Once());

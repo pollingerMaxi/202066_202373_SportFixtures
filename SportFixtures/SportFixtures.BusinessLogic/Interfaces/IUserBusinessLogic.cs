@@ -69,5 +69,12 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// </summary>
         /// <param name="email"></param>
         void Logout(string email);
+
+        /// <summary>
+        /// Returns the favorites of the given user.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        IEnumerable<UsersTeams> GetFavoritesOfUser(int userId);
     }
 }

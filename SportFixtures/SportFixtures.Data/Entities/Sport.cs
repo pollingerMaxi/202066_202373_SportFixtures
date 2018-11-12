@@ -9,6 +9,7 @@ namespace SportFixtures.Data.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public ICollection<Team> Teams { get; set; }
+        public EncounterMode EncounterMode { get; set; }
 
         public override bool Equals(object obj)
         {

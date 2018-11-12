@@ -8,13 +8,15 @@ namespace SportFixtures.Data.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string PhotoPath { get; set; }
+        public string Photo { get; set; }
         public int SportId { get; set; }
         public ICollection<UsersTeams> FavoritedBy { get; set; }
+        public ICollection<EncountersTeams> Encounters { get; set; }
 
         public Team()
         {
             FavoritedBy = new List<UsersTeams>();
+            Encounters = new List<EncountersTeams>();
         }
 
         public override bool Equals(object obj)

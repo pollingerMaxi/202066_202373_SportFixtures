@@ -41,7 +41,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -64,7 +64,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -89,7 +89,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -118,7 +118,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -142,11 +142,11 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
-        [HttpGet("sports/{sportId}")]
+        [HttpGet("sport/{sportId}")]
         [AuthorizedRoles(Role.Admin)]
         public ActionResult<ICollection<EncounterDTO>> GetAllEncountersOfSport(int sportId)
         {
@@ -166,11 +166,11 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
-        [HttpGet("teams/{teamId}")]
+        [HttpGet("team/{teamId}")]
         [AuthorizedRoles(Role.Admin)]
         public ActionResult<ICollection<EncounterDTO>> GetAllEncountersOfTeam(int teamId)
         {
@@ -190,7 +190,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -213,7 +213,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -245,7 +245,27 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPost("results")]
+        [AuthorizedRoles(Role.Admin)]
+        public ActionResult AddResultsToEncounter([FromBody]ResultsDTO results)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                encounterBusinessLogic.AddResults(results.Positions, results.EncounterId);
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                return StatusCode(500, e.Message);
             }
         }
     }

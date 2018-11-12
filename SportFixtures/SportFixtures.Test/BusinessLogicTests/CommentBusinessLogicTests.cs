@@ -32,6 +32,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         private ITeamBusinessLogic teamBL;
         private IUserBusinessLogic userBL;
         private List<Comment> commentList;
+        private List<Encounter> encounterList;
         private User user;
         private Encounter encounter;
 
@@ -50,10 +51,15 @@ namespace SportFixtures.Test.BusinessLogicTests
             commentBL = new CommentBusinessLogic(mockCommentRepo.Object, encounterBL, userBL);
             commentList = new List<Comment>();
             user = new User() { Id = 1 };
-            var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
-            var team2 = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            var nacional = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            var eNacional = new EncountersTeams() { Team = nacional, TeamId = nacional.Id };
+            var peñarol = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            var ePeñarol = new EncountersTeams() { Team = peñarol, TeamId = peñarol.Id };
+            ICollection<EncountersTeams> teams = new List<EncountersTeams>() { eNacional, ePeñarol };
             var sport = new Sport() { Id = 1, Name = "Futbol" };
-            encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id, Team1 = team1, Team2 = team2 };
+            encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = sport.Id, Teams = teams };
+
+            encounterList = new List<Encounter>() { encounter };
             mockCommentRepo.Setup(r => r.Get(null, null, "")).Returns(commentList);
         }
 
@@ -63,7 +69,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             Comment comment = new Comment() { Id = 1, EncounterId = 1, UserId = 1, Text = "This is a comment." };
             mockCommentRepo.Setup(x => x.Insert(It.IsAny<Comment>())).Callback<Comment>(x => commentList.Add(comment));
             mockEncounterRepo.Setup(e => e.Update(It.IsAny<Encounter>())).Callback<Encounter>(e => encounter.Comments.Add(comment));
-            mockEncounterRepo.Setup(e => e.GetById(It.IsAny<int>())).Returns(encounter);
+            mockEncounterRepo.Setup(e => e.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, "Teams")).Returns(encounterList);
             mockUserRepo.Setup(x => x.GetById(It.IsAny<int>())).Returns(user);
             commentBL.Add(comment);
             mockCommentRepo.Verify(x => x.Insert(It.IsAny<Comment>()), Times.Once());
@@ -93,7 +99,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             Comment comment = new Comment() { Id = 1, EncounterId = 1, UserId = 1, Text = "This is a comment." };
             mockCommentRepo.Setup(x => x.Insert(It.IsAny<Comment>())).Callback<Comment>(x => commentList.Add(comment));
-            mockEncounterRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(encounter);
+            mockEncounterRepo.Setup(e => e.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, "Teams")).Returns(encounterList);
             commentBL.Add(comment);
         }
 
