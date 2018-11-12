@@ -17,6 +17,7 @@ export class TeamsManagementComponent implements OnInit {
   public srcData: SafeResourceUrl;
   public sports: Sport[];
   public selectedSport: Sport;
+  public uploadedFiles: any[] = [];
 
   constructor(
     private teamService: TeamService,
@@ -76,6 +77,12 @@ export class TeamsManagementComponent implements OnInit {
 
   public async getSports() {
     this.sports = await this.sportService.getSports();
+  }
+
+  public onUpload(event) {
+    for (let file of event.files) {
+      this.uploadedFiles.push(file);
+    }
   }
 
 }

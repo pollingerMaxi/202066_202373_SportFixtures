@@ -29,39 +29,51 @@
             </div>
             <div class="form-group">
               <label for="selectedTeamSport">Sport Name</label>
-              <input id="selectedTeamSport" class="form-control" type="text" [(ngModel)]="selectedTeamSport.name">
+              <input id="selectedTeamSport" class="form-control" type="text" [(ngModel)]="selectedTeamSport.name"
+                disabled>
             </div>
-            <div class="form-group">
+            <div class="form-group contenedor" *ngIf="srcData">
               <label for="selectedTeamPhoto">Team Photo</label>
-              <img width="260px" [src]="srcData" alt="{{selectedTeam.name}} photo" *ngIf="srcData"/>
+              <img [src]="srcData" alt="{{selectedTeam.name}} photo" />
+              <p-fileUpload name="demo[]" (onUpload)="onUpload($event)" accept="image/*" *ngIf="sessionService.isAdmin()">
+                <ng-template pTemplate="content">
+                  <ul *ngIf="uploadedFiles.length">
+                    <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                  </ul>
+                </ng-template>
+              </p-fileUpload>
             </div>
+            <!-- <br /> -->
             <hr />
-            <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="followTeam(selectedTeam)">Follow
+            <a class="btn btn-primary btn-lg btn-block waves-effect waves-light" (click)="followTeam(selectedTeam)">Follow
               team</a>
-            <!-- <div *ngIf="sessionService.isAdmin()"> -->
+            <br />
+            <div *ngIf="sessionService.isAdmin()">
               <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="updateTeam(selectedTeam)">Update
                 team</a>
               <a class="btn btn-danger btn-lg btn-block waves-effect waves-light" (click)="deleteTeam(selectedTeam.id)">Delete
                 team</a>
-            <!-- </div> -->
+            </div>
           </div>
         </div>
       </div>
-      <div class="dividerRight"></div>
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-        <div class="white-box">
-          <div class="panel-body">
-            <div class="form-group">
-              <label for="teamName">Team Name</label>
-              <input id="teamName" class="form-control" type="text" [(ngModel)]="team.name">
+        <div class="dividerRight"></div>
+        <div>
+          <div class="white-box">
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="teamName">Team Name</label>
+                <input id="teamName" class="form-control" type="text" [(ngModel)]="team.name">
+              </div>
+              <div class="form-group">
+                <label for="encounterMode">Sport</label>
+                <br>
+                <p-dropdown [options]="sports" [(ngModel)]="selectedSport.name" optionLabel="name"></p-dropdown>
+              </div>
+              <hr />
+              <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addTeam(team)">Add team</a>
             </div>
-            <div class="form-group">
-              <label for="encounterMode">Sport</label>
-              <br>
-              <p-dropdown [options]="sports" [(ngModel)]="selectedSport.name" optionLabel="name"></p-dropdown>
-            </div>
-            <hr />
-            <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addTeam(team)">Add team</a>
           </div>
         </div>
       </div>

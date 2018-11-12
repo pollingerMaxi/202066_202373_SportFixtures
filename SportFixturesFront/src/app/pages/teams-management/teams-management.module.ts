@@ -7,6 +7,7 @@ import { FormsModule } from "@angular/forms";
 import { AppSettings } from "src/app/config/appSettings";
 import { NgModule } from "@angular/core";
 import { SportService, TeamService, SessionService } from "src/app/services";
+import { FileUploadModule } from 'primeng/fileupload';
 
 const routes: Routes = [
     {
@@ -25,7 +26,8 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         DropdownModule,
         ListboxModule,
-        FormsModule
+        FormsModule,
+        FileUploadModule
     ],
     declarations: [
         TeamsManagementComponent
