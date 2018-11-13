@@ -16,7 +16,8 @@ export class AppSettings {
         addTeam: `${AppSettings.BaseUrl}teams`,
         updateTeam: `${AppSettings.BaseUrl}teams`,
         deleteTeam: `${AppSettings.BaseUrl}teams/`,
-        getFavorites: `${AppSettings.BaseUrl}users/favorites/`
+        getFavorites: `${AppSettings.BaseUrl}users/favorites/`,
+        getEncountersOfTeam: `${AppSettings.BaseUrl}encounters/team/`
     };
 
     public static readonly RouterUrls: any = {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService, SessionService } from 'src/app/services';
+import { UserService, SessionService, EncounterService, CommentService } from 'src/app/services';
 import { ToasterService } from 'angular2-toaster';
-import { Favorite } from 'src/app/shared/models';
+import { Favorite, Encounter, Comment } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +14,9 @@ export class HomeComponent implements OnInit {
   constructor(
     private userService: UserService,
     private sessionService: SessionService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private encounterService: EncounterService,
+    private commentService: CommentService
   ) { }
 
   ngOnInit() {
@@ -26,10 +28,29 @@ export class HomeComponent implements OnInit {
       .then(res => {
         this.favorites = JSON.parse(JSON.stringify(res));
         console.log(this.favorites);
+        this.getEncountersOfTeam();
       })
       .catch(error => {
         this.toasterService.pop("error", "Error!", "Could not get favorites.");
       });
+  }
+
+  public async getEncountersOfTeam() {
+    let encounters: Encounter[] = [];
+    this.favorites.forEach(async fav => {
+      try {
+        await this.encounterService.getEncountersOfTeam(fav.teamId)
+      }
+      catch (error) {
+        this.toasterService.pop("error", "Error!", error);
+      }
+      encounters.concat();
+    });
+  }
+
+  public getCommentsOfEncounter() {
+    let comments: Comment[] = [];
+
   }
 
 }
