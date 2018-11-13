@@ -15,10 +15,12 @@ export class AppSettings {
         getSportById: `${AppSettings.BaseUrl}sports/`,
         addTeam: `${AppSettings.BaseUrl}teams`,
         updateTeam: `${AppSettings.BaseUrl}teams`,
-        deleteTeam: `${AppSettings.BaseUrl}teams/`
+        deleteTeam: `${AppSettings.BaseUrl}teams/`,
+        getFavorites: `${AppSettings.BaseUrl}users/favorites/`
     };
 
     public static readonly RouterUrls: any = {
+        home: "home",
         login: "login",
         sportsManagement: "sportsManagement",
         teamsManagement: "teamsManagement"

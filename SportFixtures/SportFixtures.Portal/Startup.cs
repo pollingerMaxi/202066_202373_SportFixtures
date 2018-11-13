@@ -38,7 +38,9 @@ namespace SportFixtures.Portal
                         .AllowAnyHeader()
                         .AllowCredentials());
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             ResolveRepositoryDependencies(services);
             ResolveBusinessLogicDependencies(services);
             var mappingConfig = new MapperConfiguration(c => c.AddProfile(new MappingProfile()));

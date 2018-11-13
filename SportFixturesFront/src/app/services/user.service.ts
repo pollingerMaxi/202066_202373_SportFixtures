@@ -13,4 +13,8 @@ export class UserService extends BaseService {
     public async getAllUsers() {
         return await this.getAll(AppSettings.ApiEndpoints.getAllUsers);
     }
+
+    public async getFavoritesOfUser(id: string) {
+        return await this.getAll(AppSettings.ApiEndpoints.getFavorites + id);
+    }
 }

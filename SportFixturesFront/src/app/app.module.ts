@@ -10,22 +10,16 @@ import { DefaultComponent } from './shared/default/default.component';
 import { LoginService, UserService, SessionService } from './services';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { TabBarComponent } from './shared/tab-bar/tab-bar.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AuthenticationGuard } from './shared/guards/authentication.guard';
-import { TeamsManagementComponent } from './pages/teams-management/teams-management.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: DefaultComponent,
-    canActivate: [AuthenticationGuard]
-  },
-  {
-    path: 'home',
-    component: DefaultComponent,
+    path: AppSettings.RouterUrls.home,
+    loadChildren: './pages/home/home.module#HomeModule',
     canActivate: [AuthenticationGuard]
   },
   {
@@ -67,7 +61,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     HttpModule,
     RouterModule.forRoot(routes),
-    
+
     TabMenuModule,
     AngularFontAwesomeModule
   ],
