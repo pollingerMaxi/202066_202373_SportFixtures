@@ -72,7 +72,7 @@ export class TeamsManagementComponent implements OnInit {
 
   public async getSport() {
     this.selectedTeamSport = await this.sportService.getSportById(this.selectedTeam.sportId);
-    this.srcData = this.sanitizer.bypassSecurityTrustResourceUrl("data:image/png;base64," + this.selectedTeam.photoPath);
+    this.srcData = this.sanitizer.bypassSecurityTrustResourceUrl("data:image/png;base64," + this.selectedTeam.photo);
   }
 
   public async getSports() {
@@ -80,9 +80,15 @@ export class TeamsManagementComponent implements OnInit {
   }
 
   public onUpload(event) {
-    for (let file of event.files) {
-      this.uploadedFiles.push(file);
-    }
+    let file = event.target.files;
+    var reader = new FileReader();
+    reader.onload = this._handleReaderLoaded.bind(this);
+    reader.readAsBinaryString(file[0]);
+  }
+
+  private _handleReaderLoaded(readerEvt) {
+    var binaryString = readerEvt.target.result;
+    this.selectedTeam.photo = btoa(binaryString);
   }
 
 }

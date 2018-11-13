@@ -93,7 +93,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public IEnumerable<Sport> GetAll()
         {
-            return repository.Get(null, null, "");
+            return repository.Get(null, null, "Teams");
         }
 
     }
