@@ -10,6 +10,8 @@ import { Favorite, Encounter, Comment } from 'src/app/shared/models';
 })
 export class HomeComponent implements OnInit {
   public favorites: Favorite[];
+  private encounters: Encounter[] = [];
+  private comments: Comment[] = [];
 
   constructor(
     private userService: UserService,
@@ -19,13 +21,13 @@ export class HomeComponent implements OnInit {
     private commentService: CommentService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.getFavoritesOfUser();
   }
 
   public getFavoritesOfUser() {
     this.userService.getFavoritesOfUser(this.sessionService.getUser().id)
-      .then(res => {
+      .then(async res => {
         this.favorites = JSON.parse(JSON.stringify(res));
         console.log(this.favorites);
         this.getEncountersOfTeam();
@@ -35,22 +37,21 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  public async getEncountersOfTeam() {
-    let encounters: Encounter[] = [];
-    this.favorites.forEach(async fav => {
-      try {
-        await this.encounterService.getEncountersOfTeam(fav.teamId)
-      }
-      catch (error) {
-        this.toasterService.pop("error", "Error!", error);
-      }
-      encounters.concat();
+  public getEncountersOfTeam() {
+    this.favorites.forEach(fav => {
+      this.encounterService.getEncountersOfTeam(fav.teamId)
+        .then(encs => {
+          encs.forEach(async enc => {
+            await this.getCommentsOfEncounter(enc.id);
+          });
+        })
+        .catch(error => {
+          this.toasterService.pop("error", "Error!", error);
+        });
     });
   }
 
-  public getCommentsOfEncounter() {
-    let comments: Comment[] = [];
-
+  private async getCommentsOfEncounter(encounterId: string) {
+    this.comments.concat(await this.commentService.getCommentsOfEncounter(encounterId));
   }
-
 }
