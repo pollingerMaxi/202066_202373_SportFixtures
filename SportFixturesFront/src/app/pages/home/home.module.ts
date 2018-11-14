@@ -4,7 +4,6 @@ import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { AppSettings } from "src/app/config/appSettings";
-import { FullCalendarModule } from 'primeng/fullcalendar';
 
 const routes: Routes = [
     {
@@ -21,8 +20,7 @@ const routes: Routes = [
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
-        FormsModule,
-        FullCalendarModule
+        FormsModule
     ],
     declarations: [
         HomeComponent

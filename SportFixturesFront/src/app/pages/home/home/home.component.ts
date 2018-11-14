@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
     private commentService: CommentService
   ) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.getFavoritesOfUser();
   }
 
@@ -29,7 +29,6 @@ export class HomeComponent implements OnInit {
     this.userService.getFavoritesOfUser(this.sessionService.getUser().id)
       .then(async res => {
         this.favorites = JSON.parse(JSON.stringify(res));
-        console.log(this.favorites);
         this.getEncountersOfTeam();
       })
       .catch(error => {
@@ -52,6 +51,12 @@ export class HomeComponent implements OnInit {
   }
 
   private async getCommentsOfEncounter(encounterId: string) {
-    this.comments.concat(await this.commentService.getCommentsOfEncounter(encounterId));
-  }
+    let obtained = await this.commentService.getCommentsOfEncounter(encounterId);
+    this.comments = this.comments.concat(obtained);
+    this.comments.sort(function
+      (first, second) {
+      return parseInt(first.encounterId) - parseInt(second.encounterId)
+    });
+  };
 }
+
