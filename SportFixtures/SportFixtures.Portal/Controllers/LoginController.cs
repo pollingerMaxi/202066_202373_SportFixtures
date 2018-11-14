@@ -53,7 +53,7 @@ namespace SportFixtures.Portal.Controllers
 
         [HttpPost]
         [Route("api/logout")]
-        public ActionResult Logout([FromBody]string email)
+        public ActionResult Logout([FromBody]LogoutDTO data)
         {
             if (!ModelState.IsValid)
             {
@@ -62,7 +62,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                userBusinessLogic.Logout(email);
+                userBusinessLogic.Logout(data.Username);
                 return Ok();
             }
             catch (UserDoesNotExistException e)

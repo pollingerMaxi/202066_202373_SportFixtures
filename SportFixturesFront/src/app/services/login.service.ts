@@ -32,7 +32,7 @@ export class LoginService {
     logout() {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let opt = new RequestOptions({ headers: headers, withCredentials: true });
-        this.http.post(AppSettings.ApiEndpoints.logout, {}, opt)
+        this.http.post(AppSettings.ApiEndpoints.logout, { "username": this.sessionService.getUser().username }, opt)
             .subscribe(response => {
                 let res = response;
             });
