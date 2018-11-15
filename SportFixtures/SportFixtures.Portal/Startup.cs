@@ -15,6 +15,8 @@ using SportFixtures.Data.Access;
 using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
 using SportFixtures.Portal.Profiles;
+using SportFixtures.Logger;
+using SportFixtures.Logger.Implementations;
 
 namespace SportFixtures.Portal
 {
@@ -41,6 +43,7 @@ namespace SportFixtures.Portal
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             ResolveRepositoryDependencies(services);
             ResolveBusinessLogicDependencies(services);
+            ResolveLoggerDependencies(services);
             var mappingConfig = new MapperConfiguration(c => c.AddProfile(new MappingProfile()));
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
@@ -64,6 +67,11 @@ namespace SportFixtures.Portal
             services.AddScoped<IRepository<Comment>, GenericRepository<Comment>>();
             services.AddScoped<IRepository<UsersTeams>, GenericRepository<UsersTeams>>();
             services.AddScoped<IRepository<Encounter>, GenericRepository<Encounter>>();
+        }
+
+        private void ResolveLoggerDependencies(IServiceCollection services)
+        {
+            services.AddScoped<ILogger, Logger.Implementations.Logger>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

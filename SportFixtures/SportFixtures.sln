@@ -15,13 +15,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.Data.Access",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.BusinessLogic", "SportFixtures.BusinessLogic\SportFixtures.BusinessLogic.csproj", "{52ACEE54-4702-40E2-97EF-82771FDBD17C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportFixtures.Exceptions", "SportFixtures.Exceptions\SportFixtures.Exceptions.csproj", "{E24242AC-D897-4124-9D21-2D833B154F2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.Exceptions", "SportFixtures.Exceptions\SportFixtures.Exceptions.csproj", "{E24242AC-D897-4124-9D21-2D833B154F2D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.BusinessLogic.Implementations", "SportFixtures.BusinessLogic.Implementations\SportFixtures.BusinessLogic.Implementations.csproj", "{F5DC6992-2A14-4B87-840D-1C3D7B9E98F8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.FixtureGenerator", "SportFixtures.FixtureGenerator\SportFixtures.FixtureGenerator.csproj", "{5DD3CAC6-53C6-4D0B-B227-C0DA5134DB7C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.FixtureGenerator.Implementations", "SportFixtures.FixtureGenerator.Implementations\SportFixtures.FixtureGenerator.Implementations.csproj", "{361A4109-333B-4226-9BA1-B825BA165E4C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.Logger", "SportFixtures.Logger\SportFixtures.Logger.csproj", "{AAC39C44-216E-4219-BC7B-D8FE6790E5FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.Logger.Implementations", "Logger.Implementations\SportFixtures.Logger.Implementations.csproj", "{7CD845B4-5917-454E-806B-93DD5A7B2428}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +73,14 @@ Global
 		{361A4109-333B-4226-9BA1-B825BA165E4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{361A4109-333B-4226-9BA1-B825BA165E4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{361A4109-333B-4226-9BA1-B825BA165E4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAC39C44-216E-4219-BC7B-D8FE6790E5FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAC39C44-216E-4219-BC7B-D8FE6790E5FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAC39C44-216E-4219-BC7B-D8FE6790E5FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAC39C44-216E-4219-BC7B-D8FE6790E5FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CD845B4-5917-454E-806B-93DD5A7B2428}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CD845B4-5917-454E-806B-93DD5A7B2428}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CD845B4-5917-454E-806B-93DD5A7B2428}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CD845B4-5917-454E-806B-93DD5A7B2428}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

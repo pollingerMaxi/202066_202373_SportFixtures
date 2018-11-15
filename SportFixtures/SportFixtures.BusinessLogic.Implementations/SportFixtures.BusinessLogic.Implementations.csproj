@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Logger.Implementations\SportFixtures.Logger.Implementations.csproj" />
     <ProjectReference Include="..\SportFixtures.BusinessLogic\SportFixtures.BusinessLogic.csproj" />
     <ProjectReference Include="..\SportFixtures.Data.Repository\SportFixtures.Data.Repository.csproj" />
     <ProjectReference Include="..\SportFixtures.FixtureGenerator.Implementations\SportFixtures.FixtureGenerator.Implementations.csproj" />
     <ProjectReference Include="..\SportFixtures.FixtureGenerator\SportFixtures.FixtureGenerator.csproj" />
+    <ProjectReference Include="..\SportFixtures.Logger\SportFixtures.Logger.csproj" />
   </ItemGroup>
 
 </Project>
