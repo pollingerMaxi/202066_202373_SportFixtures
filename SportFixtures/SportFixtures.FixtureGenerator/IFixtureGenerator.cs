@@ -13,5 +13,18 @@ namespace SportFixtures.FixtureGenerator
         /// <param name="date"></param>
         /// <returns></returns>
         ICollection<Encounter> GenerateFixture(IEnumerable<Team> teams, DateTime date);
+
+        /// <summary>
+        /// Returns a list with the algorithms obtained from the DLLs placed in the folders.
+        /// </summary>
+        /// <returns></returns>
+        string[] GetFixtureAlgorithms();
+
+
+        /// <summary>
+        /// Creates an instance of the given algorithm, loaded from the DLLs folders.
+        /// </summary>
+        /// <param name="algorithmId"></param>
+        void SetFixtureGenerator(int algorithmId);
     }
 }
