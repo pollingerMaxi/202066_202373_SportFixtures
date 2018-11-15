@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.DTOs;
 
 namespace SportFixtures.BusinessLogic.Interfaces
 {
@@ -34,7 +35,7 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// Returns all teams in repository.
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Team> GetAll();
+        IEnumerable<Team> GetAll(TeamFilterDTO filter);
 
         /// <summary>
         /// Returns the team with given ID.

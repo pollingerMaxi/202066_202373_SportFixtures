@@ -113,7 +113,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void GetAllTest()
         {
-            teamBL.GetAll();
+            teamBL.GetAll(null);
             mockTeamRepo.Verify(x => x.Get(null, null, ""), Times.Once());
         }
 

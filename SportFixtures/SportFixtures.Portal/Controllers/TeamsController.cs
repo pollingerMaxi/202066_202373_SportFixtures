@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.DTOs;
 using SportFixtures.Exceptions.SportExceptions;
 using SportFixtures.Exceptions.TeamExceptions;
 using SportFixtures.Portal.DTOs;
@@ -27,7 +28,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<TeamDTO>> GetAllTeams()
+        public ActionResult<ICollection<TeamDTO>> GetAllTeams([FromBody]TeamDTO data)
         {
             if (!ModelState.IsValid)
             {
@@ -36,7 +37,8 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var teams = mapper.Map<TeamDTO[]>(teamBusinessLogic.GetAll());
+                var filter = mapper.Map<TeamFilterDTO>(data);
+                var teams = mapper.Map<TeamDTO[]>(teamBusinessLogic.GetAll(filter));
                 return Ok(teams);
             }
             catch (Exception e)
