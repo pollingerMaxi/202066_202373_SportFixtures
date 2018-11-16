@@ -4,25 +4,30 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 using SportFixtures.Data.Entities;
 
 namespace SportFixtures.FixtureGenerator.Implementations
 {
     public class FixtureGenerator : IFixtureGenerator
     {
+        IConfiguration config;
         private List<Type> implementations;
         private IFixtureGenerator fixtureGenerator;
         private static string[] algorithms;
-        private static readonly string DOUBLE_FOLDER_PATH = AppDomain.CurrentDomain.BaseDirectory + "AlgorithmsDouble";
-        private static readonly string MULTIPLE_FOLDER_PATH = AppDomain.CurrentDomain.BaseDirectory + "AlgorithmsMultiple";
+        private static string DOUBLE_FOLDER_PATH;
+        private static string MULTIPLE_FOLDER_PATH;
 
-        public FixtureGenerator()
+        public FixtureGenerator(IConfiguration cfg)
         {
+            config = cfg;
+            DOUBLE_FOLDER_PATH = config.GetSection("AlgorithmsDouble").Value;
+            MULTIPLE_FOLDER_PATH = config.GetSection("AlgorithmsMultiple").Value;
             implementations = new List<Type>();
             algorithms = SetAlgorithms();
         }
 
-        public FixtureGenerator(int algorithmId) : this()
+        public FixtureGenerator(int algorithmId, IConfiguration cfg) : this(cfg)
         {
             GenerateInstanceByFixtureId(algorithmId);
         }
