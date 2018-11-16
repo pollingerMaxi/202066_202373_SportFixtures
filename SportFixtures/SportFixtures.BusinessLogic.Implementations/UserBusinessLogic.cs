@@ -3,7 +3,6 @@ using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.UserExceptions;
-using SportFixtures.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,16 +15,14 @@ namespace SportFixtures.BusinessLogic.Implementations
         private IRepository<User> repository;
         private IRepository<UsersTeams> favoritesRepository;
         private ITeamBusinessLogic teamBusinessLogic;
-        private ILogger logger;
 
         public User LoggedUser { get; private set; }
 
-        public UserBusinessLogic(IRepository<User> repository, ITeamBusinessLogic teamBL, IRepository<UsersTeams> favsRepo, ILogger logger)
+        public UserBusinessLogic(IRepository<User> repository, ITeamBusinessLogic teamBL, IRepository<UsersTeams> favsRepo)
         {
             this.repository = repository;
             favoritesRepository = favsRepo;
             this.teamBusinessLogic = teamBL;
-            this.logger = logger;
         }
 
         public void AddUser(User user)
@@ -157,7 +154,6 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
 
             var token = GenerateToken(user, userFromDb);
-            logger.LogWrite("login", user.Username);
             return userFromDb;
         }
 

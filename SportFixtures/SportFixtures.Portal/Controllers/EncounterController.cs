@@ -5,6 +5,7 @@ using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Exceptions.EncounterExceptions;
 using SportFixtures.Exceptions.SportExceptions;
+using SportFixtures.Logger;
 using SportFixtures.Portal.DTOs;
 using SportFixtures.Portal.Filters;
 using System;
@@ -17,13 +18,17 @@ namespace SportFixtures.Portal.Controllers
     [Route("api/encounters")]
     public class EncounterController : ControllerBase
     {
+        private static readonly string ACTION = "Fixture";
+
         private IEncounterBusinessLogic encounterBusinessLogic;
         private readonly IMapper mapper;
+        private readonly ILogger logger;
 
-        public EncounterController(IEncounterBusinessLogic encounterBL, IMapper mapper)
+        public EncounterController(IEncounterBusinessLogic encounterBL, IMapper mapper, ILogger logger)
         {
             this.encounterBusinessLogic = encounterBL;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -229,6 +234,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 var encounters = mapper.Map<EncounterDTO[]>(encounterBusinessLogic.GenerateFixture(data.Date, data.SportId, data.Algorithm));
+                logger.LogWrite(ACTION, "Successfully generated fixture!", $"User with token: {Request.Headers["Authorization"]}");
                 return Ok(encounters);
             }
             catch (SportDoesNotExistException e)
@@ -263,7 +269,7 @@ namespace SportFixtures.Portal.Controllers
                 encounterBusinessLogic.AddResults(results.Positions, results.EncounterId);
                 return Ok();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return StatusCode(500, e.Message);
             }

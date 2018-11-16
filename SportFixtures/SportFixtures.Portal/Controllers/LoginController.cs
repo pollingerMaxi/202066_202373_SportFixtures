@@ -14,13 +14,17 @@ namespace SportFixtures.Portal.Controllers
 {
     public class LoginController : ControllerBase
     {
+        private static readonly string ACTION = "Login";
+
         private IUserBusinessLogic userBusinessLogic;
         private readonly IMapper mapper;
+        private readonly ILogger logger;
 
-        public LoginController(IUserBusinessLogic userBL, IMapper mapper)
+        public LoginController(IUserBusinessLogic userBL, IMapper mapper, ILogger logger)
         {
             userBusinessLogic = userBL;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         [HttpPost]
@@ -29,6 +33,7 @@ namespace SportFixtures.Portal.Controllers
         {
             if (!ModelState.IsValid)
             {
+                logger.LogWrite(ACTION, "Model is invalid", $"Tried to login with: {data.Username}");
                 return BadRequest(ModelState);
             }
 
@@ -36,18 +41,22 @@ namespace SportFixtures.Portal.Controllers
             {
                 var loginSuccessful = userBusinessLogic.Login(mapper.Map<User>(data));
                 var mappedUser = mapper.Map<UserDTO>(loginSuccessful);
+                logger.LogWrite(ACTION, "Successful login!", mappedUser.Username);
                 return Ok(mappedUser);
             }
             catch (UserDoesNotExistException e)
             {
+                logger.LogWrite(ACTION, e.Message, $"Tried to login with: {data.Username}");
                 return NotFound(e.Message);
             }
             catch (EmailOrPasswordException e)
             {
+                logger.LogWrite(ACTION, e.Message, $"Tried to login with: {data.Username}");
                 return BadRequest(e.Message);
             }
             catch (Exception e)
             {
+                logger.LogWrite(ACTION, e.Message, $"Tried to login with: {data.Username}");
                 return StatusCode(500, e.Message);
             }
         }

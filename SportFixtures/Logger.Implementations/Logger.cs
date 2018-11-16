@@ -8,14 +8,14 @@ namespace SportFixtures.Logger.Implementations
     {
         private string m_exePath = string.Empty;
         
-        public void LogWrite(string logMessage, string user)
+        public void LogWrite(string action, string logMessage, string user)
         {
             m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             try
             {
                 using (StreamWriter w = File.AppendText(m_exePath + "\\" + "log.txt"))
                 {
-                    Log(logMessage, user, w);
+                    Log(action, logMessage, user, w);
                 }
             }
             catch (Exception ex)
@@ -23,7 +23,7 @@ namespace SportFixtures.Logger.Implementations
             }
         }
 
-        public void Log(string logMessage, string user,TextWriter txtWriter)
+        public void Log(string action, string logMessage, string user,TextWriter txtWriter)
         {
             try
             {
@@ -31,7 +31,8 @@ namespace SportFixtures.Logger.Implementations
                 txtWriter.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
                     DateTime.Now.ToLongDateString());
                 txtWriter.WriteLine("  User:{0}", user);
-                txtWriter.WriteLine("  Action:{0}", logMessage);
+                txtWriter.WriteLine("  Action:{0}", action);
+                txtWriter.WriteLine("  Message:{0}", logMessage);
                 txtWriter.WriteLine("-------------------------------");
             }
             catch (Exception ex)
