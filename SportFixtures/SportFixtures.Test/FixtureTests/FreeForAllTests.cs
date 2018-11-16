@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using SportFixtures.Exceptions.EncounterExceptions;
-using SportFixtures.Data;
+using SportFixtures.Data.Enums;
 
 namespace SportFixtures.Test.FixtureTests
 {

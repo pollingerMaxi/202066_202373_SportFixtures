@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.Data.Access",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.BusinessLogic", "SportFixtures.BusinessLogic\SportFixtures.BusinessLogic.csproj", "{52ACEE54-4702-40E2-97EF-82771FDBD17C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportFixtures.Exceptions", "SportFixtures.Exceptions\SportFixtures.Exceptions.csproj", "{E24242AC-D897-4124-9D21-2D833B154F2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.Exceptions", "SportFixtures.Exceptions\SportFixtures.Exceptions.csproj", "{E24242AC-D897-4124-9D21-2D833B154F2D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.BusinessLogic.Implementations", "SportFixtures.BusinessLogic.Implementations\SportFixtures.BusinessLogic.Implementations.csproj", "{F5DC6992-2A14-4B87-840D-1C3D7B9E98F8}"
 EndProject

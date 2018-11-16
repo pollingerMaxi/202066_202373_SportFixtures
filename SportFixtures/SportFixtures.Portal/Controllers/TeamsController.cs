@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
-using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Data.DTOs;
 using SportFixtures.Exceptions.SportExceptions;
@@ -12,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SportFixtures.Data.Enums;
 
 namespace SportFixtures.Portal.Controllers
 {
