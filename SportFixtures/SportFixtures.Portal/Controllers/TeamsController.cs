@@ -28,7 +28,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<TeamDTO>> GetAllTeams([FromBody]TeamDTO data)
+        public ActionResult<ICollection<TeamDTO>> GetAllTeams()
         {
             if (!ModelState.IsValid)
             {
@@ -37,7 +37,14 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var filter = mapper.Map<TeamFilterDTO>(data);
+                string name = HttpContext.Request.Query["name"].ToString();
+                var orderParam = HttpContext.Request.Query["order"].ToString();
+                Order order = Order.Ascending;
+                if (!string.IsNullOrWhiteSpace(orderParam))
+                {
+                    order = (Order)Enum.Parse(typeof(Order), orderParam);
+                }
+                var filter = new TeamFilterDTO { Name = name, Order = order };
                 var teams = mapper.Map<TeamDTO[]>(teamBusinessLogic.GetAll(filter));
                 return Ok(teams);
             }

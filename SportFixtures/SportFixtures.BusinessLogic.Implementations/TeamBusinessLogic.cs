@@ -74,12 +74,12 @@ namespace SportFixtures.BusinessLogic.Implementations
                 return repository.Get(null, null, "");
             }
 
-            if(filter.Name != null){
-                return repository.Get(null, (q => q.OrderBy(t => t.Name)), "");
+            if(string.IsNullOrEmpty(filter.Name)){
+                return filter.Order == Order.Descending ? repository.Get(null, (q => q.OrderByDescending(t => t.Name)), "") :
+                                repository.Get(null, (q => q.OrderBy(t => t.Name)), "");
             }
             else{
-                return filter.Order == Order.Descending ? repository.Get(t => t.Name == filter.Name, (q => q.OrderByDescending(t => t.Name)), "") :
-                                repository.Get(t => t.Name == filter.Name, (q => q.OrderBy(t => t.Name)), "");
+                return repository.Get(t => t.Name == filter.Name, (q => q.OrderBy(t => t.Name)), "");
             }
         }
 
