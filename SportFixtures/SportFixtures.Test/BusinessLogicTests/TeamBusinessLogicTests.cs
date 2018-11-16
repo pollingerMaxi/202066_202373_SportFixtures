@@ -4,6 +4,7 @@ using SportFixtures.BusinessLogic.Implementations;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Access;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.DTOs;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.SportExceptions;
 using SportFixtures.Exceptions.TeamExceptions;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using SportFixtures.Data.Enums;
 
 namespace SportFixtures.Test.BusinessLogicTests
 {
@@ -115,6 +117,33 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             teamBL.GetAll(null);
             mockTeamRepo.Verify(x => x.Get(null, null, ""), Times.Once());
+        }
+
+        [TestMethod]
+        public void GetAllFilterByNameTest()
+        {
+            TeamFilterDTO filter = new TeamFilterDTO { Name = "Nacional" };
+            mockTeamRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), "")).Returns(teamList);
+            teamBL.GetAll(filter);
+            mockTeamRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), ""), Times.Once());
+        }
+
+        [TestMethod]
+        public void GetAllOrderAscendingTest()
+        {
+            TeamFilterDTO filter = new TeamFilterDTO { Order = Order.Ascending };
+            mockTeamRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), "")).Returns(teamList);
+            teamBL.GetAll(filter);
+            mockTeamRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), ""), Times.Once());
+        }
+
+        [TestMethod]
+        public void GetAllOrderDescendingTest()
+        {
+            TeamFilterDTO filter = new TeamFilterDTO { Order = Order.Descending };
+            mockTeamRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), "")).Returns(teamList);
+            teamBL.GetAll(filter);
+            mockTeamRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), ""), Times.Once());
         }
 
         [TestMethod]
