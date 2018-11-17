@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SportFixtures.BusinessLogic.Interfaces;
-using SportFixtures.Data;
-using SportFixtures.Data.Entities;
+using SportFixtures.Data.Enums;
 using System;
 
 namespace SportFixtures.Portal.Filters

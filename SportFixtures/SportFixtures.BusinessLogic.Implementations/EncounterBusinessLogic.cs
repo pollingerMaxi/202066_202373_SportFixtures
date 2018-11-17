@@ -1,5 +1,6 @@
 using System;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.Enums;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.EncounterExceptions;

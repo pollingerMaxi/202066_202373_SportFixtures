@@ -1,8 +1,8 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
-using SportFixtures.Data;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.Enums;
 using SportFixtures.Exceptions.EncounterExceptions;
 using SportFixtures.Exceptions.SportExceptions;
 using SportFixtures.Portal.DTOs;
