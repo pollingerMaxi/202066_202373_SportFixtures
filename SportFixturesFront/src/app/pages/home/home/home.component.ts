@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
           });
         })
         .catch(error => {
-          this.toasterService.pop("error", "Error!", error);
+          this.toasterService.pop("error", "Error!", error._body);
         });
     });
   }
