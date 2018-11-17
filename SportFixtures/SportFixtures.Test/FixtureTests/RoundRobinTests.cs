@@ -6,6 +6,7 @@ using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data;
 using SportFixtures.Data.Access;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.Enums;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.EncounterExceptions;
 using SportFixtures.FixtureGenerator;
