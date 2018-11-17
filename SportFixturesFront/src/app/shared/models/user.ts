@@ -10,6 +10,7 @@ export class User {
     public username: string;
     public favorites: Team[];
     public role: Role;
+    public password: string;
 
     constructor() {
         this.name = "";
@@ -18,5 +19,6 @@ export class User {
         this.token = "";
         this.username = "";
         this.role = Role.User;
+        this.password = "";
     }
 }

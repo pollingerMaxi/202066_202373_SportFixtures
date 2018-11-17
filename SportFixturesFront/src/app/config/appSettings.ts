@@ -18,7 +18,10 @@ export class AppSettings {
         deleteTeam: `${AppSettings.BaseUrl}teams/`,
         getFavorites: `${AppSettings.BaseUrl}users/favorites/`,
         getEncountersOfTeam: `${AppSettings.BaseUrl}encounters/team/`,
-        getCommentsOfEncounter: `${AppSettings.BaseUrl}comments/encounter/`
+        getCommentsOfEncounter: `${AppSettings.BaseUrl}comments/encounter/`,
+        addUser: `${AppSettings.BaseUrl}users`,
+        updateUser: `${AppSettings.BaseUrl}users`,
+        deleteUser:`${AppSettings.BaseUrl}users/`
     };
 
     public static readonly RouterUrls: any = {
