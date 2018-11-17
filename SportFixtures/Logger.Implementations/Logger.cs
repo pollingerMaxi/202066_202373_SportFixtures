@@ -13,7 +13,8 @@ namespace SportFixtures.Logger.Implementations
             m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             try
             {
-                using (StreamWriter w = File.AppendText(m_exePath + "\\" + "log.txt"))
+                string path = m_exePath + "\\" + DateTime.Today.ToString("dd/MM/yyyy") + ".txt";
+                using (StreamWriter w = File.AppendText(path))
                 {
                     Log(action, logMessage, user, w);
                 }
