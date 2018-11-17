@@ -86,7 +86,20 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
-        public void GeneratePositionTableForDoubleEncounterMode()
+        public void GeneratePositionTableForDoubleEncounterModeTieTest()
+        {
+            PositionInEncounter scoreNacional = new PositionInEncounter { Id = 1, Position = 1, TeamId = nacional.Id };
+            PositionInEncounter scoreCerro = new PositionInEncounter { Id = 2, Position = 1, TeamId = cerro.Id };
+            Encounter encounter = new Encounter() { Id = 1, Teams = { eNacional, eCerro }, Results = { scoreNacional, scoreCerro } };
+            encounterList.Add(encounter);
+            mockEncounterBL.Setup(s => s.GetAllEncountersOfTeam(nacional.Id)).Returns(encounterList);
+            mockEncounterBL.Setup(s => s.GetAllEncountersOfTeam(cerro.Id)).Returns(encounterList);
+            ICollection<Score> positionTable = positionTableCalculator.GeneratePositionTableForSport(football.Id);
+            Assert.IsTrue(positionTable.Count() == 2);
+        }
+
+        [TestMethod]
+        public void GeneratePositionTableForDoubleEncounterModeTest()
         {
             PositionInEncounter scoreNacional = new PositionInEncounter { Id = 1, Position = 0, TeamId = nacional.Id };
             PositionInEncounter scoreCerro = new PositionInEncounter { Id = 2, Position = 2, TeamId = cerro.Id };
@@ -99,7 +112,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
-        public void GeneratePositionTableForMultipleEncounterMode()
+        public void GeneratePositionTableForMultipleEncounterModeTest()
         {
             PositionInEncounter scoreGolfTeam1 = new PositionInEncounter { Id = 1, Position = 1, TeamId = golfTeam1.Id };
             PositionInEncounter scoreGolfTeam2 = new PositionInEncounter { Id = 2, Position = 2, TeamId = golfTeam2.Id };
