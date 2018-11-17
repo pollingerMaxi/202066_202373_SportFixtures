@@ -37,6 +37,11 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard]
   },
   {
+    path: AppSettings.RouterUrls.usersManagement,
+    loadChildren: './pages/users-management/users.module#UsersModule',
+    canActivate: [AuthenticationGuard]
+  },
+  {
     path: 'logout',
     component: LoginComponent
   },

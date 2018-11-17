@@ -25,6 +25,7 @@ export class AppSettings {
         home: "home",
         login: "login",
         sportsManagement: "sportsManagement",
-        teamsManagement: "teamsManagement"
+        teamsManagement: "teamsManagement",
+        usersManagement: "usersManagement"
     };
 }

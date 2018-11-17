@@ -6,3 +6,4 @@ export * from './user';
 export * from './favorite';
 export * from './encounter';
 export * from './comment';
+export * from './role';

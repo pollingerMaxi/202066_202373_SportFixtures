@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="center">
+    <h3>
+      {{pageTitle}}
+    </h3>
+    <hr />
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="white-box">
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="usersList">Registered users</label>
+            <br>
+            <p-listbox [options]="users" [(ngModel)]="selectedUser" optionLabel="name"></p-listbox>
+          </div>
+          <hr />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 fixer">
+      <div class="dividerLeft"></div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="white-box">
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="selectedUserName">User Name</label>
+              <input id="selectedUserName" class="form-control" type="text" [(ngModel)]="selectedUser.name">
+            </div>
+            <!-- <div class="form-group contenedor" *ngIf="srcData">
+              <label for="selectedTeamPhoto">Team Photo</label>
+              <img [src]="srcData" alt="{{selectedTeam.name}} photo" />
+              <input type="file" *ngIf="sessionService.isAdmin()" (change)="onUpload($event)" />
+              <ng-template pTemplate="content">
+                <ul *ngIf="uploadedFiles.length">
+                  <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                </ul>
+              </ng-template>
+            </div> -->
+            <hr />
+            <div *ngIf="sessionService.isAdmin()">
+              <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="updateUser(selectedUser)">Update
+                user</a>
+              <a class="btn btn-danger btn-lg btn-block waves-effect waves-light" (click)="deleteUser(selectedUser.id)">Delete
+                user</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="dividerRight"></div>
+        <div>
+          <div class="white-box">
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="userName">Name</label>
+                <input id="userName" class="form-control" type="text" [(ngModel)]="user.name">
+              </div>
+              <div class="form-group">
+                <label for="userName">Lastname</label>
+                <input id="userName" class="form-control" type="text" [(ngModel)]="user.lastname">
+              </div>
+              <div class="form-group">
+                <label for="userName">Username</label>
+                <input id="userName" class="form-control" type="text" [(ngModel)]="user.username">
+              </div>
+              <div class="form-group">
+                <label for="userName">Email</label>
+                <input id="userName" class="form-control" type="text" [(ngModel)]="user.email">
+              </div>
+              <div class="form-group">
+                <label for="userRole">Role</label>
+                <br>
+                <p-dropdown [options]="roles" [(ngModel)]="user.role" autoWidth="false"
+                  [style]="{'width':'100%'}"></p-dropdown>
+              </div>
+              <hr />
+              <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addUser(user)">Add user</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
