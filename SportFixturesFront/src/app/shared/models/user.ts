@@ -1,4 +1,5 @@
 import { Team } from ".";
+import { Role } from "./role";
 
 export class User {
     public id: string;
@@ -8,7 +9,8 @@ export class User {
     public token: string;
     public username: string;
     public favorites: Team[];
-    public role: number;
+    public role: Role;
+    public password: string;
 
     constructor() {
         this.name = "";
@@ -16,6 +18,7 @@ export class User {
         this.email = "";
         this.token = "";
         this.username = "";
-        this.role = 0;
+        this.role = Role.User;
+        this.password = "";
     }
 }

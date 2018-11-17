@@ -35,15 +35,13 @@
             <div class="form-group contenedor" *ngIf="srcData">
               <label for="selectedTeamPhoto">Team Photo</label>
               <img [src]="srcData" alt="{{selectedTeam.name}} photo" />
-              <p-fileUpload name="demo[]" (onUpload)="onUpload($event)" accept="image/*" *ngIf="sessionService.isAdmin()">
-                <ng-template pTemplate="content">
-                  <ul *ngIf="uploadedFiles.length">
-                    <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                  </ul>
-                </ng-template>
-              </p-fileUpload>
+              <input type="file" *ngIf="sessionService.isAdmin()" (change)="onUpload($event)" />
+              <ng-template pTemplate="content">
+                <ul *ngIf="uploadedFiles.length">
+                  <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                </ul>
+              </ng-template>
             </div>
-            <!-- <br /> -->
             <hr />
             <a class="btn btn-primary btn-lg btn-block waves-effect waves-light" (click)="followTeam(selectedTeam)">Follow
               team</a>
@@ -57,7 +55,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" *ngIf="sessionService.isAdmin()">
         <div class="dividerRight"></div>
         <div>
           <div class="white-box">
@@ -69,7 +67,8 @@
               <div class="form-group">
                 <label for="encounterMode">Sport</label>
                 <br>
-                <p-dropdown [options]="sports" [(ngModel)]="selectedSport.name" optionLabel="name"></p-dropdown>
+                <p-dropdown [options]="sports" [(ngModel)]="selectedSport" optionLabel="name" autoWidth="false" [style]="{'width':'100%'}"
+                  placeholder="Select a Sport"></p-dropdown>
               </div>
               <hr />
               <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addTeam(team)">Add team</a>

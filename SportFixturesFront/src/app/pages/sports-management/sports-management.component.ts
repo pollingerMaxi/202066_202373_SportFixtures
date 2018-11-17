@@ -36,7 +36,7 @@ export class SportsManagementComponent implements OnInit {
         this.toasterService.pop("success", "Success!", "Sport successfully added!");
       })
       .catch(error => {
-        this.toasterService.pop("error", "Error!", "Could not add sport.");
+        this.toasterService.pop("error", "Error!", error._body);
       });
   }
 
@@ -50,17 +50,17 @@ export class SportsManagementComponent implements OnInit {
         this.toasterService.pop("success", "Success!", "Sport successfully updated!");
       })
       .catch(error => {
-        this.toasterService.pop("error", "Error!", "Could not update sport.");
+        this.toasterService.pop("error", "Error!", error._body);
       });
   }
 
   public deleteSport(id: string) {
     this.sportService.deleteSport(id)
       .then(response => {
-        this.toasterService.pop("success", "Success!", "Sport successfully updated!");
+        this.toasterService.pop("success", "Success!", "Sport successfully deleted!");
       })
       .catch(error => {
-        this.toasterService.pop("error", "Error!", "Could not update sport.");
+        this.toasterService.pop("error", "Error!", error._body);
       });;
   }
 

@@ -7,25 +7,19 @@ import { AppSettings } from './config/appSettings';
 import { FormsModule } from '@angular/forms';
 import { ToasterModule } from 'angular2-toaster';
 import { DefaultComponent } from './shared/default/default.component';
-import { LoginService, UserService, SessionService } from './services';
+import { LoginService, UserService, SessionService, EncounterService, CommentService } from './services';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { TabBarComponent } from './shared/tab-bar/tab-bar.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AuthenticationGuard } from './shared/guards/authentication.guard';
-import { TeamsManagementComponent } from './pages/teams-management/teams-management.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: DefaultComponent,
-    canActivate: [AuthenticationGuard]
-  },
-  {
-    path: 'home',
-    component: DefaultComponent,
+    path: AppSettings.RouterUrls.home,
+    loadChildren: './pages/home/home.module#HomeModule',
     canActivate: [AuthenticationGuard]
   },
   {
@@ -40,6 +34,11 @@ const routes: Routes = [
   {
     path: AppSettings.RouterUrls.teamsManagement,
     loadChildren: './pages/teams-management/teams-management.module#TeamsManagementModule',
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: AppSettings.RouterUrls.usersManagement,
+    loadChildren: './pages/users-management/users.module#UsersModule',
     canActivate: [AuthenticationGuard]
   },
   {
@@ -67,11 +66,11 @@ const routes: Routes = [
     BrowserAnimationsModule,
     HttpModule,
     RouterModule.forRoot(routes),
-    
+
     TabMenuModule,
     AngularFontAwesomeModule
   ],
-  providers: [LoginService, UserService, SessionService],
+  providers: [LoginService, UserService, SessionService, EncounterService, CommentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

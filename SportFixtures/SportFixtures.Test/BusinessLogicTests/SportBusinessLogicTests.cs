@@ -33,8 +33,8 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void AddSportUniqueNameOkTest()
         {
-            sportList.Add(new Sport { Name = "Basquetbol" });
-            Assert.IsTrue(sportBL.GetAll().Count() == 1);
+            sportBL.Add(new Sport { Name = "Basquetbol" });
+            mockSportRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Once());
         }
 
         [TestMethod]
@@ -213,7 +213,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void GetAllTest()
         {
             sportBL.GetAll();
-            mockSportRepo.Verify(x => x.Get(null, null, ""), Times.Once());
+            mockSportRepo.Verify(x => x.Get(null, null, It.IsAny<string>()), Times.Once());
         }
 
         [TestMethod]

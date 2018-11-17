@@ -19,7 +19,7 @@ export class TabBarComponent implements OnInit {
       { label: 'Sports Management', icon: 'fa fa-stumbleupon-circle', routerLink: '/sportsManagement' },
       { label: 'Teams Management', icon: 'fa fa-address-card', routerLink: '/teamsManagement' },
       { label: 'Encounters Management', icon: 'fa fa-trophy' },
-      { label: 'Users Management', icon: 'fa fa-users' },
+      { label: 'Users Management', icon: 'fa fa-users' , routerLink: '/usersManagement'},
       { label: 'Logout', icon: 'fa fa-arrow-circle-right', routerLink: ['/logout'] },
     ];
 

@@ -151,7 +151,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 teamBusinessLogic.Delete(id);
-                return Ok();
+                return Ok(new ResponseOkDTO());
             }
             catch (TeamDoesNotExistsException e)
             {
