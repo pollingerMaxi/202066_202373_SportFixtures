@@ -45,7 +45,7 @@ export class UsersManagementComponent implements OnInit {
         this.toasterService.pop("success", "Success!", "User successfully added!");
       })
       .catch(error => {
-        this.toasterService.pop("error", "Error!", "Could not add user.");
+        this.toasterService.pop("error", "Error!", error._body);
       });
   }
 
@@ -55,17 +55,17 @@ export class UsersManagementComponent implements OnInit {
         this.toasterService.pop("success", "Success!", "User successfully updated!");
       })
       .catch(error => {
-        this.toasterService.pop("error", "Error!", "Could not update user.");
+        this.toasterService.pop("error", "Error!", error._body);
       });
   }
 
   public deleteUser(id: string) {
     this.userService.deleteUser(id)
       .then(response => {
-        this.toasterService.pop("success", "Success!", "User successfully updated!");
+        this.toasterService.pop("success", "Success!", "User successfully deleted!");
       })
       .catch(error => {
-        this.toasterService.pop("error", "Error!", "Could not delete user.");
+        this.toasterService.pop("error", "Error!", error._body);
       });;
   }
 }

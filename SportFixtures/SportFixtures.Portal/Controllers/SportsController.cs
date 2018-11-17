@@ -133,7 +133,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 sportBusinessLogic.Delete(id);
-                return Ok();
+                return Ok(new ResponseOkDTO());
             }
             catch (SportDoesNotExistException e)
             {

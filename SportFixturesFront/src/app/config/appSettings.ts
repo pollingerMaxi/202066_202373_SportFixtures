@@ -21,7 +21,8 @@ export class AppSettings {
         getCommentsOfEncounter: `${AppSettings.BaseUrl}comments/encounter/`,
         addUser: `${AppSettings.BaseUrl}users`,
         updateUser: `${AppSettings.BaseUrl}users`,
-        deleteUser:`${AppSettings.BaseUrl}users/`
+        deleteUser: `${AppSettings.BaseUrl}users/`,
+        followTeam: `${AppSettings.BaseUrl}users/favorite`
     };
 
     public static readonly RouterUrls: any = {

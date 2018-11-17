@@ -55,7 +55,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" *ngIf="sessionService.isAdmin()">
         <div class="dividerRight"></div>
         <div>
           <div class="white-box">
@@ -67,8 +67,8 @@
               <div class="form-group">
                 <label for="encounterMode">Sport</label>
                 <br>
-                <p-dropdown [options]="sports" [(ngModel)]="selectedSport.name" optionLabel="name" autoWidth="false"
-                  [style]="{'width':'100%'}"></p-dropdown>
+                <p-dropdown [options]="sports" [(ngModel)]="selectedSport" optionLabel="name" autoWidth="false" [style]="{'width':'100%'}"
+                  placeholder="Select a Sport"></p-dropdown>
               </div>
               <hr />
               <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addTeam(team)">Add team</a>

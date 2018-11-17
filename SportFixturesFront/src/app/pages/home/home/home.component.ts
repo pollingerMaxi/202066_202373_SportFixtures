@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
         this.getEncountersOfTeam();
       })
       .catch(error => {
-        this.toasterService.pop("error", "Error!", "Could not get favorites.");
+        this.toasterService.pop("error", "Error!", error._body);
       });
   }
 

@@ -2,7 +2,8 @@ import { Injectable } from "@angular/core";
 import { BaseService } from "./base.service";
 import { Http } from "@angular/http";
 import { AppSettings } from "../config/appSettings";
-import { Team } from "../shared/models";
+import { Team, Favorite } from "../shared/models";
+import { SplitInterpolation } from "@angular/compiler";
 
 @Injectable()
 export class TeamService extends BaseService {
@@ -25,5 +26,9 @@ export class TeamService extends BaseService {
 
     public async deleteTeam(id: string) {
         return await this.delete(AppSettings.ApiEndpoints.deleteTeam, id);
+    }
+
+    public async followTeam(favorite: Favorite) {
+        return await this.post(AppSettings.ApiEndpoints.followTeam, favorite);
     }
 }

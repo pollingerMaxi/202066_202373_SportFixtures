@@ -134,7 +134,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 encounterBusinessLogic.Delete(id);
-                return Ok();
+                return Ok(new ResponseOkDTO());
             }
             catch (EncounterDoesNotExistException e)
             {
@@ -261,7 +261,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 encounterBusinessLogic.AddResults(results.Positions, results.EncounterId);
-                return Ok();
+                return Ok(new ResponseOkDTO());
             }
             catch(Exception e)
             {

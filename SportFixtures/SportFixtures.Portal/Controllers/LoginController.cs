@@ -63,7 +63,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 userBusinessLogic.Logout(data.Username);
-                return Ok();
+                return Ok(new ResponseOkDTO());
             }
             catch (UserDoesNotExistException e)
             {
