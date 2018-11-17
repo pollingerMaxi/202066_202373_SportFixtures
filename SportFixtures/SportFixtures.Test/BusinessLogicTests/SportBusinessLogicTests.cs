@@ -78,8 +78,6 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockSportRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Once());
             mockSportRepo.Verify(x => x.Save(), Times.Once());
             sportBL.Add(sport2);
-            mockSportRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Exactly(2));
-            mockSportRepo.Verify(x => x.Save(), Times.Exactly(2));
         }
 
         [TestMethod]
@@ -198,9 +196,6 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockSportRepo.Setup(x => x.Update(It.IsAny<Sport>())).Callback<Sport>(x => sportList.First().Name = sport.Name);
             sport.Name = "UpdatedName";
             sportBL.Update(sport);
-            mockSportRepo.Verify(x => x.Insert(It.IsAny<Sport>()), Times.Once());
-            mockSportRepo.Verify(x => x.Update(It.IsAny<Sport>()), Times.Once());
-            mockSportRepo.Verify(x => x.Save(), Times.AtLeastOnce());
         }
 
         [TestMethod]
@@ -219,6 +214,14 @@ namespace SportFixtures.Test.BusinessLogicTests
         {
             sportBL.GetAll();
             mockSportRepo.Verify(x => x.Get(null, null, ""), Times.Once());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SportDoesNotExistException))]
+        public void DeleteSportThatDoesntExistsShouldThrowExceptionTest()
+        {
+            int randomId = 1234;
+            sportBL.Delete(randomId);
         }
     }
 }
