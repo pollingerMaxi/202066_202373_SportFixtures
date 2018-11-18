@@ -1,4 +1,5 @@
 ﻿using SportFixtures.BusinessLogic.Interfaces;
+using SportFixtures.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,11 +11,36 @@ namespace SportFixtures.BusinessLogic.Implementations
 {
     public class LoggerBusinessLogic : ILoggerBusinessLogic
     {
-        public ICollection<string> GetLogsBetweenDates(DateTime from, DateTime to)
+        public ICollection<LogFile> GetLogsBetweenDates(DateTime from, DateTime to)
         {
             var m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Directory.SetCurrentDirectory(m_exePath + "\\logs\\");
             var files = Directory.GetFiles(m_exePath + "\\logs\\").Select(Path.GetFileName).ToArray();
+            var fileNames = GetFilesList(from, to, m_exePath, files);
+            var logs = new List<LogFile>();
+
+            foreach (var file in fileNames)
+            {
+                string[] lines = File.ReadAllLines(file);
+                foreach (string line in lines)
+                {
+                    if (!String.IsNullOrWhiteSpace(line))
+                    {
+                        var logFile = new LogFile();
+                        var splitted = line.Split('|');
+                        logFile.LogEntry = splitted[0].Trim();
+                        logFile.User = splitted[1].Trim();
+                        logFile.Action = splitted[2].Trim();
+                        logFile.Message = splitted[3].Trim();
+                        logs.Add(logFile);
+                    }
+                }
+            }
+            return logs;
+        }
+
+        private static ICollection<string> GetFilesList(DateTime from, DateTime to, string m_exePath, string[] files)
+        {
             var list = new List<string>();
             foreach (var file in files)
             {
