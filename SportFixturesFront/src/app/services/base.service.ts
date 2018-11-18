@@ -10,7 +10,7 @@ export class BaseService {
      * Base method to get all
      * @param url Url of the endpoint
      */
-    protected async getAll(url: string) {
+    protected async getAll(url: string): Promise<any> {
         let request = await this.http.get(url, this.jwt()).toPromise();
         return this.extractData(request);
     }
