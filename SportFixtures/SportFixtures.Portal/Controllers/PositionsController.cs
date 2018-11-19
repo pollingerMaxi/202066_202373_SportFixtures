@@ -20,7 +20,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetPositionsTableForSport(int sportId)
+        public ActionResult GetPositionsTableForSport(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -29,7 +29,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var table = tableCalculator.GeneratePositionTableForSport(sportId);
+                var table = tableCalculator.GeneratePositionTableForSport(id);
                 return Ok(table);
             }
             catch (SportDoesNotExistException e)

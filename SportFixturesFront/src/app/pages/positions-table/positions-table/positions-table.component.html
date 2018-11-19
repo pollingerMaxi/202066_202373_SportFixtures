@@ -1,0 +1,17 @@
+<p-table [value]="positions">
+  <ng-template pTemplate="header">
+    <tr>
+      <th *ngFor="let col of cols">
+        {{col.header}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-positionTable>
+    <tr>
+      <td *ngFor="let col of cols">
+        {{positionTable[col.field]}}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="getPositions(6)">Get positions</a>

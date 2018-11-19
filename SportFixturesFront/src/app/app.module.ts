@@ -47,6 +47,10 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard]
   },
   {
+    path: AppSettings.RouterUrls.positionsTable,
+    loadChildren: './pages/positions-table/positions-table.module#PositionsTableModule'
+  },
+  {
     path: 'logout',
     component: LoginComponent
   },

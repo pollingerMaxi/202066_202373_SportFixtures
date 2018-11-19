@@ -148,7 +148,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public IEnumerable<Encounter> GetAllEncountersOfTeam(int teamId)
         {
-            var encounters = repository.Get(e => (e.Teams.Any(t => t.TeamId == teamId)), null, "");
+            var encounters = repository.Get(e => (e.Teams.Any(t => t.TeamId == teamId)), null, "Results");
             if (encounters.Count() == 0)
             {
                 throw new NoEncountersFoundForTeamException();

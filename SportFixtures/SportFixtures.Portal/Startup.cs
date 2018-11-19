@@ -60,6 +60,7 @@ namespace SportFixtures.Portal
             services.AddScoped<ICommentBusinessLogic, CommentBusinessLogic>();
             services.AddScoped<IEncounterBusinessLogic, EncounterBusinessLogic>();
             services.AddScoped<ILoggerBusinessLogic, LoggerBusinessLogic>();
+            services.AddScoped<IPositionTableCalculator, PositionTableCalculator>();
         }
 
         private void ResolveRepositoryDependencies(IServiceCollection services)

@@ -7,3 +7,4 @@ export const HOME: string = "Home";
 export const LOGIN: string = "Login";
 export const LOGOUT: string = "Logout";
 export const REPORTS: string = "Reports";
+export const POSITIONS: string = "Positions";
