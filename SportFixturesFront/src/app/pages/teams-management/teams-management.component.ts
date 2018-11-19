@@ -22,7 +22,7 @@ export class TeamsManagementComponent implements OnInit {
   constructor(
     private teamService: TeamService,
     private toasterService: ToasterService,
-    private sessionService: SessionService,
+    public sessionService: SessionService,
     private sportService: SportService,
     private sanitizer: DomSanitizer) {
     this.team = new Team();

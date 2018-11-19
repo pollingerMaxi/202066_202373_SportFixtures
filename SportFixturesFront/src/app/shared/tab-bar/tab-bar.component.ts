@@ -12,8 +12,11 @@ export class TabBarComponent implements OnInit {
   public adminOptions: MenuItem[];
   public notAuthOptions: MenuItem[];
   public userOptions: MenuItem[];
+  public sessionService: SessionService;
 
-  constructor(private sessionService: SessionService) { }
+  constructor(private sessService: SessionService) { 
+    this.sessionService = sessService;
+  }
 
   ngOnInit() {
     this.adminOptions = [

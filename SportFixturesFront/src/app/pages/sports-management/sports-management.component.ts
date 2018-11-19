@@ -16,11 +16,13 @@ export class SportsManagementComponent implements OnInit {
   public selectedEncounterMode: EncounterMode;
   public sports: Sport[];
   public selectedSport: Sport;
+  public sessionService: SessionService
 
   constructor(
     private sportService: SportService,
     private toasterService: ToasterService,
-    private sessionService: SessionService) {
+    private sessService: SessionService) {
+    this.sessionService = sessService;
     this.sport = new Sport();
     this.selectedSport = new Sport();
   }

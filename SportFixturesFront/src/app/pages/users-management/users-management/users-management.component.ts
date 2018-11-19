@@ -20,7 +20,7 @@ export class UsersManagementComponent implements OnInit {
   constructor(
     private userService: UserService,
     private toasterService: ToasterService,
-    private sessionService: SessionService) {
+    public sessionService: SessionService) {
     this.selectedUser = new User();
     this.user = new User();
   }

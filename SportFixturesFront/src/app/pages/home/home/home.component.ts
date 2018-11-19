@@ -11,7 +11,7 @@ import { Favorite, Encounter, Comment } from 'src/app/shared/models';
 export class HomeComponent implements OnInit {
   public favorites: Favorite[];
   private encounters: Encounter[] = [];
-  private comments: Comment[] = [];
+  public comments: Comment[] = [];
 
   constructor(
     private userService: UserService,
