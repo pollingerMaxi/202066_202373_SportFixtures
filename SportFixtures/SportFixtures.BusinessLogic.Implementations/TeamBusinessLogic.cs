@@ -1,5 +1,7 @@
 using System;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.DTOs;
+using SportFixtures.Data.Enums;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Repository;
 using System.Collections.Generic;
@@ -66,9 +68,19 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
-        public IEnumerable<Team> GetAll()
+        public IEnumerable<Team> GetAll(TeamFilterDTO filter = null)
         {
-            return repository.Get(null, null, "");
+            if(filter == null){
+                return repository.Get(null, null, "");
+            }
+
+            if(string.IsNullOrEmpty(filter.Name)){
+                return filter.Order == Order.Descending ? repository.Get(null, (q => q.OrderByDescending(t => t.Name)), "") :
+                                repository.Get(null, (q => q.OrderBy(t => t.Name)), "");
+            }
+            else{
+                return repository.Get(t => t.Name == filter.Name, (q => q.OrderBy(t => t.Name)), "");
+            }
         }
 
         public Team GetById(int teamId)

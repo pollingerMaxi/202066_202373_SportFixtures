@@ -2,7 +2,6 @@
 using Moq;
 using SportFixtures.BusinessLogic.Implementations;
 using SportFixtures.BusinessLogic.Interfaces;
-using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.UserExceptions;
@@ -12,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq.Expressions;
 using System.Collections;
+using SportFixtures.Data.Enums;
 
 namespace SportFixtures.Test.BusinessLogicTests
 {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Team, Sport } from 'src/app/shared/models';
+import { Team, Sport, Favorite } from 'src/app/shared/models';
 import { SessionService, TeamService, SportService } from 'src/app/services';
 import { ToasterService } from 'angular2-toaster';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -41,12 +41,13 @@ export class TeamsManagementComponent implements OnInit {
   }
 
   public addTeam(team: Team) {
+    team.sportId = this.selectedSport.id;
     this.teamService.addTeam(team)
       .then(response => {
         this.toasterService.pop("success", "Success!", "Team successfully added!");
       })
       .catch(error => {
-        this.toasterService.pop("error", "Error!", "Could not add team.");
+        this.toasterService.pop("error", "Error!", error._body);
       });
   }
 
@@ -56,23 +57,23 @@ export class TeamsManagementComponent implements OnInit {
         this.toasterService.pop("success", "Success!", "Team successfully updated!");
       })
       .catch(error => {
-        this.toasterService.pop("error", "Error!", "Could not update team.");
+        this.toasterService.pop("error", "Error!", error._body);
       });
   }
 
   public deleteTeam(id: string) {
     this.teamService.deleteTeam(id)
       .then(response => {
-        this.toasterService.pop("success", "Success!", "Team successfully updated!");
+        this.toasterService.pop("success", "Success!", "Team successfully deleted!");
       })
       .catch(error => {
-        this.toasterService.pop("error", "Error!", "Could not update team.");
+        this.toasterService.pop("error", "Error!", error._body);
       });;
   }
 
   public async getSport() {
     this.selectedTeamSport = await this.sportService.getSportById(this.selectedTeam.sportId);
-    this.srcData = this.sanitizer.bypassSecurityTrustResourceUrl("data:image/png;base64," + this.selectedTeam.photoPath);
+    this.srcData = this.sanitizer.bypassSecurityTrustResourceUrl("data:image/png;base64," + this.selectedTeam.photo);
   }
 
   public async getSports() {
@@ -80,9 +81,28 @@ export class TeamsManagementComponent implements OnInit {
   }
 
   public onUpload(event) {
-    for (let file of event.files) {
-      this.uploadedFiles.push(file);
-    }
+    let file = event.target.files;
+    var reader = new FileReader();
+    reader.onload = this._handleReaderLoaded.bind(this);
+    reader.readAsBinaryString(file[0]);
+  }
+
+  private _handleReaderLoaded(readerEvt) {
+    var binaryString = readerEvt.target.result;
+    this.selectedTeam.photo = btoa(binaryString);
+  }
+
+  public followTeam(team: Team) {
+    let fav = new Favorite();
+    fav.teamId = team.id;
+    fav.userId = this.sessionService.getUser().id;
+    this.teamService.followTeam(fav)
+      .then(response => {
+        this.toasterService.pop("success", "Success!", "Now following team: " + team.name);
+      })
+      .catch(error => {
+        this.toasterService.pop("error", "Error!", error._body);
+      });
   }
 
 }

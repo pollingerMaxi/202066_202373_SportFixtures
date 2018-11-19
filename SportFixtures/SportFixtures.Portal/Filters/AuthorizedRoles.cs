@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SportFixtures.BusinessLogic.Interfaces;
-using SportFixtures.Data;
-using SportFixtures.Data.Entities;
+using SportFixtures.Data.Enums;
 using System;
 
 namespace SportFixtures.Portal.Filters
@@ -34,6 +33,7 @@ namespace SportFixtures.Portal.Filters
                 context.Result = new ContentResult()
                 {
                     Content = "Token authorization is required to use this service.",
+                    StatusCode = 403
                 };
             }
 
@@ -45,6 +45,7 @@ namespace SportFixtures.Portal.Filters
                 context.Result = new ContentResult()
                 {
                     Content = "Token is invalid. Please provide a valid token to use this service.",
+                    StatusCode = 403
                 };
             }
 
@@ -53,6 +54,7 @@ namespace SportFixtures.Portal.Filters
                 context.Result = new ContentResult()
                 {
                     Content = $"User is not in role: {_role}",
+                    StatusCode = 403
                 };
             }
         }

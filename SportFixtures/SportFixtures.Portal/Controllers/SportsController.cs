@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
-using SportFixtures.Data;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.Enums;
 using SportFixtures.Exceptions.SportExceptions;
 using SportFixtures.Portal.DTOs;
 using SportFixtures.Portal.Filters;
@@ -133,7 +133,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 sportBusinessLogic.Delete(id);
-                return Ok();
+                return Ok(new ResponseOkDTO());
             }
             catch (SportDoesNotExistException e)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportFixtures.Data.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace SportFixtures.Data.Entities

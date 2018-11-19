@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { SessionService } from 'src/app/services';
+import { USERS_MANAGEMENT, PROFILE, SPORTS_MANAGEMENT, TEAMS_MANAGEMENT, HOME, ENCOUNTERS_MANAGEMENT, LOGOUT, LOGIN } from '../resources/constStrings';
 
 @Component({
   selector: 'app-tab-bar',
@@ -8,23 +9,32 @@ import { SessionService } from 'src/app/services';
   styleUrls: ['./tab-bar.component.css']
 })
 export class TabBarComponent implements OnInit {
-  public navOptions: MenuItem[];
+  public adminOptions: MenuItem[];
   public notAuthOptions: MenuItem[];
+  public userOptions: MenuItem[];
 
   constructor(private sessionService: SessionService) { }
 
   ngOnInit() {
-    this.navOptions = [
-      { label: 'Home', icon: 'fa fa-stumbleupon-circle', routerLink: 'home' },
-      { label: 'Sports Management', icon: 'fa fa-stumbleupon-circle', routerLink: '/sportsManagement' },
-      { label: 'Teams Management', icon: 'fa fa-address-card', routerLink: '/teamsManagement' },
-      { label: 'Encounters Management', icon: 'fa fa-trophy' },
-      { label: 'Users Management', icon: 'fa fa-users' },
-      { label: 'Logout', icon: 'fa fa-arrow-circle-right', routerLink: ['/logout'] },
+    this.adminOptions = [
+      { label: HOME, icon: 'fa fa-stumbleupon-circle', routerLink: 'home' },
+      { label: SPORTS_MANAGEMENT, icon: 'fa fa-stumbleupon-circle', routerLink: '/sportsManagement' },
+      { label: TEAMS_MANAGEMENT, icon: 'fa fa-address-card', routerLink: '/teamsManagement' },
+      { label: ENCOUNTERS_MANAGEMENT, icon: 'fa fa-trophy' },
+      { label: USERS_MANAGEMENT, icon: 'fa fa-users', routerLink: '/usersManagement' },
+      { label: LOGOUT, icon: 'fa fa-arrow-circle-right', routerLink: ['/logout'] }
+    ];
+
+    this.userOptions = [
+      { label: HOME, icon: 'fa fa-stumbleupon-circle', routerLink: 'home' },
+      { label: SPORTS_MANAGEMENT, icon: 'fa fa-stumbleupon-circle', routerLink: '/sportsManagement' },
+      { label: TEAMS_MANAGEMENT, icon: 'fa fa-address-card', routerLink: '/teamsManagement' },
+      { label: PROFILE, icon: 'fa fa-users', routerLink: '/usersManagement' },
+      { label: LOGOUT, icon: 'fa fa-arrow-circle-right', routerLink: ['/logout'] }
     ];
 
     this.notAuthOptions = [
-      { label: 'Login', icon: 'fa fa-stumbleupon-circle', routerLink: '/login' }
+      { label: LOGIN, icon: 'fa fa-stumbleupon-circle', routerLink: '/login' }
     ];
   }
 

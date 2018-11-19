@@ -50,6 +50,36 @@ namespace SportFixtures.Test.DataTests
         }
 
         [TestMethod]
+        public void GetAllTeamsWithFiltersTest()
+        {
+            Team nacional = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            Team peñarol = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            Team cerro = new Team() { Id = 3, Name = "Cerro", SportId = 1 };
+            repository.Insert(nacional);
+            repository.Insert(peñarol);
+            repository.Insert(cerro);
+            context.SaveChanges();
+            var teams = repository.Get(null, q=>q.OrderBy(t => t.Name), "");
+            Assert.IsTrue(teams.Count() == 3);
+            Assert.IsTrue(teams.First<Team>().Equals(cerro));
+        }
+
+        [TestMethod]
+        public void GetTeamWithNameFilterTest()
+        {
+            Team nacional = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
+            Team peñarol = new Team() { Id = 2, Name = "Peñarol", SportId = 1 };
+            Team cerro = new Team() { Id = 3, Name = "Cerro", SportId = 1 };
+            repository.Insert(nacional);
+            repository.Insert(peñarol);
+            repository.Insert(cerro);
+            context.SaveChanges();
+            var teams = repository.Get(t=>t.Name == nacional.Name, q => q.OrderBy(t => t.Name), "");
+            Assert.IsTrue(teams.Count() == 1);
+            Assert.IsTrue(teams.First<Team>().Equals(nacional));
+        }
+
+        [TestMethod]
         public void AddTeamWithNameTest()
         {
             var team = new Team() { Name = "Test name" };
@@ -70,10 +100,20 @@ namespace SportFixtures.Test.DataTests
         [TestMethod]
         public void GetTeamByIdTest()
         {
-            var team = new Team();
+            var team = new Team { Name = "Nacional", SportId = 1 };
             repository.Insert(team);
             context.SaveChanges();
-            Assert.IsTrue(repository.GetById(team.Id) == team);
+            Assert.IsTrue(repository.GetById(team.Id).Equals(team));
+        }
+
+        [TestMethod]
+        public void GetTeamByIdNotEqualsToTeamTest()
+        {
+            var nacional = new Team { Name = "Nacional", SportId = 1 };
+            var cerro = new Team { Name = "Cerro", SportId = 1 };
+            repository.Insert(nacional);
+            context.SaveChanges();
+            Assert.IsFalse(repository.GetById(nacional.Id).Equals(cerro));
         }
 
         [TestMethod]

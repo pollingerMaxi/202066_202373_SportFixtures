@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SportFixtures.Data
+namespace SportFixtures.Data.Enums
 {
     public enum Role
     {

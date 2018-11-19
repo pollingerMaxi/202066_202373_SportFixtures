@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
-using SportFixtures.Data;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.Enums;
 using SportFixtures.Exceptions.TeamExceptions;
 using SportFixtures.Exceptions.UserExceptions;
 using SportFixtures.Portal.DTOs;
@@ -133,7 +133,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 userBusinessLogic.Delete(id);
-                return Ok();
+                return Ok(new ResponseOkDTO());
             }
             catch (UserDoesNotExistException e)
             {
@@ -156,7 +156,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 userBusinessLogic.FollowTeam(userteam.UserId, userteam.TeamId);
-                return Ok();
+                return Ok("{\"response\": \"ok\"}");
             }
             catch (TeamDoesNotExistsException e)
             {

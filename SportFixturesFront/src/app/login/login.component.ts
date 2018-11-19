@@ -14,11 +14,11 @@ export class LoginComponent implements OnInit {
   constructor(private loginService: LoginService,
     private toasterService: ToasterService,
     private router: Router,
-    private activeRoute: ActivatedRoute) { 
-      if(activeRoute.snapshot.url[0].path == "logout"){
-        this.logout();
-      }
+    private activeRoute: ActivatedRoute) {
+    if (activeRoute.snapshot.url[0].path == "logout") {
+      this.logout();
     }
+  }
 
   ngOnInit() {
     this.loginParams = new LoginModel();
@@ -37,9 +37,8 @@ export class LoginComponent implements OnInit {
       );
   }
 
-  public logout(){
+  public logout() {
     this.loginService.logout();
-    // this.router.navigate(['/login']);
   }
 
 }

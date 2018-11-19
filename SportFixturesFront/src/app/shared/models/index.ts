@@ -3,3 +3,7 @@ export * from './login';
 export * from './sport';
 export * from './team';
 export * from './user';
+export * from './favorite';
+export * from './encounter';
+export * from './comment';
+export * from './role';

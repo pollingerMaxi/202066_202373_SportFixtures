@@ -13,13 +13,25 @@ export class AppSettings {
         deleteSport: `${AppSettings.BaseUrl}sports/`,
         getTeams: `${AppSettings.BaseUrl}teams`,
         getSportById: `${AppSettings.BaseUrl}sports/`,
-        getLogs: `${AppSettings.BaseUrl}logger?from=18112018&to=18112019`
+        addTeam: `${AppSettings.BaseUrl}teams`,
+        updateTeam: `${AppSettings.BaseUrl}teams`,
+        deleteTeam: `${AppSettings.BaseUrl}teams/`,
+        getFavorites: `${AppSettings.BaseUrl}users/favorites/`,
+        getEncountersOfTeam: `${AppSettings.BaseUrl}encounters/team/`,
+        getCommentsOfEncounter: `${AppSettings.BaseUrl}comments/encounter/`,
+        addUser: `${AppSettings.BaseUrl}users`,
+        updateUser: `${AppSettings.BaseUrl}users`,
+        deleteUser: `${AppSettings.BaseUrl}users/`,
+        followTeam: `${AppSettings.BaseUrl}users/favorite`,
+        getLogs: `${AppSettings.BaseUrl}logger?from={0}&to={1}`
     };
 
     public static readonly RouterUrls: any = {
+        home: "home",
         login: "login",
         sportsManagement: "sportsManagement",
         teamsManagement: "teamsManagement",
+        usersManagement: "usersManagement",
         actionsReport: "actionsReport"
     };
 }

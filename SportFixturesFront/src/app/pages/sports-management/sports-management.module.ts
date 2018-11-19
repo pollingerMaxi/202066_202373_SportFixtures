@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { SportsManagementComponent } from './sports-management.component';
 import { SportService } from '../../services';
 import { AppSettings } from '../../config/appSettings';
-import { PageNotFoundComponent } from '../../page-not-found/page-not-found.component';
 import { RouterModule, Routes } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';
 import { ListboxModule } from 'primeng/listbox';

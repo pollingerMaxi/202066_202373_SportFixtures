@@ -1,8 +1,8 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
-using SportFixtures.Data;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.Enums;
 using SportFixtures.Exceptions.EncounterExceptions;
 using SportFixtures.Exceptions.SportExceptions;
 using SportFixtures.Logger;
@@ -139,7 +139,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 encounterBusinessLogic.Delete(id);
-                return Ok();
+                return Ok(new ResponseOkDTO());
             }
             catch (EncounterDoesNotExistException e)
             {
@@ -267,7 +267,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 encounterBusinessLogic.AddResults(results.Positions, results.EncounterId);
-                return Ok();
+                return Ok(new ResponseOkDTO());
             }
             catch (Exception e)
             {
