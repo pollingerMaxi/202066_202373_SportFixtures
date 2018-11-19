@@ -10,8 +10,9 @@ export class LogsService extends BaseService {
         super(_http);
     }
 
-    public async getLogs() {
-        let files = await this.getAll(AppSettings.ApiEndpoints.getLogs);
-        return files
+    public async getLogs(from: string, to:string) {
+        let url = AppSettings.ApiEndpoints.getLogs.replace("{0}", from).replace("{1}", to);
+        let files = await this.getAll(url);
+        return files;
     }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { SessionService } from 'src/app/services';
-import { USERS_MANAGEMENT, PROFILE, SPORTS_MANAGEMENT, TEAMS_MANAGEMENT, HOME, ENCOUNTERS_MANAGEMENT, LOGOUT, LOGIN } from '../resources/constStrings';
+import { USERS_MANAGEMENT, PROFILE, SPORTS_MANAGEMENT, TEAMS_MANAGEMENT, HOME, ENCOUNTERS_MANAGEMENT, LOGOUT, LOGIN, REPORTS } from '../resources/constStrings';
 
 @Component({
   selector: 'app-tab-bar',
@@ -22,6 +22,7 @@ export class TabBarComponent implements OnInit {
       { label: TEAMS_MANAGEMENT, icon: 'fa fa-address-card', routerLink: '/teamsManagement' },
       { label: ENCOUNTERS_MANAGEMENT, icon: 'fa fa-trophy' },
       { label: USERS_MANAGEMENT, icon: 'fa fa-users', routerLink: '/usersManagement' },
+      { label: REPORTS, icon: 'fa fa-table', routerLink: '/actionsReport' },
       { label: LOGOUT, icon: 'fa fa-arrow-circle-right', routerLink: ['/logout'] }
     ];
 

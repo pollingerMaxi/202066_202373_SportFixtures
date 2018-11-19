@@ -1,5 +1,5 @@
 import { LogsService } from 'src/app/services';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-actions-report',
@@ -8,9 +8,10 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class ActionsReportComponent implements OnInit {
-  public minDate: Date = new Date('11/15/2018');
-  public maxDate: Date = new Date('11/20/2018');
-  value: Date;
+  public dateFormat: String = "dd-MM-yyyy";
+  public value: Date;
+  public rangePicked: boolean;
+  public logs: any[];
 
   constructor(
     private logsService: LogsService
@@ -20,14 +21,21 @@ export class ActionsReportComponent implements OnInit {
   }
 
   public getLogs() {
-    this.logsService.getLogs()
+    console.log(this.value);
+    let { from, to } = this.parseDates();
+    this.logsService.getLogs(from, to)
       .then(response => {
-        console.log(response);
-
+        this.logs = response;
       })
       .catch(error => {
+        alert(error);
         console.log(error);
+      });
+  }
 
-      });;
+  private parseDates() {
+    let from = this.value[0].toISOString().substring(0, 10).replace('-', "").replace('-', "");
+    let to = this.value[1].toISOString().substring(0, 10).replace('-', "").replace('-', "");
+    return { from, to };
   }
 }

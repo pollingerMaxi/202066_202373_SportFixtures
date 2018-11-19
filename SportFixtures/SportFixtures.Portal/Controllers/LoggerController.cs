@@ -29,8 +29,8 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 var files = loggerBusinessLogic.GetLogsBetweenDates(
-                    DateTime.ParseExact(from, "ddMMyyyy", CultureInfo.InvariantCulture),
-                    DateTime.ParseExact(to, "ddMMyyyy", CultureInfo.InvariantCulture));
+                    DateTime.ParseExact(from, "yyyyMMdd", CultureInfo.InvariantCulture),
+                    DateTime.ParseExact(to, "yyyyMMdd", CultureInfo.InvariantCulture));
                 return Ok(files);
             }
             catch (Exception e)
