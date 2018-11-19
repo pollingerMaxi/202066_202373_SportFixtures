@@ -9,16 +9,18 @@
           <hr />
         </div>
       </div>
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input id="username" class="form-control" type="text" [(ngModel)]="loginParams.username">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input id="password" class="form-control" type="password" [(ngModel)]="loginParams.password">
-      </div>
-      <hr />
-      <a class="btn btn-primary btn-lg btn-block waves-effect waves-light" (click)="login()">Login!</a>
+      <form (keyup.enter)="login()">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input id="username" class="form-control" type="text" [(ngModel)]="loginParams.username" name="username">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input id="password" class="form-control" type="password" [(ngModel)]="loginParams.password" name="password">
+        </div>
+        <hr />
+        <a class="btn btn-primary btn-lg btn-block waves-effect waves-light" (click)="login()">Login!</a>
+      </form>
     </div>
   </div>
 </div>
