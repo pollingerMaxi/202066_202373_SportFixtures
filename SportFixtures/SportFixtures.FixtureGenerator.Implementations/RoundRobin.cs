@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.Enums;
 using SportFixtures.Exceptions.EncounterExceptions;
 
 namespace SportFixtures.FixtureGenerator.Implementations
@@ -11,10 +12,14 @@ namespace SportFixtures.FixtureGenerator.Implementations
     public class RoundRobin : IFixtureGenerator
     {
         private IEncounterBusinessLogic encounterBL;
+        public EncounterMode encounterMode { get; set; }
+        public string algorithmName { get; set; }
 
         public RoundRobin(IEncounterBusinessLogic encounterBL)
         {
             this.encounterBL = encounterBL;
+            this.encounterMode = EncounterMode.Double;
+            this.algorithmName = "Round Robin";
         }
 
         public ICollection<Encounter> GenerateFixture(IEnumerable<Team> teams, DateTime date)
