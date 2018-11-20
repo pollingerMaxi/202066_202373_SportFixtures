@@ -23,10 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.FixtureGenera
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.FixtureGenerator.Implementations", "SportFixtures.FixtureGenerator.Implementations\SportFixtures.FixtureGenerator.Implementations.csproj", "{361A4109-333B-4226-9BA1-B825BA165E4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportFixtures.FixtureSelector", "SportFixtures.FixtureSelector\SportFixtures.FixtureSelector.csproj", "{2AD4DC3E-0F4B-40BD-B9B0-996D74FABF33}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportFixtures.FixtureSelector.Implementations", "SportFixtures.FixtureSelector.Implementations\SportFixtures.FixtureSelector.Implementations.csproj", "{EB91D9D1-AD94-44CF-9192-B8D1A2466E0F}"
-EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
