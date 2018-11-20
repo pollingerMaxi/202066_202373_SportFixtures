@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using SportFixtures.Data;
 using SportFixtures.Data.Entities;
-using SportFixtures.Data.Enums;
+using SportFixtures.Data;
 
 namespace SportFixtures.FixtureGenerator
 {

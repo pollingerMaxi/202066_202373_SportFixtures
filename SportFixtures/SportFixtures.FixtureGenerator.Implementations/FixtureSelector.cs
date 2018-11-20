@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using SportFixtures.Data.Entities;
-using SportFixtures.Data.Enums;
+using SportFixtures.Data;
 
 namespace SportFixtures.FixtureGenerator.Implementations
 {

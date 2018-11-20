@@ -6,7 +6,7 @@ using SportFixtures.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using SportFixtures.Exceptions.EncounterExceptions;
-using SportFixtures.Data.Enums;
+using SportFixtures.Data;
 
 namespace SportFixtures.FixtureGenerator.Implementations
 {

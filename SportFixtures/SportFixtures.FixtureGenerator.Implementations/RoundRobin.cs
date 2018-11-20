@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Entities;
-using SportFixtures.Data.Enums;
+using SportFixtures.Data;
 using SportFixtures.Exceptions.EncounterExceptions;
 
 namespace SportFixtures.FixtureGenerator.Implementations
