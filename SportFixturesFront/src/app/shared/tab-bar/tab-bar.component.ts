@@ -20,7 +20,7 @@ export class TabBarComponent implements OnInit {
 
   ngOnInit() {
     this.adminOptions = [
-      { label: HOME, icon: 'fa fa-stumbleupon-circle', routerLink: 'home' },
+      { label: HOME, icon: 'fa fa-home', routerLink: 'home' },
       { label: SPORTS_MANAGEMENT, icon: 'fa fa-stumbleupon-circle', routerLink: '/sportsManagement' },
       { label: TEAMS_MANAGEMENT, icon: 'fa fa-address-card', routerLink: '/teamsManagement' },
       { label: ENCOUNTERS_MANAGEMENT, icon: 'fa fa-trophy' },
@@ -31,7 +31,7 @@ export class TabBarComponent implements OnInit {
     ];
 
     this.userOptions = [
-      { label: HOME, icon: 'fa fa-stumbleupon-circle', routerLink: 'home' },
+      { label: HOME, icon: 'fa fa-home', routerLink: 'home' },
       { label: SPORTS_MANAGEMENT, icon: 'fa fa-stumbleupon-circle', routerLink: '/sportsManagement' },
       { label: TEAMS_MANAGEMENT, icon: 'fa fa-address-card', routerLink: '/teamsManagement' },
       { label: PROFILE, icon: 'fa fa-users', routerLink: '/usersManagement' },

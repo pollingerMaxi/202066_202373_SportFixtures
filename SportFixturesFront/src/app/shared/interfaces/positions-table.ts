@@ -1,5 +1,6 @@
+import { Team } from "../models";
+
 export interface PositionsTable {
-    position,
-    name,
+    team: Team,
     points
 }

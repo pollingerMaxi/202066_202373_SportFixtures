@@ -7,7 +7,7 @@ import { AppSettings } from './config/appSettings';
 import { FormsModule } from '@angular/forms';
 import { ToasterModule } from 'angular2-toaster';
 import { DefaultComponent } from './shared/default/default.component';
-import { LoginService, UserService, SessionService, EncounterService, CommentService } from './services';
+import { LoginService, UserService, SessionService, EncounterService, CommentService, SportService } from './services';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
@@ -17,6 +17,11 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AuthenticationGuard } from './shared/guards/authentication.guard';
 
 const routes: Routes = [
+  {
+    path: '',
+    loadChildren: './pages/home/home.module#HomeModule',
+    canActivate: [AuthenticationGuard]
+  },
   {
     path: AppSettings.RouterUrls.home,
     loadChildren: './pages/home/home.module#HomeModule',
@@ -79,7 +84,7 @@ const routes: Routes = [
     TabMenuModule,
     AngularFontAwesomeModule
   ],
-  providers: [LoginService, UserService, SessionService, EncounterService, CommentService],
+  providers: [LoginService, UserService, SessionService, EncounterService, CommentService, SportService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,17 +1,24 @@
+<div class="form-group">
+  <label for="sportList">Registered sports</label>
+  <br>
+  <p-dropdown [options]="sports" [(ngModel)]="selectedSport" optionLabel="name" autoWidth="false" [style]="{'width':'100%'}"
+    placeholder="Select a Sport"></p-dropdown>
+</div>
 <p-table [value]="positions">
   <ng-template pTemplate="header">
     <tr>
-      <th *ngFor="let col of cols">
-        {{col.header}}
-      </th>
+      <th>Position</th>
+      <th>Name</th>
+      <th>Points</th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-positionTable>
+  <ng-template pTemplate="body" let-position>
     <tr>
-      <td *ngFor="let col of cols">
-        {{positionTable[col.field]}}
-      </td>
+      <td>{{positionForDisplay[position.team.name]}}</td>
+      <td>{{position.team.name}}</td>
+      <td>{{position.points}}</td>
     </tr>
   </ng-template>
 </p-table>
-<a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="getPositions(6)">Get positions</a>
+<a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="getPositions(selectedSport.id)">Get
+  positions</a>

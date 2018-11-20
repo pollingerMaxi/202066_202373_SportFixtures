@@ -11,9 +11,7 @@ export class PositionsService extends BaseService {
         super(_http);
     }
 
-    public getPositions(sportId: string) {
-        return this.getAll(AppSettings.ApiEndpoints.getPositions + sportId)
-            .then(res => <PositionsTable[]>res.data)
-            .then(data => { return data; });
+    public getPositions(sportId: string): Promise<PositionsTable[]> {
+        return this.getAll(AppSettings.ApiEndpoints.getPositions + sportId);
     }
 }

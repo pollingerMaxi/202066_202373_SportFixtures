@@ -31,7 +31,7 @@ const routes: Routes = [
         SportsManagementComponent
     ],
     providers: [
-        SportService
+        
     ],
     exports: [
         SportsManagementComponent

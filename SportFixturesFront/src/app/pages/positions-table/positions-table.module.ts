@@ -6,6 +6,7 @@ import { AppSettings } from "src/app/config/appSettings";
 import { PositionsTableComponent } from "./positions-table/positions-table.component";
 import { TableModule } from 'primeng/table';
 import { PositionsService } from "src/app/services";
+import { DropdownModule } from "primeng/dropdown";
 
 const routes: Routes = [
     {
@@ -23,7 +24,8 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
         FormsModule,
-        TableModule
+        TableModule,
+        DropdownModule
     ],
     declarations: [
         PositionsTableComponent
