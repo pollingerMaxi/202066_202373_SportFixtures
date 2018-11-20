@@ -30,6 +30,25 @@ namespace SportFixtures.Portal.Controllers
             this.mapper = mapper;
         }
 
+        [HttpGet]
+        public ActionResult<ICollection<FixtureDTO>> GetAllFixtureGenerators()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var encounters = mapper.Map<Fixture[]>(encounterBusinessLogic.GetAll());
+                return Ok(encounters);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
         [HttpPost("generate/")]
         [AuthorizedRoles(Role.Admin)]
         public ActionResult<ICollection<EncounterDTO>> GenerateFixture([FromBody]FixtureDTO data)

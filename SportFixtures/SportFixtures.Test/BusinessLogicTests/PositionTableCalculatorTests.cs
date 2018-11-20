@@ -13,6 +13,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using SportFixtures.Data;
+using SportFixtures.Data.Enums;
 
 namespace SportFixtures.Test.BusinessLogicTests
 {
