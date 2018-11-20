@@ -1,14 +1,17 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
+using SportFixtures.BusinessLogic.Implementations;
 using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Exceptions.EncounterExceptions;
 using SportFixtures.Exceptions.SportExceptions;
 using SportFixtures.Portal.DTOs;
 using SportFixtures.Portal.Filters;
+using SportFixtures.FixtureGenerator;
 using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,11 +21,14 @@ namespace SportFixtures.Portal.Controllers
     public class EncounterController : ControllerBase
     {
         private IEncounterBusinessLogic encounterBusinessLogic;
+        private IFixtureSelector fixtureSelector;
+        private ISportBusinessLogic sportBL; //temporal
         private readonly IMapper mapper;
 
-        public EncounterController(IEncounterBusinessLogic encounterBL, IMapper mapper)
+        public EncounterController(IEncounterBusinessLogic encounterBL, IFixtureSelector fixtureSelector, IMapper mapper)
         {
             this.encounterBusinessLogic = encounterBL;
+            this.fixtureSelector = fixtureSelector;
             this.mapper = mapper;
         }
 
@@ -228,7 +234,9 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var encounters = mapper.Map<EncounterDTO[]>(encounterBusinessLogic.GenerateFixture(data.Date, data.SportId, data.Algorithm));
+                fixtureSelector.CreateInstance(data.AlgorithmName);
+                ICollection<Team> teams = sportBL.GetById(data.SportId).Teams;
+                var encounters = mapper.Map<EncounterDTO[]>(fixtureSelector.GenerateFixture(teams, data.Date));
                 return Ok(encounters);
             }
             catch (SportDoesNotExistException e)
