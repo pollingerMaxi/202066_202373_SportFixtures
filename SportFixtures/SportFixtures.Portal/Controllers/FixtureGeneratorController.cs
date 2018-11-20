@@ -40,8 +40,8 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var encounters = mapper.Map<Fixture[]>(encounterBusinessLogic.GetAll());
-                return Ok(encounters);
+                var fixtures = mapper.Map<FixtureDTO[]>(fixtureSelector.GetAlgorithmNames());
+                return Ok(fixtures);
             }
             catch (Exception e)
             {

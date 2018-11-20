@@ -19,7 +19,7 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// Returns a list with the algorithms names by encounter mode.
         /// </summary>
         /// <returns></returns>
-        ICollection<string> GetAlgorithmNamesByEncounterMode(EncounterMode encounterMode);
+        ICollection<string> GetAlgorithmNames();
 
         /// <summary>
         /// Creates an instance of an algorithm by its name.

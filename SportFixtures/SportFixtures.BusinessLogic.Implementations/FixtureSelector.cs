@@ -32,12 +32,10 @@ namespace SportFixtures.BusinessLogic.Implementations
             return fixtureGenerator.GenerateFixture(teams, date);
         }
 
-        public ICollection<string> GetAlgorithmNamesByEncounterMode(EncounterMode encounterMode){
+        public ICollection<string> GetAlgorithmNames(){
             ICollection<string> algorithms = new List<string>();
             foreach(Type type in implementations){
-                if(type.GetProperty("EncounterMode").Equals(encounterMode)){
-                    algorithms.Add(type.Name);
-                }
+                algorithms.Add(type.Name);
             }
             return algorithms;
         }
