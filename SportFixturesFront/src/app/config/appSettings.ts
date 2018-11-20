@@ -24,7 +24,11 @@ export class AppSettings {
         deleteUser: `${AppSettings.BaseUrl}users/`,
         followTeam: `${AppSettings.BaseUrl}users/favorite`,
         getLogs: `${AppSettings.BaseUrl}logger?from={0}&to={1}`,
-        getPositions: `${AppSettings.BaseUrl}positions/`
+        getPositions: `${AppSettings.BaseUrl}positions/`,
+        addEncounter: `${AppSettings.BaseUrl}encounters`,
+        updateEncounter: `${AppSettings.BaseUrl}encounters`,
+        deleteEncounter: `${AppSettings.BaseUrl}encounters/`,
+        getEncounters: `${AppSettings.BaseUrl}encounters`,
     };
 
     public static readonly RouterUrls: any = {
@@ -34,6 +38,7 @@ export class AppSettings {
         teamsManagement: "teamsManagement",
         usersManagement: "usersManagement",
         actionsReport: "actionsReport",
-        positionsTable: "positionsTable"
+        positionsTable: "positionsTable",
+        encountersManagement: "encountersManagement"
     };
 }

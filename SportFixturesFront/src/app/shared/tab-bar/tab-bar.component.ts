@@ -14,7 +14,7 @@ export class TabBarComponent implements OnInit {
   public userOptions: MenuItem[];
   public sessionService: SessionService;
 
-  constructor(private sessService: SessionService) { 
+  constructor(private sessService: SessionService) {
     this.sessionService = sessService;
   }
 
@@ -23,7 +23,7 @@ export class TabBarComponent implements OnInit {
       { label: HOME, icon: 'fa fa-home', routerLink: 'home' },
       { label: SPORTS_MANAGEMENT, icon: 'fa fa-stumbleupon-circle', routerLink: '/sportsManagement' },
       { label: TEAMS_MANAGEMENT, icon: 'fa fa-address-card', routerLink: '/teamsManagement' },
-      { label: ENCOUNTERS_MANAGEMENT, icon: 'fa fa-trophy' },
+      { label: ENCOUNTERS_MANAGEMENT, icon: 'fa fa-trophy', routerLink: '/encountersManagement' },
       { label: USERS_MANAGEMENT, icon: 'fa fa-users', routerLink: '/usersManagement' },
       { label: REPORTS, icon: 'fa fa-table', routerLink: '/actionsReport' },
       { label: POSITIONS, icon: 'fa fa-star', routerLink: '/positionsTable' },

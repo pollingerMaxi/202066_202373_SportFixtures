@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="center">
+    <h3>
+      Encounters Management
+    </h3>
+    <hr />
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="white-box">
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="encountersList">Registered encounters</label>
+            <br>
+            <p-listbox [options]="encounters" [(ngModel)]="selectedEncounter" optionLabel="date"></p-listbox>
+          </div>
+          <hr />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 fixer">
+      <div class="dividerLeft"></div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="white-box">
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="selectedSportName">Encounter date</label>
+              <input id="selectedSportName" class="form-control" type="text">
+            </div>
+            <div class="form-group">
+              <label for="teams">Teams</label>
+              <br />
+              <div>
+                <p-dropdown [options]="selectedEncounter.teams" optionLabel="name" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+              </div>
+            </div>
+            <hr />
+            <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="updateEncounter(selectedEncounter)">Update
+              encounter</a>
+            <a class="btn btn-danger btn-lg btn-block waves-effect waves-light" (click)="deleteEncounter(selectedEncounter.id)">Delete
+              encounter</a>
+          </div>
+        </div>
+      </div>
+      <div class="dividerRight"></div>
+
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <div class="white-box">
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="encounterDate">Encounter Date</label>
+                <input id="encounterDate" class="form-control" type="text" [(ngModel)]="encounter.date">
+              </div>
+              <div class="form-group">
+                <label for="encounterTeams">Teams</label>
+                <br>
+                
+              </div>
+              <hr />
+              <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addEncounter(encounter)">Add sport</a>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
