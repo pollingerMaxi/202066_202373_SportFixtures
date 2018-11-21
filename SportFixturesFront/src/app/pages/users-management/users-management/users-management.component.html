@@ -75,7 +75,7 @@
               <p-dropdown [options]="roles" [(ngModel)]="selectedUser.role" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
             </div>
             <hr />
-            <div *ngIf="sessionService.isAdmin()">
+            <div >
               <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="updateUser(selectedUser)">Update
                 user</a>
               <a class="btn btn-danger btn-lg btn-block waves-effect waves-light" (click)="deleteUser(selectedUser.id)">Delete

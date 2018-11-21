@@ -31,31 +31,34 @@ namespace SportFixtures.BusinessLogic.Implementations
                 Score position = new Score() { Team = team };
                 foreach (Encounter encounter in encounters)
                 {
-                    int teamPosition = encounter.Results.First(t => t.TeamId == team.Id).Position;
-                    if (sport.EncounterMode == EncounterMode.Double)
+                    if (encounter.Results.Count > 0)
                     {
-                        if (teamPosition == 2)
+                        int teamPosition = encounter.Results.FirstOrDefault(t => t.TeamId == team.Id).Position;
+                        if (sport.EncounterMode == EncounterMode.Double)
                         {
-                            position.Points += 3;
+                            if (teamPosition == 2)
+                            {
+                                position.Points += 3;
+                            }
+                            else if (teamPosition == 1)
+                            {
+                                position.Points += 1;
+                            }
                         }
-                        else if (teamPosition == 1)
+                        else if (sport.EncounterMode == EncounterMode.Multiple)
                         {
-                            position.Points += 1;
-                        }
-                    }
-                    else if (sport.EncounterMode == EncounterMode.Multiple)
-                    {
-                        if (teamPosition == 1)
-                        {
-                            position.Points += 3;
-                        }
-                        else if (teamPosition == 2)
-                        {
-                            position.Points += 2;
-                        }
-                        else if (teamPosition == 3)
-                        {
-                            position.Points += 1;
+                            if (teamPosition == 1)
+                            {
+                                position.Points += 3;
+                            }
+                            else if (teamPosition == 2)
+                            {
+                                position.Points += 2;
+                            }
+                            else if (teamPosition == 3)
+                            {
+                                position.Points += 1;
+                            }
                         }
                     }
                 }

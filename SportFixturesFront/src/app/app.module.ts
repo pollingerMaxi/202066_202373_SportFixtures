@@ -16,6 +16,7 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AuthenticationGuard } from './shared/guards/authentication.guard';
 import { CommentsPageComponent } from './pages/comments-page/comments-page/comments-page.component';
+import { AuthorizationGuard } from './shared/guards/authorization.guard';
 
 const routes: Routes = [
   {
@@ -63,7 +64,8 @@ const routes: Routes = [
   },
   {
     path: AppSettings.RouterUrls.resultsManagement,
-    loadChildren: './pages/positions-create/positions-create.module#PositionsCreateModule'
+    loadChildren: './pages/positions-create/positions-create.module#PositionsCreateModule',
+    canActivate: [AuthorizationGuard]
   },
   {
     path: 'logout',

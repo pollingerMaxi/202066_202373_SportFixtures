@@ -179,7 +179,6 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpGet("team/{teamId}")]
-        [AuthorizedRoles(Role.Admin)]
         public ActionResult<ICollection<EncounterDTO>> GetAllEncountersOfTeam(int teamId)
         {
             if (!ModelState.IsValid)
