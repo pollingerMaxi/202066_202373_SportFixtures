@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { EncounterForSportComponent } from './encounters-for-sport/encounter-for-sport.component';
 import { ListboxModule } from 'primeng/listbox';
 import { DropdownModule } from 'primeng/dropdown';
+import { EncounterForTeamComponent } from './encounter-for-team/encounter-for-team.component';
 
 const routes: Routes = [
     {
@@ -32,7 +33,8 @@ const routes: Routes = [
     ],
     declarations: [
         ActionsReportComponent,
-        EncounterForSportComponent
+        EncounterForSportComponent,
+        EncounterForTeamComponent
     ],
     providers: [
         LogsService
