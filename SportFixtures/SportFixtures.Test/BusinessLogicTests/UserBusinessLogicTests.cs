@@ -145,6 +145,19 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(EmailAlreadyRegisteredException))]
+        public void AddUserWithNotUniqueEmailTest()
+        {
+            var user = new User() { Name = "Name", Username = "username", LastName = "Lastname", Password = "hash", Email = "something@domain.com" };
+            var user2 = new User() { Name = "Name", Username = "username2", LastName = "Lastname", Password = "hash", Email = "something@domain.com" };
+            mockUserRepo.Setup(x => x.Insert(It.IsAny<User>())).Callback<User>(x => userList.Add(user));
+            userBLWithoutTeamBL.AddUser(user);
+            userBLWithoutTeamBL.AddUser(user2);
+            mockUserRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once());
+            mockUserRepo.Verify(x => x.Save(), Times.Once());
+        }
+
+        [TestMethod]
         public void FollowTeamTest()
         {
             var team = new Team();
@@ -239,6 +252,25 @@ namespace SportFixtures.Test.BusinessLogicTests
                     Password = "invalidPWHash",
                     Email = "invalid@email.com",
                     Role = Role.User
+                } });
+            userList.Add(userWithAllData);
+            userBLWithoutTeamBL.Login(userWithAllData);
+            mockUserRepo.Verify(x => x.Get(It.IsAny<Expression<Func<User, bool>>>(), null, ""), Times.AtLeastOnce);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EmailOrPasswordException))]
+        public void LoginWithInvalidPasswordTest()
+        {
+            mockUserRepo.Setup(r => r.Get(It.IsAny<Expression<Func<User, bool>>>(), null, ""))
+                .Returns(new List<User>(){new User()
+                {
+                    Name = "admin",
+                    Username = "admin",
+                    LastName = "lastname",
+                    Password = "invalidPsw",
+                    Email = "admin@email.com",
+                    Role = Role.User,
                 } });
             userList.Add(userWithAllData);
             userBLWithoutTeamBL.Login(userWithAllData);

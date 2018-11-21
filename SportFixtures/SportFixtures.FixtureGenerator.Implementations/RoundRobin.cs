@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Entities;
 using SportFixtures.Exceptions.EncounterExceptions;
+using SportFixtures.Data.Enums;
 
 namespace SportFixtures.FixtureGenerator.Implementations
 {

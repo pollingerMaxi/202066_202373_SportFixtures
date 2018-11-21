@@ -1,18 +1,21 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
+<<<<<<< HEAD
+=======
 using SportFixtures.BusinessLogic.Implementations;
 using SportFixtures.Data;
+>>>>>>> reflection
 using SportFixtures.Data.Entities;
 using SportFixtures.Data.Enums;
 using SportFixtures.Exceptions.EncounterExceptions;
 using SportFixtures.Exceptions.SportExceptions;
-using SportFixtures.Logger;
 using SportFixtures.Portal.DTOs;
 using SportFixtures.Portal.Filters;
 using SportFixtures.FixtureGenerator;
 using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,17 +24,13 @@ namespace SportFixtures.Portal.Controllers
     [Route("api/encounters")]
     public class EncounterController : ControllerBase
     {
-        private static readonly string ACTION = "Fixture";
-
         private IEncounterBusinessLogic encounterBusinessLogic;
         private readonly IMapper mapper;
-        private readonly ILogger logger;
 
-        public EncounterController(IEncounterBusinessLogic encounterBL, IMapper mapper, ILogger logger)
+        public EncounterController(IEncounterBusinessLogic encounterBL, IMapper mapper)
         {
             this.encounterBusinessLogic = encounterBL;
             this.mapper = mapper;
-            this.logger = logger;
         }
 
         [HttpGet]
@@ -239,7 +238,7 @@ namespace SportFixtures.Portal.Controllers
                 encounterBusinessLogic.AddResults(results.Positions, results.EncounterId);
                 return Ok(new ResponseOkDTO());
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 return StatusCode(500, e.Message);
             }

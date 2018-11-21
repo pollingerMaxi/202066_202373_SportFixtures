@@ -34,6 +34,9 @@ namespace SportFixtures.Portal.Profiles
             CreateMap<Encounter, EncounterDTO>();
             CreateMap<EncounterDTO, Encounter>()
                 .ForMember(e => e.Teams, src => src.MapFrom(u => u.Teams));
+            CreateMap<Encounter, FixtureEncounterDTO>();
+
+            CreateMap<EncountersTeams, EncountersTeamsDTO>();
 
             CreateMap<Sport, SportCreateDTO>()
                 .ForMember(e => e.Name, src => src.MapFrom(u => u.Name));

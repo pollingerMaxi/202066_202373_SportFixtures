@@ -1,11 +1,10 @@
 ﻿using System;
-using SportFixtures.FixtureGenerator;
-using System.Collections;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using SportFixtures.Exceptions.EncounterExceptions;
+using SportFixtures.Data.Enums;
 
 namespace SportFixtures.FixtureGenerator.Implementations
 {
@@ -17,6 +16,7 @@ namespace SportFixtures.FixtureGenerator.Implementations
         {
             this.encounterBL = encounterBL;
         }
+
         public ICollection<Encounter> GenerateFixture(IEnumerable<Team> teams, DateTime date)
         {
             if (teams.Count() < 2)
