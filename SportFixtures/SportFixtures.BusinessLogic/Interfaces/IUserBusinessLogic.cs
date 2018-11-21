@@ -21,6 +21,13 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void FollowTeam(int userId, int teamId);
 
         /// <summary>
+        /// Removes the given team of the user's Favorites.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="team"></param>
+        void UnfollowTeam(int userId, int teamId);
+
+        /// <summary>
         /// Updates a user.
         /// </summary>
         /// <param name="user"></param>

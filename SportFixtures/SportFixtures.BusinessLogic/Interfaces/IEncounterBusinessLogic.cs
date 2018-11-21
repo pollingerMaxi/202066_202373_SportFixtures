@@ -85,6 +85,18 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// <returns></returns>
         IEnumerable<Encounter> GetAllEncountersOfTheDay(DateTime date);
 
+        /// <summary>
+        /// Adds results for a given encounter.
+        /// </summary>
+        /// <param name="results"></param>
+        /// <returns></returns>
         void AddResults(ICollection<PositionInEncounter> results, int encounterId);
+
+        /// <summary>
+        /// Adds many encounters.
+        /// </summary>
+        /// <param name="encounters"></param>
+        /// <returns></returns>
+        void AddMany(ICollection<Encounter> encounters);
     }
 }

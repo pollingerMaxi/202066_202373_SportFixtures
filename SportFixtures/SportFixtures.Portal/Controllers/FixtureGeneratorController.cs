@@ -53,7 +53,7 @@ namespace SportFixtures.Portal.Controllers
             }
         }
 
-        [HttpPost("generate/")]
+        [HttpPost("generate")]
         [AuthorizedRoles(Role.Admin)]
         public ActionResult<ICollection<FixtureEncounterDTO>> GenerateFixture([FromBody]FixtureDTO data)
         {

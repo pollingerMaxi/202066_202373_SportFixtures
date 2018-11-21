@@ -126,6 +126,23 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
+        public void UnfollowTeam(int userId, int teamId)
+        {
+            teamBusinessLogic.CheckIfExists(teamId);
+            CheckIfExists(userId);
+            var follow = GetFollow(userId, teamId);
+            favoritesRepository.Delete(follow);
+            favoritesRepository.Save();
+        }
+
+        private UsersTeams GetFollow(int userId, int teamId){
+            var follow = favoritesRepository.Get(f => f.TeamId == teamId && f.UserId == userId, null, "").FirstOrDefault();
+            if(follow is null){
+                throw new UserDoesNotFollowTeamException();
+            }
+            return follow;
+        }
+
         public User Login(User user)
         {
             var users = repository.Get(u => u.Username == user.Username, null, "");
