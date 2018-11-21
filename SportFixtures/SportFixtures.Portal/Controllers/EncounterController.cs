@@ -101,6 +101,31 @@ namespace SportFixtures.Portal.Controllers
             }
         }
 
+        [HttpPost("add_many")]
+        [AuthorizedRoles(Role.Admin)]
+        public ActionResult CreateManyEncounters([FromBody]ICollection<EncounterDTO> data)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var encounter = mapper.Map<ICollection<Encounter>>(data);
+                encounterBusinessLogic.AddMany(encounter);
+                return Ok(mapper.Map<EncounterDTO>(encounter));
+            }
+            catch (EncounterException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
         [HttpPut]
         [AuthorizedRoles(Role.Admin)]
         public ActionResult UpdateEncounter([FromBody]EncounterDTO data)

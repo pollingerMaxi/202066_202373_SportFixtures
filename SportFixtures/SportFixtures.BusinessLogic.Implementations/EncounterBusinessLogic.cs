@@ -200,5 +200,14 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Update(encounter);
             repository.Save();
         }
+
+        public void AddMany(ICollection<Encounter> encounters){
+            foreach(Encounter encounter in encounters){
+                Validate(encounter);
+                repository.Attach(encounter);
+                repository.Insert(encounter);
+            }
+            repository.Save();
+        }
     }
 }

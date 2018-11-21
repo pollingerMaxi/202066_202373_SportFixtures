@@ -430,39 +430,6 @@ namespace SportFixtures.Test.BusinessLogicTests
             Assert.IsTrue(encounterBL.TeamsHaveEncountersOnTheSameDay(encounterList, encounterSameDate));
         }
 
-        //[TestMethod]
-        //public void GenerateFixtureFreeForAllTest()
-        //{
-        //    ICollection<EncountersTeams> teamList = new List<EncountersTeams>() { eNacional, ePeñarol, eDefensor, eDanubio, eCerro };
-        //    List<Sport> sports = new List<Sport>() { football, basketball, footballWithTeams };
-        //    mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(sports);
-
-        //    var generatedEncounters = encounterBL.GenerateFixture(DateTime.Now, footballWithTeams.Id, Algorithm.FreeForAll);
-        //    var expectedEncountersCount = (teamList.Count() * (teamList.Count() - 1)) / 2;
-        //    Assert.IsTrue(generatedEncounters.Count == expectedEncountersCount);
-        //}
-
-        //[TestMethod]
-        //public void GenerateFixtureRoundRobinTest()
-        //{
-        //    ICollection<EncountersTeams> teamList = new List<EncountersTeams>() { eNacional, ePeñarol, eDefensor, eDanubio, eCerro };
-        //    List<Sport> sports = new List<Sport>() { footballWithTeams, football, basketball };
-        //    mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(sports);
-
-        //    var generatedEncounters = encounterBL.GenerateFixture(DateTime.Now, footballWithTeams.Id, Algorithm.RoundRobin);
-        //    var expectedEncountersCount = teamList.Count * (teamList.Count - 1);
-        //    Assert.IsTrue(generatedEncounters.Count == expectedEncountersCount);
-        //}
-
-        //[TestMethod]
-        //[ExpectedException(typeof(FixtureGeneratorAlgorithmDoesNotExist))]
-        //public void GenerateFixtureShouldReturnExceptionTest()
-        //{
-        //    ICollection<EncountersTeams> teamList = new List<EncountersTeams>() { eNacional, ePeñarol, eDefensor, eDanubio, eCerro };
-        //    mockSportRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Sport, bool>>>(), null, "Teams")).Returns(new List<Sport>() { football });
-        //    var generatedEncounters = encounterBL.GenerateFixture(DateTime.Now, 1, (Algorithm)2);
-        //}
-
         [TestMethod]
         public void CheckTeamsHaveEncountersOnTheSameDayOnAGivenListTeamsShouldReturnTrue()
         {
@@ -564,6 +531,21 @@ namespace SportFixtures.Test.BusinessLogicTests
             mockEncounterRepo.Verify(x => x.Insert(It.IsAny<Encounter>()), Times.Once());
             mockEncounterRepo.Verify(x => x.Save(), Times.Exactly(1));
             encounterBL.AddResults(results, encounter.Id);
+        }
+
+        [TestMethod]
+        public void AddManyEncountersOkTest()
+        {
+            ICollection<EncountersTeams> teams = new List<EncountersTeams>() { eNacional, ePeñarol };
+            DateTime date = new DateTime(2018, 9, 27, 8, 30, 00);
+            var encounter = new Encounter() { Id = 1, Date = date, SportId = football.Id, Teams = teams };
+            var encounter2 = new Encounter() { Id = 2, Date = date.AddDays(5), SportId = football.Id, Teams = teams };
+            mockEncounterRepo.Setup(x => x.Insert(encounter)).Callback<Encounter>(x => encounterList.Add(encounter));
+            mockEncounterRepo.Setup(x => x.Insert(encounter2)).Callback<Encounter>(x => encounterList.Add(encounter2));
+            var encounters = new List<Encounter>(){encounter, encounter2};
+            encounterBL.AddMany(encounters);
+            mockEncounterRepo.Verify(x => x.Insert(It.IsAny<Encounter>()), Times.Exactly(2));
+            mockEncounterRepo.Verify(x => x.Save(), Times.Once());
         }
 
     }
