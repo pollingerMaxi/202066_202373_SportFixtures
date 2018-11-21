@@ -16,8 +16,6 @@ namespace SportFixtures.BusinessLogic.Implementations
         private IRepository<UsersTeams> favoritesRepository;
         private ITeamBusinessLogic teamBusinessLogic;
 
-        public User LoggedUser { get; private set; }
-
         public UserBusinessLogic(IRepository<User> repository, ITeamBusinessLogic teamBL, IRepository<UsersTeams> favsRepo)
         {
             this.repository = repository;
@@ -128,17 +126,6 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
-        /// <summary>
-        /// Throws exception if LoggedUser is not an admin.
-        /// </summary>
-        private void CheckIfLoggedUserIsAdmin()
-        {
-            if (LoggedUser.Role != Role.Admin)
-            {
-                throw new LoggedUserIsNotAdminException();
-            }
-        }
-
         public User Login(User user)
         {
             var users = repository.Get(u => u.Username == user.Username, null, "");
@@ -224,7 +211,6 @@ namespace SportFixtures.BusinessLogic.Implementations
             user.Token = null;
             repository.Update(user);
             repository.Save();
-            LoggedUser = null;
         }
 
         public IEnumerable<UsersTeams> GetFavoritesOfUser(int userId)

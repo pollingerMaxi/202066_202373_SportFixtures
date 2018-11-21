@@ -147,6 +147,15 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
+        public void GetAllFilterByNameDescendingTest()
+        {
+            TeamFilterDTO filter = new TeamFilterDTO { Name = "Nacional", Order = Order.Descending };
+            mockTeamRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), "")).Returns(teamList);
+            teamBL.GetAll(filter);
+            mockTeamRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), ""), Times.Once());
+        }
+
+        [TestMethod]
         public void EqualsTest()
         {
             var team1 = new Team() { Id = 1, Name = "Nacional", SportId = 1 };
