@@ -35,4 +35,8 @@ export class TeamService extends BaseService {
     public async getTeamsFiltered(order): Promise<Team[]> {
         return await this.getAll(AppSettings.ApiEndpoints.getTeams + "?order=" + order);
     }
+
+    public async unfollowTeam(favorite: Favorite) {
+        return await this.post(AppSettings.ApiEndpoints.unfollowTeam, favorite);
+    }
 }

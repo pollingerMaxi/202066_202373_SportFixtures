@@ -31,6 +31,7 @@ export class AppSettings {
         getEncounters: `${AppSettings.BaseUrl}encounters`,
         addComment: `${AppSettings.BaseUrl}comments`,
         addResults: `${AppSettings.BaseUrl}encounters/results`,
+        unfollowTeam: `${AppSettings.BaseUrl}users/unfollow`
     };
 
     public static readonly RouterUrls: any = {
