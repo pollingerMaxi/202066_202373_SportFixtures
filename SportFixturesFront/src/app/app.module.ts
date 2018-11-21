@@ -15,6 +15,7 @@ import { TabBarComponent } from './shared/tab-bar/tab-bar.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AuthenticationGuard } from './shared/guards/authentication.guard';
+import { CommentsPageComponent } from './pages/comments-page/comments-page/comments-page.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,11 @@ const routes: Routes = [
   {
     path: AppSettings.RouterUrls.encountersManagement,
     loadChildren: './pages/encounters-management/encounters-management.module#EncountersManagementModule',
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: AppSettings.RouterUrls.comments,
+    loadChildren: './pages/comments-page/comments.module#CommentsModule',
     canActivate: [AuthenticationGuard]
   },
   {

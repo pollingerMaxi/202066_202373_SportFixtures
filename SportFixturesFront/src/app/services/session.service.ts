@@ -4,34 +4,34 @@ import { User } from "../shared/models";
 
 @Injectable()
 export class SessionService {
-    public setUser(user){
+    public setUser(user) {
         localStorage.setItem(AppSettings.localstorageUser, JSON.stringify(user));
     }
 
-    public setToken(token){
+    public setToken(token) {
         localStorage.setItem(AppSettings.localstorageToken, JSON.stringify(token));
     }
 
-    public getUser(){
+    public getUser(): User {
         let user = localStorage.getItem(AppSettings.localstorageUser);
         return <User>JSON.parse(user);
     }
 
-    public getToken(){
+    public getToken(): string {
         return localStorage.getItem(AppSettings.localstorageToken);
     }
 
-    public logout(){
+    public logout() {
         localStorage.removeItem(AppSettings.localstorageUser);
         localStorage.removeItem(AppSettings.localstorageToken);
     }
 
-    public isAdmin(){
+    public isAdmin(): boolean {
         let user = JSON.parse(localStorage.getItem(AppSettings.localstorageUser));
         return user.role == 1;
     }
 
-    public userIsLogged(){
+    public userIsLogged(): boolean {
         let token = JSON.parse(localStorage.getItem(AppSettings.localstorageUser));
         return token != null || token != undefined;
     }

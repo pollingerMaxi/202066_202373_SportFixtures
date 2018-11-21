@@ -15,4 +15,8 @@ export class CommentService extends BaseService {
         return await this.getAll(AppSettings.ApiEndpoints.getCommentsOfEncounter + encounterId);
     }
 
+    public async addComment(comment: Comment) {
+        return await this.post(AppSettings.ApiEndpoints.addComment, comment);
+    }
+
 }

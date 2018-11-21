@@ -29,6 +29,7 @@ export class AppSettings {
         updateEncounter: `${AppSettings.BaseUrl}encounters`,
         deleteEncounter: `${AppSettings.BaseUrl}encounters/`,
         getEncounters: `${AppSettings.BaseUrl}encounters`,
+        addComment: `${AppSettings.BaseUrl}comments`
     };
 
     public static readonly RouterUrls: any = {
@@ -39,6 +40,7 @@ export class AppSettings {
         usersManagement: "usersManagement",
         actionsReport: "actionsReport",
         positionsTable: "positionsTable",
-        encountersManagement: "encountersManagement"
+        encountersManagement: "encountersManagement",
+        comments: "comments"
     };
 }
