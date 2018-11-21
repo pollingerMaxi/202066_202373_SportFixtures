@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="center">
+    <div class="white-box">
+      <div class="panel-body">
+        <div class="form-group">
+          <label for="encountersList">Registered encounters</label>
+          <br>
+          <p-dropdown [options]="encounters" [(ngModel)]="selectedEncounter" optionLabel="date" autoWidth="false"
+            [style]="{'width':'100%'}" placeholder="Select an Encounter to add results" (onChange)="onChange($event)"></p-dropdown>
+        </div>
+        <div>
+          <div class="form-group" *ngFor="let team of selectedEncounter.teams">
+            <label for="team">{{team.team.name}}</label>
+            <br>
+            <p-dropdown [options]="positions" autoWidth="false" [style]="{'width':'200px'}" optionLabel="position"
+              placeholder="Select position" (onChange)="onPositionChange($event, team.teamId)"></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addResults()">Add results to
+        encounter</a>
+    </div>
+  </div>
+</div>

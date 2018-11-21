@@ -133,7 +133,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public IEnumerable<Encounter> GetAll()
         {
-            return repository.Get(null, null, "");
+            return repository.Get(null, null, "Teams.Team");
         }
 
         public IEnumerable<Encounter> GetAllEncountersOfSport(int sportId)

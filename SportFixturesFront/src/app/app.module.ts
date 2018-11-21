@@ -7,7 +7,7 @@ import { AppSettings } from './config/appSettings';
 import { FormsModule } from '@angular/forms';
 import { ToasterModule } from 'angular2-toaster';
 import { DefaultComponent } from './shared/default/default.component';
-import { LoginService, UserService, SessionService, EncounterService, CommentService, SportService, TeamService } from './services';
+import { LoginService, UserService, SessionService, EncounterService, CommentService, SportService, TeamService, PositionsService } from './services';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
@@ -62,6 +62,10 @@ const routes: Routes = [
     loadChildren: './pages/positions-table/positions-table.module#PositionsTableModule'
   },
   {
+    path: AppSettings.RouterUrls.resultsManagement,
+    loadChildren: './pages/positions-create/positions-create.module#PositionsCreateModule'
+  },
+  {
     path: 'logout',
     component: LoginComponent
   },
@@ -95,7 +99,7 @@ const routes: Routes = [
     TabMenuModule,
     AngularFontAwesomeModule
   ],
-  providers: [LoginService, UserService, SessionService, EncounterService, CommentService, SportService, TeamService],
+  providers: [LoginService, UserService, SessionService, EncounterService, CommentService, SportService, TeamService, PositionsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

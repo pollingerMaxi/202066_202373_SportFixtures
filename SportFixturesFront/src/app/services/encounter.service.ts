@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { BaseService } from "./base.service";
 import { Http } from "@angular/http";
 import { AppSettings } from "../config/appSettings";
-import { Encounter } from "../shared/models";
+import { Encounter, Results } from "../shared/models";
 
 @Injectable()
 export class EncounterService extends BaseService {
@@ -29,5 +29,9 @@ export class EncounterService extends BaseService {
 
     public async deleteEncounter(id: string) {
         return await this.delete(AppSettings.ApiEndpoints.deleteEncounter, id);
+    }
+
+    public async addResults(results: Results) {
+        return await this.post(AppSettings.ApiEndpoints.addResults, results);
     }
 }

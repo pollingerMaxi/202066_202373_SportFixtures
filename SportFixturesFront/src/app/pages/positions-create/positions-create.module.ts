@@ -3,18 +3,18 @@ import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { AppSettings } from "src/app/config/appSettings";
-import { PositionsTableComponent } from "./positions-table/positions-table.component";
-import { TableModule } from 'primeng/table';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from "primeng/dropdown";
+import { PositionsCreateComponent } from '../positions-create/positions-create/positions-create.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: PositionsTableComponent
+        component: PositionsCreateComponent
     },
     {
-        path: AppSettings.RouterUrls.positionsTable,
-        component: PositionsTableComponent
+        path: AppSettings.RouterUrls.resultsManagement,
+        component: PositionsCreateComponent
     }
 ];
 
@@ -23,18 +23,18 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
         FormsModule,
-        TableModule,
-        DropdownModule
+        DropdownModule,
+        InputSwitchModule
     ],
     declarations: [
-        PositionsTableComponent
+        PositionsCreateComponent
     ],
     providers: [
 
     ],
     exports: [
-        PositionsTableComponent
+        PositionsCreateComponent
     ]
 
 })
-export class PositionsTableModule { }
+export class PositionsCreateModule { }

@@ -8,3 +8,5 @@ export * from './encounter';
 export * from './comment';
 export * from './role';
 export * from './encountersTeams';
+export * from './positionInEncounter';
+export * from './results';
