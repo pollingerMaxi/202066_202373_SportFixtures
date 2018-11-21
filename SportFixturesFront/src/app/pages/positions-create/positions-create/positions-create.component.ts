@@ -61,11 +61,10 @@ export class PositionsCreateComponent implements OnInit {
         found.position = event.value
       } else {
         let pos = new PositionInEncounter();
-        pos.position = event.value;
         pos.teamId = teamId;
+        pos.position = event.value.position;
         this.multiPos.push(pos);
       }
-
     } catch (error) {
       console.log(error)
     }
