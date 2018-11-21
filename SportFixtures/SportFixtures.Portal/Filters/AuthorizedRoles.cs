@@ -48,15 +48,18 @@ namespace SportFixtures.Portal.Filters
                     StatusCode = 403
                 };
             }
-
-            if (user.Role != Role.Admin)
+            else
             {
-                context.Result = new ContentResult()
+                if (user.Role != Role.Admin)
                 {
-                    Content = $"User is not in role: {_role}",
-                    StatusCode = 403
-                };
+                    context.Result = new ContentResult()
+                    {
+                        Content = $"User is not in role: {_role}",
+                        StatusCode = 403
+                    };
+                }
             }
+
         }
     }
 }
