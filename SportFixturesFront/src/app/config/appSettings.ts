@@ -45,6 +45,7 @@ export class AppSettings {
         positionsTable: "positionsTable",
         encountersManagement: "encountersManagement",
         comments: "comments",
-        resultsManagement: "resultsManagement"
+        resultsManagement: "resultsManagement",
+        fixtureGenerator: "fixtureGenerator"
     };
 }
