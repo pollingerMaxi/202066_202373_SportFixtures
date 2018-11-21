@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Encounter, Sport, Team } from 'src/app/shared/models';
+import { Encounter, Sport, Team, EncountersTeams } from 'src/app/shared/models';
 import { EncounterService, SportService, TeamService } from 'src/app/services';
 import { ToasterService } from 'angular2-toaster';
 
@@ -37,6 +37,14 @@ export class EncountersManagementComponent implements OnInit {
 
   public addEncounter(encounter: Encounter) {
     console.log(encounter);
+    let et = new Array<EncountersTeams>();
+    this.selectedTeams.forEach(team => {
+      let t = new EncountersTeams();
+      t.team = team;
+      t.teamId = parseInt(team.id);
+      et.push(t);
+    });
+    encounter.teams = et;
     this.encounterService.addEncounter(encounter)
       .then(response => {
         this.toasterService.pop("success", "Success!", "Encounter successfully added!");

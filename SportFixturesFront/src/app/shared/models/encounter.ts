@@ -1,12 +1,12 @@
 import { Favorite } from "./favorite";
-import { Team } from ".";
+import { EncountersTeams } from "./encountersTeams";
 
 export class Encounter {
     public id: string;
     public date: Date;
     public sportId: string;
     public favorites: Favorite[];
-    public teams: Team[];
+    public teams: EncountersTeams[];
     // public score: Score;
 
     constructor() {

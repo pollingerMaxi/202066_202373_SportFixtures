@@ -7,3 +7,4 @@ export * from './favorite';
 export * from './encounter';
 export * from './comment';
 export * from './role';
+export * from './encountersTeams';
