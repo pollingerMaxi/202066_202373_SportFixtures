@@ -12,7 +12,7 @@ export class TeamService extends BaseService {
         super(_http);
     }
 
-    public async getTeams(): Promise<any> {
+    public async getTeams(): Promise<Team[]> {
         return await this.getAll(AppSettings.ApiEndpoints.getTeams);
     }
 

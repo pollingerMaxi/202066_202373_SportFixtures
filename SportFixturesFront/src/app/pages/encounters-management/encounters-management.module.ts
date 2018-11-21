@@ -6,6 +6,7 @@ import { FormsModule } from "@angular/forms";
 import { AppSettings } from "src/app/config/appSettings";
 import { NgModule } from "@angular/core";
 import { EncountersManagementComponent } from "./encounters-management/encounters-management.component";
+import { DatePickerModule } from "@syncfusion/ej2-angular-calendars";
 
 const routes: Routes = [
     {
@@ -24,7 +25,8 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         DropdownModule,
         ListboxModule,
-        FormsModule
+        FormsModule,
+        DatePickerModule
     ],
     declarations: [
         EncountersManagementComponent

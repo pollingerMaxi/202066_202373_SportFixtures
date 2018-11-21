@@ -19,7 +19,7 @@ export class EncounterService extends BaseService {
         return await this.post(AppSettings.ApiEndpoints.addSport, encounter);
     }
 
-    public async getEncounters(): Promise<any> {
+    public async getEncounters(): Promise<Encounter[]> {
         return await this.getAll(AppSettings.ApiEndpoints.getEncounters);
     }
 

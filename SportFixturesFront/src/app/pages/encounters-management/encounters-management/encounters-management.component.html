@@ -25,7 +25,7 @@
           <div class="panel-body">
             <div class="form-group">
               <label for="selectedSportName">Encounter date</label>
-              <input id="selectedSportName" class="form-control" type="text">
+              <ejs-datepicker id="datepicker" [format]='dateFormat' width='245px' [(value)]='selectedEncounter.date' (change)='selectedEncounter.date = $event.value'></ejs-datepicker>
             </div>
             <div class="form-group">
               <label for="teams">Teams</label>
@@ -43,24 +43,30 @@
         </div>
       </div>
       <div class="dividerRight"></div>
-
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-          <div class="white-box">
-            <div class="panel-body">
-              <div class="form-group">
-                <label for="encounterDate">Encounter Date</label>
-                <input id="encounterDate" class="form-control" type="text" [(ngModel)]="encounter.date">
-              </div>
-              <div class="form-group">
-                <label for="encounterTeams">Teams</label>
-                <br>
-                
-              </div>
-              <hr />
-              <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addEncounter(encounter)">Add sport</a>
+        <div class="white-box">
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="encounterDate">Encounter Date</label>
+              <input id="encounterDate" class="form-control" type="text" [(ngModel)]="encounter.date">
             </div>
+            <div class="form-group">
+              <label for="encounterMode">Sport</label>
+              <br>
+              <p-dropdown [options]="sports" [(ngModel)]="selectedSport" optionLabel="name" autoWidth="false" [style]="{'width':'100%'}"
+                placeholder="Select a Sport" (onChange)="onChange($event)"></p-dropdown>
+            </div>
+            <div class="form-group" *ngIf="teams.length > 0">
+              <label for="teamsList">Teams for the Encounter</label>
+              <br>
+              <p-listbox [options]="teams" [(ngModel)]="selectedTeams" optionLabel="name" multiple="multiple" checkbox="checkbox"></p-listbox>
+            </div>
+            <hr />
+            <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addEncounter(encounter)">Add
+              sport</a>
           </div>
         </div>
+      </div>
     </div>
   </div>
 </div>
