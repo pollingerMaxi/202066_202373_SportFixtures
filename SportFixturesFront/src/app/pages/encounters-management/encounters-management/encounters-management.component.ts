@@ -36,14 +36,7 @@ export class EncountersManagementComponent implements OnInit {
   }
 
   public addEncounter(encounter: Encounter) {
-    console.log(encounter);
-    let et = new Array<EncountersTeams>();
-    this.selectedTeams.forEach(team => {
-      let t = new EncountersTeams();
-      t.team = team;
-      t.teamId = parseInt(team.id);
-      et.push(t);
-    });
+    let et = this.makeEncountersTeamsForEncounter();
     encounter.teams = et;
     this.encounterService.addEncounter(encounter)
       .then(response => {
@@ -52,6 +45,17 @@ export class EncountersManagementComponent implements OnInit {
       .catch(error => {
         this.toasterService.pop("error", "Error!", error._body);
       });
+  }
+
+  private makeEncountersTeamsForEncounter() {
+    let et = new Array<EncountersTeams>();
+    this.selectedTeams.forEach(team => {
+      let t = new EncountersTeams();
+      t.team = team;
+      t.teamId = parseInt(team.id);
+      et.push(t);
+    });
+    return et;
   }
 
   private async getEncounters() {
@@ -72,7 +76,6 @@ export class EncountersManagementComponent implements OnInit {
     t.forEach(team => {
       if (team.sportId == sportId) {
         this.teams.push(team);
-        console.log(team);
       }
     });
   }
