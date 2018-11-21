@@ -15,7 +15,6 @@ namespace SportFixtures.FixtureGenerator
         /// <param name="date"></param>
         /// <returns></returns>
         EncounterMode encounterMode {get; set;}
-        string algorithmName { get; set; }
         ICollection<Encounter> GenerateFixture(IEnumerable<Team> teams, DateTime date);
     }
 }

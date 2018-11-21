@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SportFixtures.Exceptions.FixtureSelectorExceptions;
 
 namespace SportFixtures.Portal.Controllers
 {
@@ -52,7 +53,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPost("generate/")]
-        //[AuthorizedRoles(Role.Admin)]
+        [AuthorizedRoles(Role.Admin)]
         public ActionResult<ICollection<FixtureEncounterDTO>> GenerateFixture([FromBody]FixtureDTO data)
         {
             if (!ModelState.IsValid)
@@ -77,6 +78,14 @@ namespace SportFixtures.Portal.Controllers
                 return NotFound(e.Message);
             }
             catch (NotEnoughTeamsForEncounterException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (AlgorithmDoesNotExistException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (ThereAreNoAlgorithmsException e)
             {
                 return NotFound(e.Message);
             }

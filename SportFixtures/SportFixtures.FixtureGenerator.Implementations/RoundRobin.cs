@@ -13,13 +13,11 @@ namespace SportFixtures.FixtureGenerator.Implementations
     {
         private IEncounterBusinessLogic encounterBL;
         public EncounterMode encounterMode { get; set; }
-        public string algorithmName { get; set; }
 
         public RoundRobin(IEncounterBusinessLogic encounterBL)
         {
             this.encounterBL = encounterBL;
             this.encounterMode = EncounterMode.Double;
-            this.algorithmName = "Round Robin";
         }
 
         public ICollection<Encounter> GenerateFixture(IEnumerable<Team> teams, DateTime date)

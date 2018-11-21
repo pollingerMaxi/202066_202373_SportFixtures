@@ -14,13 +14,11 @@ namespace SportFixtures.FixtureGenerator.Implementations
     {
         private IEncounterBusinessLogic encounterBL;
         public EncounterMode encounterMode { get; set; }
-        public string algorithmName { get; set; }
 
         public FreeForAll(IEncounterBusinessLogic encounterBL)
         {
             this.encounterBL = encounterBL;
             this.encounterMode = EncounterMode.Double;
-            this.algorithmName = "Free For All";
         }
 
         public ICollection<Encounter> GenerateFixture(IEnumerable<Team> teams, DateTime date)

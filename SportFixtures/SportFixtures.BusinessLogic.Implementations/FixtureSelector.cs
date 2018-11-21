@@ -8,6 +8,7 @@ using SportFixtures.Data.Entities;
 using SportFixtures.Data;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.FixtureGenerator;
+using SportFixtures.Exceptions.FixtureSelectorExceptions;
 
 namespace SportFixtures.BusinessLogic.Implementations
 {
@@ -33,6 +34,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         }
 
         public ICollection<string> GetAlgorithmNames(){
+            LoadAlgorithms();
             ICollection<string> algorithms = new List<string>();
             foreach(Type type in implementations){
                 algorithms.Add(type.Name);
@@ -42,12 +44,21 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void CreateInstance(string name, IEncounterBusinessLogic encounterBL)
         {
+            if(implementations.Count() == 0)
+            {
+                throw new ThereAreNoAlgorithmsException();
+            }
             Type fixtureToInstance = implementations.FirstOrDefault(f => f.Name.Equals(name));
+            if(fixtureToInstance is null)
+            {
+                throw new AlgorithmDoesNotExistException();
+            }
             this.fixtureGenerator = (IFixtureGenerator)Activator.CreateInstance(fixtureToInstance, new object[] { encounterBL });
         }
 
         private void LoadAlgorithms()
         {
+            implementations.Clear();
             try
             {
                 DirectoryInfo assembliesDirectory = new DirectoryInfo(assemblyPath);
@@ -63,7 +74,6 @@ namespace SportFixtures.BusinessLogic.Implementations
                     {
                         if (typeof(IFixtureGenerator).IsAssignableFrom(type))
                         {
-                            //IFixtureGenerator algorithm = (IFixtureGenerator)Activator.CreateInstance(type);
                             implementations.Add(type);
                         }
                     }
@@ -71,19 +81,19 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
             catch (Exception)
             {
-
+              
             }
         }
 
-        private List<string> GetAlgorithms(List<Type> implementations, EncounterMode encounterMode)
+        private List<string> GetAlgorithmsByEncounterMode(List<Type> implementations, EncounterMode encounterMode)
         {
             List<string> types = new List<string>();
 
             foreach (Type type in implementations)
-                // if(type.GetProperty("EncounterMode").Equals(encounterMode))
-                // {
+                if(type.GetProperty("EncounterMode").Equals(encounterMode))
+                {
                     types.Add(type.Name);
-                // }
+                }
 
             return types;
         }
