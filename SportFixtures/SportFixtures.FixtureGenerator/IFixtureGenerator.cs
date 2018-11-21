@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using SportFixtures.Data;
 using SportFixtures.Data.Entities;
-using SportFixtures.Data;
+using SportFixtures.Data.Enums;
 
 namespace SportFixtures.FixtureGenerator
 {
@@ -14,7 +13,6 @@ namespace SportFixtures.FixtureGenerator
         /// <param name="teams"></param>
         /// <param name="date"></param>
         /// <returns></returns>
-        EncounterMode encounterMode {get; set;}
         ICollection<Encounter> GenerateFixture(IEnumerable<Team> teams, DateTime date);
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using SportFixtures.Data.Entities;
-using SportFixtures.Data;
 
 namespace SportFixtures.BusinessLogic.Interfaces
 {

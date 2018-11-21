@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using SportFixtures.Data.Entities;
-using SportFixtures.Data;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.FixtureGenerator;
 using SportFixtures.Exceptions.FixtureSelectorExceptions;
+using SportFixtures.Data.Enums;
 
 namespace SportFixtures.BusinessLogic.Implementations
 {

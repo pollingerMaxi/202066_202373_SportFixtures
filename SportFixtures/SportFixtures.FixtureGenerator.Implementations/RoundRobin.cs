@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Entities;
-using SportFixtures.Data;
 using SportFixtures.Exceptions.EncounterExceptions;
+using SportFixtures.Data.Enums;
 
 namespace SportFixtures.FixtureGenerator.Implementations
 {
     public class RoundRobin : IFixtureGenerator
     {
         private IEncounterBusinessLogic encounterBL;
-        public EncounterMode encounterMode { get; set; }
 
         public RoundRobin(IEncounterBusinessLogic encounterBL)
         {
             this.encounterBL = encounterBL;
-            this.encounterMode = EncounterMode.Double;
         }
 
         public ICollection<Encounter> GenerateFixture(IEnumerable<Team> teams, DateTime date)
