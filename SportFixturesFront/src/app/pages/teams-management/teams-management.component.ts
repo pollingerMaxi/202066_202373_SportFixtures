@@ -18,7 +18,7 @@ export class TeamsManagementComponent implements OnInit {
   public sports: Sport[];
   public selectedSport: Sport;
   public uploadedFiles: any[] = [];
-  public order: Order;
+  public order: boolean = true;
 
   constructor(
     private teamService: TeamService,
