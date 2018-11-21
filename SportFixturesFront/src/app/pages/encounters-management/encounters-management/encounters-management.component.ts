@@ -37,13 +37,13 @@ export class EncountersManagementComponent implements OnInit {
 
   public addEncounter(encounter: Encounter) {
     console.log(encounter);
-    // this.encounterService.addEncounter(encounter)
-    //   .then(response => {
-    //     this.toasterService.pop("success", "Success!", "Sport successfully added!");
-    //   })
-    //   .catch(error => {
-    //     this.toasterService.pop("error", "Error!", error._body);
-    //   });
+    this.encounterService.addEncounter(encounter)
+      .then(response => {
+        this.toasterService.pop("success", "Success!", "Encounter successfully added!");
+      })
+      .catch(error => {
+        this.toasterService.pop("error", "Error!", error._body);
+      });
   }
 
   private async getEncounters() {
@@ -69,20 +69,20 @@ export class EncountersManagementComponent implements OnInit {
     });
   }
 
-  public updateSport(encounter: Encounter) {
+  public updateEncounter(encounter: Encounter) {
     this.encounterService.updateEncounter(encounter)
       .then(response => {
-        this.toasterService.pop("success", "Success!", "Sport successfully updated!");
+        this.toasterService.pop("success", "Success!", "Encounter successfully updated!");
       })
       .catch(error => {
         this.toasterService.pop("error", "Error!", error._body);
       });
   }
 
-  public deleteSport(id: string) {
+  public deleteEncounter(id: string) {
     this.encounterService.deleteEncounter(id)
       .then(response => {
-        this.toasterService.pop("success", "Success!", "Sport successfully deleted!");
+        this.toasterService.pop("success", "Success!", "Encounter successfully deleted!");
       })
       .catch(error => {
         this.toasterService.pop("error", "Error!", error._body);
