@@ -25,13 +25,13 @@
           <div class="panel-body">
             <div class="form-group">
               <label for="selectedSportName">Encounter date</label>
-              <ejs-datepicker id="datepicker" [format]='dateFormat' width='245px' [(value)]='selectedEncounter.date' (change)='selectedEncounter.date = $event.value'></ejs-datepicker>
+              <ejs-datepicker id="datepicker" [format]='dateFormat' [(value)]='selectedEncounter.date' (change)='selectedEncounter.date = $event.value'></ejs-datepicker>
             </div>
             <div class="form-group">
               <label for="teams">Teams</label>
               <br />
               <div>
-                <p-dropdown [options]="selectedEncounter.teams" optionLabel="name" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+                <p-listbox [options]="selectedEncounter.teams" [(ngModel)]="selectedEncounter.teams" optionLabel="name" disabled></p-listbox>
               </div>
             </div>
             <hr />
@@ -48,7 +48,7 @@
           <div class="panel-body">
             <div class="form-group">
               <label for="encounterDate">Encounter Date</label>
-              <input id="encounterDate" class="form-control" type="text" [(ngModel)]="encounter.date">
+              <ejs-datepicker id="datepicker" [format]='dateFormat' (change)='encounter.date = $event.value'></ejs-datepicker>
             </div>
             <div class="form-group">
               <label for="encounterMode">Sport</label>
@@ -59,7 +59,8 @@
             <div class="form-group" *ngIf="teams.length > 0">
               <label for="teamsList">Teams for the Encounter</label>
               <br>
-              <p-listbox [options]="teams" [(ngModel)]="selectedTeams" optionLabel="name" multiple="multiple" checkbox="checkbox"></p-listbox>
+              <p-listbox [options]="teams" [(ngModel)]="selectedTeams" optionLabel="name" multiple="multiple" checkbox="checkbox"
+                (onChange)="encounter.teams = selectedTeams"></p-listbox>
             </div>
             <hr />
             <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addEncounter(encounter)">Add

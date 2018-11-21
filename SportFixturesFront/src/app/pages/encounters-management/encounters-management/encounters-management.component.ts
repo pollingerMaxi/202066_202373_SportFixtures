@@ -36,13 +36,14 @@ export class EncountersManagementComponent implements OnInit {
   }
 
   public addEncounter(encounter: Encounter) {
-    this.encounterService.addEncounter(encounter)
-      .then(response => {
-        this.toasterService.pop("success", "Success!", "Sport successfully added!");
-      })
-      .catch(error => {
-        this.toasterService.pop("error", "Error!", error._body);
-      });
+    console.log(encounter);
+    // this.encounterService.addEncounter(encounter)
+    //   .then(response => {
+    //     this.toasterService.pop("success", "Success!", "Sport successfully added!");
+    //   })
+    //   .catch(error => {
+    //     this.toasterService.pop("error", "Error!", error._body);
+    //   });
   }
 
   private async getEncounters() {
@@ -55,6 +56,7 @@ export class EncountersManagementComponent implements OnInit {
 
   onChange(event) {
     this.getTeamsForSport(this.selectedSport.id);
+    this.encounter.sportId = this.selectedSport.id;
   }
 
   private async getTeamsForSport(sportId: string) {
