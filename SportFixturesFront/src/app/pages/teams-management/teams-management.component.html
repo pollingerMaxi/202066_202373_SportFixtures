@@ -11,8 +11,10 @@
         <div class="panel-body">
           <div class="form-group">
             <label for="teamsList">Registered teams</label>
-            <br>
-            <p-listbox [options]="teams" [(ngModel)]="selectedTeam" optionLabel="name" (click)="getSport()"></p-listbox>
+            <br />
+            <p-inputSwitch (onChange)="onChange($event)" [(ngModel)]="order"></p-inputSwitch>
+            <label for="order">Order - <span *ngIf="order">Ascending</span><span *ngIf="!order">Descending</span></label>
+            <p-listbox [(options)]="teams" [(ngModel)]="selectedTeam" optionLabel="name" (click)="getSport()" filter="true"></p-listbox>
           </div>
           <hr />
         </div>

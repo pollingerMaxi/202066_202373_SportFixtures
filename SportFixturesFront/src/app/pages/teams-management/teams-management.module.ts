@@ -6,8 +6,8 @@ import { ListboxModule } from "primeng/listbox";
 import { FormsModule } from "@angular/forms";
 import { AppSettings } from "src/app/config/appSettings";
 import { NgModule } from "@angular/core";
-import { SportService, TeamService, SessionService } from "src/app/services";
 import { FileUploadModule } from 'primeng/fileupload';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 const routes: Routes = [
     {
@@ -27,13 +27,14 @@ const routes: Routes = [
         DropdownModule,
         ListboxModule,
         FormsModule,
-        FileUploadModule
+        FileUploadModule,
+        InputSwitchModule
     ],
     declarations: [
         TeamsManagementComponent
     ],
     providers: [
-        //SportService, TeamService, SessionService
+
     ],
     exports: [
         TeamsManagementComponent

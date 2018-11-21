@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Team, Sport, Favorite } from 'src/app/shared/models';
+import { Team, Sport, Favorite, Order } from 'src/app/shared/models';
 import { SessionService, TeamService, SportService } from 'src/app/services';
 import { ToasterService } from 'angular2-toaster';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -18,6 +18,7 @@ export class TeamsManagementComponent implements OnInit {
   public sports: Sport[];
   public selectedSport: Sport;
   public uploadedFiles: any[] = [];
+  public order: Order;
 
   constructor(
     private teamService: TeamService,
@@ -103,6 +104,14 @@ export class TeamsManagementComponent implements OnInit {
       .catch(error => {
         this.toasterService.pop("error", "Error!", error._body);
       });
+  }
+
+  async onChange(event) {
+    if (event.checked) {
+      this.teams = await this.teamService.getTeamsFiltered(Order.Ascending);
+    } else {
+      this.teams = await this.teamService.getTeamsFiltered(Order.Descending);
+    }
   }
 
 }
