@@ -185,6 +185,36 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
+        public void UnfollowTeamTest()
+        {
+            var team = new Team();
+            var teamBL = new TeamBusinessLogic(mockTeamRepo.Object, NO_BUSINESS_LOGIC);
+            var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL, mockUTRepo.Object);
+            mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
+            mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
+            userBL.FollowTeam(userWithAllData.Id, team.Id);
+            userBL.UnfollowTeam(userWithAllData.Id, team.Id);
+            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Exactly(2));
+            mockTeamRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Exactly(2));
+            mockUTRepo.Verify(x => x.Delete(It.IsAny<int>()), Times.Once());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserDoesNotFollowTeamException))]
+        public void UnfollowTeamShouldReturnExceptionTest()
+        {
+            var team = new Team();
+            var teamBL = new TeamBusinessLogic(mockTeamRepo.Object, NO_BUSINESS_LOGIC);
+            var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL, mockUTRepo.Object);
+            mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
+            mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
+            userBL.UnfollowTeam(userWithAllData.Id, 123);
+            mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once());
+            mockTeamRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once());
+            mockUTRepo.Verify(x => x.Delete(It.IsAny<int>()), Times.Once());
+        }
+
+        [TestMethod]
         public void UpdateUserTest()
         {
             userList.Add(adminWithAllData);

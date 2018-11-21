@@ -172,6 +172,37 @@ namespace SportFixtures.Portal.Controllers
             }
         }
 
+        [HttpPost("unfollow")]
+        public ActionResult UnfollowTeam([FromBody]UsersTeams userteam)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                userBusinessLogic.UnfollowTeam(userteam.UserId, userteam.TeamId);
+                return Ok("{\"response\": \"ok\"}");
+            }
+            catch (TeamDoesNotExistsException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (UserDoesNotExistException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (UserDoesNotFollowTeamException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [HttpGet("favorites/{userId}")]
         public ActionResult GetFavorites([FromRoute]int userId)
         {

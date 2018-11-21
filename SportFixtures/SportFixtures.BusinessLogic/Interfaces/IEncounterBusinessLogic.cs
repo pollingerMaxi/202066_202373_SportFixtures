@@ -88,14 +88,14 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// <summary>
         /// Adds results for a given encounter.
         /// </summary>
-        /// <param name="date"></param>
+        /// <param name="results"></param>
         /// <returns></returns>
         void AddResults(ICollection<PositionInEncounter> results, int encounterId);
 
         /// <summary>
         /// Adds many encounters.
         /// </summary>
-        /// <param name="date"></param>
+        /// <param name="encounters"></param>
         /// <returns></returns>
         void AddMany(ICollection<Encounter> encounters);
     }
