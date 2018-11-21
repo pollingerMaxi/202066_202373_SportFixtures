@@ -21,14 +21,11 @@ namespace SportFixtures.Portal.Controllers
     public class EncounterController : ControllerBase
     {
         private IEncounterBusinessLogic encounterBusinessLogic;
-        private IFixtureSelector fixtureSelector;
-        private ISportBusinessLogic sportBL; //temporal
         private readonly IMapper mapper;
 
-        public EncounterController(IEncounterBusinessLogic encounterBL, IFixtureSelector fixtureSelector, IMapper mapper)
+        public EncounterController(IEncounterBusinessLogic encounterBL, IMapper mapper)
         {
             this.encounterBusinessLogic = encounterBL;
-            this.fixtureSelector = fixtureSelector;
             this.mapper = mapper;
         }
 

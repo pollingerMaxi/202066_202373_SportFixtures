@@ -40,10 +40,10 @@ namespace SportFixtures.BusinessLogic.Implementations
             return algorithms;
         }
 
-        public void CreateInstance(string name)
+        public void CreateInstance(string name, IEncounterBusinessLogic encounterBL)
         {
             Type fixtureToInstance = implementations.FirstOrDefault(f => f.Name.Equals(name));
-            this.fixtureGenerator = (IFixtureGenerator)Activator.CreateInstance(fixtureToInstance);
+            this.fixtureGenerator = (IFixtureGenerator)Activator.CreateInstance(fixtureToInstance, new object[] { encounterBL });
         }
 
         private void LoadAlgorithms()
@@ -69,7 +69,7 @@ namespace SportFixtures.BusinessLogic.Implementations
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
             }

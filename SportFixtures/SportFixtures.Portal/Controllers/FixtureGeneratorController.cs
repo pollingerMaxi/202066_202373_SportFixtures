@@ -20,18 +20,20 @@ namespace SportFixtures.Portal.Controllers
     public class FixtureGeneratorController : ControllerBase
     {
         private IFixtureSelector fixtureSelector;
+        private IEncounterBusinessLogic encounterBL;
         private ISportBusinessLogic sportBL;
         private readonly IMapper mapper;
 
-        public FixtureGeneratorController(IFixtureSelector fixtureSelector, ISportBusinessLogic sportBL, IMapper mapper)
+        public FixtureGeneratorController(IFixtureSelector fixtureSelector, IEncounterBusinessLogic encounterBL, ISportBusinessLogic sportBL, IMapper mapper)
         {
             this.fixtureSelector = fixtureSelector;
+            this.encounterBL = encounterBL;
             this.sportBL = sportBL;
             this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<ICollection<FixtureDTO>> GetAllFixtureGenerators()
+        public ActionResult<ICollection<string>> GetAllFixtureGenerators()
         {
             if (!ModelState.IsValid)
             {
@@ -40,7 +42,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var fixtures = mapper.Map<FixtureDTO[]>(fixtureSelector.GetAlgorithmNames());
+                var fixtures = fixtureSelector.GetAlgorithmNames();
                 return Ok(fixtures);
             }
             catch (Exception e)
@@ -50,8 +52,8 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpPost("generate/")]
-        [AuthorizedRoles(Role.Admin)]
-        public ActionResult<ICollection<EncounterDTO>> GenerateFixture([FromBody]FixtureDTO data)
+        //[AuthorizedRoles(Role.Admin)]
+        public ActionResult<ICollection<FixtureEncounterDTO>> GenerateFixture([FromBody]FixtureDTO data)
         {
             if (!ModelState.IsValid)
             {
@@ -60,9 +62,10 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                fixtureSelector.CreateInstance(data.AlgorithmName);
-                ICollection<Team> teams = sportBL.GetById(data.SportId).Teams;
-                var encounters = mapper.Map<EncounterDTO[]>(fixtureSelector.GenerateFixture(teams, data.Date));
+                fixtureSelector.CreateInstance(data.AlgorithmName, encounterBL);
+                var teams = sportBL.GetById(data.SportId).Teams;
+                var encounters = mapper.Map<FixtureEncounterDTO[]>(fixtureSelector.GenerateFixture(teams, data.Date));
+                var response = Ok(encounters);
                 return Ok(encounters);
             }
             catch (SportDoesNotExistException e)

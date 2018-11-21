@@ -6,6 +6,6 @@ namespace SportFixtures.Portal.DTOs
 {
     public class FixtureGeneratorDTO
     {
-        public EncounterMode encounterMode { get; set; }
+        public string Name { get; set; }
     }
 }
