@@ -1,12 +1,15 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
+using SportFixtures.BusinessLogic.Implementations;
+using SportFixtures.Data;
 using SportFixtures.Data.Entities;
 using SportFixtures.Data.Enums;
 using SportFixtures.Exceptions.EncounterExceptions;
 using SportFixtures.Exceptions.SportExceptions;
 using SportFixtures.Portal.DTOs;
 using SportFixtures.Portal.Filters;
+using SportFixtures.FixtureGenerator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -208,38 +211,6 @@ namespace SportFixtures.Portal.Controllers
                 return Ok(encounters);
             }
             catch (NoEncountersFoundForDateException e)
-            {
-                return NotFound(e.Message);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
-        [HttpPost("fixture/")]
-        [AuthorizedRoles(Role.Admin)]
-        public ActionResult<ICollection<EncounterDTO>> GenerateFixture([FromBody]FixtureDTO data)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                var encounters = mapper.Map<EncounterDTO[]>(encounterBusinessLogic.GenerateFixture(data.Date, data.SportId, data.Algorithm));
-                return Ok(encounters);
-            }
-            catch (SportDoesNotExistException e)
-            {
-                return NotFound(e.Message);
-            }
-            catch (FixtureGeneratorAlgorithmDoesNotExist e)
-            {
-                return NotFound(e.Message);
-            }
-            catch (NotEnoughTeamsForEncounterException e)
             {
                 return NotFound(e.Message);
             }

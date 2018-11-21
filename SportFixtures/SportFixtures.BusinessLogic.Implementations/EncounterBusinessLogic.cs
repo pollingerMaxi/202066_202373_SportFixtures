@@ -178,24 +178,24 @@ namespace SportFixtures.BusinessLogic.Implementations
             return false;
         }
 
-        public ICollection<Encounter> GenerateFixture(DateTime date, int sportId, Algorithm fixtureGenerator)
-        {
-            ICollection<Team> teams = sportBL.GetById(sportId).Teams;
-            IFixtureGenerator generator = null;
-            if (fixtureGenerator == Algorithm.FreeForAll)
-            {
-                generator = new FreeForAll(this);
-            }
-            else if (fixtureGenerator == Algorithm.RoundRobin)
-            {
-                generator = new RoundRobin(this);
-            }
-            else
-            {
-                throw new FixtureGeneratorAlgorithmDoesNotExist();
-            }
-            return generator.GenerateFixture(teams, date);
-        }
+        //public ICollection<Encounter> GenerateFixture(DateTime date, int sportId, Algorithm fixtureGenerator)
+        //{
+        //    ICollection<Team> teams = sportBL.GetById(sportId).Teams;
+        //    IFixtureGenerator generator = null;
+        //    if (fixtureGenerator == Algorithm.FreeForAll)
+        //    {
+        //        generator = new FreeForAll(this);
+        //    }
+        //    else if (fixtureGenerator == Algorithm.RoundRobin)
+        //    {
+        //        generator = new RoundRobin(this);
+        //    }
+        //    else
+        //    {
+        //        throw new FixtureGeneratorAlgorithmDoesNotExist();
+        //    }
+        //    return generator.GenerateFixture(teams, date);
+        //}
 
         private void ValidateResults(Encounter encounter)
         {

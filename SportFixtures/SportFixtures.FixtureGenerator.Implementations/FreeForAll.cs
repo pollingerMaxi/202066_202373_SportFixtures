@@ -6,17 +6,21 @@ using SportFixtures.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using SportFixtures.Exceptions.EncounterExceptions;
+using SportFixtures.Data;
 
 namespace SportFixtures.FixtureGenerator.Implementations
 {
     public class FreeForAll : IFixtureGenerator
     {
         private IEncounterBusinessLogic encounterBL;
+        public EncounterMode encounterMode { get; set; }
 
         public FreeForAll(IEncounterBusinessLogic encounterBL)
         {
             this.encounterBL = encounterBL;
+            this.encounterMode = EncounterMode.Double;
         }
+
         public ICollection<Encounter> GenerateFixture(IEnumerable<Team> teams, DateTime date)
         {
             if (teams.Count() < 2)

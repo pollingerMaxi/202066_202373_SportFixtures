@@ -28,46 +28,38 @@ namespace SportFixtures.BusinessLogic.Implementations
             foreach (Team team in teams)
             {
                 List<Encounter> encounters = encounterBL.GetAllEncountersOfTeam(team.Id).ToList();
+                Score position = new Score() { Team = team };
                 foreach (Encounter encounter in encounters)
                 {
-                    Score position = new Score() { Team = team };
                     int teamPosition = encounter.Results.First(t => t.TeamId == team.Id).Position;
                     if (sport.EncounterMode == EncounterMode.Double)
                     {
                         if (teamPosition == 2)
                         {
-                            position.Points = 3;
+                            position.Points += 3;
                         }
                         else if (teamPosition == 1)
                         {
-                            position.Points = 1;
-                        }
-                        else
-                        {
-                            position.Points = 0;
+                            position.Points += 1;
                         }
                     }
                     else if (sport.EncounterMode == EncounterMode.Multiple)
                     {
                         if (teamPosition == 1)
                         {
-                            position.Points = 3;
+                            position.Points += 3;
                         }
                         else if (teamPosition == 2)
                         {
-                            position.Points = 2;
+                            position.Points += 2;
                         }
                         else if (teamPosition == 3)
                         {
-                            position.Points = 1;
-                        }
-                        else
-                        {
-                            position.Points = 0;
+                            position.Points += 1;
                         }
                     }
-                    positions.Add(position);
                 }
+                positions.Add(position);
             }
             return positions;
         }

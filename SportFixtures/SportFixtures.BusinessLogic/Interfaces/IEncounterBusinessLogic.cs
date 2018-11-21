@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using SportFixtures.Data.Entities;
-using SportFixtures.FixtureGenerator;
 
 namespace SportFixtures.BusinessLogic.Interfaces
 {
@@ -86,14 +85,14 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// <returns></returns>
         IEnumerable<Encounter> GetAllEncountersOfTheDay(DateTime date);
 
-        /// <summary>
-        /// Generates a fixture of encounters with given algorithm and date.
-        /// </summary>
-        /// <param name="date"></param>
-        /// <param name="sportId"></param>
-        /// <param name="fixtureGenerator"></param>
-        /// <returns></returns>
-        ICollection<Encounter> GenerateFixture(DateTime date, int sportId, Algorithm fixtureGenerator);
+        ///// <summary>
+        ///// Generates a fixture of encounters with given algorithm and date.
+        ///// </summary>
+        ///// <param name="date"></param>
+        ///// <param name="sportId"></param>
+        ///// <param name="fixtureGenerator"></param>
+        ///// <returns></returns>
+        //ICollection<Encounter> GenerateFixture(DateTime date, int sportId, Algorithm fixtureGenerator);
 
         void AddResults(ICollection<PositionInEncounter> results, int encounterId);
     }
