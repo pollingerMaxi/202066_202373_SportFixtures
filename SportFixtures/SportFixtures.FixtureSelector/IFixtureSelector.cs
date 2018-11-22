@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Entities;
 
-namespace SportFixtures.BusinessLogic.Interfaces
+namespace SportFixtures.FixtureSelector
 {
     public interface IFixtureSelector
     {
@@ -18,7 +19,7 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// Returns a list with the algorithms names by encounter mode.
         /// </summary>
         /// <returns></returns>
-        ICollection<string> GetAlgorithmNames();
+        ICollection<FixtureAlgorithm> GetAlgorithmNames();
 
         /// <summary>
         /// Creates an instance of an algorithm by its name.

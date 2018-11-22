@@ -1,12 +1,11 @@
 using System;
+using SportFixtures.Data;
 using SportFixtures.FixtureGenerator;
 
 namespace SportFixtures.Portal.DTOs
 {
-    public class FixtureDTO
+    public class FixtureGeneratorDTO
     {
-        public DateTime Date { get; set; }
-        public int SportId { get; set; }
-        public string AlgorithmName { get; set; }
+        public string Name { get; set; }
     }
 }

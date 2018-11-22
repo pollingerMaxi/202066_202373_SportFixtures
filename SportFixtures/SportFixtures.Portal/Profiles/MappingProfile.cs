@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SportFixtures.Data.Entities;
+using SportFixtures.FixtureSelector;
 using SportFixtures.Portal.DTOs;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,9 @@ namespace SportFixtures.Portal.Profiles
                 .ForMember(e => e.Name, src => src.MapFrom(u => u.Name));
             CreateMap<SportCreateDTO, Sport>()
                 .ForMember(e => e.Name, src => src.MapFrom(u => u.Name));
+
+            CreateMap<FixtureAlgorithm, FixtureGeneratorDTO>();
+            CreateMap<FixtureGeneratorDTO, FixtureAlgorithm>();
         }
     }
 }

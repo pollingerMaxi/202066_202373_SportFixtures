@@ -18,8 +18,8 @@
           <div class="form-group">
             <label for="algorithms">Algorithms</label>
             <br>
-            <p-dropdown [options]="algorithms" [(ngModel)]="selectedAlgorithm" autoWidth="false" [style]="{'width':'100%'}"
-              placeholder="Select an Algorithm"></p-dropdown>
+            <p-dropdown [(options)]="algorithms" autoWidth="false" [style]="{'width':'100%'}"
+              placeholder="Select an Algorithm" optionLabel="name"></p-dropdown>
           </div>
           <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="generateFixture()">Generate
             fixture</a>

@@ -6,6 +6,7 @@ import { AppSettings } from "src/app/config/appSettings";
 import { ListboxModule } from "primeng/listbox";
 import { DropdownModule } from "primeng/dropdown";
 import { FixtureGeneratorComponent } from "./fixture-generator/fixture-generator.component";
+import { FixtureService } from "src/app/services";
 
 const routes: Routes = [
     {
@@ -30,7 +31,7 @@ const routes: Routes = [
         FixtureGeneratorComponent
     ],
     providers: [
-
+        FixtureService
     ],
     exports: [
         FixtureGeneratorComponent
