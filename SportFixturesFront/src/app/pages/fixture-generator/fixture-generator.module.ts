@@ -7,6 +7,7 @@ import { ListboxModule } from "primeng/listbox";
 import { DropdownModule } from "primeng/dropdown";
 import { FixtureGeneratorComponent } from "./fixture-generator/fixture-generator.component";
 import { FixtureService } from "src/app/services";
+import { DatePickerModule } from "@syncfusion/ej2-angular-calendars";
 
 const routes: Routes = [
     {
@@ -25,7 +26,8 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         FormsModule,
         ListboxModule,
-        DropdownModule
+        DropdownModule,
+        DatePickerModule
     ],
     declarations: [
         FixtureGeneratorComponent

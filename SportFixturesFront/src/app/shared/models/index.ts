@@ -11,3 +11,5 @@ export * from './encountersTeams';
 export * from './positionInEncounter';
 export * from './results';
 export * from './order';
+export * from './fixtureEncounter';
+export * from './fixture';
