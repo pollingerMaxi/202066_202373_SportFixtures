@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Sport } from '../../shared/models/sport';
-import { EncounterMode } from '../../shared/models/encounterMode';
 import { SelectItem } from 'primeng/components/common/selectitem';
 import { ToasterService } from 'angular2-toaster';
-import { SportService, SessionService } from '../../services';
+import { SportService, SessionService } from '../../../services';
+import { Sport, EncounterMode } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-sports-management',

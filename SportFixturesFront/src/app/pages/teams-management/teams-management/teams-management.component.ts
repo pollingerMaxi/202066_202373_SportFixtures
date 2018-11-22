@@ -114,4 +114,17 @@ export class TeamsManagementComponent implements OnInit {
     }
   }
 
+  public unfollowTeam(team: Team) {
+    let fav = new Favorite();
+    fav.teamId = team.id;
+    fav.userId = this.sessionService.getUser().id;
+    this.teamService.unfollowTeam(fav)
+      .then(response => {
+        this.toasterService.pop("success", "Success!", "No longer following: " + team.name);
+      })
+      .catch(error => {
+        this.toasterService.pop("error", "Error!", error._body);
+      });
+  }
+
 }

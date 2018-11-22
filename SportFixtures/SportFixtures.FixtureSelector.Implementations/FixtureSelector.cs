@@ -9,7 +9,7 @@ using SportFixtures.FixtureGenerator;
 using SportFixtures.Exceptions.FixtureSelectorExceptions;
 using SportFixtures.Data.Enums;
 
-namespace SportFixtures.BusinessLogic.Implementations
+namespace SportFixtures.FixtureSelector.Implementations
 {
     public class FixtureSelector : IFixtureSelector
     {
@@ -32,23 +32,25 @@ namespace SportFixtures.BusinessLogic.Implementations
             return fixtureGenerator.GenerateFixture(teams, date);
         }
 
-        public ICollection<string> GetAlgorithmNames(){
+        public ICollection<FixtureAlgorithm> GetAlgorithmNames()
+        {
             LoadAlgorithms();
-            ICollection<string> algorithms = new List<string>();
-            foreach(Type type in implementations){
-                algorithms.Add(type.Name);
+            ICollection<FixtureAlgorithm> algorithms = new List<FixtureAlgorithm>();
+            foreach (Type type in implementations)
+            {
+                algorithms.Add(new FixtureAlgorithm() { Name = type.Name });
             }
             return algorithms;
         }
 
         public void CreateInstance(string name, IEncounterBusinessLogic encounterBL)
         {
-            if(implementations.Count() == 0)
+            if (implementations.Count() == 0)
             {
                 throw new ThereAreNoAlgorithmsException();
             }
             Type fixtureToInstance = implementations.FirstOrDefault(f => f.Name.Equals(name));
-            if(fixtureToInstance is null)
+            if (fixtureToInstance is null)
             {
                 throw new AlgorithmDoesNotExistException();
             }
@@ -80,7 +82,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             }
             catch (Exception)
             {
-              
+
             }
         }
 
@@ -89,7 +91,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             List<string> types = new List<string>();
 
             foreach (Type type in implementations)
-                if(type.GetProperty("EncounterMode").Equals(encounterMode))
+                if (type.GetProperty("EncounterMode").Equals(encounterMode))
                 {
                     types.Add(type.Name);
                 }

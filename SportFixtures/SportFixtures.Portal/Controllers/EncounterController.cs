@@ -114,7 +114,7 @@ namespace SportFixtures.Portal.Controllers
             {
                 var encounter = mapper.Map<ICollection<Encounter>>(data);
                 encounterBusinessLogic.AddMany(encounter);
-                return Ok(mapper.Map<EncounterDTO>(encounter));
+                return Ok(mapper.Map<ICollection<EncounterDTO>>(encounter));
             }
             catch (EncounterException e)
             {

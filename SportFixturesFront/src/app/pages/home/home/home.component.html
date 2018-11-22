@@ -10,6 +10,9 @@
       <div class="white-box">
         <div class="panel-body">
           <div class="form-group">
+            <div class="spinningwheel" *ngIf="!comments">
+              <div class="css-wheel centered"></div>
+            </div>
             <div *ngIf="comments.length > 0">
               <ng-container *ngFor="let comment of comments">
                 User: {{comment.userId }} - Encounter: {{comment.encounterId }}
@@ -20,7 +23,8 @@
               </ng-container>
             </div>
           </div>
-          <a class="btn btn-primary btn-lg btn-block waves-effect waves-light" routerLink="/comments">Add new comments</a>
+          <a class="btn btn-primary btn-lg btn-block waves-effect waves-light" routerLink="/comments">Add new
+            comments</a>
         </div>
       </div>
     </div>
@@ -30,5 +34,36 @@
     <h3>
       Sports calendar
     </h3>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="white-box">
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="sport">Sport</label>
+            <br>
+            <p-dropdown [options]="sports" [(ngModel)]="selectedSport" autoWidth="false" [style]="{'width':'100%'}"
+              placeholder="Select a Sport" optionLabel="name" (onChange)="getEncountersOfSport()"></p-dropdown>
+          </div>
+          <div class="form-group">
+            <label for="startDate">Pick a date</label>
+            <br>
+            <ejs-datepicker id="startDate" [format]='dateFormat' (change)='updateEncounters($event.value)' [style]="{'width':'50%'}"></ejs-datepicker>
+          </div>
+          <div class="form-group" *ngIf="filteredEncounters.length > 0">
+            <div *ngFor="let enc of filteredEncounters; let i=index">
+                <ng-template #tipContent>Id: {{enc.id}}  -  Teams: Id: {{enc.teams[i].teamId}} and more... </ng-template>
+                <button type="button" class="btn btn-outline-secondary" [ngbTooltip]="tipContent">
+                  {{enc.date}}
+                </button>
+            </div>
+          </div>
+          <div *ngIf="filteredEncounters.length == 0">
+            No encounters for selected date/sport
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

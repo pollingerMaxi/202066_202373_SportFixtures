@@ -1,0 +1,24 @@
+<div class="center">
+  <h3>
+    Encounters for sport report
+  </h3>
+  <hr />
+</div>
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="white-box">
+      <div class="panel-body center">
+        <div class="control-section">
+          <div id="control_wrapper">
+            <p-dropdown [options]="sports" [(ngModel)]="selectedSport" optionLabel="name" autoWidth="false" [style]="{'width':'100%'}"
+              placeholder="Select a Sport" (onChange)="onChange($event)"></p-dropdown>
+          </div>
+        </div>
+        <div class="center">
+          <p-listbox [(options)]="encounters" optionLabel="date" disabled *ngIf="encounters"></p-listbox>
+        </div>
+        <hr />
+      </div>
+    </div>
+  </div>
+</div>

@@ -138,7 +138,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public IEnumerable<Encounter> GetAllEncountersOfSport(int sportId)
         {
-            var encounters = repository.Get(e => e.SportId == sportId, null, "");
+            var encounters = repository.Get(e => e.SportId == sportId, null, "Teams");
             if (encounters.Count() == 0)
             {
                 throw new NoEncountersFoundForSportException();
@@ -201,8 +201,10 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
-        public void AddMany(ICollection<Encounter> encounters){
-            foreach(Encounter encounter in encounters){
+        public void AddMany(ICollection<Encounter> encounters)
+        {
+            foreach (Encounter encounter in encounters)
+            {
                 Validate(encounter);
                 repository.Attach(encounter);
                 repository.Insert(encounter);

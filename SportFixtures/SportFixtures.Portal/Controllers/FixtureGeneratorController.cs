@@ -1,20 +1,15 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
-using SportFixtures.BusinessLogic.Implementations;
-using SportFixtures.Data;
-using SportFixtures.Data.Entities;
 using SportFixtures.Exceptions.EncounterExceptions;
 using SportFixtures.Exceptions.SportExceptions;
 using SportFixtures.Portal.DTOs;
 using SportFixtures.Portal.Filters;
-using SportFixtures.FixtureGenerator;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using SportFixtures.Exceptions.FixtureSelectorExceptions;
 using SportFixtures.Data.Enums;
+using SportFixtures.FixtureSelector;
 
 namespace SportFixtures.Portal.Controllers
 {
@@ -35,7 +30,7 @@ namespace SportFixtures.Portal.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<string>> GetAllFixtureGenerators()
+        public ActionResult<ICollection<FixtureGeneratorDTO>> GetAllFixtureGenerators()
         {
             if (!ModelState.IsValid)
             {
@@ -44,7 +39,7 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var fixtures = fixtureSelector.GetAlgorithmNames();
+                var fixtures = mapper.Map<FixtureGeneratorDTO[]>(fixtureSelector.GetAlgorithmNames());
                 return Ok(fixtures);
             }
             catch (Exception e)

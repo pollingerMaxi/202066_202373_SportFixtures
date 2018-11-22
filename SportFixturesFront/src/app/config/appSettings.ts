@@ -31,6 +31,12 @@ export class AppSettings {
         getEncounters: `${AppSettings.BaseUrl}encounters`,
         addComment: `${AppSettings.BaseUrl}comments`,
         addResults: `${AppSettings.BaseUrl}encounters/results`,
+        unfollowTeam: `${AppSettings.BaseUrl}users/unfollow`,
+        getEncountersOfSport: `${AppSettings.BaseUrl}encounters/sport/`,
+        getFixtureGenerators: `${AppSettings.BaseUrl}fixtures`,
+        generateFixture: `${AppSettings.BaseUrl}fixtures/generate`,
+        addEncountersInBulk: `${AppSettings.BaseUrl}encounters/add_many`,
+        getEncountersOfDay: `${AppSettings.BaseUrl}encounters/bydate/`
     };
 
     public static readonly RouterUrls: any = {
@@ -43,6 +49,7 @@ export class AppSettings {
         positionsTable: "positionsTable",
         encountersManagement: "encountersManagement",
         comments: "comments",
-        resultsManagement: "resultsManagement"
+        resultsManagement: "resultsManagement",
+        fixtureGenerator: "fixtureGenerator"
     };
 }

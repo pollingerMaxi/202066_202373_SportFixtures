@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SportsManagementComponent } from './sports-management.component';
-import { SportService } from '../../services';
+import { SportsManagementComponent } from './sports-management/sports-management.component';
 import { AppSettings } from '../../config/appSettings';
 import { RouterModule, Routes } from '@angular/router';
 import { DropdownModule } from 'primeng/dropdown';

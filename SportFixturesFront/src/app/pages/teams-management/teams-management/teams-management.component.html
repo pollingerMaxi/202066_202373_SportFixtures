@@ -47,6 +47,8 @@
             <hr />
             <a class="btn btn-primary btn-lg btn-block waves-effect waves-light" (click)="followTeam(selectedTeam)">Follow
               team</a>
+            <a class="btn btn-primary btn-lg btn-block waves-effect waves-light" (click)="unfollowTeam(selectedTeam)">Unfollow
+              team</a>
             <br />
             <div *ngIf="sessionService.isAdmin()">
               <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="updateTeam(selectedTeam)">Update

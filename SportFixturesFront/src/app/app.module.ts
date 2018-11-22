@@ -15,7 +15,6 @@ import { TabBarComponent } from './shared/tab-bar/tab-bar.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AuthenticationGuard } from './shared/guards/authentication.guard';
-import { CommentsPageComponent } from './pages/comments-page/comments-page/comments-page.component';
 import { AuthorizationGuard } from './shared/guards/authorization.guard';
 
 const routes: Routes = [
@@ -56,7 +55,7 @@ const routes: Routes = [
   {
     path: AppSettings.RouterUrls.actionsReport,
     loadChildren: './pages/actions-report/actions-report.module#ActionsReportModule',
-    canActivate: [AuthenticationGuard]
+    canActivate: [AuthenticationGuard, AuthorizationGuard]
   },
   {
     path: AppSettings.RouterUrls.positionsTable,
@@ -66,6 +65,11 @@ const routes: Routes = [
     path: AppSettings.RouterUrls.resultsManagement,
     loadChildren: './pages/positions-create/positions-create.module#PositionsCreateModule',
     canActivate: [AuthorizationGuard]
+  },
+  {
+    path: AppSettings.RouterUrls.fixtureGenerator,
+    loadChildren: './pages/fixture-generator/fixture-generator.module#FixtureGeneratorModule',
+    canActivate: [AuthenticationGuard, AuthorizationGuard]
   },
   {
     path: 'logout',

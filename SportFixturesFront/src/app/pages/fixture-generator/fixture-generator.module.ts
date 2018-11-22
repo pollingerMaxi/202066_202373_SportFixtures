@@ -1,22 +1,22 @@
 import { NgModule } from "@angular/core";
-import { HomeComponent } from "./home/home.component";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { AppSettings } from "src/app/config/appSettings";
-import { TableModule } from "primeng/table";
+import { ListboxModule } from "primeng/listbox";
 import { DropdownModule } from "primeng/dropdown";
+import { FixtureGeneratorComponent } from "./fixture-generator/fixture-generator.component";
+import { FixtureService } from "src/app/services";
 import { DatePickerModule } from "@syncfusion/ej2-angular-calendars";
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
     {
         path: '',
-        component: HomeComponent
+        component: FixtureGeneratorComponent
     },
     {
-        path: AppSettings.RouterUrls.teamsManagement,
-        component: HomeComponent
+        path: AppSettings.RouterUrls.fixtureGenerator,
+        component: FixtureGeneratorComponent
     }
 ];
 
@@ -25,20 +25,19 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
         FormsModule,
-        TableModule,
+        ListboxModule,
         DropdownModule,
-        DatePickerModule,
-        NgbModule
+        DatePickerModule
     ],
     declarations: [
-        HomeComponent
+        FixtureGeneratorComponent
     ],
     providers: [
-
+        FixtureService
     ],
     exports: [
-        HomeComponent
+        FixtureGeneratorComponent
     ]
 
 })
-export class HomeModule { }
+export class FixtureGeneratorModule { }

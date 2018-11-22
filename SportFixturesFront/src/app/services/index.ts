@@ -7,3 +7,4 @@ export * from './encounter.service';
 export * from './comment.service';
 export * from './logs.service';
 export * from './positions.service';
+export * from './fixture.service';

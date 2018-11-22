@@ -6,6 +6,10 @@ import { ActionsReportComponent } from './actions-report/actions-report.componen
 import { LogsService } from 'src/app/services';
 import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { FormsModule } from '@angular/forms';
+import { EncounterForSportComponent } from './encounters-for-sport/encounter-for-sport.component';
+import { ListboxModule } from 'primeng/listbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { EncounterForTeamComponent } from './encounter-for-team/encounter-for-team.component';
 
 const routes: Routes = [
     {
@@ -23,10 +27,14 @@ const routes: Routes = [
         CommonModule,
         RouterModule.forChild(routes),
         DateRangePickerModule,
-        FormsModule
+        FormsModule,
+        ListboxModule,
+        DropdownModule
     ],
     declarations: [
-        ActionsReportComponent
+        ActionsReportComponent,
+        EncounterForSportComponent,
+        EncounterForTeamComponent
     ],
     providers: [
         LogsService

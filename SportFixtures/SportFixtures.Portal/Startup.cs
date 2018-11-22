@@ -16,7 +16,7 @@ using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
 using SportFixtures.Portal.Profiles;
 using SportFixtures.Logger;
-using SportFixtures.Logger.Implementations;
+using SportFixtures.FixtureSelector;
 
 namespace SportFixtures.Portal
 {
@@ -61,7 +61,7 @@ namespace SportFixtures.Portal
             services.AddScoped<IEncounterBusinessLogic, EncounterBusinessLogic>();
             services.AddScoped<ILoggerBusinessLogic, LoggerBusinessLogic>();
             services.AddScoped<IPositionTableCalculator, PositionTableCalculator>();
-            services.AddScoped<IFixtureSelector, FixtureSelector>();
+            services.AddScoped<IFixtureSelector, FixtureSelector.Implementations.FixtureSelector>();
         }
 
         private void ResolveRepositoryDependencies(IServiceCollection services)
