@@ -4,6 +4,10 @@ import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { AppSettings } from "src/app/config/appSettings";
+import { TableModule } from "primeng/table";
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { DropdownModule } from "primeng/dropdown";
+import { DatePickerModule } from "@syncfusion/ej2-angular-calendars";
 
 const routes: Routes = [
     {
@@ -20,7 +24,11 @@ const routes: Routes = [
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
-        FormsModule
+        FormsModule,
+        TableModule,
+        MatTooltipModule,
+        DropdownModule,
+        DatePickerModule
     ],
     declarations: [
         HomeComponent
