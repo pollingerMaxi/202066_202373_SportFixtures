@@ -1,0 +1,6 @@
+
+Log Entry: 19-11-2018T23:14:16.497-03:00  |  User: Tried to login with: admin  |  Action: Login  |  Message: Login failed for user 'IIS APPPOOL\WebAPI'.
+Log Entry: 19-11-2018T23:15:15.845-03:00  |  User: Tried to login with: admin  |  Action: Login  |  Message: Login failed for user 'IIS APPPOOL\WebAPI'.
+Log Entry: 19-11-2018T23:16:45.302-03:00  |  User: admin  |  Action: Login  |  Message: Successful login!
+Log Entry: 19-11-2018T23:17:17.484-03:00  |  User: admin  |  Action: Login  |  Message: Successful login!
+Log Entry: 19-11-2018T23:46:25.985-03:00  |  User: admin  |  Action: Login  |  Message: Successful login!

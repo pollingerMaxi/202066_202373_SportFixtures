@@ -1,0 +1,9 @@
+
+Log Entry: 20-11-2018T00:03:57.114-03:00  |  User: admin  |  Action: Login  |  Message: Successful login!
+Log Entry: 20-11-2018T00:05:22.141-03:00  |  User: admin  |  Action: Login  |  Message: Successful login!
+Log Entry: 20-11-2018T00:06:20.607-03:00  |  User: user  |  Action: Login  |  Message: Successful login!
+Log Entry: 20-11-2018T00:06:34.950-03:00  |  User: admin  |  Action: Login  |  Message: Successful login!
+Log Entry: 20-11-2018T00:35:13.016-03:00  |  User: user  |  Action: Login  |  Message: Successful login!
+Log Entry: 20-11-2018T00:35:33.632-03:00  |  User: admin  |  Action: Login  |  Message: Successful login!
+Log Entry: 20-11-2018T00:51:20.849-03:00  |  User: admin  |  Action: Login  |  Message: Successful login!
+Log Entry: 20-11-2018T01:02:39.419-03:00  |  User: admin  |  Action: Login  |  Message: Successful login!
