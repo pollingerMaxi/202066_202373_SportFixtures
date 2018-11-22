@@ -1,4 +1,4 @@
-import { TeamsManagementComponent } from "./teams-management.component";
+import { TeamsManagementComponent } from "./teams-management/teams-management.component";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
 import { DropdownModule } from "primeng/dropdown";
