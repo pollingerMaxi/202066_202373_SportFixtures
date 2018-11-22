@@ -170,7 +170,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         {
             foreach (EncountersTeams team in encounter.Teams)
             {
-                if (encounters.Any(e => ((e.Id != encounter.Id) && (e.Date.Date == encounter.Date.Date) && (e.Teams.Any(t => t.TeamId == team.TeamId)))))
+                if (encounters.Any(e => ((e.Date.Date == encounter.Date.Date) && (e.Teams.Any(t => t.TeamId == team.TeamId)))))
                 {
                     return true;
                 }
@@ -201,8 +201,10 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
-        public void AddMany(ICollection<Encounter> encounters){
-            foreach(Encounter encounter in encounters){
+        public void AddMany(ICollection<Encounter> encounters)
+        {
+            foreach (Encounter encounter in encounters)
+            {
                 Validate(encounter);
                 repository.Attach(encounter);
                 repository.Insert(encounter);

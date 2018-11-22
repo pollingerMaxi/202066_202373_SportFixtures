@@ -34,7 +34,8 @@ export class AppSettings {
         unfollowTeam: `${AppSettings.BaseUrl}users/unfollow`,
         getEncountersOfSport: `${AppSettings.BaseUrl}encounters/sport/`,
         getFixtureGenerators: `${AppSettings.BaseUrl}fixtures`,
-        generateFixture: `${AppSettings.BaseUrl}fixtures/generate`
+        generateFixture: `${AppSettings.BaseUrl}fixtures/generate`,
+        addEncountersInBulk: `${AppSettings.BaseUrl}encounters/add_many`
     };
 
     public static readonly RouterUrls: any = {

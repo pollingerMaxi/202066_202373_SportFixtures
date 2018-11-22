@@ -24,24 +24,33 @@
           <div class="form-group">
             <label for="startDate">Pick a start date</label>
             <br>
-            <ejs-datepicker id="startDate" [format]='dateFormat' (change)='selectedDate = $event.value'></ejs-datepicker>
+            <ejs-datepicker id="startDate" [format]='dateFormat' (change)='selectedDate = $event.value' [style]="{'width':'50%'}"></ejs-datepicker>
           </div>
           <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="generateFixture()">Generate
             fixture</a>
         </div>
         <div class="panel-body">
           <div class="form-group">
-
+            <table>
+              <thead>
+                <tr>
+                  <td>Date</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let encounter of fixtureEncounters; let i=index">
+                  <td>
+                    {{encounter.date}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
         <hr />
+        <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addFixture()">Add generated
+          fixture</a>
       </div>
     </div>
   </div>
 </div>
-
-
-un combo con los deportes
-un combo con los nombres de los algoritmos (GetAllFixtureGenerators)
-un boton de generar, cuando los genera, que los muestre (GenerateFixture)
-boton de agregar encuentros (CreateManyEncounters)
