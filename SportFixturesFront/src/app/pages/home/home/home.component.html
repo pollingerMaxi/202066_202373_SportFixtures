@@ -52,11 +52,11 @@
             <ejs-datepicker id="startDate" [format]='dateFormat' (change)='updateEncounters($event.value)' [style]="{'width':'50%'}"></ejs-datepicker>
           </div>
           <div class="form-group" *ngIf="filteredEncounters.length > 0">
-            <div *ngFor="let enc of filteredEncounters">
-              <div>
-                {{enc.date}}
-                <div matTooltip="Id: {{enc.id}}"></div>
-              </div>
+            <div *ngFor="let enc of filteredEncounters; let i=index">
+                <ng-template #tipContent>Id: {{enc.id}}  -  Teams: {{enc.teams[i].teamId}} </ng-template>
+                <button type="button" class="btn btn-outline-secondary" [ngbTooltip]="tipContent">
+                  {{enc.date}}
+                </button>
             </div>
           </div>
           <div *ngIf="filteredEncounters.length == 0">

@@ -5,9 +5,9 @@ import { RouterModule, Routes } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { AppSettings } from "src/app/config/appSettings";
 import { TableModule } from "primeng/table";
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { DropdownModule } from "primeng/dropdown";
 import { DatePickerModule } from "@syncfusion/ej2-angular-calendars";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
     {
@@ -26,9 +26,9 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         FormsModule,
         TableModule,
-        MatTooltipModule,
         DropdownModule,
-        DatePickerModule
+        DatePickerModule,
+        NgbModule
     ],
     declarations: [
         HomeComponent
