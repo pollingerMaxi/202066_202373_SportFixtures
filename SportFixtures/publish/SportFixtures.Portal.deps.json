@@ -31,7 +31,11 @@
           "SportFixtures.BusinessLogic.Implementations": "1.0.0",
           "SportFixtures.Data": "1.0.0",
           "SportFixtures.Data.Access": "1.0.0",
-          "SportFixtures.FixtureGenerator": "1.0.0"
+          "SportFixtures.FixtureGenerator": "1.0.0",
+          "SportFixtures.FixtureSelector": "1.0.0",
+          "SportFixtures.FixtureSelector.Implementations": "1.0.0",
+          "SportFixtures.Logger": "1.0.0",
+          "SportFixtures.Logger.Implementations": "1.0.0"
         },
         "runtime": {
           "SportFixtures.Portal.dll": {}
@@ -244,7 +248,9 @@
           "SportFixtures.BusinessLogic": "1.0.0",
           "SportFixtures.Data.Repository": "1.0.0",
           "SportFixtures.FixtureGenerator": "1.0.0",
-          "SportFixtures.FixtureGenerator.Implementations": "1.0.0"
+          "SportFixtures.FixtureGenerator.Implementations": "1.0.0",
+          "SportFixtures.Logger": "1.0.0",
+          "SportFixtures.Logger.Implementations": "1.0.0"
         },
         "runtime": {
           "SportFixtures.BusinessLogic.Implementations.dll": {}
@@ -314,6 +320,52 @@
         },
         "compile": {
           "SportFixtures.FixtureGenerator.Implementations.dll": {}
+        }
+      },
+      "SportFixtures.FixtureSelector/1.0.0": {
+        "dependencies": {
+          "SportFixtures.BusinessLogic": "1.0.0",
+          "SportFixtures.Data": "1.0.0"
+        },
+        "runtime": {
+          "SportFixtures.FixtureSelector.dll": {}
+        },
+        "compile": {
+          "SportFixtures.FixtureSelector.dll": {}
+        }
+      },
+      "SportFixtures.FixtureSelector.Implementations/1.0.0": {
+        "dependencies": {
+          "SportFixtures.BusinessLogic": "1.0.0",
+          "SportFixtures.Data": "1.0.0",
+          "SportFixtures.Exceptions": "1.0.0",
+          "SportFixtures.FixtureGenerator": "1.0.0",
+          "SportFixtures.FixtureSelector": "1.0.0"
+        },
+        "runtime": {
+          "SportFixtures.FixtureSelector.Implementations.dll": {}
+        },
+        "compile": {
+          "SportFixtures.FixtureSelector.Implementations.dll": {}
+        }
+      },
+      "SportFixtures.Logger/1.0.0": {
+        "runtime": {
+          "SportFixtures.Logger.dll": {}
+        },
+        "compile": {
+          "SportFixtures.Logger.dll": {}
+        }
+      },
+      "SportFixtures.Logger.Implementations/1.0.0": {
+        "dependencies": {
+          "SportFixtures.Logger": "1.0.0"
+        },
+        "runtime": {
+          "SportFixtures.Logger.Implementations.dll": {}
+        },
+        "compile": {
+          "SportFixtures.Logger.Implementations.dll": {}
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
@@ -3358,6 +3410,26 @@
       "sha512": ""
     },
     "SportFixtures.FixtureGenerator.Implementations/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SportFixtures.FixtureSelector/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SportFixtures.FixtureSelector.Implementations/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SportFixtures.Logger/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SportFixtures.Logger.Implementations/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
