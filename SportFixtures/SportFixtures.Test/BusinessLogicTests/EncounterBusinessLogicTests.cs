@@ -62,7 +62,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             encounterBL = new EncounterBusinessLogic(mockEncounterRepo.Object, mockSportBL.Object);
             encounterList = new List<Encounter>();
             mockEncounterRepo.Setup(r => r.Get(null, null, It.IsAny<string>())).Returns(encounterList);
-            mockEncounterRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, "")).Returns(encounterList);
+            mockEncounterRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, It.IsAny<string>())).Returns(encounterList);
 
             football = new Sport() { Id = 1, Name = "Football", EncounterMode = EncounterMode.Double };
             mockSportBL.Setup(s => s.GetById(1)).Returns(football);
@@ -320,7 +320,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         public void GetAllTest()
         {
             encounterBL.GetAll();
-            mockEncounterRepo.Verify(x => x.Get(null, null, ""), Times.Once());
+            mockEncounterRepo.Verify(x => x.Get(null, null, It.IsAny<string>()), Times.Once());
         }
 
         [TestMethod]
@@ -341,7 +341,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             var encounter = new Encounter() { Id = 1, Date = DateTime.Now, SportId = football.Id, Teams = teams };
             encounterList.Add(encounter);
             encounterBL.GetAllEncountersOfTeam(nacional.Id);
-            mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
+            mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, "Results"), Times.Once());
         }
 
         [TestMethod]

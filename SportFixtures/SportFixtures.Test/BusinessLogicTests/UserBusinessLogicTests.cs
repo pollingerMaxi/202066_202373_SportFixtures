@@ -187,16 +187,18 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void UnfollowTeamTest()
         {
-            var team = new Team();
+            var team = new Team() { Id = 0, Name = "Team", SportId = 1 };
             var teamBL = new TeamBusinessLogic(mockTeamRepo.Object, NO_BUSINESS_LOGIC);
             var userBL = new UserBusinessLogic(mockUserRepo.Object, teamBL, mockUTRepo.Object);
             mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(team);
             mockUserRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(userWithAllData);
+            var fav = new UsersTeams { TeamId = team.Id, Team = team, User = userWithAllData, UserId = userWithAllData.Id };
+            mockUTRepo.Setup(r => r.Get(It.IsAny<Expression<Func<UsersTeams, bool>>>(), null, "")).Returns(new List<UsersTeams>() { fav });
             userBL.FollowTeam(userWithAllData.Id, team.Id);
             userBL.UnfollowTeam(userWithAllData.Id, team.Id);
             mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Exactly(2));
             mockTeamRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Exactly(2));
-            mockUTRepo.Verify(x => x.Delete(It.IsAny<int>()), Times.Once());
+            mockUTRepo.Verify(x => x.Delete(fav), Times.Once());
         }
 
         [TestMethod]
