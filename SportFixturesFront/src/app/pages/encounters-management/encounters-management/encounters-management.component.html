@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="center">
+    <h3>
+      Encounters Management
+    </h3>
+    <hr />
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="white-box">
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="encountersList">Registered encounters</label>
+            <br>
+            <p-listbox [options]="encounters" [(ngModel)]="selectedEncounter" optionLabel="date"></p-listbox>
+          </div>
+          <hr />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 fixer">
+      <div class="dividerLeft"></div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="white-box">
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="selectedSportName">Encounter date</label>
+              <ejs-datepicker id="datepicker" [format]='dateFormat' [(value)]='selectedEncounter.date' (change)='selectedEncounter.date = $event.value'></ejs-datepicker>
+            </div>
+            <div class="form-group">
+              <label for="teams">Teams</label>
+              <br />
+              <div>
+                <p-listbox [options]="selectedEncounter.teams" [(ngModel)]="selectedEncounter.teams" optionLabel="name"
+                  disabled></p-listbox>
+              </div>
+            </div>
+            <hr />
+            <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="updateEncounter(selectedEncounter)">Update
+              encounter</a>
+            <a class="btn btn-danger btn-lg btn-block waves-effect waves-light" (click)="deleteEncounter(selectedEncounter.id)">Delete
+              encounter</a>
+          </div>
+        </div>
+      </div>
+      <div class="dividerRight"></div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="white-box">
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="encounterDate">Encounter Date</label>
+              <ejs-datepicker id="datepicker" [format]='dateFormat' (change)='encounter.date = $event.value'></ejs-datepicker>
+            </div>
+            <div class="form-group">
+              <label for="encounterMode">Sport</label>
+              <br>
+              <p-dropdown [options]="sports" [(ngModel)]="selectedSport" optionLabel="name" autoWidth="false" [style]="{'width':'100%'}"
+                placeholder="Select a Sport" (onChange)="onChange($event)"></p-dropdown>
+            </div>
+            <div class="form-group" *ngIf="teams.length > 0">
+              <label for="teamsList">Teams for the Encounter</label>
+              <br>
+              <p-listbox [options]="teams" [(ngModel)]="selectedTeams" optionLabel="name" multiple="multiple" checkbox="checkbox"
+                (onChange)="encounter.teams = selectedTeams"></p-listbox>
+            </div>
+            <hr />
+            <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addEncounter(encounter)">Add
+              encounter</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

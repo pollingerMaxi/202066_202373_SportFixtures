@@ -1,11 +1,10 @@
 ﻿using System;
-using SportFixtures.FixtureGenerator;
-using System.Collections;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using SportFixtures.Exceptions.EncounterExceptions;
+using SportFixtures.Data.Enums;
 
 namespace SportFixtures.FixtureGenerator.Implementations
 {
@@ -17,6 +16,7 @@ namespace SportFixtures.FixtureGenerator.Implementations
         {
             this.encounterBL = encounterBL;
         }
+
         public ICollection<Encounter> GenerateFixture(IEnumerable<Team> teams, DateTime date)
         {
             if (teams.Count() < 2)
@@ -29,9 +29,12 @@ namespace SportFixtures.FixtureGenerator.Implementations
             foreach (Team team in teams)
             {
                 teamList.Remove(team);
+                EncountersTeams eTeam = new EncountersTeams() { Team = team, TeamId = team.Id };
                 foreach (Team rival in teamList)
                 {
-                    Encounter encounter = new Encounter() { Team1 = team, Team2 = rival, SportId = team.SportId, Date = date };
+                    EncountersTeams eRival = new EncountersTeams() { Team = rival, TeamId = rival.Id };
+                    ICollection<EncountersTeams> opponents = new List<EncountersTeams>() { eTeam, eRival };
+                    Encounter encounter = new Encounter() { Teams = opponents, SportId = team.SportId, Date = date };
                     while (encounterBL.TeamsHaveEncountersOnTheSameDay(encounter) || encounterBL.TeamsHaveEncountersOnTheSameDay(generatedEncounters, encounter))
                     {
                         encounter.Date = encounter.Date.AddDays(1);

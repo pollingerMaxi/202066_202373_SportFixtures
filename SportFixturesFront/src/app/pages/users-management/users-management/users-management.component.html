@@ -1,0 +1,125 @@
+<div class="container">
+  <div class="center">
+    <h3>
+      {{pageTitle}}
+    </h3>
+    <hr />
+  </div>
+  <div class="row" *ngIf="!sessionService.isAdmin()">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="white-box">
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="userName">Name</label>
+            <input disabled id="userName" class="form-control" type="text" [(ngModel)]="selectedUser.name">
+          </div>
+          <div class="form-group">
+            <label for="userLastname">Lastname</label>
+            <input disabled id="userLastname" class="form-control" type="text" [(ngModel)]="selectedUser.lastName">
+          </div>
+          <div class="form-group">
+            <label for="userUsername">Username</label>
+            <input disabled id="userUsername" class="form-control" type="text" [(ngModel)]="selectedUser.username">
+          </div>
+          <div class="form-group">
+            <label for="userEmail">Email</label>
+            <input disabled id="userEmail" class="form-control" type="text" [(ngModel)]="selectedUser.email">
+          </div>
+          <div class="form-group">
+            <label for="userRole">Role</label>
+            <br>
+            <p-dropdown disabled [options]="roles" [(ngModel)]="selectedUser.role" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+          </div>
+        </div>
+        <hr />
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="sessionService.isAdmin()">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+      <div class="white-box">
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="usersList">Registered users</label>
+            <br>
+            <p-listbox [options]="users" [(ngModel)]="selectedUser" optionLabel="name"></p-listbox>
+          </div>
+          <hr />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 fixer" *ngIf="sessionService.isAdmin()">
+      <div class="dividerLeft"></div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="white-box">
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="userName">Name</label>
+              <input id="userName" class="form-control" type="text" [(ngModel)]="selectedUser.name">
+            </div>
+            <div class="form-group">
+              <label for="userLastname">Lastname</label>
+              <input id="userLastname" class="form-control" type="text" [(ngModel)]="selectedUser.lastName">
+            </div>
+            <div class="form-group">
+              <label for="userUsername">Username</label>
+              <input id="userUsername" class="form-control" type="text" [(ngModel)]="selectedUser.username">
+            </div>
+            <div class="form-group">
+              <label for="userEmail">Email</label>
+              <input id="userEmail" class="form-control" type="text" [(ngModel)]="selectedUser.email">
+            </div>
+            <div class="form-group">
+              <label for="userRole">Role</label>
+              <br>
+              <p-dropdown [options]="roles" [(ngModel)]="selectedUser.role" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+            </div>
+            <hr />
+            <div >
+              <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="updateUser(selectedUser)">Update
+                user</a>
+              <a class="btn btn-danger btn-lg btn-block waves-effect waves-light" (click)="deleteUser(selectedUser.id)">Delete
+                user</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="dividerRight"></div>
+        <div>
+          <div class="white-box">
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="newuserName">Name</label>
+                <input id="newuserName" class="form-control" type="text" [(ngModel)]="user.name">
+              </div>
+              <div class="form-group">
+                <label for="newuserLastname">Lastname</label>
+                <input id="newuserLastname" class="form-control" type="text" [(ngModel)]="user.lastName">
+              </div>
+              <div class="form-group">
+                <label for="newuserUsername">Username</label>
+                <input id="newuserUsername" class="form-control" type="text" [(ngModel)]="user.username">
+              </div>
+              <div class="form-group">
+                <label for="newuserEmail">Email</label>
+                <input id="newuserEmail" class="form-control" type="text" [(ngModel)]="user.email">
+              </div>
+              <div class="form-group">
+                <label for="newuserRole">Role</label>
+                <br>
+                <p-dropdown [options]="roles" [(ngModel)]="user.role" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+              </div>
+              <div class="form-group">
+                <label for="newuserPassword">Password</label>
+                <input id="newuserPassword" class="form-control" type="text" [(ngModel)]="user.password">
+              </div>
+              <hr />
+              <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addUser(user)">Add user</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

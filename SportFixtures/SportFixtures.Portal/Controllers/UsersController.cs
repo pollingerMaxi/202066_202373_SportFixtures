@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
-using SportFixtures.Data;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.Enums;
 using SportFixtures.Exceptions.TeamExceptions;
 using SportFixtures.Exceptions.UserExceptions;
 using SportFixtures.Portal.DTOs;
@@ -41,7 +41,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -64,7 +64,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -88,7 +88,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -117,7 +117,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -133,7 +133,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 userBusinessLogic.Delete(id);
-                return Ok();
+                return Ok(new ResponseOkDTO());
             }
             catch (UserDoesNotExistException e)
             {
@@ -141,7 +141,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -156,7 +156,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 userBusinessLogic.FollowTeam(userteam.UserId, userteam.TeamId);
-                return Ok();
+                return Ok("{\"response\": \"ok\"}");
             }
             catch (TeamDoesNotExistsException e)
             {
@@ -166,9 +166,63 @@ namespace SportFixtures.Portal.Controllers
             {
                 return NotFound(e.Message);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return BadRequest("User is already following this team.");
+            }
+        }
+
+        [HttpPost("unfollow")]
+        public ActionResult UnfollowTeam([FromBody]UsersTeams userteam)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                userBusinessLogic.UnfollowTeam(userteam.UserId, userteam.TeamId);
+                return Ok("{\"response\": \"ok\"}");
+            }
+            catch (TeamDoesNotExistsException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (UserDoesNotExistException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (UserDoesNotFollowTeamException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("favorites/{userId}")]
+        public ActionResult GetFavorites([FromRoute]int userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var favorites = userBusinessLogic.GetFavoritesOfUser(userId);
+                return Ok(favorites);
+            }
+            catch (UserDoesNotExistException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
             }
         }
     }

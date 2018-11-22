@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="center">
+    <div class="white-box">
+      <div class="panel-body">
+        <div class="form-group">
+          <label for="encountersList">Registered encounters</label>
+          <br>
+          <p-dropdown [options]="encounters" [(ngModel)]="selectedEncounter" optionLabel="date" autoWidth="false"
+            [style]="{'width':'100%'}" placeholder="Select an Encounter to comment"></p-dropdown>
+        </div>
+
+        <div class="form-group">
+          <label for="commentArea">Type in your comment here:</label>
+          <br>
+          <textarea id="commentArea" name="commentArea" [rows]="10" [cols]="120" pInputTextarea autoResize="autoResize"
+            [(ngModel)]="comment.text"></textarea>
+        </div>
+      </div>
+      <a class="btn btn-success btn-lg btn-block waves-effect waves-light" (click)="addComment(comment)">Add comment to encounter</a>
+    </div>
+  </div>
+</div>

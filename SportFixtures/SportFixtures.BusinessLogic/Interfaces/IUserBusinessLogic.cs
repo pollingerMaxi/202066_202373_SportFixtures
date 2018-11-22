@@ -21,6 +21,13 @@ namespace SportFixtures.BusinessLogic.Interfaces
         void FollowTeam(int userId, int teamId);
 
         /// <summary>
+        /// Removes the given team of the user's Favorites.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="team"></param>
+        void UnfollowTeam(int userId, int teamId);
+
+        /// <summary>
         /// Updates a user.
         /// </summary>
         /// <param name="user"></param>
@@ -42,7 +49,7 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// Login a user, generates and returns the token.
         /// </summary>
         /// <param name="user"></param>
-        Guid Login(User user);
+        User Login(User user);
 
         /// <summary>
         /// Returns all the users in the repository.
@@ -69,5 +76,12 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// </summary>
         /// <param name="email"></param>
         void Logout(string email);
+
+        /// <summary>
+        /// Returns the favorites of the given user.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        IEnumerable<UsersTeams> GetFavoritesOfUser(int userId);
     }
 }

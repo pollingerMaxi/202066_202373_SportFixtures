@@ -7,6 +7,6 @@ namespace SportFixtures.Portal.DTOs
     {
         public DateTime Date { get; set; }
         public int SportId { get; set; }
-        public Algorithm Algorithm { get; set; }
+        public string AlgorithmName { get; set; }
     }
 }

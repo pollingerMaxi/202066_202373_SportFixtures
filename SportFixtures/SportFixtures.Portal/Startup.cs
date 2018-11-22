@@ -15,6 +15,8 @@ using SportFixtures.Data.Access;
 using SportFixtures.Data.Entities;
 using SportFixtures.Data.Repository;
 using SportFixtures.Portal.Profiles;
+using SportFixtures.Logger;
+using SportFixtures.FixtureSelector;
 
 namespace SportFixtures.Portal
 {
@@ -30,9 +32,20 @@ namespace SportFixtures.Portal
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             ResolveRepositoryDependencies(services);
             ResolveBusinessLogicDependencies(services);
+            ResolveLoggerDependencies(services);
             var mappingConfig = new MapperConfiguration(c => c.AddProfile(new MappingProfile()));
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
@@ -46,6 +59,9 @@ namespace SportFixtures.Portal
             services.AddScoped<IUserBusinessLogic, UserBusinessLogic>();
             services.AddScoped<ICommentBusinessLogic, CommentBusinessLogic>();
             services.AddScoped<IEncounterBusinessLogic, EncounterBusinessLogic>();
+            services.AddScoped<ILoggerBusinessLogic, LoggerBusinessLogic>();
+            services.AddScoped<IPositionTableCalculator, PositionTableCalculator>();
+            services.AddScoped<IFixtureSelector, FixtureSelector.Implementations.FixtureSelector>();
         }
 
         private void ResolveRepositoryDependencies(IServiceCollection services)
@@ -56,6 +72,11 @@ namespace SportFixtures.Portal
             services.AddScoped<IRepository<Comment>, GenericRepository<Comment>>();
             services.AddScoped<IRepository<UsersTeams>, GenericRepository<UsersTeams>>();
             services.AddScoped<IRepository<Encounter>, GenericRepository<Encounter>>();
+        }
+
+        private void ResolveLoggerDependencies(IServiceCollection services)
+        {
+            services.AddScoped<ILogger, Logger.Implementations.Logger>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,7 +91,8 @@ namespace SportFixtures.Portal
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
+            app.UseCors("CorsPolicy");
             app.UseMvc();
         }
     }

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
-using SportFixtures.Data;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.Enums;
 using SportFixtures.Exceptions.SportExceptions;
 using SportFixtures.Portal.DTOs;
 using SportFixtures.Portal.Filters;
@@ -40,7 +40,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -63,13 +63,13 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
         [HttpPost]
         [AuthorizedRoles(Role.Admin)]
-        public ActionResult CreateSport([FromBody]SportDTO data)
+        public ActionResult CreateSport([FromBody]SportCreateDTO data)
         {
             if (!ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -117,7 +117,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -133,7 +133,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 sportBusinessLogic.Delete(id);
-                return Ok();
+                return Ok(new ResponseOkDTO());
             }
             catch (SportDoesNotExistException e)
             {
@@ -141,7 +141,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
     }

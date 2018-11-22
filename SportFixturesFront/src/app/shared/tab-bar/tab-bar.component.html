@@ -1,0 +1,3 @@
+<p-tabMenu [model]="adminOptions" *ngIf="sessionService.userIsLogged() && sessionService.isAdmin()"></p-tabMenu>
+<p-tabMenu [model]="userOptions" *ngIf="sessionService.userIsLogged() && !sessionService.isAdmin()"></p-tabMenu>
+<p-tabMenu [model]="notAuthOptions" *ngIf="!sessionService.userIsLogged()"></p-tabMenu>

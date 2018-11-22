@@ -1,5 +1,7 @@
 using System;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.DTOs;
+using SportFixtures.Data.Enums;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Repository;
 using System.Collections.Generic;
@@ -34,24 +36,6 @@ namespace SportFixtures.BusinessLogic.Implementations
             {
                 throw new InvalidTeamNameException();
             }
-
-            if (!ValidatePhotoPath(team.PhotoPath))
-            {
-                throw new InvalidPhotoPathException();
-            }
-        }
-
-        private bool ValidatePhotoPath(String path)
-        {
-            bool pathIsValid = true;
-
-            if (!string.IsNullOrWhiteSpace(path))
-            {
-                Regex r = new Regex(@"^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.(jpg|gif|jpeg|png)$");
-                pathIsValid = r.IsMatch(path);
-            }
-
-            return pathIsValid;
         }
 
         private void AddTeamToSport(Team team)
@@ -61,9 +45,11 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void Update(Team team)
         {
-            CheckIfExists(team.Id);
             ValidateTeam(team);
-            repository.Update(team);
+            Team dbTeam = GetById(team.Id);
+            dbTeam.Name = team.Name;
+            dbTeam.Photo = team.Photo;
+            repository.Update(dbTeam);
             repository.Save();
         }
 
@@ -82,9 +68,19 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
-        public IEnumerable<Team> GetAll()
+        public IEnumerable<Team> GetAll(TeamFilterDTO filter = null)
         {
-            return repository.Get(null, null, "");
+            if(filter == null){
+                return repository.Get(null, null, "");
+            }
+
+            if(string.IsNullOrEmpty(filter.Name)){
+                return filter.Order == Order.Descending ? repository.Get(null, (q => q.OrderByDescending(t => t.Name)), "") :
+                                repository.Get(null, (q => q.OrderBy(t => t.Name)), "");
+            }
+            else{
+                return repository.Get(t => t.Name == filter.Name, (q => q.OrderBy(t => t.Name)), "");
+            }
         }
 
         public Team GetById(int teamId)

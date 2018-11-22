@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
-using SportFixtures.Data;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.DTOs;
 using SportFixtures.Exceptions.SportExceptions;
 using SportFixtures.Exceptions.TeamExceptions;
 using SportFixtures.Portal.DTOs;
@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SportFixtures.Data.Enums;
 
 namespace SportFixtures.Portal.Controllers
 {
@@ -36,12 +37,20 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var teams = mapper.Map<TeamDTO[]>(teamBusinessLogic.GetAll());
+                string name = HttpContext.Request.Query["name"].ToString();
+                var orderParam = HttpContext.Request.Query["order"].ToString();
+                Order order = Order.Ascending;
+                if (!string.IsNullOrWhiteSpace(orderParam))
+                {
+                    order = (Order)Enum.Parse(typeof(Order), orderParam);
+                }
+                var filter = new TeamFilterDTO { Name = name, Order = order };
+                var teams = mapper.Map<TeamDTO[]>(teamBusinessLogic.GetAll(filter));
                 return Ok(teams);
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -64,7 +73,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -97,7 +106,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -126,7 +135,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -142,7 +151,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 teamBusinessLogic.Delete(id);
-                return Ok();
+                return Ok(new ResponseOkDTO());
             }
             catch (TeamDoesNotExistsException e)
             {
@@ -150,7 +159,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
     }

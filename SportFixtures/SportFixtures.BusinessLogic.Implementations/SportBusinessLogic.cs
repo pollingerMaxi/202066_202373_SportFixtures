@@ -70,8 +70,9 @@ namespace SportFixtures.BusinessLogic.Implementations
         public void Update(Sport sport)
         {
             ValidateSport(sport);
-            CheckIfSportExists(sport.Id);
-            repository.Update(sport);
+            Sport dbSport = GetById(sport.Id);
+            dbSport.Name = sport.Name;
+            repository.Update(dbSport);
             repository.Save();
         }
 
@@ -92,7 +93,7 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public IEnumerable<Sport> GetAll()
         {
-            return repository.Get(null, null, "");
+            return repository.Get(null, null, "Teams");
         }
 
     }

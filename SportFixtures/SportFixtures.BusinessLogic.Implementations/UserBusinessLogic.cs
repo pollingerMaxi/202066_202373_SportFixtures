@@ -1,6 +1,6 @@
 ﻿using SportFixtures.BusinessLogic.Interfaces;
-using SportFixtures.Data;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.Enums;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.UserExceptions;
 using System;
@@ -15,8 +15,6 @@ namespace SportFixtures.BusinessLogic.Implementations
         private IRepository<User> repository;
         private IRepository<UsersTeams> favoritesRepository;
         private ITeamBusinessLogic teamBusinessLogic;
-
-        public User LoggedUser { get; private set; }
 
         public UserBusinessLogic(IRepository<User> repository, ITeamBusinessLogic teamBL, IRepository<UsersTeams> favsRepo)
         {
@@ -59,10 +57,20 @@ namespace SportFixtures.BusinessLogic.Implementations
                 throw new InvalidUserLastNameException();
             }
 
-            if (!UsernameIsUnique(user.Username))
+            if (!UsernameIsUnique(user))
             {
                 throw new UsernameAlreadyInUseException();
             }
+
+            if (!EmailIsUnique(user))
+            {
+                throw new EmailAlreadyRegisteredException();
+            }
+        }
+
+        private bool EmailIsUnique(User user)
+        {
+            return repository.Get(u => u.Id != user.Id, null, "").FirstOrDefault(u => u.Email == user.Email) == null;
         }
 
         /// <summary>
@@ -72,7 +80,7 @@ namespace SportFixtures.BusinessLogic.Implementations
         /// <returns></returns>
         private bool ValidateEmail(string email)
         {
-            return Regex.IsMatch(email, 
+            return Regex.IsMatch(email,
                 @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
         }
 
@@ -94,15 +102,21 @@ namespace SportFixtures.BusinessLogic.Implementations
 
         public void Update(User user)
         {
-            CheckIfExists(user.Id);
-            CheckIfLoggedUserIsAdmin();
-            repository.Update(user);
+            ValidateUser(user);
+            User dbUser = GetById(user.Id);
+            dbUser.Name = user.Name;
+            dbUser.LastName = user.LastName;
+            dbUser.Username = user.Username;
+            dbUser.Email = user.Email;
+            dbUser.Role = user.Role;
+            dbUser.Password = user.Password;
+            repository.Update(dbUser);
             repository.Save();
         }
 
-        private bool UsernameIsUnique(string username)
+        private bool UsernameIsUnique(User user)
         {
-            return repository.Get(null, null, "").FirstOrDefault(u => u.Username == username) == null;
+            return repository.Get(u => u.Id != user.Id, null, "").FirstOrDefault(u => u.Username == user.Username) == null;
         }
 
         public void Delete(int id)
@@ -112,33 +126,39 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Save();
         }
 
-        /// <summary>
-        /// Throws exception if LoggedUser is not an admin.
-        /// </summary>
-        private void CheckIfLoggedUserIsAdmin()
+        public void UnfollowTeam(int userId, int teamId)
         {
-            if (LoggedUser.Role != Role.Admin)
-            {
-                throw new LoggedUserIsNotAdminException();
-            }
+            teamBusinessLogic.CheckIfExists(teamId);
+            CheckIfExists(userId);
+            var follow = GetFollow(userId, teamId);
+            favoritesRepository.Delete(follow);
+            favoritesRepository.Save();
         }
 
-        public Guid Login(User user)
+        private UsersTeams GetFollow(int userId, int teamId){
+            var follow = favoritesRepository.Get(f => f.TeamId == teamId && f.UserId == userId, null, "").FirstOrDefault();
+            if(follow is null){
+                throw new UserDoesNotFollowTeamException();
+            }
+            return follow;
+        }
+
+        public User Login(User user)
         {
-            var users = repository.Get(u => u.Email == user.Email, null, "");
+            var users = repository.Get(u => u.Username == user.Username, null, "");
             if (users.Count() == 0)
             {
                 throw new UserDoesNotExistException();
             }
 
             var userFromDb = users.FirstOrDefault();
-            if (!user.Email.Equals(userFromDb.Email) && !user.Password.Equals(userFromDb.Password))
+            if (!user.Username.Equals(userFromDb.Username) || !user.Password.Equals(userFromDb.Password))
             {
                 throw new EmailOrPasswordException();
             }
 
             var token = GenerateToken(user, userFromDb);
-            return token;
+            return userFromDb;
         }
 
         /// <summary>
@@ -149,7 +169,6 @@ namespace SportFixtures.BusinessLogic.Implementations
         private Guid GenerateToken(User user, User userFromDb)
         {
             var token = Guid.NewGuid();
-            LoggedUser = user;
             userFromDb.Token = token;
             UpdateUserToken(userFromDb);
             return token;
@@ -188,9 +207,9 @@ namespace SportFixtures.BusinessLogic.Implementations
             repository.Dispose();
         }
 
-        public void Logout(string email)
+        public void Logout(string username)
         {
-            var userFromDb = repository.Get(e => e.Email == email, null, "").FirstOrDefault();
+            var userFromDb = repository.Get(u => u.Username == username, null, "").FirstOrDefault();
             if (userFromDb == null)
             {
                 throw new UserDoesNotExistException();
@@ -209,7 +228,12 @@ namespace SportFixtures.BusinessLogic.Implementations
             user.Token = null;
             repository.Update(user);
             repository.Save();
-            LoggedUser = null;
+        }
+
+        public IEnumerable<UsersTeams> GetFavoritesOfUser(int userId)
+        {
+            CheckIfExists(userId);
+            return favoritesRepository.Get(f => f.UserId == userId, null, "Team");
         }
     }
 }

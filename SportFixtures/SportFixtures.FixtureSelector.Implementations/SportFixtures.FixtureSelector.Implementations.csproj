@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SportFixtures.BusinessLogic\SportFixtures.BusinessLogic.csproj" />
+    <ProjectReference Include="..\SportFixtures.Data\SportFixtures.Data.csproj" />
+    <ProjectReference Include="..\SportFixtures.Exceptions\SportFixtures.Exceptions.csproj" />
+    <ProjectReference Include="..\SportFixtures.FixtureGenerator\SportFixtures.FixtureGenerator.csproj" />
+    <ProjectReference Include="..\SportFixtures.FixtureSelector\SportFixtures.FixtureSelector.csproj" />
+  </ItemGroup>
+
+</Project>

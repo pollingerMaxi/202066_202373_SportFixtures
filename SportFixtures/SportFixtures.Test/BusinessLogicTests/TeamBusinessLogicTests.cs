@@ -4,6 +4,7 @@ using SportFixtures.BusinessLogic.Implementations;
 using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Access;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.DTOs;
 using SportFixtures.Data.Repository;
 using SportFixtures.Exceptions.SportExceptions;
 using SportFixtures.Exceptions.TeamExceptions;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using SportFixtures.Data.Enums;
 
 namespace SportFixtures.Test.BusinessLogicTests
 {
@@ -31,7 +33,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestInitialize]
         public void TestInitialize()
         {
-            teamWithAllData = new Team() { Name = "TeamName", PhotoPath = @"C:\path\to\file.jpg", SportId = 1 };
+            teamWithAllData = new Team() { Name = "TeamName", Photo = @"C:\path\to\file.jpg", SportId = 1 };
             teamList = new List<Team>() { teamWithAllData };
             sport = new Sport() { Id = 1, Name = "SportName", Teams = teamList };
             sportList = new List<Sport>() { sport };
@@ -67,19 +69,10 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidPhotoPathException))]
-        public void AddTeamInvalidPhotoPathShouldReturnExceptionTest()
-        {
-            var team = new Team() { Id = 1, Name = "TeamName", PhotoPath = "!230#_skdpath" };
-            var teamsList = new List<Team>();
-            teamBL.Add(team);
-        }
-
-        [TestMethod]
         public void UpdateTeamNameOkTest()
         {
             mockTeamRepo.Setup(x => x.Update(It.IsAny<Team>())).Callback<Team>(x => teamList.First().Name = teamWithAllData.Name);
-            mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(new Team() { Name = "TeamName", PhotoPath = "C:\\path\\to\\file.jpg", SportId = 1 });
+            mockTeamRepo.Setup(r => r.GetById(It.IsAny<int>())).Returns(new Team() { Name = "TeamName", Photo = "C:\\path\\to\\file.jpg", SportId = 1 });
             teamWithAllData.Name = "UpdatedName";
             teamBL.Update(teamWithAllData);
             mockTeamRepo.Verify(x => x.Update(It.IsAny<Team>()), Times.Once());
@@ -122,8 +115,44 @@ namespace SportFixtures.Test.BusinessLogicTests
         [TestMethod]
         public void GetAllTest()
         {
-            teamBL.GetAll();
+            teamBL.GetAll(null);
             mockTeamRepo.Verify(x => x.Get(null, null, ""), Times.Once());
+        }
+
+        [TestMethod]
+        public void GetAllFilterByNameTest()
+        {
+            TeamFilterDTO filter = new TeamFilterDTO { Name = "Nacional" };
+            mockTeamRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), "")).Returns(teamList);
+            teamBL.GetAll(filter);
+            mockTeamRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), ""), Times.Once());
+        }
+
+        [TestMethod]
+        public void GetAllOrderAscendingTest()
+        {
+            TeamFilterDTO filter = new TeamFilterDTO { Order = Order.Ascending };
+            mockTeamRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), "")).Returns(teamList);
+            teamBL.GetAll(filter);
+            mockTeamRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), ""), Times.Once());
+        }
+
+        [TestMethod]
+        public void GetAllOrderDescendingTest()
+        {
+            TeamFilterDTO filter = new TeamFilterDTO { Order = Order.Descending };
+            mockTeamRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), "")).Returns(teamList);
+            teamBL.GetAll(filter);
+            mockTeamRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), ""), Times.Once());
+        }
+
+        [TestMethod]
+        public void GetAllFilterByNameDescendingTest()
+        {
+            TeamFilterDTO filter = new TeamFilterDTO { Name = "Nacional", Order = Order.Descending };
+            mockTeamRepo.Setup(r => r.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), "")).Returns(teamList);
+            teamBL.GetAll(filter);
+            mockTeamRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Team, bool>>>(), It.IsAny<Func<IQueryable<Team>, IOrderedQueryable<Team>>>(), ""), Times.Once());
         }
 
         [TestMethod]

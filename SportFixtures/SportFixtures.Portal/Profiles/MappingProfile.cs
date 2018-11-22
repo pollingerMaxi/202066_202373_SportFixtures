@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SportFixtures.Data.Entities;
+using SportFixtures.FixtureSelector;
 using SportFixtures.Portal.DTOs;
 using System;
 using System.Collections.Generic;
@@ -25,18 +26,26 @@ namespace SportFixtures.Portal.Profiles
             CreateMap<CommentDTO, Comment>();
 
             CreateMap<User, LoginDTO>()
-                .ForMember(e => e.Email, src => src.MapFrom(u => u.Email))
+                .ForMember(e => e.Username, src => src.MapFrom(u => u.Email))
                 .ForMember(e => e.Password, src => src.MapFrom(u => u.Password));
             CreateMap<LoginDTO, User>()
-                .ForMember(e => e.Email, src => src.MapFrom(u => u.Email))
+                .ForMember(e => e.Email, src => src.MapFrom(u => u.Username))
                 .ForMember(e => e.Password, src => src.MapFrom(u => u.Password));
 
-            CreateMap<Encounter, EncounterDTO>()
-                .ForMember(e => e.Home, src => src.MapFrom(u => u.Team1))
-                .ForMember(e => e.Visitor, src => src.MapFrom(u => u.Team2));
+            CreateMap<Encounter, EncounterDTO>();
             CreateMap<EncounterDTO, Encounter>()
-                .ForMember(e => e.Team1, src => src.MapFrom(u => u.Home))
-                .ForMember(e => e.Team2, src => src.MapFrom(u => u.Visitor));
+                .ForMember(e => e.Teams, src => src.MapFrom(u => u.Teams));
+            CreateMap<Encounter, FixtureEncounterDTO>();
+
+            CreateMap<EncountersTeams, EncountersTeamsDTO>();
+
+            CreateMap<Sport, SportCreateDTO>()
+                .ForMember(e => e.Name, src => src.MapFrom(u => u.Name));
+            CreateMap<SportCreateDTO, Sport>()
+                .ForMember(e => e.Name, src => src.MapFrom(u => u.Name));
+
+            CreateMap<FixtureAlgorithm, FixtureGeneratorDTO>();
+            CreateMap<FixtureGeneratorDTO, FixtureAlgorithm>();
         }
     }
 }

@@ -4,6 +4,7 @@ using SportFixtures.BusinessLogic.Interfaces;
 using SportFixtures.Data.Entities;
 using SportFixtures.Exceptions.UserExceptions;
 using SportFixtures.Portal.DTOs;
+using SportFixtures.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,17 @@ namespace SportFixtures.Portal.Controllers
 {
     public class LoginController : ControllerBase
     {
+        private static readonly string ACTION = "Login";
+
         private IUserBusinessLogic userBusinessLogic;
         private readonly IMapper mapper;
+        private readonly ILogger logger;
 
-        public LoginController(IUserBusinessLogic userBL, IMapper mapper)
+        public LoginController(IUserBusinessLogic userBL, IMapper mapper, ILogger logger)
         {
             userBusinessLogic = userBL;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         [HttpPost]
@@ -28,31 +33,37 @@ namespace SportFixtures.Portal.Controllers
         {
             if (!ModelState.IsValid)
             {
+                logger.LogWrite(ACTION, "Model is invalid", $"Tried to login with: {data.Username}");
                 return BadRequest(ModelState);
             }
 
             try
             {
                 var loginSuccessful = userBusinessLogic.Login(mapper.Map<User>(data));
-                return Ok(loginSuccessful);
+                var mappedUser = mapper.Map<UserDTO>(loginSuccessful);
+                logger.LogWrite(ACTION, "Successful login!", mappedUser.Username);
+                return Ok(mappedUser);
             }
             catch (UserDoesNotExistException e)
             {
+                logger.LogWrite(ACTION, e.Message, $"Tried to login with: {data.Username}");
                 return NotFound(e.Message);
             }
             catch (EmailOrPasswordException e)
             {
+                logger.LogWrite(ACTION, e.Message, $"Tried to login with: {data.Username}");
                 return BadRequest(e.Message);
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                logger.LogWrite(ACTION, e.Message, $"Tried to login with: {data.Username}");
+                return StatusCode(500, e.Message);
             }
         }
 
         [HttpPost]
         [Route("api/logout")]
-        public ActionResult Logout([FromBody]string email)
+        public ActionResult Logout([FromBody]LogoutDTO data)
         {
             if (!ModelState.IsValid)
             {
@@ -61,8 +72,8 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                userBusinessLogic.Logout(email);
-                return Ok();
+                userBusinessLogic.Logout(data.Username);
+                return Ok(new ResponseOkDTO());
             }
             catch (UserDoesNotExistException e)
             {
@@ -74,7 +85,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
     }

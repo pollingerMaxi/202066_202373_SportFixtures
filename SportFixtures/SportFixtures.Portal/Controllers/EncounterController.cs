@@ -1,12 +1,16 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SportFixtures.BusinessLogic.Interfaces;
+using SportFixtures.BusinessLogic.Implementations;
 using SportFixtures.Data;
 using SportFixtures.Data.Entities;
+using SportFixtures.Data.Enums;
 using SportFixtures.Exceptions.EncounterExceptions;
 using SportFixtures.Exceptions.SportExceptions;
+using SportFixtures.Logger;
 using SportFixtures.Portal.DTOs;
 using SportFixtures.Portal.Filters;
+using SportFixtures.FixtureGenerator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +21,17 @@ namespace SportFixtures.Portal.Controllers
     [Route("api/encounters")]
     public class EncounterController : ControllerBase
     {
+        private static readonly string ACTION = "Fixture";
+
         private IEncounterBusinessLogic encounterBusinessLogic;
         private readonly IMapper mapper;
+        private readonly ILogger logger;
 
-        public EncounterController(IEncounterBusinessLogic encounterBL, IMapper mapper)
+        public EncounterController(IEncounterBusinessLogic encounterBL, IMapper mapper, ILogger logger)
         {
             this.encounterBusinessLogic = encounterBL;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -41,7 +49,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -64,7 +72,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -89,7 +97,32 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPost("add_many")]
+        [AuthorizedRoles(Role.Admin)]
+        public ActionResult CreateManyEncounters([FromBody]ICollection<EncounterDTO> data)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var encounter = mapper.Map<ICollection<Encounter>>(data);
+                encounterBusinessLogic.AddMany(encounter);
+                return Ok(mapper.Map<ICollection<EncounterDTO>>(encounter));
+            }
+            catch (EncounterException e)
+            {
                 return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -118,7 +151,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -134,7 +167,7 @@ namespace SportFixtures.Portal.Controllers
             try
             {
                 encounterBusinessLogic.Delete(id);
-                return Ok();
+                return Ok(new ResponseOkDTO());
             }
             catch (EncounterDoesNotExistException e)
             {
@@ -142,11 +175,11 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
-        [HttpGet("sports/{sportId}")]
+        [HttpGet("sport/{sportId}")]
         [AuthorizedRoles(Role.Admin)]
         public ActionResult<ICollection<EncounterDTO>> GetAllEncountersOfSport(int sportId)
         {
@@ -166,12 +199,11 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
-        [HttpGet("teams/{teamId}")]
-        [AuthorizedRoles(Role.Admin)]
+        [HttpGet("team/{teamId}")]
         public ActionResult<ICollection<EncounterDTO>> GetAllEncountersOfTeam(int teamId)
         {
             if (!ModelState.IsValid)
@@ -190,7 +222,7 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
@@ -213,13 +245,13 @@ namespace SportFixtures.Portal.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
 
-        [HttpPost("fixture/")]
+        [HttpPost("results")]
         [AuthorizedRoles(Role.Admin)]
-        public ActionResult<ICollection<EncounterDTO>> GenerateFixture([FromBody]FixtureDTO data)
+        public ActionResult AddResultsToEncounter([FromBody]ResultsDTO results)
         {
             if (!ModelState.IsValid)
             {
@@ -228,24 +260,12 @@ namespace SportFixtures.Portal.Controllers
 
             try
             {
-                var encounters = mapper.Map<EncounterDTO[]>(encounterBusinessLogic.GenerateFixture(data.Date, data.SportId, data.Algorithm));
-                return Ok(encounters);
-            }
-            catch (SportDoesNotExistException e)
-            {
-                return NotFound(e.Message);
-            }
-            catch (FixtureGeneratorAlgorithmDoesNotExist e)
-            {
-                return NotFound(e.Message);
-            }
-            catch (NotEnoughTeamsForEncounterException e)
-            {
-                return NotFound(e.Message);
+                encounterBusinessLogic.AddResults(results.Positions, results.EncounterId);
+                return Ok(new ResponseOkDTO());
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, e.Message);
             }
         }
     }
