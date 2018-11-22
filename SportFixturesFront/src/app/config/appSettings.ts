@@ -35,7 +35,8 @@ export class AppSettings {
         getEncountersOfSport: `${AppSettings.BaseUrl}encounters/sport/`,
         getFixtureGenerators: `${AppSettings.BaseUrl}fixtures`,
         generateFixture: `${AppSettings.BaseUrl}fixtures/generate`,
-        addEncountersInBulk: `${AppSettings.BaseUrl}encounters/add_many`
+        addEncountersInBulk: `${AppSettings.BaseUrl}encounters/add_many`,
+        getEncountersOfDay: `${AppSettings.BaseUrl}encounters/bydate/`
     };
 
     public static readonly RouterUrls: any = {

@@ -34,8 +34,6 @@ export class EncounterService extends BaseService {
     public async addResults(results: Results) {
         return await this.post(AppSettings.ApiEndpoints.addResults, results);
     }
- 
-    
 
     public async getEncountersOfSport(sportId: string): Promise<Encounter[]> {
         return await this.getAll(AppSettings.ApiEndpoints.getEncountersOfSport + sportId);
@@ -43,5 +41,9 @@ export class EncounterService extends BaseService {
 
     public async addEncountersInBulk(encounters: Encounter[]) {
         return await this.post(AppSettings.ApiEndpoints.addEncountersInBulk, encounters);
+    }
+
+    public async getEncountersOfDay(date: any): Promise<Encounter[]> {
+        return await this.getAll(AppSettings.ApiEndpoints.getEncountersOfDay + date);
     }
 }

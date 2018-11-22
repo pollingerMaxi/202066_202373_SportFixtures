@@ -26,7 +26,7 @@ export class TabBarComponent implements OnInit {
       { label: ENCOUNTERS_MANAGEMENT, icon: 'fa fa-trophy', routerLink: '/encountersManagement' },
       { label: USERS_MANAGEMENT, icon: 'fa fa-users', routerLink: '/usersManagement' },
       { label: REPORTS, icon: 'fa fa-table', routerLink: '/actionsReport' },
-      { label: FIXTURE, icon: 'fa fa-atom', routerLink: '/fixtureGenerator' },
+      { label: FIXTURE, icon: 'fa fa-adjust', routerLink: '/fixtureGenerator' },
       { label: POSITIONS, icon: 'fa fa-star', routerLink: '/positionsTable' },
       { label: LOGOUT, icon: 'fa fa-arrow-circle-right', routerLink: ['/logout'] }
     ];
