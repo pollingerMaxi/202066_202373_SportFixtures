@@ -69,7 +69,7 @@ namespace SportFixtures.Portal.Controllers
             {
                 return NotFound(e.Message);
             }
-            catch (FixtureGeneratorAlgorithmDoesNotExist e)
+            catch (FixtureGeneratorAlgorithmDoesNotExistException e)
             {
                 return NotFound(e.Message);
             }

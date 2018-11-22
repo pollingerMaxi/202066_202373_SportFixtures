@@ -443,7 +443,7 @@ namespace SportFixtures.Test.BusinessLogicTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SportDoesNotSupportMultipleTeamsEncounters))]
+        [ExpectedException(typeof(SportDoesNotSupportMultipleTeamsEncountersException))]
         public void AddEncounterMultipleTeamsOnSportDoubleModeShouldReturnExceptionTest()
         {
             ICollection<EncountersTeams> teams = new List<EncountersTeams>() { eNacional, ePeñarol, eCerro };

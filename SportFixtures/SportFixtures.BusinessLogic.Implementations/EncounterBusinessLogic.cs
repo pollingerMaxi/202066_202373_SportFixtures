@@ -67,7 +67,7 @@ namespace SportFixtures.BusinessLogic.Implementations
             Sport sport = sportBL.GetById(encounter.SportId);
             if (sport.EncounterMode == EncounterMode.Double && encounter.Teams.Count() > 2)
             {
-                throw new SportDoesNotSupportMultipleTeamsEncounters();
+                throw new SportDoesNotSupportMultipleTeamsEncountersException();
             }
 
         }

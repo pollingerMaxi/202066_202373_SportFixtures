@@ -26,9 +26,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.Logger", "SportFixtures.Logger\SportFixtures.Logger.csproj", "{AAC39C44-216E-4219-BC7B-D8FE6790E5FC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.Logger.Implementations", "Logger.Implementations\SportFixtures.Logger.Implementations.csproj", "{7CD845B4-5917-454E-806B-93DD5A7B2428}"
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportFixtures.FixtureSelector", "SportFixtures.FixtureSelector\SportFixtures.FixtureSelector.csproj", "{529D5666-82A7-41B7-8847-EC78CF8A7E08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportFixtures.FixtureSelector.Implementations", "SportFixtures.FixtureSelector.Implementations\SportFixtures.FixtureSelector.Implementations.csproj", "{FB182D86-6AEA-4207-83D7-F6C4113A97A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.FixtureSelector", "SportFixtures.FixtureSelector\SportFixtures.FixtureSelector.csproj", "{529D5666-82A7-41B7-8847-EC78CF8A7E08}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportFixtures.FixtureSelector.Implementations", "SportFixtures.FixtureSelector.Implementations\SportFixtures.FixtureSelector.Implementations.csproj", "{FB182D86-6AEA-4207-83D7-F6C4113A97A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
