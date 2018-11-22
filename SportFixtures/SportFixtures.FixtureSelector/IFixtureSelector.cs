@@ -23,6 +23,8 @@ namespace SportFixtures.BusinessLogic.Interfaces
         /// <summary>
         /// Creates an instance of an algorithm by its name.
         /// </summary>
+        /// <param name="name"></param>
+        /// <param name="encounterBL"></param>
         /// <returns></returns>
         void CreateInstance(string name, IEncounterBusinessLogic encounterBL);
     }

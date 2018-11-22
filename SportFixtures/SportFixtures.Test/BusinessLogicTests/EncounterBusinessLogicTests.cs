@@ -237,7 +237,6 @@ namespace SportFixtures.Test.BusinessLogicTests
             DateTime date = DateTime.Now;
             ICollection<EncountersTeams> teams = new List<EncountersTeams>() { eNacional, ePeñarol };
             var notAddedEncounter = new Encounter() { Id = 123, Date = date.AddDays(1), SportId = football.Id, Teams = teams };
-            mockEncounterRepo.Setup(x => x.Insert(It.IsAny<Encounter>())).Callback<Encounter>(x => encounterList.Add(encounter));
             encounterBL.Update(notAddedEncounter);
         }
 
