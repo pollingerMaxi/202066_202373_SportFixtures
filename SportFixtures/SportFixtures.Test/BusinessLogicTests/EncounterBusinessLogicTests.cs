@@ -328,7 +328,7 @@ namespace SportFixtures.Test.BusinessLogicTests
             encounterList.Add(encounter);
             int sportId = 1;
             encounterBL.GetAllEncountersOfSport(sportId);
-            mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, ""), Times.Once());
+            mockEncounterRepo.Verify(x => x.Get(It.IsAny<Expression<Func<Encounter, bool>>>(), null, It.IsAny<string>()), Times.Once());
         }
 
         [TestMethod]
